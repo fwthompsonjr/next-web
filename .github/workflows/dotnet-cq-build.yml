@@ -1,0 +1,32 @@
+name: "CQ : Build and Test"
+
+on:
+  push:
+    branches:
+      - "**"
+      - "!main"
+      - "!releases"
+    paths:
+      - "src/**"
+
+env:
+  SOLUTION_NAME: ${{ github.workspace }}\src\nextweb.sln
+  NET_VERSION: "8.0.x"
+  NUGET_CERT_REVOCATION_MODE: offline
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: dotnet restore ${{ env.SOLUTION_NAME }}
+        id: dotnet-restore
+        name: DotNet Restore
+
+      - run: dotnet build ${{ env.SOLUTION_NAME }} --no-restore -c Release
+        id: dotnet-build
+        name: DotNet Build
+
+      - run: dotnet test ${{ env.SOLUTION_NAME }} --no-restore -c Release
+        id: dotnet-test
+        name: DotNet Test
