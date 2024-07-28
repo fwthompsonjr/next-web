@@ -10,7 +10,7 @@ on:
       - "src/**"
 
 env:
-  SOLUTION_NAME: ${{ github.workspace }}\src\nextweb.sln
+  SOLUTION_NAME: ${{ github.workspace }}/src/nextweb.sln
   NET_VERSION: "8.0.x"
   NUGET_CERT_REVOCATION_MODE: offline
 
