@@ -2,7 +2,8 @@
   {
     "id": "3.2.0",
     "notes": [
-      "web: initial project setup"
+      "web: initial project setup",
+      "test: can application build on ubuntu server."
     ]
   }
 ]
