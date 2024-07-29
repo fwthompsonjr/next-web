@@ -12,8 +12,7 @@ let authformvalidators = [
             if (value == null) { return false; }
             if (value.length == 0) { return false; }
             if (isValidEmail(String(value))) { return true; }
-            if (value.indexOf("@") >= 0) { return false; }
-            return true;
+            return value.indexOf("@") < 0;
         },
         "message": "Must be a valid user name."
     },
@@ -44,9 +43,9 @@ let jsreauthenticate = {
     "jqid": "#form-re-authorize",
     "bttn": "#form-re-authorize-submit",
     "init": function () {
-        var formJq = jsreauthenticate.jqid;
-        var buttonJq = jsreauthenticate.bttn;
-        var submitaction = "jsreauthenticate.authenticate( 'user', 're-authorize')";
+        let formJq = jsreauthenticate.jqid;
+        let buttonJq = jsreauthenticate.bttn;
+        let submitaction = "jsreauthenticate.authenticate( 'user', 're-authorize')";
         $(buttonJq).attr("onclick", submitaction);
         $(formJq).validate({
             rules: {
@@ -84,7 +83,7 @@ let jsreauthenticate = {
         handler.checkSession();
     },
     "isvalid": function () {
-        var formJq = jsreauthenticate.jqid;
+        let formJq = jsreauthenticate.jqid;
         $(formJq).validate();
         return $(formJq).valid();
     },
@@ -93,7 +92,7 @@ let jsreauthenticate = {
         const pwd = "#form-re-authorize-password";
         let js = {
             "username": $(usr).val(),
-            "login-password": $(pwd).val();
+            "login-password": $(pwd).val()
         };
         return JSON.stringify(js);
     }
@@ -104,4 +103,4 @@ authformvalidators.forEach(v => {
     }
 });
 jsreauthenticate.init();
-var jsReauthorizeInterval = setInterval(() => { jsreauthenticate.update_session(); }, 15000); 
+let jsReauthorizeInterval = setInterval(() => { jsreauthenticate.update_session(); }, 15000); 
