@@ -45,5 +45,24 @@ namespace next.web.tests.dep.util
             });
             Assert.Null(error);
         }
+        [Theory]
+        [InlineData("home")]
+        [InlineData("blank")]
+        [InlineData("introduction")]
+        [InlineData("myaccount")]
+        [InlineData("mysearch")]
+        [InlineData("mailbox")]
+        [InlineData("default")]
+        [InlineData("not-mapped")]
+        public void ContainerCanGetSanitizer(string name)
+        {
+            var error = Record.Exception(() =>
+            {
+                AppContainer.Build();
+                var actual = AppContainer.GetSanitizer(name);
+                Assert.NotNull(actual);
+            });
+            Assert.Null(error);
+        }
     }
 }

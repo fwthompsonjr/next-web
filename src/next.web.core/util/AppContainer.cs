@@ -3,7 +3,9 @@ using legallead.desktop.interfaces;
 using legallead.desktop.utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using next.web.core.interfaces;
 using next.web.core.models;
+using next.web.core.services;
 
 namespace next.web.core.util
 {
@@ -43,6 +45,12 @@ namespace next.web.core.util
                     ServiceProvider = serviceCollection.BuildServiceProvider();
                 }
             }
+        }
+        internal static IContentSanitizer? GetSanitizer(string name)
+        {
+            if (ServiceProvider == null) Build();
+            var svc = ServiceProvider?.GetKeyedService<IContentSanitizer>(name) ?? defaultSanitizer;
+            return svc;
         }
 
         private static string GetPermissionApi(IConfiguration configuration)
@@ -98,6 +106,7 @@ namespace next.web.core.util
             services.AddSingleton(s => provider.GetRequiredService<IUserMailboxMapper>());
             services.AddSingleton(s => provider.GetRequiredService<CommonMessageList>());
             services.AddSingleton(s => provider.GetRequiredService<IHistoryPersistence>());
+            services.AddKeyedSingleton("default", defaultSanitizer);
         }
         private static readonly object locker = new();
         private static readonly string[] sourceArray = [
@@ -105,5 +114,6 @@ namespace next.web.core.util
             "api.permissions:destination",
             "api.permissions:remote",
             "api.permissions:local"];
+        private static readonly IContentSanitizer defaultSanitizer = new ContentSanitizerBase();
     }
 }
