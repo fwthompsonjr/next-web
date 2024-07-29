@@ -1,0 +1,17 @@
+[
+  {
+    "id": "3.2.1",
+    "notes": [
+      "core: inherit presentation assembly",
+      "core: setup initial dependency injection"
+    ]
+  },
+  {
+    "id": "3.2.0",
+    "notes": [
+      "web: initial project setup",
+      "test: can application build on ubuntu server.",
+      "test: change solution path."
+    ]
+  }
+]

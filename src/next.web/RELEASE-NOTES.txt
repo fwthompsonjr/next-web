@@ -1,0 +1,7 @@
+
+      next.web.application
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      : 3.2.1 - 2024-07-27 - Setup dependency injection in core project
+      : 3.2.0 - 2024-07-27 - Setup initial MVC application.
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    
