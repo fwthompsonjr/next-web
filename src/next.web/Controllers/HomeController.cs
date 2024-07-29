@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using next.web.core.util;
 using next.web.Models;
 using System.Diagnostics;
 
@@ -15,7 +16,13 @@ namespace next.web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var content = Introduction;
+            if (string.IsNullOrWhiteSpace(content)) return View();
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                Content = content
+            };
         }
 
         public IActionResult Privacy()
@@ -27,6 +34,15 @@ namespace next.web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private static string? _introduction;
+        private static string Introduction => _introduction ??= GetIntroduction();
+        private static string GetIntroduction()
+        {
+            var content = ContentHandler.GetLocalContent("home");
+            if (content == null || string.IsNullOrWhiteSpace(content.Content)) return string.Empty;
+            return content.Content;
         }
     }
 }
