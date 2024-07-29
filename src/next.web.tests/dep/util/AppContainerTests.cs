@@ -1,5 +1,6 @@
 ﻿using legallead.desktop.interfaces;
 using legallead.desktop.utilities;
+using next.web.core.interfaces;
 using next.web.core.util;
 
 namespace next.web.tests.dep.util
@@ -21,6 +22,7 @@ namespace next.web.tests.dep.util
         }
         [Theory]
         [InlineData(typeof(IPermissionApi))]
+        [InlineData(typeof(IAuthorizedUserService))]
         [InlineData(typeof(ISearchBuilder))]
         [InlineData(typeof(IContentParser))]
         [InlineData(typeof(IErrorContentProvider))]

@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Rewrite;
 using next.web.core.util;
+using next.web.Services;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.web
@@ -9,12 +11,17 @@ namespace next.web
         private static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            var services = builder.Services;
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
+            services.AddControllersWithViews();
+            services.Configure<RouteOptions>(options =>
+            {
+                options.LowercaseUrls = true;
+            });
 
             var app = builder.Build();
-
+            AppContainer.Build(app.Services);
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -29,11 +36,13 @@ namespace next.web
             app.UseRouting();
 
             app.UseAuthorization();
-
+            // enforce lowercase URLs
+            // by redirecting uppercase urls to lowercase urls
+            var options = new RewriteOptions().Add(new RedirectLowerCaseRule());
+            app.UseRewriter(options);
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-            AppContainer.Build();
             app.Run();
         }
     }
