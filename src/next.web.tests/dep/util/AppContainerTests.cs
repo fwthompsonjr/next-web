@@ -1,5 +1,6 @@
 ﻿using legallead.desktop.interfaces;
 using legallead.desktop.utilities;
+using next.web.core.interfaces;
 using next.web.core.util;
 
 namespace next.web.tests.dep.util
@@ -21,6 +22,7 @@ namespace next.web.tests.dep.util
         }
         [Theory]
         [InlineData(typeof(IPermissionApi))]
+        [InlineData(typeof(IAuthorizedUserService))]
         [InlineData(typeof(ISearchBuilder))]
         [InlineData(typeof(IContentParser))]
         [InlineData(typeof(IErrorContentProvider))]
@@ -41,6 +43,25 @@ namespace next.web.tests.dep.util
             {
                 AppContainer.Build();
                 var actual = AppContainer.ServiceProvider?.GetService(serviceType);
+                Assert.NotNull(actual);
+            });
+            Assert.Null(error);
+        }
+        [Theory]
+        [InlineData("home")]
+        [InlineData("blank")]
+        [InlineData("introduction")]
+        [InlineData("myaccount")]
+        [InlineData("mysearch")]
+        [InlineData("mailbox")]
+        [InlineData("default")]
+        [InlineData("not-mapped")]
+        public void ContainerCanGetSanitizer(string name)
+        {
+            var error = Record.Exception(() =>
+            {
+                AppContainer.Build();
+                var actual = AppContainer.GetSanitizer(name);
                 Assert.NotNull(actual);
             });
             Assert.Null(error);
