@@ -17,5 +17,9 @@
     "folder": "_ll-applications",
     "isEnabled": true
   },
-  "Initial_View": "introduction"
+  "Initial_View": "introduction",
+  "app.meta": {
+    "name": "Oxford Legal Lead",
+    "prefix": "oxford.leads.web"
+  }
 }
