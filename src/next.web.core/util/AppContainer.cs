@@ -47,11 +47,7 @@ namespace next.web.core.util
 
         private static string GetPermissionApi(IConfiguration configuration)
         {
-            var keys = new[] {
-              "Permissions_API",
-              "api.permissions:destination",
-              "api.permissions:remote",
-              "api.permissions:local" }.ToList();
+            var keys = sourceArray.ToList();
             var keyvalues = new List<string> { };
             foreach (var item in keys)
             {
@@ -104,5 +100,10 @@ namespace next.web.core.util
             services.AddSingleton(s => provider.GetRequiredService<IHistoryPersistence>());
         }
         private static readonly object locker = new();
+        private static readonly string[] sourceArray = [
+              "Permissions_API",
+            "api.permissions:destination",
+            "api.permissions:remote",
+            "api.permissions:local"];
     }
 }
