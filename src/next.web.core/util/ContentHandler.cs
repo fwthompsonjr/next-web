@@ -32,11 +32,12 @@ namespace next.web.core.util
             raw.Content = beutifier.BeautfyHTML(text.ToString());
             return raw;
         }
-
+        private static readonly string appName = CoreMetaData.GetKeyOrDefault("app.meta:name", "Oxford Legal Lead");
+        private static readonly string appCode = CoreMetaData.GetKeyOrDefault("app.meta:prefix", "oxford.leads.web");
         private static readonly Dictionary<string, string> common = new() {
-            { "Legal Lead", "Oxford Legal Lead" },
-            { "Oxford Legal Leads UI", "Oxford Legal Leads" },
-            { "legallead.ui", "next.web.app" },
+            { "Legal Lead", appName },
+            { $"{appName}s UI", appName },
+            { "legallead.ui", appCode },
             { "(c)", "&copy;" }
         };
     }
