@@ -44,7 +44,7 @@ namespace next.web.tests.dep.svc
             request.Setup(x => x.Host).Returns(HostString.FromUriComponent("http://localhost:8080"));
             request.Setup(x => x.PathBase).Returns(PathString.FromUriComponent("/api"));
 
-            session.Setup(s => 
+            session.Setup(s =>
                 s.TryGetValue(It.Is<string>(s => s == testKeyName), out expectedValue))
                 .Returns(true);
             session.Setup(s =>

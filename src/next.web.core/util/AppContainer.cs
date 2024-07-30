@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.services;
-using System.Web;
 
 namespace next.web.core.util
 {
@@ -99,7 +98,8 @@ namespace next.web.core.util
                 return new SearchBuilder(api);
             });
             if (provider == null) return;
-            services.AddSingleton<IAuthorizedUserService>(s => {
+            services.AddSingleton<IAuthorizedUserService>(s =>
+            {
                 var http = GetAccessor();
                 return new AuthorizedUserService(http);
             });

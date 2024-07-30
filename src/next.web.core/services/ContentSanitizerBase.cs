@@ -39,6 +39,18 @@ namespace next.web.core.services
             });
             return text.ToString();
         }
+
+        private static string AppendHandlerJs(HtmlDocument doc, string fallback)
+        {
+            var node = doc.DocumentNode;
+            var body = node.SelectSingleNode(HtmlSelectors.BodyTag);
+            if (body == null) return fallback;
+            var content = body.InnerHtml;
+            if (content.Contains(jsHandlerTag)) return node.OuterHtml;
+            content += (Environment.NewLine + jsHandlerTag);
+            body.InnerHtml = content;
+            return node.OuterHtml;
+        }
         private static string ReplaceHeadCss(HtmlDocument doc, string fallback)
         {
             var node = doc.DocumentNode;
@@ -103,7 +115,7 @@ namespace next.web.core.services
             if (body == null) return fallback;
             body_js_names.ForEach(h =>
             {
-                var find = HtmlSelectors.GetNamedStyleTag(h);
+                var find = HtmlSelectors.GetNamedSriptTag(h);
                 var block = body.SelectSingleNode(find);
                 if (block != null)
                 {
@@ -142,6 +154,7 @@ namespace next.web.core.services
                 content = CommonSubstition(content);
                 var doc = GetDocument(content);
                 if (doc == null) return content;
+                content = AppendHandlerJs(doc, content);
                 content = ReplaceHeadCss(doc, content);
                 content = RemoveVerifyJs(doc, content);
                 content = RenameHomeCommonJs(doc, content);
@@ -185,6 +198,7 @@ namespace next.web.core.services
         ];
         private static readonly string linkRelative = "<link name=\"{0}\" href=\"/css/{0}.css\" rel=\"stylesheet\" />";
         private static readonly string scriptTag = "<script name=\"{0}\" src=\"/js/{0}.js\"></script>";
+        private static readonly string jsHandlerTag = "<script name=\"handler_js\" src=\"/js/handler.js\"></script>";
 
         [ExcludeFromCodeCoverage(Justification = "Behavior tested from public accessor")]
         protected static class HtmlSelectors
@@ -196,6 +210,10 @@ namespace next.web.core.services
             public static string GetNamedStyleTag(string name)
             {
                 return $"//style[@name='{name}']";
+            }
+            public static string GetNamedSriptTag(string name)
+            {
+                return $"//script[@name='{name}']";
             }
             public static bool IsJsExclusion(string? jscript)
             {
