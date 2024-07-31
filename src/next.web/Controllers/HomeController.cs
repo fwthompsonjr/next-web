@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace next.web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -34,15 +34,6 @@ namespace next.web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        private static string? _introduction;
-        private static string Introduction => _introduction ??= GetIntroduction();
-        private static string GetIntroduction()
-        {
-            var content = ContentHandler.GetLocalContent("home");
-            if (content == null || string.IsNullOrWhiteSpace(content.Content)) return string.Empty;
-            return content.Content;
         }
     }
 }

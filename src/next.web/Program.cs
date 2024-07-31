@@ -19,14 +19,21 @@ namespace next.web
             {
                 options.LowercaseUrls = true;
             });
+            services.AddDistributedMemoryCache();
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var app = builder.Build();
             AppContainer.Build(app.Services);
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -36,6 +43,7 @@ namespace next.web
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
             // enforce lowercase URLs
             // by redirecting uppercase urls to lowercase urls
             var options = new RewriteOptions().Add(new RedirectLowerCaseRule());
