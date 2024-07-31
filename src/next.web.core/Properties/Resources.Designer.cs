@@ -61,6 +61,19 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;div name=&quot;left-menu&quot;&gt;
+        ///	&lt;div name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
+        ///		&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
+        ///	&lt;/div&gt;
+        ///&lt;/div&gt;.
+        /// </summary>
+        internal static string base_menu {
+            get {
+                return ResourceManager.GetString("base_menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///  &quot;Permissions_API&quot;: &quot;http://api.legallead.co/&quot;,
         ///  &quot;api.permissions&quot;: {

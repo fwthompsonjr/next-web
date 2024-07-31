@@ -1,0 +1,30 @@
+<div id="app-side-menu" name="left-menu">
+	<div data-position-index="0" name="left-menu-icon" class="row">
+		<i class="bi bi-three-dots"></i>
+	</div>
+	<div data-position-index="1" name="left-menu-home" class="row">
+		<a href="/home">
+			<i class="bi bi-house" title="Home"></i>
+		</a>
+	</div>
+	<div data-position-index="10" name="left-menu-account" class="row d-none">
+		<a href="/home">
+			<i class="bi bi-person" title="My Account"></i>
+		</a>
+	</div>
+	<div data-position-index="20" name="left-menu-account" class="row d-none">
+		<a href="/my-acoount/home">
+			<i class="bi bi-binoculars" title="Search"></i>
+		</a>
+	</div>
+	<div data-position-index="30" name="left-menu-account" class="row d-none">
+		<a href="/home">
+			<i class="bi bi-mailbox" title="Messages"></i>
+		</a>
+	</div>
+	<div data-position-index="100" name="left-menu-exit" class="row">
+		<a href="/home">
+			<i class="bi bi-box-arrow-left" title="Exit"></i>
+		</a>
+	</div>
+</div>

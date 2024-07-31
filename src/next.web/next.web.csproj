@@ -23,6 +23,9 @@
     </PropertyGroup>
   </Target>
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\base-menu.css" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\next.web.core\next.web.core.csproj" />
   </ItemGroup>
 </Project>

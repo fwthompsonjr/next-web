@@ -28,6 +28,29 @@ namespace next.web.core.services
             }
         }
 
+        protected static string DisplayMenuOptions(HtmlDocument doc, string fallback)
+        {
+            const string dnone = "d-none";
+            const string menuSelector = "//div[@id='app-side-menu']";
+            var node = doc.DocumentNode;
+            var body = node.SelectSingleNode(HtmlSelectors.BodyTag);
+            if (body == null) return fallback;
+            var nodeMenu = node.SelectSingleNode(menuSelector);
+            if (nodeMenu == null) return fallback;
+            var children = nodeMenu.SelectNodes("div");
+            if (children == null) return fallback;
+            var items = children.ToList();
+            items.ForEach(itm => {
+                var attr = itm.Attributes.FirstOrDefault(x => x.Name == "class");
+                if (attr != null)
+                {
+                    var cls = attr.Value.Trim().Split(' ').ToList();
+                    cls.RemoveAll(x => x == dnone);
+                    itm.Attributes["class"].Value = string.Join(" ", cls);
+                }
+            });
+            return node.OuterHtml;
+        }
 
         private static string CommonSubstition(string content)
         {
@@ -39,7 +62,33 @@ namespace next.web.core.services
             });
             return text.ToString();
         }
-
+        private static string AppendMenuHeadCss(HtmlDocument doc, string fallback)
+        {
+            const string menuHeadCss = "base-menu";
+            var node = doc.DocumentNode;
+            var head = node.SelectSingleNode(HtmlSelectors.HeadTag);
+            if (head == null) return fallback;
+            var find = HtmlSelectors.GetNamedStyleTag(menuHeadCss);
+            var block = head.SelectSingleNode(find);
+            if (block != null) return node.OuterHtml;
+            var current = head.InnerHtml;
+            var addition = string.Format(linkRelative, menuHeadCss);
+            current += (Environment.NewLine + addition);
+            head.InnerHtml = current;
+            return node.OuterHtml;
+        }
+        private static string AppendSideMenu(HtmlDocument doc, string fallback)
+        {
+            const string menuSelector = "//div[@id='app-side-menu']";
+            var node = doc.DocumentNode;
+            var body = node.SelectSingleNode(HtmlSelectors.BodyTag);
+            if (body == null) return fallback;
+            var element = body.SelectSingleNode(menuSelector);
+            if (element != null) return fallback;
+            var text = string.Concat(MenuContent, Environment.NewLine, body.InnerHtml);
+            body.InnerHtml = text;
+            return node.OuterHtml;
+        }
         private static string AppendHandlerJs(HtmlDocument doc, string fallback)
         {
             var node = doc.DocumentNode;
@@ -154,8 +203,10 @@ namespace next.web.core.services
                 content = CommonSubstition(content);
                 var doc = GetDocument(content);
                 if (doc == null) return content;
+                content = AppendSideMenu(doc, content);
                 content = AppendHandlerJs(doc, content);
                 content = ReplaceHeadCss(doc, content);
+                content = AppendMenuHeadCss(doc, content);
                 content = RemoveVerifyJs(doc, content);
                 content = RenameHomeCommonJs(doc, content);
                 content = ReplaceBodyJs(doc, content);
@@ -196,6 +247,10 @@ namespace next.web.core.services
             "function getDisplay( )",
             "function reloadContent()"
         ];
+
+        private static string? menuContent;
+        private static string GetMenuContent => Properties.Resources.base_menu;
+        private static string MenuContent => menuContent ??= GetMenuContent;
         private static readonly string linkRelative = "<link name=\"{0}\" href=\"/css/{0}.css\" rel=\"stylesheet\" />";
         private static readonly string scriptTag = "<script name=\"{0}\" src=\"/js/{0}.js\"></script>";
         private static readonly string jsHandlerTag = "<script name=\"handler_js\" src=\"/js/handler.js\"></script>";

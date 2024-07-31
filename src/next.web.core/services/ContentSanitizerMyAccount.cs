@@ -11,9 +11,9 @@ namespace next.web.core.services
             if (doc == null) return html;
             html = RenameCommonJs(doc, html);
             html = RenameValidationJs(doc, html);
+            html = DisplayMenuOptions(doc, html);
             return html;
         }
-
         private static string RenameCommonJs(HtmlDocument doc, string fallback)
         {
             const string nodeName = "home_common";
