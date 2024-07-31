@@ -18,6 +18,7 @@
     "isEnabled": true
   },
   "Initial_View": "introduction",
+  "Post_Login_Page": "/my-account/home",
   "app.meta": {
     "name": "Oxford Legal Lead",
     "prefix": "oxford.leads.web"

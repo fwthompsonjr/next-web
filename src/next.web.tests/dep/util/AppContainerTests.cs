@@ -18,6 +18,7 @@ namespace next.web.tests.dep.util
                 Assert.False(string.IsNullOrWhiteSpace(AppContainer.PaymentSessionKey));
                 Assert.False(string.IsNullOrWhiteSpace(AppContainer.PermissionApiBase));
                 Assert.False(string.IsNullOrWhiteSpace(AppContainer.InitialViewName));
+                Assert.False(string.IsNullOrWhiteSpace(AppContainer.PostLoginPage));
             });
             Assert.Null(error);
         }

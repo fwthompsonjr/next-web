@@ -24,7 +24,7 @@ namespace next.web.core.services
                 response.MapResponse(appsubmission);
                 if (response.StatusCode != 200) return response;
                 response.Message = "Login completed";
-                response.RedirectTo = "/my-account/home";
+                response.RedirectTo = AppContainer.PostLoginPage ?? "/my-acount/home";
                 return response;
             }
             catch (Exception ex)
@@ -48,7 +48,7 @@ namespace next.web.core.services
                 response.MapResponse(appsubmission);
                 if (response.StatusCode != 200) return response;
                 response.Message = "Login completed";
-                response.RedirectTo = "/my-account/home";
+                response.RedirectTo = AppContainer.PostLoginPage ?? "/my-acount/home";
                 var token = appsubmission.Message.ToInstance<AccessTokenBo>();
                 var app = user.Applications[0];
                 var userbo = new UserContextBo

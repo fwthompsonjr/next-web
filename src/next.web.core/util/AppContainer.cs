@@ -18,6 +18,7 @@ namespace next.web.core.util
         public static string? PaymentSessionKey { get; private set; }
         public static string? PermissionApiBase { get; private set; }
         public static string? InitialViewName { get; private set; }
+        public static string? PostLoginPage { get; private set; }
         private static IServiceProvider? WebServices { get; set; }
         public static void Build(IServiceProvider? webServices = null)
         {
@@ -40,6 +41,10 @@ namespace next.web.core.util
                 if (string.IsNullOrEmpty(InitialViewName))
                 {
                     InitialViewName = Configuration["Initial_View"] ?? "introduction";
+                }
+                if (string.IsNullOrEmpty(PostLoginPage))
+                {
+                    PostLoginPage = Configuration["Post_Login_Page"] ?? "/my-account/home";
                 }
                 if (ServiceProvider == null)
                 {
