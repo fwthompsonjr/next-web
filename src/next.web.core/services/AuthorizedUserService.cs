@@ -20,9 +20,8 @@ namespace next.web.core.services
         {
             get
             {
-                if (!IsAuthenicated()) return new();
                 var data = Retrieve(SessionKeyNames.UserBo);
-                if (string.IsNullOrWhiteSpace(data)) return null;
+                if (string.IsNullOrWhiteSpace(data)) return GetUser();
                 return data.ToInstance<UserBo>();
             }
         }
@@ -36,16 +35,22 @@ namespace next.web.core.services
 
         public string? Retrieve(string keyName)
         {
-            if (!IsAuthenicated()) return null;
             var session = _contextAccessor?.HttpContext.Session;
             if (session == null) return null;
             if (!session.TryGetValue(keyName, out var value)) return null;
             return Encoding.UTF8.GetString(value);
         }
 
-        private bool IsAuthenicated()
+        private static UserBo GetUser()
         {
-            return _contextAccessor?.HttpContext.User.Identity?.IsAuthenticated ?? false;
+            var apps = new List<ApiContext>
+                    {
+                        new(){ Id = "d6450506-3479-4c02-92c7-de59f6e7091e", Name = "legallead.permissions.api" }
+                    }.ToArray();
+            return new()
+            {
+                Applications = apps
+            };
         }
     }
 }

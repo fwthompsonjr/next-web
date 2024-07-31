@@ -14,6 +14,7 @@ let theHandler = {
             case "form-login":
                 if (setIconState) { setIconState(0, false); }
                 if (setStatusMessage) { setStatusMessage(0, '', false); }
+                if (loginCompletedAction) { loginCompletedAction(); }
                 break;
             default:
         }
@@ -41,9 +42,9 @@ let theHandler = {
 let theResponder = {
     "handle": function (data) {
         const current = theResponder.translate(data);
+        let hostname = document.location.protocol + '//' + document.location.host;
         if (current.statusCode == 200 && current.redirectTo.length > 0) {
-            window.document.location = current.redirectTo;
-            // return;
+            window.document.location = hostname + current.redirectTo;
         }
     },
     "translate": function (json) {
@@ -53,9 +54,9 @@ let theResponder = {
             "redirectTo": "/home"
         };
         if (undefined == json || null == json) return rsp;
-        if (!isNaN(json.StatusCode)) { rsp.statusCode = parseInt(json.StatusCode); }
-        if (null !== json.Message) { rsp.message = String(json.Message); }
-        if (null !== json.RedirectTo) { rsp.redirectTo = String(json.RedirectTo); }
+        if (!isNaN(json.statusCode)) { rsp.statusCode = parseInt(json.statusCode); }
+        if (null !== json.message) { rsp.message = String(json.message); }
+        if (null !== json.redirectTo) { rsp.redirectTo = String(json.redirectTo); }
         return rsp;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using legallead.desktop.interfaces;
 using legallead.desktop.utilities;
+using Microsoft.Extensions.DependencyInjection;
 using next.web.core.interfaces;
 using next.web.core.util;
 
@@ -63,6 +64,21 @@ namespace next.web.tests.dep.util
                 AppContainer.Build();
                 var actual = AppContainer.GetSanitizer(name);
                 Assert.NotNull(actual);
+            });
+            Assert.Null(error);
+        }
+        [Theory]
+        [InlineData("form-login", true)]
+        [InlineData("blank")]
+        [InlineData("not-mapped")]
+        public void ContainerCanGetJsHandler(string name, bool expected = false)
+        {
+            var error = Record.Exception(() =>
+            {
+                AppContainer.Build();
+                var actual = AppContainer.ServiceProvider?.GetKeyedService<IJsHandler>(name);
+                var isFound = actual != null;
+                Assert.Equal(expected, isFound);
             });
             Assert.Null(error);
         }

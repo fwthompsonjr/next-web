@@ -1,4 +1,5 @@
-﻿using next.web.core.models;
+﻿using Microsoft.AspNetCore.Http;
+using next.web.core.models;
 using next.web.core.reponses;
 
 namespace next.web.core.interfaces
@@ -7,6 +8,7 @@ namespace next.web.core.interfaces
     {
         string Name { get; }
 
-        FormSubmissionResponse Submit(FormSubmissionModel model);
+        Task<FormSubmissionResponse> Submit(FormSubmissionModel model);
+        Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session);
     }
 }
