@@ -2,11 +2,10 @@
 
 namespace next.web.Controllers
 {
-    [Route("/my-account")]
-    public class AccountController : BaseController
+    [Route("/correspondence")]
+    public class MailController : BaseController
     {
         [HttpGet]
-        [Route("home")]
         public async Task<IActionResult> Index()
         {
             var session = HttpContext.Session;
@@ -16,20 +15,6 @@ namespace next.web.Controllers
                 ContentType = "text/html",
                 Content = content
             };
-        }
-
-        [HttpGet]
-        [Route("profile")]
-        public async Task<IActionResult> Profile()
-        {
-            return await Index();
-        }
-
-        [HttpGet]
-        [Route("permissions")]
-        public async Task<IActionResult> Permissions()
-        {
-            return await Index();
         }
     }
 }

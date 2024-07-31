@@ -8,23 +8,62 @@
 		</a>
 	</div>
 	<div data-position-index="10" name="left-menu-account" class="row d-none">
-		<a href="/home">
+		<a href="my-account/home">
 			<i class="bi bi-person" title="My Account"></i>
 		</a>
 	</div>
 	<div data-position-index="20" name="left-menu-account" class="row d-none">
-		<a href="/my-acoount/home">
+		<a href="/search">
 			<i class="bi bi-binoculars" title="Search"></i>
 		</a>
 	</div>
 	<div data-position-index="30" name="left-menu-account" class="row d-none">
-		<a href="/home">
+		<a href="/correspondence">
 			<i class="bi bi-mailbox" title="Messages"></i>
 		</a>
 	</div>
 	<div data-position-index="100" name="left-menu-exit" class="row">
-		<a href="/home">
+		<a href="/logout">
 			<i class="bi bi-box-arrow-left" title="Exit"></i>
+		</a>
+	</div>
+</div>
+<div id="my-account-options" name="app-sub-menu" class="d-none">
+	<div class="row">
+		<a href="/my-account/home">
+			<i class="bi bi-person" title="Account"></i>
+		</a>
+	</div>
+	<div class="row">
+		<a href="/my-account/profile">
+			<i class="bi bi-person-gear" title="Profile"></i>
+		</a>
+	</div>
+	<div class="row">
+		<a href="/my-account/permissions">
+			<i class="bi bi-person-lock" title="Permissions"></i>
+		</a>
+	</div>
+</div>
+<div id="my-search-options" name="app-sub-menu" class="d-none">
+	<div class="row">
+		<a href="/search">
+			<i class="bi bi-search" title="Search"></i>
+		</a>
+	</div>
+	<div class="row">
+		<a href="/search/active">
+			<i class="bi bi-search-heart" title="Active Searches"></i>
+		</a>
+	</div>
+	<div class="row">
+		<a href="/search/purchases">
+			<i class="bi bi-receipt" title="Purchases"></i>
+		</a>
+	</div>
+	<div class="row">
+		<a href="/search/history">
+			<i class="bi bi-clock-history" title="History"></i>
 		</a>
 	</div>
 </div>

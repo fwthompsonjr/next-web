@@ -2,11 +2,10 @@
 
 namespace next.web.Controllers
 {
-    [Route("/my-account")]
-    public class AccountController : BaseController
+    [Route("/search")]
+    public class SearchController : BaseController
     {
         [HttpGet]
-        [Route("home")]
         public async Task<IActionResult> Index()
         {
             var session = HttpContext.Session;
@@ -19,15 +18,23 @@ namespace next.web.Controllers
         }
 
         [HttpGet]
-        [Route("profile")]
-        public async Task<IActionResult> Profile()
+        [Route("active")]
+        public async Task<IActionResult> Active()
         {
             return await Index();
         }
 
         [HttpGet]
-        [Route("permissions")]
-        public async Task<IActionResult> Permissions()
+        [Route("purchases")]
+        public async Task<IActionResult> Purchases()
+        {
+            return await Index();
+        }
+
+
+        [HttpGet]
+        [Route("history")]
+        public async Task<IActionResult> History()
         {
             return await Index();
         }

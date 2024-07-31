@@ -11,6 +11,7 @@ namespace next.web.core.services
             if (doc == null) return html;
             html = RenameCommonJs(doc, html);
             html = RenameValidationJs(doc, html);
+            html = RenameSubContentCss(doc, html);
             html = DisplayMenuOptions(doc, html);
             return html;
         }
@@ -55,6 +56,16 @@ namespace next.web.core.services
             hbody = hbody.Replace(commentLine, "");
             hbody += (Environment.NewLine + newScript);
             body.InnerHtml = hbody;
+            return node.OuterHtml;
+        }
+        private static string RenameSubContentCss(HtmlDocument doc, string fallback)
+        {
+            const string validationName = "subcontent-css";
+            var node = doc.DocumentNode;
+            var find = $"//link[@name='{validationName}']";
+            var acctnode = node.SelectSingleNode(find);
+            if (acctnode == null) return fallback;
+            acctnode.Attributes["href"].Value = "/css/subcontent-myaccount-css.css";
             return node.OuterHtml;
         }
         private static bool IsJsValidationExclusion(string? jscript)
