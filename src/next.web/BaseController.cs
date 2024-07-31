@@ -35,6 +35,14 @@ namespace next.web
             }
             return RemoveHeaderDuplicate(content);
         }
+        internal static bool IsSessionAuthenicated(ISession? session)
+        {
+            var user = GetUserToken(session);
+            if (user == null) return false;
+            var isValid = !string.IsNullOrEmpty(user.UserName);
+            if (isValid) isValid &= user.IsAuthenicated;
+            return isValid;
+        }
 
         protected static string GetPageOrDefault(string pageName)
         {

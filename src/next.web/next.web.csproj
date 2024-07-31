@@ -26,6 +26,9 @@
     <_ContentIncludedByDefault Remove="wwwroot\css\base-menu.css" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\next.web.core\next.web.core.csproj" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,25 @@
 let theHandler = {
-    "checkSession": function () { },
+    "checkSession": function () {
+        const landing = "/data/session-check";
+        const sls = '/';
+        let pth = document.location.pathname;
+        if (pth.startsWith(sls)) { pth = pth.substring(1); }
+        const loc = pth.split(loc)[0];
+        let dta = { id: 10, location: loc };
+        const requested = {
+            "formName": "check-session",
+            "payload": JSON.stringify(dta)
+        };
+        $.ajax({
+            type: "POST",
+            url: landing,
+            data: JSON.stringify(requested),
+            dataType: "json",
+            success: function (resultData) {
+                theResponder.handle(resultData);
+            }
+        });
+    },
     "pre_submit": function (formName) {
         switch (formName) {
             case "form-login":
@@ -43,8 +63,10 @@ let theResponder = {
     "handle": function (data) {
         const current = theResponder.translate(data);
         let hostname = document.location.protocol + '//' + document.location.host;
-        if (current.statusCode == 200 && current.redirectTo.length > 0) {
-            window.document.location = hostname + current.redirectTo;
+        let navigationPage = hostname + current.redirectTo;
+        if (current.statusCode == 200 && current.redirectTo.length > 0 ||
+            current.statusCode == 408 && current.redirectTo.length > 0) {
+            window.document.location = navigationPage;
         }
     },
     "translate": function (json) {
@@ -60,5 +82,26 @@ let theResponder = {
         return rsp;
     }
 }
-
+let theMenu = {
+    "config": {
+        parents: ["#my-account-parent-option", "#my-search-parent-option"],
+        children: ["#my-account-options", "#my-search-options"]
+    },
+    "show_child": function (index) {
+        const dnone = "d-none";
+        const selected = "menu-selected";
+        const idx = parseInt(index);
+        if (isNaN(idx) || idx < 0 || idx > 1) { return; }
+        theMenu.config.parents.forEach(c => $(c).removeClass(selected));
+        const childElement = theMenu.config.children[idx];
+        if ($(childElement).is(":visible")) {
+            $(childElement).addClass(dnone);
+            return;
+        }
+        const parent = theMenu.config.parents[idx];
+        theMenu.config.children.forEach(c => $(c).addClass(dnone));
+        $(childElement).removeClass(dnone);
+        $(parent).addClass(selected);
+    }
+}
 window.jsHandler = theHandler;

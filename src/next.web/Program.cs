@@ -23,9 +23,7 @@ namespace next.web
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(5);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var app = builder.Build();
