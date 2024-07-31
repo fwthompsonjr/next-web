@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace next.web.Controllers
 {
@@ -7,6 +8,7 @@ namespace next.web.Controllers
     {
         [HttpGet]
         [Route("home")]
+        [OutputCache(Duration = 10)]
         public async Task<IActionResult> Index()
         {
             var session = HttpContext.Session;
@@ -20,6 +22,7 @@ namespace next.web.Controllers
 
         [HttpGet]
         [Route("profile")]
+        [OutputCache(Duration = 10)]
         public async Task<IActionResult> Profile()
         {
             return await Index();
@@ -27,6 +30,7 @@ namespace next.web.Controllers
 
         [HttpGet]
         [Route("permissions")]
+        [OutputCache(Duration = 10)]
         public async Task<IActionResult> Permissions()
         {
             return await Index();

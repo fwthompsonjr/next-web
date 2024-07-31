@@ -21,7 +21,7 @@ namespace next.web
                 if (isValid) isValid &= user.IsAuthenicated;
             }
             var newName = isValid ? pageName : "home";
-            var content = GetPageOrDefault(newName);
+            var content = RemoveHeaderDuplicate(GetPageOrDefault(newName));
             if (!isValid) return content;
             var provider = AppContainer.ServiceProvider;
             var api = provider?.GetService<IPermissionApi>();
@@ -33,7 +33,7 @@ namespace next.web
                 content = await user.MapProfileResponse(api, profiles, content);
                 content = await user.MapPermissionsResponse(api, permissions, content);
             }
-            return content;
+            return RemoveHeaderDuplicate(content);
         }
 
         protected static string GetPageOrDefault(string pageName)
@@ -70,5 +70,15 @@ namespace next.web
             return content.Content;
         }
 
+        private static string RemoveHeaderDuplicate(string content)
+        {
+            const string find = "Oxford Oxford";
+            const string replace = "Oxford";
+            while (content.Contains(find))
+            {
+                content = content.Replace(find, replace);
+            }
+            return content;
+        }
     }
 }

@@ -8,7 +8,7 @@
 		</a>
 	</div>
 	<div data-position-index="10" name="left-menu-account" class="row d-none">
-		<a href="my-account/home">
+		<a href="/my-account/home">
 			<i class="bi bi-person" title="My Account"></i>
 		</a>
 	</div>

@@ -1,8 +1,6 @@
-﻿using AngleSharp.Common;
-using legallead.desktop.entities;
+﻿using legallead.desktop.entities;
 using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using next.web.core.models;
 using next.web.core.util;

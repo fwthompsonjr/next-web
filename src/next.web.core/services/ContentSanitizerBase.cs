@@ -40,7 +40,8 @@ namespace next.web.core.services
             var children = nodeMenu.SelectNodes("div");
             if (children == null) return fallback;
             var items = children.ToList();
-            items.ForEach(itm => {
+            items.ForEach(itm =>
+            {
                 var attr = itm.Attributes.FirstOrDefault(x => x.Name == "class");
                 if (attr != null)
                 {
