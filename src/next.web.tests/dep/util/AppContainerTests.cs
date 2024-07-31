@@ -23,7 +23,6 @@ namespace next.web.tests.dep.util
         }
         [Theory]
         [InlineData(typeof(IPermissionApi))]
-        [InlineData(typeof(IAuthorizedUserService))]
         [InlineData(typeof(ISearchBuilder))]
         [InlineData(typeof(IContentParser))]
         [InlineData(typeof(IErrorContentProvider))]
@@ -67,6 +66,7 @@ namespace next.web.tests.dep.util
             });
             Assert.Null(error);
         }
+
         [Theory]
         [InlineData("form-login", true)]
         [InlineData("blank")]

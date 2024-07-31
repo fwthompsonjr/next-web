@@ -98,11 +98,6 @@ namespace next.web.core.util
                 return new SearchBuilder(api);
             });
             if (provider == null) return;
-            services.AddSingleton<IAuthorizedUserService>(s =>
-            {
-                var http = GetAccessor();
-                return new AuthorizedUserService(http);
-            });
             services.AddTransient(s => provider.GetRequiredService<IContentParser>());
             services.AddSingleton(s => provider.GetRequiredService<IInternetStatus>());
             services.AddSingleton(s => provider.GetRequiredService<IErrorContentProvider>());

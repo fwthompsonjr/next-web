@@ -29,4 +29,8 @@
 		<ProjectReference Include="..\next.web\next.web.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="dep\svc\" />
+	</ItemGroup>
+
 </Project>

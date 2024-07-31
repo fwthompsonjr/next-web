@@ -1,5 +1,4 @@
-﻿using AngleSharp.Io;
-using legallead.desktop.entities;
+﻿using legallead.desktop.entities;
 using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
 using next.web.core.extensions;
@@ -7,23 +6,13 @@ using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.reponses;
 using next.web.core.util;
-using System.Runtime.InteropServices.Marshalling;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace next.web.core.services
 {
-    internal class JsAuthenicateHandler : IJsHandler
+    internal class JsAuthenicateHandler(IPermissionApi api) : IJsHandler
     {
-        private readonly IAuthorizedUserService _service;
-        private readonly IPermissionApi _api;
+        private readonly IPermissionApi _api = api;
 
-        public JsAuthenicateHandler(
-            IAuthorizedUserService service,
-            IPermissionApi api)
-        {
-            _service = service;
-            _api = api;
-        }
         public string Name => "form-login";
         public async virtual Task<FormSubmissionResponse> Submit(FormSubmissionModel model)
         {
@@ -52,9 +41,9 @@ namespace next.web.core.services
             try
             {
                 const string failureMessage = "Unable to parse form submission data.";
-                var user = _service.Current;
+                var user = GetUser();
                 var data = (model.Payload ?? string.Empty).ToInstance<FormLoginModel>();
-                if (user == null || data == null || user.Applications == null || user.Applications.Length == 0) return response;
+                if (data == null || user.Applications == null || user.Applications.Length == 0) return response;
                 var appsubmission = await Submit(model, failureMessage);
                 response.MapResponse(appsubmission);
                 if (response.StatusCode != 200) return response;
@@ -72,7 +61,7 @@ namespace next.web.core.services
                     Expires = token?.Expires
                 };
                 userbo.Save(session);
-                
+
                 return response;
             }
             catch (Exception ex)
@@ -85,12 +74,11 @@ namespace next.web.core.services
 
         private async Task<ApiResponse> Submit(FormSubmissionModel model, string failureMessage)
         {
-            var user = _service.Current;
+            var user = GetUser();
             var formName = model.FormName ?? string.Empty;
             var failed = new ApiResponse { StatusCode = 402, Message = failureMessage };
             var matchedName = HomeFormNames.Find(x => x.Equals(formName, StringComparison.OrdinalIgnoreCase));
             if (string.IsNullOrWhiteSpace(matchedName)) return failed;
-            if (user == null) return failed;
             var data = (model.Payload ?? string.Empty).ToInstance<FormLoginModel>();
             if (data == null) return failed;
             var obj = new { data.UserName, data.Password };
@@ -99,5 +87,16 @@ namespace next.web.core.services
         }
 
         internal static readonly List<string> HomeFormNames = ["form-login", "form-register"];
+        private static UserBo GetUser()
+        {
+            var apps = new List<ApiContext>
+                    {
+                        new(){ Id = "d6450506-3479-4c02-92c7-de59f6e7091e", Name = "legallead.permissions.api" }
+                    }.ToArray();
+            return new()
+            {
+                Applications = apps
+            };
+        }
     }
 }
