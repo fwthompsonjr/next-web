@@ -7,10 +7,10 @@ namespace next.web.Controllers
     {
         [HttpGet]
         [Route("home")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var session = HttpContext.Session;
-            var content = GetAuthenicatedPage(session, "myaccount");
+            var content = await GetAuthenicatedPage(session, "myaccount");
             return new ContentResult
             {
                 ContentType = "text/html",

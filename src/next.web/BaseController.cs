@@ -1,4 +1,5 @@
 ﻿using legallead.desktop.entities;
+using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.models;
@@ -10,7 +11,7 @@ namespace next.web
     public abstract class BaseController : Controller
     {
 
-        internal static string GetAuthenicatedPage(ISession? session, string pageName)
+        internal static async Task<string> GetAuthenicatedPage(ISession? session, string pageName)
         {
             var isValid = HasUserToken(session);
             var user = GetUserToken(session);
@@ -20,7 +21,19 @@ namespace next.web
                 if (isValid) isValid &= user.IsAuthenicated;
             }
             var newName = isValid ? pageName : "home";
-            return GetPageOrDefault(newName);
+            var content = GetPageOrDefault(newName);
+            if (!isValid) return content;
+            var provider = AppContainer.ServiceProvider;
+            var api = provider?.GetService<IPermissionApi>();
+            var profiles = provider?.GetService<IUserProfileMapper>();
+            var permissions = provider?.GetService<IUserPermissionsMapper>();
+            if (api == null || user == null || profiles == null || permissions == null) return content;
+            if (newName.StartsWith("myaccount"))
+            {
+                content = await user.MapProfileResponse(api, profiles, content);
+                content = await user.MapPermissionsResponse(api, permissions, content);
+            }
+            return content;
         }
 
         protected static string GetPageOrDefault(string pageName)
