@@ -113,6 +113,7 @@ namespace next.web.core.util
             services.AddSingleton(s => provider.GetRequiredService<CommonMessageList>());
             services.AddSingleton(s => provider.GetRequiredService<IHistoryPersistence>());
             services.AddKeyedSingleton("default", defaultSanitizer);
+            services.AddKeyedSingleton<IContentSanitizer>("myaccount", new ContentSanitizerMyAccount());
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
         }
         private static readonly object locker = new();
