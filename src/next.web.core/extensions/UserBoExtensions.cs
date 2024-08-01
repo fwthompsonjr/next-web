@@ -17,6 +17,16 @@ namespace next.web.core.extensions
             if (exists) { session.Remove(SessionKeyNames.UserBo); }
             session.Set(SessionKeyNames.UserBo, Encoding.UTF8.GetBytes(json));
         }
+
+        public static UserBo? GetUser(this ISession session)
+        {
+            var exists = session.TryGetValue(SessionKeyNames.UserBo, out var user);
+            if (!exists) { return null; }
+            var data = Encoding.UTF8.GetString(user);
+            var bo = data.ToInstance<UserContextBo>();
+            return bo?.ToUserBo();
+        }
+
         public static async Task<string> GetUserId(this UserBo user, IPermissionApi api)
         {
             const string landing = "get-contact-index";
