@@ -61,11 +61,18 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div name=&quot;left-menu&quot;&gt;
-        ///	&lt;div name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
+        ///   Looks up a localized string similar to &lt;div id=&quot;app-side-menu&quot; name=&quot;left-menu&quot;&gt;
+        ///	&lt;div data-position-index=&quot;0&quot; name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
         ///		&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
         ///	&lt;/div&gt;
-        ///&lt;/div&gt;.
+        ///	&lt;div data-position-index=&quot;1&quot; name=&quot;left-menu-home&quot; class=&quot;row&quot;&gt;
+        ///		&lt;a href=&quot;/home&quot;&gt;
+        ///			&lt;i class=&quot;bi bi-house&quot; title=&quot;Home&quot;&gt;&lt;/i&gt;
+        ///		&lt;/a&gt;
+        ///	&lt;/div&gt;
+        ///	&lt;div id=&quot;my-account-parent-option&quot; data-position-index=&quot;10&quot; name=&quot;left-menu-account&quot; class=&quot;row d-none&quot;&gt;
+        ///		&lt;a href=&quot;javascript:void(0);&quot; onclick=&quot;javascript:theMenu.show_child(0);&quot;&gt;
+        ///			&lt;i class=&quot;bi bi-person [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string base_menu {
             get {
@@ -91,6 +98,22 @@ namespace next.web.core.Properties {
         internal static string core_configuration {
             get {
                 return ResourceManager.GetString("core_configuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div id=&quot;dv-main-content&quot; name=&quot;main-content&quot; style=&quot;margin-top: 20px;&quot;&gt;
+        ///	&lt;div class=&quot;card&quot;&gt;
+        ///		&lt;div class=&quot;card-body&quot;&gt;
+        ///			&lt;h5 class=&quot;card-title&quot;&gt;Logout&lt;/h5&gt;
+        ///			&lt;p&gt;You have been successfully logged out of application.&lt;/p&gt;
+        ///		&lt;/div&gt;
+        ///	&lt;/div&gt;	
+        ///&lt;/div&gt;.
+        /// </summary>
+        internal static string logout_page {
+            get {
+                return ResourceManager.GetString("logout_page", resourceCulture);
             }
         }
     }

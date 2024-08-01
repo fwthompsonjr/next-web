@@ -53,6 +53,27 @@ namespace next.web.core.services
             return node.OuterHtml;
         }
 
+        protected static string RemoveMenuOptions(HtmlDocument doc, string fallback)
+        {
+            const string menuSelector = "//div[@id='app-side-menu']";
+            const string childSelector = "//div[@name='app-sub-menu']";
+            var node = doc.DocumentNode;
+            var body = node.SelectSingleNode(HtmlSelectors.BodyTag);
+            if (body == null) return fallback;
+            var nodeMenu = node.SelectSingleNode(menuSelector);
+            if (nodeMenu != null)
+            {
+                nodeMenu.ParentNode.RemoveChild(nodeMenu);
+            }
+            var items = node.SelectNodes(childSelector)?.ToList();
+            if (items == null) return node.OuterHtml;
+            items.ForEach(itm =>
+            {
+                itm.ParentNode.RemoveChild(itm);
+            });
+            return node.OuterHtml;
+        }
+
         private static string CommonSubstition(string content)
         {
             var text = new StringBuilder(content);

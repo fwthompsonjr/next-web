@@ -124,4 +124,7 @@
   <data name="core_configuration" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\core_configuration.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="logout_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\logout_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

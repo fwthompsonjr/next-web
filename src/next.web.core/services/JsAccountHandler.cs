@@ -39,11 +39,10 @@ namespace next.web.core.services
             var payload = model.Payload ?? string.Empty;
             var failed = new ApiResponse { StatusCode = 402, Message = failureMessage };
             if (!IsFormNameValid(formName) || string.IsNullOrEmpty(payload)) return failed;
-            IJsAccountHandler handler = formName switch
+            var isPermissions = AppContainer.PermissionForms.Contains(formName, StringComparer.OrdinalIgnoreCase);
+            IJsAccountHandler handler = isPermissions switch
             {
-                "permissions-subscription-group" => new JsPermissionChange(_api, user),
-                "permissions-discounts" => new JsPermissionChange(_api, user),
-                "form-change-password" => new JsPermissionChange(_api, user),
+                true => new JsPermissionChange(_api, user),
                 _ => new JsProfileChange(_api, user, formName),
             };
             var resp = await handler.Submit(payload, failureMessage);

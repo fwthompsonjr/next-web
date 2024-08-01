@@ -118,6 +118,8 @@ namespace next.web.core.util
             services.AddSingleton(s => provider.GetRequiredService<CommonMessageList>());
             services.AddSingleton(s => provider.GetRequiredService<IHistoryPersistence>());
             services.AddKeyedSingleton("default", defaultSanitizer);
+            services.AddKeyedSingleton<IContentSanitizer>("home", new ContentSanitizerHome());
+            services.AddKeyedSingleton<IContentSanitizer>("logout", new ContentSanitizerLogout());
             services.AddKeyedSingleton<IContentSanitizer>("myaccount", new ContentSanitizerMyAccount());
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
             var accounts = new List<string>();
