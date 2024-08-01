@@ -15,5 +15,16 @@ namespace next.web.core.extensions
                 return default;
             }
         }
+        public static object? ToInstance(this string str, Type type)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject(str, type);
+            }
+            catch
+            {
+                return default;
+            }
+        }
     }
 }

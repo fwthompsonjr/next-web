@@ -15,7 +15,7 @@ namespace next.web.Controllers
         {
             provider = AppContainer.ServiceProvider;
         }
-        
+
         [HttpPost("session-check")]
         public IActionResult Check(FormSubmissionModel model)
         {
@@ -26,7 +26,7 @@ namespace next.web.Controllers
             var location = model.Payload.ToInstance<FormLocationModel>();
             if (location == null || !securepg.Contains(location.Location, StringComparer.OrdinalIgnoreCase)) return BadRequest();
 
-            var authenicated = IsSessionAuthenicated(HttpContext.Session);            
+            var authenicated = IsSessionAuthenicated(HttpContext.Session);
             response.StatusCode = authenicated ? 200 : 408;
             response.Message = authenicated ? "Session authorized" : "Error session invalid";
             response.RedirectTo = authenicated ? "" : "/home";

@@ -120,6 +120,14 @@ namespace next.web.core.util
             services.AddKeyedSingleton("default", defaultSanitizer);
             services.AddKeyedSingleton<IContentSanitizer>("myaccount", new ContentSanitizerMyAccount());
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
+            var accounts = new List<string>();
+            accounts.AddRange(ProfileForms);
+            accounts.AddRange(PermissionForms);
+            accounts.ForEach(acct =>
+            {
+                services.AddKeyedSingleton<IJsHandler, JsAccountHandler>(acct);
+            });
+
         }
         private static readonly object locker = new();
         private static readonly string[] sourceArray = [
@@ -128,5 +136,28 @@ namespace next.web.core.util
             "api.permissions:remote",
             "api.permissions:local"];
         private static readonly IContentSanitizer defaultSanitizer = new ContentSanitizerBase();
+        public static readonly List<string> ProfileForms =
+        [
+            "frm-profile-personal",
+            "frm-profile-address",
+            "frm-profile-phone",
+            "frm-profile-email"
+        ];
+        public static readonly List<string> PermissionForms =
+        [
+            "permissions-subscription-group",
+            "permissions-discounts",
+            "form-change-password"
+        ];
+        public static readonly Dictionary<string, string> AddressMap = new()
+        {
+            { "frm-profile-personal", "profile-edit-contact-name" },
+            { "frm-profile-address", "profile-edit-contact-address" },
+            { "frm-profile-phone", "profile-edit-contact-phone" },
+            { "frm-profile-email", "profile-edit-contact-email" },
+            { "Changes", "permissions-change-password" },
+            { "Discounts", "permissions-set-discount" },
+            { "Subscription", "permissions-set-permission" }
+        };
     }
 }

@@ -70,6 +70,7 @@ namespace next.web.tests.dep.util
 
         [Theory]
         [InlineData("form-login", true)]
+        [InlineData("permissions-subscription-group", true)]
         [InlineData("blank")]
         [InlineData("not-mapped")]
         public void ContainerCanGetJsHandler(string name, bool expected = false)
