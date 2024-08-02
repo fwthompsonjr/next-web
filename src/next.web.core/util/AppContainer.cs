@@ -18,12 +18,11 @@ namespace next.web.core.util
         public static string? PaymentSessionKey { get; private set; }
         public static string? PermissionApiBase { get; private set; }
         public static string? InitialViewName { get; private set; }
-        private static IServiceProvider? WebServices { get; set; }
-        public static void Build(IServiceProvider? webServices = null)
+        public static string? PostLoginPage { get; private set; }
+        public static void Build()
         {
             lock (locker)
             {
-                WebServices ??= webServices;
                 if (Configuration == null)
                 {
                     var builder = new CoreConfigurationModel();
@@ -41,6 +40,10 @@ namespace next.web.core.util
                 {
                     InitialViewName = Configuration["Initial_View"] ?? "introduction";
                 }
+                if (string.IsNullOrEmpty(PostLoginPage))
+                {
+                    PostLoginPage = Configuration["Post_Login_Page"] ?? "/my-account/home";
+                }
                 if (ServiceProvider == null)
                 {
                     var serviceCollection = new ServiceCollection();
@@ -55,10 +58,14 @@ namespace next.web.core.util
             var svc = ServiceProvider?.GetKeyedService<IContentSanitizer>(name) ?? defaultSanitizer;
             return svc;
         }
-        internal static IHttpContextAccessor? GetAccessor()
+
+        internal static IDocumentView? GetDocumentView(string name)
         {
-            return WebServices?.GetService<HttpContextAccessor>();
+            if (ServiceProvider == null) Build();
+            var svc = ServiceProvider?.GetKeyedService<IDocumentView>(name);
+            return svc;
         }
+
         private static string GetPermissionApi(IConfiguration configuration)
         {
             var keys = sourceArray.ToList();
@@ -112,9 +119,26 @@ namespace next.web.core.util
             services.AddSingleton(s => provider.GetRequiredService<IUserMailboxMapper>());
             services.AddSingleton(s => provider.GetRequiredService<CommonMessageList>());
             services.AddSingleton(s => provider.GetRequiredService<IHistoryPersistence>());
+            // content view selectors
+            services.AddKeyedSingleton<IDocumentView>("account-home", new DocumentViewAccount());
+            services.AddKeyedSingleton<IDocumentView>("account-profile", new DocumentViewProfile());
+            services.AddKeyedSingleton<IDocumentView>("account-permissions", new DocumentViewPermissions());
+
+            // content formatters
             services.AddKeyedSingleton("default", defaultSanitizer);
+            services.AddKeyedSingleton<IContentSanitizer>("post-login", new ContentSanitizerHome());
+            services.AddKeyedSingleton<IContentSanitizer>("logout", new ContentSanitizerLogout());
             services.AddKeyedSingleton<IContentSanitizer>("myaccount", new ContentSanitizerMyAccount());
+            // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
+            var accounts = new List<string>();
+            accounts.AddRange(ProfileForms);
+            accounts.AddRange(PermissionForms);
+            accounts.ForEach(acct =>
+            {
+                services.AddKeyedSingleton<IJsHandler, JsAccountHandler>(acct);
+            });
+
         }
         private static readonly object locker = new();
         private static readonly string[] sourceArray = [
@@ -123,5 +147,28 @@ namespace next.web.core.util
             "api.permissions:remote",
             "api.permissions:local"];
         private static readonly IContentSanitizer defaultSanitizer = new ContentSanitizerBase();
+        public static readonly List<string> ProfileForms =
+        [
+            "frm-profile-personal",
+            "frm-profile-address",
+            "frm-profile-phone",
+            "frm-profile-email"
+        ];
+        public static readonly List<string> PermissionForms =
+        [
+            "permissions-subscription-group",
+            "permissions-discounts",
+            "form-change-password"
+        ];
+        public static readonly Dictionary<string, string> AddressMap = new()
+        {
+            { "frm-profile-personal", "profile-edit-contact-name" },
+            { "frm-profile-address", "profile-edit-contact-address" },
+            { "frm-profile-phone", "profile-edit-contact-phone" },
+            { "frm-profile-email", "profile-edit-contact-email" },
+            { "Changes", "permissions-change-password" },
+            { "Discounts", "permissions-set-discount" },
+            { "Subscription", "permissions-set-permission" }
+        };
     }
 }

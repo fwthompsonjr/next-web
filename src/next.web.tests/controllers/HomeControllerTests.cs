@@ -15,6 +15,7 @@ namespace next.web.tests.controllers
         [InlineData("home")]
         [InlineData("error")]
         [InlineData("privacy")]
+        [InlineData("logout")]
         public void ControllerCanGetContent(string landing)
         {
             var error = Record.Exception(() =>
@@ -25,6 +26,7 @@ namespace next.web.tests.controllers
                     "home" => sut.Index(),
                     "privacy" => sut.Privacy(),
                     "error" => sut.Error(),
+                    "logout" => sut.Logout(),
                     _ => null
                 };
                 Assert.NotNull(result);

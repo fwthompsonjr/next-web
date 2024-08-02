@@ -11,9 +11,9 @@ namespace next.web.core.services
 {
     internal class JsAuthenicateHandler(IPermissionApi api) : IJsHandler
     {
-        private readonly IPermissionApi _api = api;
+        protected readonly IPermissionApi _api = api;
 
-        public string Name => "form-login";
+        public virtual string Name => "form-login";
         public async virtual Task<FormSubmissionResponse> Submit(FormSubmissionModel model)
         {
             var response = FormResponses.GetDefault(model.FormName) ?? new();
@@ -24,7 +24,7 @@ namespace next.web.core.services
                 response.MapResponse(appsubmission);
                 if (response.StatusCode != 200) return response;
                 response.Message = "Login completed";
-                response.RedirectTo = "/my-account/home";
+                response.RedirectTo = AppContainer.PostLoginPage ?? "/my-acount/home";
                 return response;
             }
             catch (Exception ex)
@@ -48,7 +48,7 @@ namespace next.web.core.services
                 response.MapResponse(appsubmission);
                 if (response.StatusCode != 200) return response;
                 response.Message = "Login completed";
-                response.RedirectTo = "/my-account/home";
+                response.RedirectTo = AppContainer.PostLoginPage ?? "/my-acount/home";
                 var token = appsubmission.Message.ToInstance<AccessTokenBo>();
                 var app = user.Applications[0];
                 var userbo = new UserContextBo
@@ -90,7 +90,7 @@ namespace next.web.core.services
         }
 
         internal static readonly List<string> HomeFormNames = ["form-login", "form-register"];
-        private static UserBo GetUser()
+        protected static UserBo GetUser()
         {
             var apps = new List<ApiContext>
                     {

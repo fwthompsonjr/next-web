@@ -22,5 +22,17 @@
             });
             Assert.Null(error);
         }
+
+        [Fact]
+        public void ResourceHasExpectedStrings()
+        {
+            var error = Record.Exception(() =>
+            {
+                _ = core.Properties.Resources.base_menu;
+                _ = core.Properties.Resources.core_configuration;
+                _ = core.Properties.Resources.logout_page;
+            });
+            Assert.Null(error);
+        }
     }
 }
