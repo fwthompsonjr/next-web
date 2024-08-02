@@ -17,13 +17,17 @@ namespace next.web.core.services
 
         private static string AppendMain(string content, HtmlDocument doc)
         {
+            const string closeHeader = "</header>";
             var find = $"//div[@class='{cover}']";
             var parent = doc.DocumentNode.SelectSingleNode(find);
             if (parent == null) return content;
-
-            var header = parent.FirstChild;
-            var main = GetMain(doc);
-            parent.InsertAfter(main, header);
+            var current = parent.InnerHtml;
+            var injected = string.Concat(
+                closeHeader, 
+                Environment.NewLine, 
+                Properties.Resources.logout_page);
+            current = current.Replace(closeHeader, injected);
+            parent.InnerHtml = current;
             return doc.DocumentNode.OuterHtml;
         }
 
@@ -38,15 +42,6 @@ namespace next.web.core.services
             txt.AppendLine(coverstyle);
             head.InnerHtml = txt.ToString();
             return doc.DocumentNode.OuterHtml;
-        }
-
-        private static HtmlNode GetMain(HtmlDocument doc)
-        {
-            var element = doc.CreateElement("main");
-            element.Attributes.Add("role", "main");
-            element.Attributes.Add("class", "inner cover");
-            element.InnerHtml = Properties.Resources.logout_page;
-            return element;
         }
         private const string cover = "cover-container d-flex h-100 p-3 mx-auto flex-column";
         private const string coverstyle = "<link rel=\"stylesheet\" name=\"cover-css\" href=\"https://getbootstrap.com/docs/4.0/examples/cover/cover.css\" />";

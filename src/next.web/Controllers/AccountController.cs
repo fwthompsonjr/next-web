@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using next.web.core.util;
 
 namespace next.web.Controllers
 {
@@ -11,13 +12,7 @@ namespace next.web.Controllers
         [OutputCache(Duration = 10)]
         public async Task<IActionResult> Index()
         {
-            var session = HttpContext.Session;
-            var content = await GetAuthenicatedPage(session, "myaccount");
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = content
-            };
+            return await GetPage("account-home");
         }
 
         [HttpGet]
@@ -25,7 +20,7 @@ namespace next.web.Controllers
         [OutputCache(Duration = 10)]
         public async Task<IActionResult> Profile()
         {
-            return await Index();
+            return await GetPage("account-profile");
         }
 
         [HttpGet]
@@ -33,7 +28,32 @@ namespace next.web.Controllers
         [OutputCache(Duration = 10)]
         public async Task<IActionResult> Permissions()
         {
-            return await Index();
+            return await GetPage("account-permissions");
+        }
+
+        private async Task<IActionResult> GetPage(string viewName)
+        {
+            var session = HttpContext.Session;
+            var content = await GetAuthenicatedPage(session, "myaccount");
+            var viewer = AppContainer.GetDocumentView(viewName);
+            if (viewer == null)
+            {
+                return new ContentResult
+                {
+                    ContentType = "text/html",
+                    Content = RemoveHeaderDuplicate(content)
+                };
+            }
+
+            content = viewer.SetMenu(content);
+            content = viewer.SetChildMenu(content);
+            content = viewer.SetTab(content);
+
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                Content = RemoveHeaderDuplicate(content)
+            };
         }
     }
 }

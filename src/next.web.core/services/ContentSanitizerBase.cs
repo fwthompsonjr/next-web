@@ -14,7 +14,7 @@ namespace next.web.core.services
         }
 
         [ExcludeFromCodeCoverage]
-        protected static HtmlDocument? GetDocument(string html)
+        internal static HtmlDocument? GetDocument(string html)
         {
             try
             {

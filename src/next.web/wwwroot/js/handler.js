@@ -4,7 +4,7 @@ let theHandler = {
         const sls = '/';
         let pth = document.location.pathname;
         if (pth.startsWith(sls)) { pth = pth.substring(1); }
-        const loc = pth.split(loc)[0];
+        const loc = pth.split(sls)[0];
         let dta = { id: 10, location: loc };
         const requested = {
             "formName": "check-session",
@@ -103,5 +103,12 @@ let theMenu = {
         $(childElement).removeClass(dnone);
         $(parent).addClass(selected);
     }
+}
+
+function verifyAndPost(src, target) {
+    if (!src || !target) return;
+    let command = "".concat(String(src).toLowerCase(), "-", String(target).toLowerCase());
+    if (command != 'user-logout') { return; }
+    document.location = "/logout";
 }
 window.jsHandler = theHandler;

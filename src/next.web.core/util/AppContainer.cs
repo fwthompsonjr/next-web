@@ -19,12 +19,10 @@ namespace next.web.core.util
         public static string? PermissionApiBase { get; private set; }
         public static string? InitialViewName { get; private set; }
         public static string? PostLoginPage { get; private set; }
-        private static IServiceProvider? WebServices { get; set; }
-        public static void Build(IServiceProvider? webServices = null)
+        public static void Build()
         {
             lock (locker)
             {
-                WebServices ??= webServices;
                 if (Configuration == null)
                 {
                     var builder = new CoreConfigurationModel();
@@ -60,10 +58,14 @@ namespace next.web.core.util
             var svc = ServiceProvider?.GetKeyedService<IContentSanitizer>(name) ?? defaultSanitizer;
             return svc;
         }
-        internal static IHttpContextAccessor? GetAccessor()
+
+        internal static IDocumentView? GetDocumentView(string name)
         {
-            return WebServices?.GetService<HttpContextAccessor>();
+            if (ServiceProvider == null) Build();
+            var svc = ServiceProvider?.GetKeyedService<IDocumentView>(name);
+            return svc;
         }
+
         private static string GetPermissionApi(IConfiguration configuration)
         {
             var keys = sourceArray.ToList();
@@ -117,10 +119,17 @@ namespace next.web.core.util
             services.AddSingleton(s => provider.GetRequiredService<IUserMailboxMapper>());
             services.AddSingleton(s => provider.GetRequiredService<CommonMessageList>());
             services.AddSingleton(s => provider.GetRequiredService<IHistoryPersistence>());
+            // content view selectors
+            services.AddKeyedSingleton<IDocumentView>("account-home", new DocumentViewAccount());
+            services.AddKeyedSingleton<IDocumentView>("account-profile", new DocumentViewProfile());
+            services.AddKeyedSingleton<IDocumentView>("account-permissions", new DocumentViewPermissions());
+
+            // content formatters
             services.AddKeyedSingleton("default", defaultSanitizer);
-            services.AddKeyedSingleton<IContentSanitizer>("home", new ContentSanitizerHome());
+            services.AddKeyedSingleton<IContentSanitizer>("post-login", new ContentSanitizerHome());
             services.AddKeyedSingleton<IContentSanitizer>("logout", new ContentSanitizerLogout());
             services.AddKeyedSingleton<IContentSanitizer>("myaccount", new ContentSanitizerMyAccount());
+            // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
             var accounts = new List<string>();
             accounts.AddRange(ProfileForms);

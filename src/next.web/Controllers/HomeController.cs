@@ -17,7 +17,7 @@ namespace next.web.Controllers
 
         public IActionResult Index()
         {
-            var helper = AppContainer.GetSanitizer("home");
+            var helper = AppContainer.GetSanitizer("post-login");
             var content = Introduction;
             if (string.IsNullOrWhiteSpace(content)) return View();
             if (IsSessionAuthenicated(HttpContext.Session) && helper is ContentSanitizerHome home)
@@ -27,7 +27,7 @@ namespace next.web.Controllers
             return new ContentResult
             {
                 ContentType = "text/html",
-                Content = content
+                Content = RemoveHeaderDuplicate(content)
             };
         }
 
@@ -35,6 +35,8 @@ namespace next.web.Controllers
         {
             return View();
         }
+        
+        [HttpGet("logout")]
         public IActionResult Logout()
         {
             var helper = AppContainer.GetSanitizer("logout");
@@ -47,7 +49,7 @@ namespace next.web.Controllers
             return new ContentResult
             {
                 ContentType = "text/html",
-                Content = content
+                Content = RemoveHeaderDuplicate(content)
             };
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

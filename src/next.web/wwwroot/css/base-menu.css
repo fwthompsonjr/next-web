@@ -17,7 +17,8 @@
     }
         div[name='left-menu'] > div.row:hover,
         div[name='app-sub-menu'] div.row:hover,
-        div[name='left-menu'] > div.row.menu-selected {
+        div[name='left-menu'] > div.row.menu-selected,
+        div.sub-menu-selected {
             background-color: rgb(31, 31, 31);
         }
 

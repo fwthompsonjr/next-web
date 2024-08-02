@@ -23,6 +23,17 @@ namespace next.web.core.services
                 if (user == null || user.Applications == null || user.Applications.Length == 0) return response;
                 var appsubmission = await Submit(model, user, failureMessage);
                 response.MapResponse(appsubmission);
+                var formName = model.FormName ?? string.Empty;
+                if (!AppContainer.AddressMap.TryGetValue(formName, out var address)) return response; // redirect to login
+                if (appsubmission.StatusCode != 200) response.RedirectTo = ""; // stay on same page
+                // trigger reload page on 200 event
+                var prefix = address.Split('-')[0];
+                response.RedirectTo = prefix switch
+                {
+                    "profile" => "/my-account/profile",
+                    "permissions" => "/my-account/permissions",
+                    _ => "/my-account/home"
+                };
                 return response;
             }
             catch (Exception ex)

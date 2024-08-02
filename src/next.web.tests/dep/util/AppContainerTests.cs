@@ -56,6 +56,7 @@ namespace next.web.tests.dep.util
         [InlineData("mysearch")]
         [InlineData("mailbox")]
         [InlineData("default")]
+        [InlineData("post-login")]
         [InlineData("not-mapped")]
         public void ContainerCanGetSanitizer(string name)
         {
@@ -79,6 +80,24 @@ namespace next.web.tests.dep.util
             {
                 AppContainer.Build();
                 var actual = AppContainer.ServiceProvider?.GetKeyedService<IJsHandler>(name);
+                var isFound = actual != null;
+                Assert.Equal(expected, isFound);
+            });
+            Assert.Null(error);
+        }
+
+        [Theory]
+        [InlineData("account-home", true)]
+        [InlineData("account-profile", true)]
+        [InlineData("account-permissions", true)]
+        [InlineData("blank")]
+        [InlineData("not-mapped")]
+        public void ContainerCanGetDocumentView(string name, bool expected = false)
+        {
+            var error = Record.Exception(() =>
+            {
+                AppContainer.Build();
+                var actual = AppContainer.GetDocumentView(name);
                 var isFound = actual != null;
                 Assert.Equal(expected, isFound);
             });

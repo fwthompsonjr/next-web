@@ -78,7 +78,7 @@ namespace next.web
             return content.Content;
         }
 
-        private static string RemoveHeaderDuplicate(string content)
+        protected static string RemoveHeaderDuplicate(string content)
         {
             const string find = "Oxford Oxford";
             const string replace = "Oxford";

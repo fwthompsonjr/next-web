@@ -11,6 +11,7 @@ namespace next.web
         private static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            AppContainer.Build();
             var services = builder.Services;
             // Add services to the container.
             services.AddHttpContextAccessor();
@@ -27,7 +28,7 @@ namespace next.web
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var app = builder.Build();
-            AppContainer.Build(app.Services);
+            
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
