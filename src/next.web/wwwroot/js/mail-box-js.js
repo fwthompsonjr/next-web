@@ -48,6 +48,7 @@ let mailbox = {
 let maillist_init = {
     "setScroll": function () {
         const selectedItem = "a[name='link-mail-items-template'].active";
+        if ($(selectedItem).length === 0) return;
         $(selectedItem).get(0).scrollIntoView();
     }
 }

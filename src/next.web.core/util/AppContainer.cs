@@ -129,6 +129,7 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IContentSanitizer>("post-login", new ContentSanitizerHome());
             services.AddKeyedSingleton<IContentSanitizer>("logout", new ContentSanitizerLogout());
             services.AddKeyedSingleton<IContentSanitizer>("myaccount", new ContentSanitizerMyAccount());
+            services.AddKeyedSingleton<IContentSanitizer>("mailbox", new ContentSanitizerMailBox());
             // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
             var accounts = new List<string>();

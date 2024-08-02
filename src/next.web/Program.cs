@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Rewrite;
+using next.web.Controllers;
 using next.web.core.util;
 using next.web.Services;
 using System.Diagnostics.CodeAnalysis;
@@ -50,6 +51,8 @@ namespace next.web
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            var home = app.Services.GetService<HomeController>();
+            _ = home?.Index();
             app.Run();
         }
     }
