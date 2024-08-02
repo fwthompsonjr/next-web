@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using legallead.desktop.interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using next.web.core.extensions;
 using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.util;
+using System.Text;
 
 namespace next.web.Controllers
 {
@@ -44,6 +47,31 @@ namespace next.web.Controllers
             var handler = provider?.GetKeyedService<IJsHandler>(model.FormName);
             if (handler == null) return Json(response);
             response = await handler.Submit(model, this.HttpContext.Session);
+            return Json(response);
+        }
+
+        [HttpPost("fetch")]
+        public async Task<IActionResult> Fetch(FormSubmissionModel model)
+        {
+            var session = HttpContext.Session;
+            var response = FormResponses.GetDefault(null);
+            var authenicated = IsSessionAuthenicated(session);
+            var user = session.GetUser();
+            var api = provider?.GetService<IPermissionApi>();
+            var errResponse = Json(response);
+            if (user == null || 
+                api == null || 
+                !authenicated || 
+                !ModelState.IsValid || 
+                !model.Validate(Request) ||
+                string.IsNullOrWhiteSpace(model.Payload))
+            {
+                return errResponse;
+            }
+            var body = await user.GetMailBody(api, model.Payload);
+            if (body == null) return errResponse;
+            response.StatusCode = 200;
+            response.Message = JsonConvert.SerializeObject(body);
             return Json(response);
         }
     }

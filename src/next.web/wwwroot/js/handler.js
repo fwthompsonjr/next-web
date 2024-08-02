@@ -56,6 +56,27 @@ let theHandler = {
                 theResponder.handle(resultData);
             }
         });
+    },
+    "fetch": function (uuidx) {
+        const landing = "/data/fetch"
+        let requested = {
+            "formName": String("mailbox"),
+            "payload": String(uuidx)
+        };
+        $.ajax({
+            type: "POST",
+            url: landing,
+            data: JSON.stringify(requested),
+            dataType: "json",
+            success: function (resultData) {
+                if (!mailbox || !mailbox.controls || !mailbox.controls.preview) { return; }
+                const answer = theResponder.translate(resultData);
+                if (answer.statusCode != 200) { return; }
+                let message = JSON.stringify(JSON.parse(answer.message));
+                alert(message);
+            }
+        });
+
     }
 }
 

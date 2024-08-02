@@ -1,0 +1,99 @@
+﻿
+html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    margin-top: 10px;
+    background: #444;
+    color: white;
+    margin-bottom: 10px;
+    overflow-x: clip
+}
+
+#footer-copy {
+    padding-top: 10px;
+}
+
+#templates {
+    display: none;
+}
+
+div[name="mailbox-header"] {
+    margin: 10px;
+}
+
+div[name="mailbox-grid"] {
+    padding-left: 25px;
+}
+
+div[name="mailbox-preview"] {
+    overflow: auto;
+}
+
+div.mailbox {
+    vertical-align: text-top;
+    padding: 12px;
+    margin: 10px;
+    border-style: dashed;
+    border-color: #999;
+    border-width: 1px;
+    max-height: 800px;
+    overflow: auto;
+}
+
+div[name="link-mail-items-header"] {
+    border-style: solid;
+    border-color: #999;
+    border-width: 1px;
+    padding-left: 15px;
+    padding-top: 5px;
+}
+
+    div[name="link-mail-items-header"][data-item-count="0"] {
+        display: block;
+    }
+
+    div[name="link-mail-items-header"][data-item-count="1"] {
+        display: none;
+    }
+
+a[name="link-mail-items-template"][data-item-index="0"] {
+    display: none;
+}
+
+a[name="link-mail-items-template"]:not([data-item-index="0"]) {
+    display: block;
+}
+
+div[name="item-address-to"] {
+    margin-left: 15px;
+}
+
+h5[name='item-subject'] {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+    .customrow {
+        margin-left: 45px;
+    }
+    .box .customrow.header {
+        flex: 0 1 auto;
+        border-bottom: 1px solid #888;
+        margin-bottom: 5px;
+    }
+
+    .box .customrow.content {
+        flex: 1 1 auto;
+    }
+
+    .box .customrow.footer {
+        flex: 0 1 40px;
+    }

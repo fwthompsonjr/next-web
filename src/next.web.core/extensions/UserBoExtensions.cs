@@ -17,6 +17,32 @@ namespace next.web.core.extensions
             if (exists) { session.Remove(SessionKeyNames.UserBo); }
             session.Set(SessionKeyNames.UserBo, Encoding.UTF8.GetBytes(json));
         }
+        public static async Task SaveMail(this UserContextBo userbo, ISession session, IPermissionApi api)
+        {
+            var user = userbo.ToUserBo();
+            var mailjs = await GetMail(api, user);
+            List<MailItem> collection = (string.IsNullOrWhiteSpace(mailjs) ? new() :
+                mailjs.ToInstance<List<MailItem>>()) ?? new();
+            var exists = session.Keys.ToList().Exists(x => x == SessionKeyNames.UserMailbox);
+            if (exists) { session.Remove(SessionKeyNames.UserMailbox); }
+            var timed = new UserTimedCollection<List<MailItem>>(
+                collection, TimeSpan.FromMinutes(5));
+            var json = JsonConvert.SerializeObject(timed);
+            session.Set(SessionKeyNames.UserMailbox, Encoding.UTF8.GetBytes(json));
+        }
+
+        public static async Task<MailItemBody?> GetMailBody(this UserBo user, IPermissionApi api, string messageId)
+        {
+            if (!Guid.TryParse(messageId, out var _)) return null;
+            var payload = new
+            {
+                MessageId = messageId,
+                RequestType = "body"
+            };
+            var response = await api.Post("message-body", payload, user);
+            if (response == null || response.StatusCode != 200) return null;
+            return response.Message.ToInstance<MailItemBody>();
+        }
 
         public static UserBo? GetUser(this ISession session)
         {
@@ -83,5 +109,19 @@ namespace next.web.core.extensions
                 return response;
             }
         }
+
+
+
+
+
+        private static async Task<string?> GetMail(IPermissionApi api, UserBo user)
+        {
+            if (!user.IsAuthenicated) return null;
+            var payload = new { RequestType = "messages" };
+            var response = await api.Post("message-list", payload, user);
+            if (response == null || response.StatusCode != 200) return null;
+            return response.Message;
+        }
+
     }
 }

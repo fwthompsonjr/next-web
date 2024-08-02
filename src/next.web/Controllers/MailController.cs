@@ -9,7 +9,7 @@ namespace next.web.Controllers
         public async Task<IActionResult> Index()
         {
             var session = HttpContext.Session;
-            var content = await GetAuthenicatedPage(session, "myaccount");
+            var content = await GetAuthenicatedPage(session, "mailbox");
             return new ContentResult
             {
                 ContentType = "text/html",

@@ -43,7 +43,10 @@ namespace next.web
             if (isValid) isValid &= user.IsAuthenicated;
             return isValid;
         }
-
+        internal static string? GetUserId(ISession? session)
+        {
+            return GetContextUser(session)?.UserId;
+        }
         protected static string GetPageOrDefault(string pageName)
         {
             var content = ContentHandler.GetLocalContent(pageName);
@@ -58,15 +61,20 @@ namespace next.web
         }
         private static UserBo? GetUserToken(ISession? session)
         {
+            var contextBo = GetContextUser(session);
+            if (contextBo == null) return null;
+            return contextBo.ToUserBo();
+        }
+
+        private static UserContextBo? GetContextUser(ISession? session)
+        {
             var keyName = SessionKeyNames.UserBo;
             if (session == null) return null;
             if (!session.TryGetValue(keyName, out var bytes)) return null;
             if (bytes.Length == 0) return null;
             var converted = Encoding.UTF8.GetString(bytes);
             if (string.IsNullOrEmpty(converted)) return null;
-            var contextBo = converted.ToInstance<UserContextBo>();
-            if (contextBo == null) return null;
-            return contextBo.ToUserBo();
+            return converted.ToInstance<UserContextBo>();
         }
 
         protected static string Introduction => _introduction ??= GetIntroduction();
