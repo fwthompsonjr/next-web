@@ -1,0 +1,22 @@
+
+{
+    "region" : "us-east-2",
+    "configuration" : "Debug",
+    "framework"     : "net8.0",
+    "self-contained" : true,
+    "application"    : "nextweb",
+    "environment"    : "oxfordleads",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-094500038aa2f7e8b,sg-07ed60e6ecfa49523\";\"aws:ec2:vpc,Subnets\"=\"subnet-0f56e1f6cb6385734\";\"aws:ec2:vpc,ELBSubnets\"=\"subnet-0f56e1f6cb6385734,subnet-07d49b1c298a9f469,subnet-08977c8bdb3ca3c42\"",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.8.0 running .NET Core",
+    "environment-type"     : "LoadBalanced",
+    "loadbalancer-type"    : "application",
+    "cname"                : "oxfordleads",
+    "instance-type"        : "t3a.medium",
+    "key-pair"             : "kvp-lead-app",
+    "health-check-url"     : "/",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}
