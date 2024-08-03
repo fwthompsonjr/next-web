@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using legallead.desktop.interfaces;
+using Microsoft.AspNetCore.Mvc;
+using next.web.core.extensions;
+using next.web.core.util;
 
 namespace next.web.Controllers
 {
@@ -9,7 +12,13 @@ namespace next.web.Controllers
         public async Task<IActionResult> Index()
         {
             var session = HttpContext.Session;
-            var content = await GetAuthenicatedPage(session, "myaccount");
+            if (!IsSessionAuthenicated(session)) return Redirect("/home");
+            var content = await GetAuthenicatedPage(session, "mailbox");
+            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
+            if (api != null)
+            {
+                content = await session.GetMailBox(api, content);
+            }
             return new ContentResult
             {
                 ContentType = "text/html",

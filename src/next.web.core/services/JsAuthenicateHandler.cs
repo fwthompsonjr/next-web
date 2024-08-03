@@ -64,7 +64,7 @@ namespace next.web.core.services
                 var userId = await user.GetUserId(api);
                 userbo.UserId = userId;
                 userbo.Save(session);
-
+                await userbo.SaveMail(session, _api);
                 return response;
             }
             catch (Exception ex)
