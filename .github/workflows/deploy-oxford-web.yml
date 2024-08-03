@@ -1,0 +1,40 @@
+name: "Deploy: Oxford.Web"
+env:
+  AWS_REGION: "us-east-2"
+  NUGET_CERT_REVOCATION_MODE: offline
+  
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [ "closed" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+
+    - name: Set Build Version
+      run: |
+          echo "BUILD_VERSION=${{format('{0}', github.run_number)}}" >> $GITHUB_ENV
+
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Deploy to AWS
+      timeout-minutes: 20
+      if: contains( github.event.pull_request.labels.*.name, 'approved')
+      shell: pwsh
+      run: |
+        & ./pipeline-aws-deploy-project.ps1 -getTools $true -buildNumber ${{ env.BUILD_VERSION }}
