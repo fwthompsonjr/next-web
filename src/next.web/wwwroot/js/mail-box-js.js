@@ -38,7 +38,7 @@ let mailbox = {
                 }
                 const mailitem = mbox.children[inx];
                 const uuidx = mailitem.children[1].children[2].innerText;
-                handler.fetch(uuidx);
+                handler.fetch(uuidx, inx, count);
             } catch {
                 mailbox.preview.clear();
             }

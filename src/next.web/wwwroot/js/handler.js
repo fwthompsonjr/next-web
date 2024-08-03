@@ -57,7 +57,7 @@ let theHandler = {
             }
         });
     },
-    "fetch": function (uuidx) {
+    "fetch": function (uuidx, positionId, count) {
         const landing = "/data/fetch"
         let requested = {
             "formName": String("mailbox"),
@@ -72,11 +72,37 @@ let theHandler = {
                 if (!mailbox || !mailbox.controls || !mailbox.controls.preview) { return; }
                 const answer = theResponder.translate(resultData);
                 if (answer.statusCode != 200) { return; }
-                let message = JSON.stringify(JSON.parse(answer.message));
-                alert(message);
+                let message = answer.message;
+                let control = "".concat("#", mailbox.controls.preview);
+                $(control).html(message);
+                theHandler.setIndex(positionId, count, requested.payload);
             }
         });
 
+    },
+    "setIndex": function (positionId, count, recordId) {
+        if (!positionId || !count) { return; }
+        if (!mailbox || !mailbox.controls || !mailbox.controls.preview) { return; }
+        if (!maillist_init || !maillist_init.setScroll) { return; }
+        let pos = parseInt(positionId) + 1;
+        let title = "Correspondence ( ~0 of ~1 )"
+            .replace("~0", String(pos))
+            .replace("~1", String(count));
+        $("#mailbox-sub-header").text(title);
+
+        const mbox = document.getElementById(mailbox.controls.maillist);
+        const cnt = mbox.childElementCount - 1;
+        for (let c = 0; c < cnt; c++) {
+            const mailitem = mbox.children[c];
+            const uuidx = mailitem.children[1].children[2].innerText;
+            let isactive = uuidx == recordId;
+            if (isactive) {
+                mailitem.classList.add('active');
+            } else {
+                mailitem.classList.remove('active');
+            }
+        }
+        maillist_init.setScroll();
     }
 }
 
