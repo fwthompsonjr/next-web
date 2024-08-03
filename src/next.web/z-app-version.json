@@ -1,5 +1,15 @@
 [
   {
+    "id": "3.2.3",
+    "description": "Construct user search history page",
+    "date": "2024-08-03"
+  },
+  {
+    "id": "3.2.2",
+    "description": "Construct user mailbox page",
+    "date": "2024-08-02"
+  },
+  {
     "id": "3.2.1",
     "description": "Setup dependency injection in core project",
     "date": "2024-07-27"
