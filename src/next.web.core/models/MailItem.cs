@@ -9,5 +9,7 @@
         public string? Subject { get; set; }
         public int? StatusId { get; set; }
         public DateTime? CreateDate { get; set; }
+        public int PositionId { get; set; }
+        public string CreateDt { get; set; } = string.Empty;
     }
 }

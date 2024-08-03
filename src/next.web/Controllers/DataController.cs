@@ -1,11 +1,9 @@
 ﻿using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using next.web.core.extensions;
 using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.util;
-using System.Text;
 
 namespace next.web.Controllers
 {
@@ -59,19 +57,19 @@ namespace next.web.Controllers
             var user = session.GetUser();
             var api = provider?.GetService<IPermissionApi>();
             var errResponse = Json(response);
-            if (user == null || 
-                api == null || 
-                !authenicated || 
-                !ModelState.IsValid || 
+            if (user == null ||
+                api == null ||
+                !authenicated ||
+                !ModelState.IsValid ||
                 !model.Validate(Request) ||
                 string.IsNullOrWhiteSpace(model.Payload))
             {
                 return errResponse;
             }
-            var body = await user.GetMailBody(api, model.Payload);
-            if (body == null) return errResponse;
+            var recordId = model.Payload ?? string.Empty;
+            var message = await session.FetchMailBody(api, recordId);
             response.StatusCode = 200;
-            response.Message = JsonConvert.SerializeObject(body);
+            response.Message = message;
             return Json(response);
         }
     }
