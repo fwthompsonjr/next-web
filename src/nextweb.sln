@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.web.tests", "next.web.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.web.core", "next.web.core\next.web.core.csproj", "{6143949A-FC3F-48B1-9802-D102C78AADAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "publish", "publish", "{DCAB0D7B-1FA1-4391-8BC8-5B74E080613E}"
+	ProjectSection(SolutionItems) = preProject
+		..\web.version.json = ..\web.version.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

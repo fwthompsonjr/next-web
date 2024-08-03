@@ -7,6 +7,9 @@ param (
 if( [string]::IsNullOrWhiteSpace( $searchPattern ) -eq $true ) {
     $searchPattern = '*.web.csproj';
 }
+if( [string]::IsNullOrWhiteSpace( $buildNumber ) -eq $true ) {
+    $buildNumber = '0';
+}
 
 function canEnumerate( $obj ) {
     try {
@@ -36,7 +39,7 @@ function getVersionNumber( $source ){
             return $v;
         }
         $content = [System.IO.File]::ReadAllText( $configFile ) | ConvertFrom-Json
-        $v = [string]::Concat("v.", [string]($content.Item(0).name).Replace("--", $dstamp));
+        $v = [string]::Concat("v.", [string]($content.Item(0).name).Replace("--", $dstamp).Replace("vv", $buildNumber));
         return $v;
     } finally {
         Set-Location $currentLocation
