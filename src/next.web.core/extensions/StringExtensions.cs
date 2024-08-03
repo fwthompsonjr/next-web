@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 
 namespace next.web.core.extensions
 {
@@ -24,6 +25,20 @@ namespace next.web.core.extensions
             catch
             {
                 return default;
+            }
+        }
+
+        public static HtmlDocument? ToHtml(this string str)
+        {
+            try
+            {
+                var document = new HtmlDocument();
+                document.LoadHtml(str);
+                return document;
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

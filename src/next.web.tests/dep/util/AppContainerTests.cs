@@ -56,6 +56,7 @@ namespace next.web.tests.dep.util
         [InlineData("mysearch")]
         [InlineData("mailbox")]
         [InlineData("default")]
+        [InlineData("viewhistory")]
         [InlineData("post-login")]
         [InlineData("not-mapped")]
         public void ContainerCanGetSanitizer(string name)
