@@ -1,7 +1,7 @@
 param (
     [string]$searchPattern,
     [string]$versionLabel,
-    [string]$buildNumber,
+    [string]$buildNumber = '',
     [bool]$getTools = $false
 )
 if( [string]::IsNullOrWhiteSpace( $searchPattern ) -eq $true ) {

@@ -13,10 +13,6 @@ jobs:
     runs-on: windows-latest
     steps:
 
-    - name: Set Build Version
-      run: |
-          echo "BUILD_VERSION=${{format('{0}', github.run_number)}}" >> $GITHUB_ENV
-
     - name: Checkout source code
       uses: actions/checkout@v4
 
@@ -37,4 +33,4 @@ jobs:
       if: contains( github.event.pull_request.labels.*.name, 'approved')
       shell: pwsh
       run: |
-        & ./pipeline-aws-deploy-project.ps1 -getTools $true -buildNumber ${{ env.BUILD_VERSION }}
+        & ./pipeline-aws-deploy-project.ps1 -getTools $true -buildNumber ${{ github.run_number }}
