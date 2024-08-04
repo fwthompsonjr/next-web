@@ -102,18 +102,41 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div id=&quot;dv-main-content&quot; name=&quot;main-content&quot; style=&quot;margin-top: 20px;&quot;&gt;
+        ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
         ///	&lt;div class=&quot;card&quot;&gt;
         ///		&lt;div class=&quot;card-body&quot;&gt;
         ///			&lt;h5 class=&quot;card-title&quot;&gt;Logout&lt;/h5&gt;
         ///			&lt;p&gt;You have been successfully logged out of application.&lt;/p&gt;
         ///		&lt;/div&gt;
-        ///	&lt;/div&gt;	
-        ///&lt;/div&gt;.
+        ///	&lt;/div&gt;
+        ///&lt;/main&gt;.
         /// </summary>
         internal static string logout_page {
             get {
                 return ResourceManager.GetString("logout_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///&lt;table automationId=&quot;search-history-table&quot; name=&quot;search-dt-table&quot;&gt;
+        ///	&lt;colgroup&gt;
+        ///		&lt;col name=&quot;requested-date&quot; /&gt;
+        ///		&lt;col name=&quot;state-abbr&quot; style=&quot;width: 60px&quot; /&gt;
+        ///		&lt;col name=&quot;county-name&quot; style=&quot;width: 150px&quot; /&gt;
+        ///		&lt;col name=&quot;begin-date&quot; style=&quot;width: 95px&quot; /&gt;
+        ///		&lt;col name=&quot;ending-date&quot; style=&quot;width: 95px&quot; /&gt;
+        ///		&lt;col name=&quot;search-status&quot; style=&quot;width: 90px&quot; /&gt;
+        ///	&lt;/colgroup&gt;
+        ///	&lt;thead&gt;
+        ///		&lt;tr&gt;
+        ///			&lt;th style=&quot;padding-left: 3px;&quot;&gt;Request Date&lt;/th&gt;
+        ///			&lt;th style=&quot;padding-left: 3px;&quot;&gt;State&lt;/th&gt;
+        ///			&lt;th style=&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string search_table_layout {
+            get {
+                return ResourceManager.GetString("search_table_layout", resourceCulture);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace next.web.core.extensions
             var exists = session.Keys.ToList().Exists(x => x == SessionKeyNames.UserBo);
             if (exists) { session.Remove(SessionKeyNames.UserBo); }
             session.Set(SessionKeyNames.UserBo, Encoding.UTF8.GetBytes(json));
-            var filter = new HistoryFilterBo();
+            var filter = new UserSearchFilterBo();
             json = JsonConvert.SerializeObject(filter);
             exists = session.Keys.ToList().Exists(x => x == SessionKeyNames.UserSearchHistoryFilter);
             if (exists) { session.Remove(SessionKeyNames.UserSearchHistoryFilter); }
@@ -127,6 +127,21 @@ namespace next.web.core.extensions
             return data ?? [];
         }
 
+        public static UserSearchFilterBo RetrieveHistoryFilter(this ISession session)
+        {
+            var key = SessionKeyNames.UserSearchHistoryFilter;
+            var userbo = session.GetContextUser();
+            if (userbo == null) { return new(); }
+            var exists = session.TryGetValue(key, out var filter);
+            if (!exists) 
+            { 
+                var tmp = new UserSearchFilterBo();
+                session.Set(key, Encoding.UTF8.GetBytes(tmp.ToJsonString()));
+                return tmp;
+            }
+            var data = Encoding.UTF8.GetString(filter);
+            return data.ToInstance<UserSearchFilterBo>() ?? new();
+        }
         public static async Task<MailItemBody?> GetMailBody(this UserBo user, IPermissionApi api, string messageId)
         {
             if (!Guid.TryParse(messageId, out var _)) return null;

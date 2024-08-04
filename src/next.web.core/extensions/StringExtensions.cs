@@ -5,6 +5,11 @@ namespace next.web.core.extensions
 {
     public static class StringExtensions
     {
+        public static string ToJsonString(this object? obj)
+        {
+            if (obj == null) return string.Empty;
+            return JsonConvert.SerializeObject(obj);
+        }
         public static T? ToInstance<T>(this string str)
         {
             try
@@ -28,18 +33,11 @@ namespace next.web.core.extensions
             }
         }
 
-        public static HtmlDocument? ToHtml(this string str)
+        public static HtmlDocument ToHtml(this string str)
         {
-            try
-            {
-                var document = new HtmlDocument();
-                document.LoadHtml(str);
-                return document;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            var document = new HtmlDocument();
+            document.LoadHtml(str);
+            return document;
         }
     }
 }
