@@ -22,6 +22,7 @@ namespace next.web
             }
             var newName = isValid ? pageName : "home";
             var content = RemoveHeaderDuplicate(GetPageOrDefault(newName));
+            content = AlterMenuBorder(content, pageName);
             if (!isValid) return content;
             var provider = AppContainer.ServiceProvider;
             var api = provider?.GetService<IPermissionApi>();
@@ -35,6 +36,27 @@ namespace next.web
             }
             return RemoveHeaderDuplicate(content);
         }
+
+        private static string AlterMenuBorder(string content, string pageName)
+        {
+            const string clsname = "alternate-border";
+            var alterations = new List<string>() { "mailbox", "viewhistory"};
+            if (!alterations.Contains(pageName)) return content;
+            var doc = content.ToHtml();
+            var border = doc.DocumentNode.SelectSingleNode("//*[@id='app-side-menu-border']");
+            if (border == null) return content;
+            var clsattribute = border.Attributes.ToList().Find(x => x.Name == "class");
+            if (clsattribute != null)
+            {
+                var items = clsattribute.Value.Split(' ').ToList();
+                if (!items.Contains(clsname)) items.Add(clsname);
+                clsattribute.Value = string.Join(" ", items);
+                return doc.DocumentNode.OuterHtml;
+            }
+            border.Attributes.Add("class", clsname);
+            return doc.DocumentNode.OuterHtml;
+        }
+
         internal static bool IsSessionAuthenicated(ISession? session)
         {
             var user = GetUserToken(session);

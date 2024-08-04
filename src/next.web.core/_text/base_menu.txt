@@ -1,3 +1,4 @@
+<div id="app-side-menu-border" name="left-menu-border"></div>
 <div id="app-side-menu" name="left-menu">
 	<div data-position-index="0" name="left-menu-icon" class="row">
 		<i class="bi bi-three-dots"></i>

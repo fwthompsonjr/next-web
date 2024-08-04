@@ -19,7 +19,7 @@ namespace next.web.core.extensions
 
             const string findList = "//*[@id=\"dv-mail-item-list\"]";
             const string findFrame = "//*[@id=\"dv-mail-item-preview\"]";
-            var document = GetDocument(source);
+            var document = source.ToHtml();
             if (document == null) return source;
             var list = await session.RetrieveMail(api);
             var data = JsonConvert.SerializeObject(list);
@@ -215,19 +215,5 @@ namespace next.web.core.extensions
             viewFrame.InnerHtml = RestyleBlue(content);
         }
 
-
-        private static HtmlDocument? GetDocument(string source)
-        {
-            try
-            {
-                var document = new HtmlDocument();
-                document.LoadHtml(source);
-                return document;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
     }
 }

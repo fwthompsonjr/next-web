@@ -16,6 +16,11 @@ namespace next.web.core.extensions
             var exists = session.Keys.ToList().Exists(x => x == SessionKeyNames.UserBo);
             if (exists) { session.Remove(SessionKeyNames.UserBo); }
             session.Set(SessionKeyNames.UserBo, Encoding.UTF8.GetBytes(json));
+            var filter = new UserSearchFilterBo();
+            json = JsonConvert.SerializeObject(filter);
+            exists = session.Keys.ToList().Exists(x => x == SessionKeyNames.UserSearchHistoryFilter);
+            if (exists) { session.Remove(SessionKeyNames.UserSearchHistoryFilter); }
+            session.Set(SessionKeyNames.UserSearchHistoryFilter, Encoding.UTF8.GetBytes(json));
         }
 
         public static async Task SaveMail(this UserContextBo userbo, ISession session, IPermissionApi api)
@@ -47,6 +52,48 @@ namespace next.web.core.extensions
             var json = JsonConvert.SerializeObject(timed);
             session.Set(SessionKeyNames.UserMailbox, Encoding.UTF8.GetBytes(json));
         }
+
+        public static async Task SaveRestriction(this UserContextBo userbo, ISession session, IPermissionApi api)
+        {
+            var user = userbo.ToUserBo();
+            var payload = user.Applications?.FirstOrDefault() ?? new();
+            var response = await api.Post("search-get-restriction", payload, user);
+            var restriction = new MySearchRestrictions
+            {
+                IsLocked = true,
+                MaxPerMonth = 5,
+                MaxPerYear = 5,
+                Reason = "Unable to contact remote service",
+                ThisMonth = 5,
+                ThisYear = 5,
+            };
+            if (response != null && response.StatusCode == 200) 
+            { 
+                var temp = response.Message.ToInstance<MySearchRestrictions>();
+                if (temp != null) { restriction = temp; }
+            }
+            var timed = new UserTimedCollection<MySearchRestrictions>(
+                restriction, TimeSpan.FromSeconds(15));
+            var json = JsonConvert.SerializeObject(timed);
+            session.Set(SessionKeyNames.UserRestriction, Encoding.UTF8.GetBytes(json));
+        }
+
+        public static async Task SaveHistory(this UserContextBo userbo, ISession session, IPermissionApi api)
+        {
+            var user = userbo.ToUserBo();
+            var payload = user.Applications?.FirstOrDefault() ?? new();
+            var response = await api.Post("search-get-history", payload, user);
+            var searches = new List<UserSearchQueryBo>();
+            if (response != null && response.StatusCode == 200)
+            {
+                var temp = response.Message.ToInstance<List<UserSearchQueryBo>>();
+                if (temp != null) { searches = temp; }
+            }
+            var timed = new UserTimedCollection<List<UserSearchQueryBo>>(
+                searches, TimeSpan.FromSeconds(60));
+            var json = JsonConvert.SerializeObject(timed);
+            session.Set(SessionKeyNames.UserSearchHistory, Encoding.UTF8.GetBytes(json));
+        }
         public static async Task<List<MailItem>> RetrieveMail(this ISession session, IPermissionApi api)
         {
             var key = SessionKeyNames.UserMailbox;
@@ -56,6 +103,52 @@ namespace next.web.core.extensions
             if (!exists) { await userbo.SaveMail(session, api); }
             var data = session.GetTimedItem<List<MailItem>>(key);
             return data ?? [];
+        }
+
+        public static async Task<MySearchRestrictions> RetrieveRestriction(this ISession session, IPermissionApi api)
+        {
+            var key = SessionKeyNames.UserRestriction;
+            var userbo = session.GetContextUser();
+            if (userbo == null) { return new(); }
+            var exists = session.IsItemExpired<MySearchRestrictions>(key);
+            if (!exists) { await userbo.SaveRestriction(session, api); }
+            var data = session.GetTimedItem<MySearchRestrictions>(key);
+            return data ?? new();
+        }
+
+        public static async Task<List<UserSearchQueryBo>> RetrieveHistory(this ISession session, IPermissionApi api)
+        {
+            var key = SessionKeyNames.UserSearchHistory;
+            var userbo = session.GetContextUser();
+            if (userbo == null) { return []; }
+            var exists = session.IsItemExpired<List<UserSearchQueryBo>>(key);
+            if (!exists) { await userbo.SaveHistory(session, api); }
+            var data = session.GetTimedItem<List<UserSearchQueryBo>>(key);
+            return data ?? [];
+        }
+
+        public static UserSearchFilterBo RetrieveHistoryFilter(this ISession session)
+        {
+            var key = SessionKeyNames.UserSearchHistoryFilter;
+            var userbo = session.GetContextUser();
+            if (userbo == null) { return new(); }
+            var exists = session.TryGetValue(key, out var filter);
+            if (!exists) 
+            { 
+                var tmp = new UserSearchFilterBo();
+                session.Set(key, Encoding.UTF8.GetBytes(tmp.ToJsonString()));
+                return tmp;
+            }
+            var data = Encoding.UTF8.GetString(filter);
+            return data.ToInstance<UserSearchFilterBo>() ?? new();
+        }
+
+        public static void UpdateHistoryFilter(this ISession session, UserSearchFilterBo filter)
+        {
+            var key = SessionKeyNames.UserSearchHistoryFilter;
+            var exists = session.TryGetValue(key, out var _);
+            if (exists) session.Remove(key);
+            session.Set(key, Encoding.UTF8.GetBytes(filter.ToJsonString()));
         }
         public static async Task<MailItemBody?> GetMailBody(this UserBo user, IPermissionApi api, string messageId)
         {

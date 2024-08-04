@@ -1,5 +1,17 @@
 [
   {
+    "id": "3.2.3",
+    "notes": [
+      "web: setup history view and data retrieval"
+    ]
+  },
+  {
+    "id": "3.2.2",
+    "notes": [
+      "web: setup mailbox view and data retrieval"
+    ]
+  },
+  {
     "id": "3.2.1",
     "notes": [
       "core: inherit presentation assembly",

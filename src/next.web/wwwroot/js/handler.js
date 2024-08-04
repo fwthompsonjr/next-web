@@ -103,6 +103,26 @@ let theHandler = {
             }
         }
         maillist_init.setScroll();
+    },
+    "filter": function (instruction) {
+        if (!instruction) { return; }
+        const landing = "/data/filter-status"
+        let requested = {
+            "formName": String("history-filter"),
+            "payload": String(instruction)
+        };
+        $.ajax({
+            type: "POST",
+            url: landing,
+            data: JSON.stringify(requested),
+            dataType: "json",
+            success: function (resultData) {
+                const answer = theResponder.translate(resultData);
+                if (answer.statusCode != 200) { return; }
+                const target = document.location.href;
+                window.location = target;
+            }
+        });
     }
 }
 
@@ -149,6 +169,12 @@ let theMenu = {
         theMenu.config.children.forEach(c => $(c).addClass(dnone));
         $(childElement).removeClass(dnone);
         $(parent).addClass(selected);
+    },
+    "hide_children": function () {
+        const dnone = "d-none";
+        const selected = "menu-selected";
+        theMenu.config.parents.forEach(c => $(c).removeClass(selected));
+        theMenu.config.children.forEach(c => $(c).addClass(dnone));
     }
 }
 
@@ -159,3 +185,17 @@ function verifyAndPost(src, target) {
     document.location = "/logout";
 }
 window.jsHandler = theHandler;
+
+window.addEventListener('DOMContentLoaded', () => {
+    let queries = [
+        "body > div.box > div.customrow.content",
+        "body > div.box > div.customrow.header",
+        "body > div.box > div.customrow.footer"];
+    queries.forEach(query => {
+        let $element = $(query);
+        if ($element.length !== 0) {
+            $element.on('click', (function () { theMenu.hide_children(); }));
+            $element.on('mouseover', (function () { theMenu.hide_children(); }));
+        }
+    });
+});

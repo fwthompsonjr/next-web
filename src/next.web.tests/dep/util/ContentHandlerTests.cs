@@ -11,6 +11,7 @@ namespace next.web.tests.dep.util
         [InlineData("myaccount")]
         [InlineData("mysearch")]
         [InlineData("mailbox")]
+        [InlineData("viewhistory")]
         [InlineData("not-mapped", true)]
         public void HandlerCanGetContent(string name, bool expected = false)
         {
