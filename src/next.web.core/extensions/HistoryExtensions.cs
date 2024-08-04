@@ -33,6 +33,9 @@ namespace next.web.core.extensions
             var table = Map(data, out var rows);
             AppendTable(document, itemlist, table);
             AppendRestriction(document, restriction, restrictionstatus);
+            ApplyStatusFilter(document, filter);
+            ApplyCountyFilter(document, filter);
+            ApplyFilterCaption(document, filter);
             ToggleVisibility(nohistory, itemlist, itemview, countattribute, rows, document);
             return document.DocumentNode.OuterHtml;
         }
@@ -63,7 +66,54 @@ namespace next.web.core.extensions
             var node = doc.DocumentNode.SelectSingleNode(restrictionstatus);
             if (node != null) { node.Attributes["value"].Value = isrestricted; }
         }
+        public static void ApplyStatusFilter(HtmlDocument document, UserSearchFilterBo filter)
+        {
+            const string sel = "selected";
+            HtmlNode? combo = document.DocumentNode.SelectSingleNode(filterstatus);
+            if (!filter.HasFilter || combo == null) return;
+            var options = combo.SelectNodes("option").ToList();
+            options.ForEach(opt =>
+            {
+                var attribute = opt.Attributes.ToList().Find(x => x.Name.Equals(sel));
+                var ovalue = opt.Attributes["value"].Value;
+                if (int.TryParse(ovalue, out var id) && id == filter.Index && attribute == null)
+                {
+                    opt.Attributes.Add(sel, sel);
+                }
+                else
+                {
+                    if (attribute != null) { opt.Attributes.Remove(attribute); }
+                }
+            });
+        }
+        public static void ApplyCountyFilter(HtmlDocument document, UserSearchFilterBo filter)
+        {
+            const string sel = "selected";
+            HtmlNode? combo = document.DocumentNode.SelectSingleNode(filtercounty);
+            if (!filter.HasFilter || combo == null) return;
+            var options = combo.SelectNodes("option").ToList();
+            var search = string.IsNullOrEmpty(filter.County) ? "None" : filter.County;
+            options.ForEach(opt =>
+            {
+                var attribute = opt.Attributes.ToList().Find(x => x.Name.Equals(sel));
+                var ovalue = opt.Attributes["name"].Value;
+                if (search.Equals(ovalue, StringComparison.OrdinalIgnoreCase) && attribute == null)
+                {
+                    opt.Attributes.Add(sel, sel);
+                }
+                else
+                {
+                    if (attribute != null) { opt.Attributes.Remove(attribute); }
+                }
+            });
+        }
 
+        public static void ApplyFilterCaption(HtmlDocument document, UserSearchFilterBo filter)
+        {
+            HtmlNode? combo = document.DocumentNode.SelectSingleNode(filtercaption);
+            if (!filter.HasFilter || combo == null) return;
+            combo.InnerHtml = filter.GetCaption();
+        }
         private static void ToggleVisibility(
             string nohistory,
             string itemlist,
@@ -203,14 +253,15 @@ namespace next.web.core.extensions
                 5 => "Downloaded",
                 _ => string.Empty
             };
-            return progressText.Contains(find);
+            if (string.IsNullOrWhiteSpace(find)) return false;
+            return progressText.Contains(find, StringComparison.OrdinalIgnoreCase);
         }
 
         private static bool MatchCounty(string? countyText, string? countyCode)
         {
             if (string.IsNullOrWhiteSpace(countyCode)) return true;
             if (string.IsNullOrEmpty(countyText)) return false;
-            return countyText.Equals(countyCode);
+            return countyText.Equals(countyCode, StringComparison.OrdinalIgnoreCase);
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member tested from public method.")]
@@ -241,6 +292,7 @@ namespace next.web.core.extensions
         private const string itemview = "//*[@id='dv-history-item-preview']";
         private const string filterstatus = "//*[@id='cbo-search-history-filter']";
         private const string filtercounty = "//*[@id='cbo-search-history-county']";
+        private const string filtercaption = "//*[@id='search-history-heading-caption']";
         private const string restrictionstatus = "//*[@id='user-restriction-status']";
         private const string countattribute = "data-item-count";
         private static Dictionary<string, MySearchSubstitutions>? _substitions;

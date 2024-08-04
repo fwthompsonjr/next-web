@@ -142,6 +142,14 @@ namespace next.web.core.extensions
             var data = Encoding.UTF8.GetString(filter);
             return data.ToInstance<UserSearchFilterBo>() ?? new();
         }
+
+        public static void UpdateHistoryFilter(this ISession session, UserSearchFilterBo filter)
+        {
+            var key = SessionKeyNames.UserSearchHistoryFilter;
+            var exists = session.TryGetValue(key, out var _);
+            if (exists) session.Remove(key);
+            session.Set(key, Encoding.UTF8.GetBytes(filter.ToJsonString()));
+        }
         public static async Task<MailItemBody?> GetMailBody(this UserBo user, IPermissionApi api, string messageId)
         {
             if (!Guid.TryParse(messageId, out var _)) return null;

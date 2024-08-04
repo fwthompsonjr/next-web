@@ -173,3 +173,10 @@ div[name='search-history-grid'],
     position: relative;
     left: 50px;
 }
+tr.selected {
+    background: blanchedalmond;
+    color: dimgrey;
+}
+tr.selected:hover {
+    color: darkgray;
+}

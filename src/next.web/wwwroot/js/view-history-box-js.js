@@ -1,7 +1,7 @@
 function getName(find, source) {
     let kvp = source.split(',');
-    for (let k = 0; k < kvp.length; k++) {
-        let collection = kvp[k].split(':');
+    for (const element of kvp) {
+        let collection = element.split(':');
         for (let i = 0; i < collection.length; i++) {
             let itm = collection[i].trim();
             if (itm == find && i + 1 < collection.length) {
@@ -27,10 +27,10 @@ let historypager = {
         let rows = $(keyname).closest('table').find('tbody').find('tr[data-page-number]');
         let selectionMade = false;
         rows.each(function () {
-            $current = $(this);
-            attr = $current.attr("data-page-number");
-            rwid = $current.attr("data-row-number");
-            hscls = $current.attr("class");
+            const $current = $(this);
+            const attr = $current.attr("data-page-number");
+            const rwid = $current.attr("data-row-number");
+            const hscls = $current.attr("class");
             if (typeof hscls !== typeof undefined && hscls !== false) {
                 $current.removeAttr('class');
             }
@@ -66,10 +66,10 @@ let historybox = {
             const changeFunction = cbofxns[i];
             const find = findings[i];
             if (null == cbo) continue;
-            const keyvalue = getName(find, caption);
+            const keyvalue = String(getName(find, caption));
             cbo.removeAttribute(chg);
             cbo.selectedIndex = 0;
-            if (hasFilter && keyvalue.length >= 0) {
+            if (hasFilter && keyvalue.length !== 0) {
                 for (let o = 0; o < cbo.children.length; o++) {
                     let opt = cbo.children[o];
                     let name = opt.getAttribute('name');
@@ -85,26 +85,27 @@ let historybox = {
     "cbochanged": function () {
         const handler = window.jsHandler;
         const cboname = "cbo-search-history-filter";
+        const altcboname = "cbo-search-history-county";
         if (undefined === handler || null === handler || !(handler)) {
             return;
         }
         const cbo = document.getElementById(cboname);
+        const altcbo = document.getElementById(altcboname);
         if (null == cbo) return;
         let idx = parseInt(cbo.selectedIndex)
         let vlu = cbo.children[idx].getAttribute('value');
-        handler.filter(vlu);
+        let aidx = parseInt(altcbo.selectedIndex)
+        let avlu = altcbo.children[aidx].getAttribute('name');
+        if (avlu == 'None') avlu = '';
+        let obj = {
+            "statusId": vlu,
+            "countyName": avlu
+        }
+        let payload = JSON.stringify(obj);
+        handler.filter(payload);
     },
     "cbocountychanged": function () {
-        const handler = window.jsHandler;
-        const cboname = "cbo-search-history-county";
-        if (undefined === handler || null === handler || !(handler)) {
-            return;
-        }
-        const cbo = document.getElementById(cboname);
-        if (null == cbo) return;
-        let idx = parseInt(cbo.selectedIndex)
-        let vlu = cbo.children[idx].getAttribute('name');
-        handler.county(vlu);
+        historybox.cbochanged();
     },
     "invoice": function () {
         const handler = window.jsHandler;
@@ -146,6 +147,8 @@ let historybox = {
                 const $destitm = $("#dv-history-item-preview > table:nth-child(1)");
                 const uuindx = $rwitm.attr('search-uuid');
                 const sts = $rwitm.find(src_items[src_items.length - 1]).attr('class');
+                $("tr[data-row-number]").removeClass('selected');
+                $rwitm.addClass('selected');
                 for (let s = 0; s < src_items.length; s++) {
                     let txt = $rwitm.find(src_items[s]).text().trim();
                     $destitm.find(dest_items[s]).text(txt);
