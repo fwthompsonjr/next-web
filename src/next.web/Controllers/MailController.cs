@@ -19,11 +19,7 @@ namespace next.web.Controllers
             {
                 content = await session.GetMailBox(api, content);
             }
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = content
-            };
+            return GetResult(content);
         }
     }
 }

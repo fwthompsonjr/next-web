@@ -112,11 +112,29 @@ namespace next.web
         {
             const string find = "Oxford Oxford";
             const string replace = "Oxford";
+            const string mappers = "styles,scripts";
+            var maps = mappers.Split(',');
             while (content.Contains(find))
             {
                 content = content.Replace(find, replace);
             }
+            foreach (var map in maps)
+            {
+                var mapper = AppContainer.GetReMapper(map);
+                if (mapper == null) continue;
+                content = mapper.Map(content);
+            }
             return content;
+        }
+
+
+        protected static ContentResult GetResult(string content)
+        {
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                Content = RemoveHeaderDuplicate(content)
+            };
         }
     }
 }

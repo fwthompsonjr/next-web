@@ -42,19 +42,10 @@ namespace next.web.Controllers
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var content = await GetAuthenicatedPage(session, "mysearch");
-            var fallback = new ContentResult
-            {
-                ContentType = "text/html",
-                Content = RemoveHeaderDuplicate(content)
-            };
+            var fallback = GetResult(content);
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
             if (api == null) return fallback;
-
-            fallback = new ContentResult
-            {
-                ContentType = "text/html",
-                Content = RemoveHeaderDuplicate(content)
-            };
+            fallback = GetResult(content);
 
             var viewer = AppContainer.GetDocumentView(viewName);
             if (viewer == null) return fallback;
@@ -62,11 +53,7 @@ namespace next.web.Controllers
             content = viewer.SetMenu(content);
             content = viewer.SetChildMenu(content);
 
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = RemoveHeaderDuplicate(content)
-            };
+            return GetResult(content);
         }
 
         private async Task<IActionResult> GetHistory(SearchFilterNames searchFilter = SearchFilterNames.History)
@@ -79,11 +66,7 @@ namespace next.web.Controllers
             {
                 content = await session.GetHistory(api, content, searchFilter);
             }
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = content
-            };
+            return GetResult(content);
         }
     }
 }

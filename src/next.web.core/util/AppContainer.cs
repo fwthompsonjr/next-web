@@ -66,6 +66,13 @@ namespace next.web.core.util
             return svc;
         }
 
+        internal static IReMapContent? GetReMapper(string name)
+        {
+            if (ServiceProvider == null) Build();
+            var svc = ServiceProvider?.GetKeyedService<IReMapContent>(name);
+            return svc;
+        }
+
         private static string GetPermissionApi(IConfiguration configuration)
         {
             var keys = sourceArray.ToList();
@@ -126,6 +133,9 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IDocumentView>("mysearch-home", new DocumentViewSearch());
             services.AddKeyedSingleton<IDocumentView>("mysearch-active", new DocumentViewSearchActive());
             services.AddKeyedSingleton<IDocumentView>("mysearch-purchases", new DocumentViewSearchPurchases());
+            // content rewrite and beautify
+            services.AddKeyedSingleton<IReMapContent, ReMapStyles>("styles");
+            services.AddKeyedSingleton<IReMapContent, ReMapScripts>("scripts");
 
             // content formatters
             services.AddKeyedSingleton("default", defaultSanitizer);
