@@ -59,7 +59,7 @@ let jsSearchForm = {
         let handler = window.jsHandler;
         if (undefined === handler || null === handler || !(handler)) { return; }
         jsSearchForm.seticon(true);
-        var arr = jsSearchForm.fields;
+        const arr = jsSearchForm.fields;
         try {
             arr.forEach(a => $(a).attr(dsb, dsb));
             handler.submit("frm-search", submission);
@@ -95,7 +95,6 @@ let jsSearchForm = {
         $(jsSearchForm.controls.rows).each(function () {
             let $tr = $(this);
             if ($tr.is(":not(:hidden)")) {
-                const lb = $tr.find("label").text();
                 const cbo = $tr.find("select");
                 const cboption = cbo.find("option:selected");
                 if (null == cboption || null == cboption.val() || cboption.val().length == 0) {
@@ -131,7 +130,7 @@ let jsSearchForm = {
             emsg.removeClass("d-none");
             return false;
         }
-        var difference = Math.round(d2 - d1) / (1000 * 3600 * 24);
+        let difference = Math.round(d2 - d1) / (1000 * 3600 * 24);
         if (difference > 7) {
             $(jsSearchForm.controls.end).addClass(errclass);
             emsg.text('Date range should be (7) days or less.');
@@ -167,7 +166,7 @@ let jsSearchForm = {
         return true;
     },
     initialize: function () {
-        var jscontrols = jsSearchForm.controls;
+        let jscontrols = jsSearchForm.controls;
         $(jscontrols.state).attr("onchange", "jsSearchForm.stateChanged()");
         $(jscontrols.county).attr("onchange", "jsSearchForm.countyChanged()");
         $(jscontrols.button).attr("onclick", "jsSearchForm.onsubmitclicked()");
@@ -175,7 +174,7 @@ let jsSearchForm = {
         $(jscontrols.county).val("0");
         $(jscontrols.start).val(null);
         $(jscontrols.end).val(null);
-        var arr = jsSearchForm.fields;
+        let arr = jsSearchForm.fields;
         arr.push(jsSearchForm.controls.state);
         arr.push(jsSearchForm.controls.county);
         arr.push(jsSearchForm.controls.rows + " select");
@@ -184,7 +183,7 @@ let jsSearchForm = {
         arr.forEach(a => $(a).attr("onblur", "jsSearchForm.oncontrolleave()"));
     },
     oncontrolleave: function () {
-        var arr = jsSearchForm.fields;
+        let arr = jsSearchForm.fields;
         arr.forEach(a => $(a).removeClass('error'));
         let emsg = $(jsSearchForm.controls.errormessage);
         if (!emsg.hasClass("d-none")) { jsSearchForm.validate(); }
@@ -194,12 +193,12 @@ let jsSearchForm = {
         let cbo = $(jsSearchForm.controls.state);
         let cboCounty = $(jsSearchForm.controls.county);
         let rows = $(jsSearchForm.controls.rows);
-        var a = jsSearchForm.attributes;
+        let a = jsSearchForm.attributes;
         rows.attr(a.name, a.hide);
         cboCounty.val("0");
-        var options = cboCounty.find("option").not("[value='0']");
+        let options = cboCounty.find("option").not("[value='0']");
         options.attr(a.name, a.hide);
-        var attr = cbo.find("option:selected").attr(attrName);
+        let attr = cbo.find("option:selected").attr(attrName);
         if (null != attr && attr.length > 0) {
             let selector = "option[~0 = '~1']".replace('~0', attrName).replace('~1', attr);
             cboCounty.find(selector).removeAttr(a.name);
@@ -217,8 +216,8 @@ let jsSearchForm = {
         if (null == selector) return;
         let search = "option[dat-county-index='~0']".replace('~0', countyIndex);
         let children = selector.find(search);
-        var a = jsSearchForm.attributes;
-        var options = selector.find("option").not("[value='']");
+        let a = jsSearchForm.attributes;
+        let options = selector.find("option").not("[value='']");
         options.attr(a.name, a.hide);
         selector.val('');
         if (children == null || children.length == 0) return;
@@ -230,7 +229,7 @@ let jsSearchForm = {
         $(rwselector).removeAttr(a.name);
     },
     countyChanged: function () {
-        var a = jsSearchForm.attributes;
+        let a = jsSearchForm.attributes;
         let cbo = $(jsSearchForm.controls.county);
         let countyId = cbo.val();
         let rows = $(jsSearchForm.controls.rows);
@@ -245,6 +244,8 @@ let jsSearchForm = {
         });
     }
 }
+
+
 let jssearchviews = {
     "links": [
         "#nvlink-subcontent-search",
@@ -328,9 +329,9 @@ let jssearchpager = {
             jssearchpager.set_page(0);
             return;
         }
-        t_body = $('#cbo-subcontent-history-pager').closest('table').find('tbody');
-        i_pos = 0;
-        historyrows = t_body.find("tr[search-uuid]");
+        let t_body = $('#cbo-subcontent-history-pager').closest('table').find('tbody');
+        let i_pos = 0;
+        const historyrows = t_body.find("tr[search-uuid]");
         historyrows.each(function () {
             let rw = $(this);
             let currentStatus = rw.find('span[name="search-status"]').text().trim();
@@ -354,7 +355,6 @@ let jssearchpager = {
             case "Downloaded": return "text-primary";
             default: return null;
         }
-        return null;
     },
     bind_preview: function (jscontent) {
         const tableRowCount = 5;
@@ -369,31 +369,31 @@ let jssearchpager = {
             "<tr name='injected-content' data-row-number='0' data-page-number='0' data-position='even'>",
             $("#tr-subcontent-preview-data-template").html(),
             "</tr>");
-        tempjs = JSON.parse(jscontent);
+        let tempjs = JSON.parse(jscontent);
         if (tempjs.length === 0) {
-            $("#frm-search-history-submit-button").click();
+            $("#frm-search-history-submit-button").trigger("click");
             return;
         }
-        t_body = $(jssearchpager.pagers[2]).closest('table').find('tbody');
-        t_foot = $(jssearchpager.pagers[2]).closest('table').find('tfoot');
+        let t_body = $(jssearchpager.pagers[2]).closest('table').find('tbody');
+        let t_foot = $(jssearchpager.pagers[2]).closest('table').find('tfoot');
         t_foot.removeClass("d-none");
         $("#cbo-subcontent-preview-pager").html("");
         tempjs.forEach(function (j) {
             t_body.append(template);
         });
-        i_pos = 0;
+        let i_pos = 0;
         $("#tr-subcontent-preview-no-data").hide();
         $("#td-subcontent-preview-record-count").text("".concat("Records: ", tempjs.length));
         t_body.find("tr[name='injected-content']").each(function () {
-            rw = $(this);
-            pgnbr = Math.floor(i_pos / tableRowCount);
+            let rw = $(this);
+            const pgnbr = Math.floor(i_pos / tableRowCount);
             rw.attr("data-row-number", i_pos);
             rw.attr("data-page-number", pgnbr);
             rw.attr("data-position", i_pos % 2 == 0 ? "even" : "odd");
             temp_mapping.forEach(function (m) {
                 let src = tempjs[i_pos];
-                finder = "span[name='~0']".replace("~0", m.split('|')[0]);
-                fld = m.split('|')[1];
+                const finder = "span[name='~0']".replace("~0", m.split('|')[0]);
+                const fld = m.split('|')[1];
                 rw.find(finder).text(src[fld]);
                 if (m == "search-status") {
                     let clsStatus = jssearchpager.get_status_class(src[fld]);
@@ -405,16 +405,16 @@ let jssearchpager = {
             if (pgnbr > 0) { rw.hide(); }
             i_pos++;
         });
-        mxCount = tempjs.length;
-        for (var i = 0; i < mxCount; i += tableRowCount) {
-            pgnbr = Math.floor(i / tableRowCount);
-            mx = Math.min(i + tableRowCount, mxCount);
-            lbl = "".concat("Records: ", i + 1, " to ", mx);
-            var child = "<option value='~0'>~1</option>".replace("~0", pgnbr).replace("~1", lbl);
+        const mxCount = tempjs.length;
+        for (let i = 0; i < mxCount; i += tableRowCount) {
+            const pgnbr = Math.floor(i / tableRowCount);
+            const mx = Math.min(i + tableRowCount, mxCount);
+            const lbl = "".concat("Records: ", i + 1, " to ", mx);
+            const child = "<option value='~0'>~1</option>".replace("~0", pgnbr).replace("~1", lbl);
             $("#cbo-subcontent-preview-pager").append(child);
         }
         $("#cbo-subcontent-preview-pager").val(0);
-        $("#frm-search-history-submit-button").click();
+        $("#frm-search-history-submit-button").trigger("click");
     },
     "set_page": function (cboId) {
         let indx = parseInt(cboId);
@@ -423,14 +423,14 @@ let jssearchpager = {
         let pg = $(keyname).val();
         let rows = $(keyname).closest('table').find('tbody').find('tr[data-page-number]');
         rows.each(function () {
-            $current = $(this);
-            attr = $current.attr("data-page-number");
-            hscls = $current.attr("class");
+            let $current = $(this);
+            let attr = $current.attr("data-page-number");
+            let hscls = $current.attr("class");
             if (typeof hscls !== typeof undefined && hscls !== false) { $current.removeAttr('class'); }
             if (attr == pg) { $current.show() }
             else { $current.hide(); }
         });
-        $(keyname).blur();
+        $(keyname).trigger('blur');
     },
     "get_preview_details": function (rw) {
         return {
@@ -446,14 +446,12 @@ let jssearchpager = {
         jssearchpager.preview_reset();
         let indx = parseInt(row_index);
         if (isNaN(indx)) { return; }
-        let search = "".concat("tr[data-row-number='", row_index, "']");
         let historyName = jssearchpager.pagers[0];
         let $rows = $(historyName).closest('table').find('tbody').find('tr[data-page-number]');
         let $rw = $rows[indx];
         let search_index = $rw.getAttribute('search-uuid');
         if (undefined == search_index || null == search_index) { return; }
         let details = jssearchpager.get_preview_details($rw);
-        let keyname = jssearchpager.pagers[2];
         let heading = $(jssearchpager.pagers[2]).closest('table').find('thead');
         let searchStatus = details["search-status"];
         const headings = [
@@ -474,10 +472,10 @@ let jssearchpager = {
                 }
             }
         });
-        finder = "span[name='search-uuid']";
+        let finder = "span[name='search-uuid']";
         heading.find(finder).text(search_index);
         if (details["search-status"] != "Completed") {
-            $("#frm-search-history-submit-button").click();
+            $("#frm-search-history-submit-button").trigger("click");
             $("my-search-preview-bttn").attr("disabled", "disabled");
             return;
         } else {
@@ -485,24 +483,24 @@ let jssearchpager = {
         }
         let handler = window.jsHandler;
         if (undefined === handler || null === handler || !(handler)) { return; }
-        var obj = JSON.stringify({ "id": search_index });
+        let obj = JSON.stringify({ "id": search_index });
         handler.submit("frm-search-preview", obj);
     },
     get_invoice: function () {
         let customfind = "table[automationid='search-preview-table'] > thead > tr > td > span[name='search-status']";
         let txt = $(customfind).text();
         if (txt != "Completed") {
-            $("#my-search-preview-bttn-close").click();
+            $("#my-search-preview-bttn-close").trigger("click");
             return;
         }
         let handler = window.jsHandler;
         if (undefined === handler || null === handler || !(handler)) { return; }
         $("#my-search-preview-bttn").attr("disabled", "disabled");
-        var uuidx = $("table[automationid='search-preview-table']")
+        let uuidx = $("table[automationid='search-preview-table']")
             .find("tr[name='requested-date']")
             .find("span[name='search-uuid']")
             .text();
-        var obj = JSON.stringify({ "id": uuidx });
+        let obj = JSON.stringify({ "id": uuidx });
         handler.submit("frm-search-invoice", obj);
     }
 }
@@ -519,7 +517,7 @@ let jsPurchases = {
         handler.reload('mysearch-purchases');
     },
     open_file: function () {
-        var itm = document.getElementById('user-download-file-name');
+        let itm = document.getElementById('user-download-file-name');
         if (undefined === itm || null === item) { return; }
         let handler = window.jsHandler;
         if (undefined === handler || null === handler || !(handler)) { return; }
@@ -550,9 +548,9 @@ let jsPurchases = {
             jssearchpager.set_page(1);
             return;
         }
-        t_body = $('#cbo-subcontent-purchases-pager').closest('table').find('tbody');
-        i_pos = 0;
-        historyrows = t_body.find("tr[data-row-number]");
+        let t_body = $('#cbo-subcontent-purchases-pager').closest('table').find('tbody');
+        let i_pos = 0;
+        let historyrows = t_body.find("tr[data-row-number]");
         historyrows.each(function () {
             let rw = $(this);
             let currentStatus = rw.find('span[name="purchase-status"]').text().trim();
@@ -621,38 +619,38 @@ let jsPurchases = {
             "<tr name='injected-content' data-row-number='0' data-page-number='0' data-position='even'>",
             $("#tr-subcontent-purchases-data-template").html(),
             "</tr>");
-        tempjs = JSON.parse(jscontent);
+        let tempjs = JSON.parse(jscontent);
         if (tempjs.length === 0) {
             // show no data and exit 
             return;
         }
-        t_body = $(jssearchpager.pagers[1]).closest('table').find('tbody');
-        t_foot = $(jssearchpager.pagers[1]).closest('table').find('tfoot');
+        let t_body = $(jssearchpager.pagers[1]).closest('table').find('tbody');
+        let t_foot = $(jssearchpager.pagers[1]).closest('table').find('tfoot');
         t_foot.removeClass("d-none");
         $("#cbo-subcontent-purchases-pager").html("");
         tempjs.forEach(function (j) {
             t_body.append(template);
         });
-        i_pos = 0;
+        let i_pos = 0;
         $("#tr-subcontent-purchases-no-data").hide();
         $("#td-subcontent-purchases-record-count").text("".concat("Records: ", tempjs.length));
         t_body.find("tr[name='injected-content']").each(function () {
-            rw = $(this);
-            pgnbr = Math.floor(i_pos / tableRowCount);
+            let rw = $(this);
+            let pgnbr = Math.floor(i_pos / tableRowCount);
             rw.attr("data-row-number", i_pos);
             rw.attr("data-page-number", pgnbr);
             rw.attr("data-position", i_pos % 2 == 0 ? "even" : "odd");
             temp_mapping.forEach(function (m) {
                 let src = tempjs[i_pos];
-                finder = "span[name='~0']".replace("~0", m.split('|')[0]);
-                fld = m.split('|')[1];
+                let finder = "span[name='~0']".replace("~0", m.split('|')[0]);
+                let fld = m.split('|')[1];
                 rw.find(finder).text(src[fld]);
                 if (fld == "price") {
-                    usprice = USDollar.format(src[fld]);
+                    let usprice = USDollar.format(src[fld]);
                     rw.find(finder).text(usprice);
                 }
                 if (fld == 'purchaseDate') {
-                    nwdate = src[fld].replace('T', '<br>');
+                    let nwdate = src[fld].replace('T', '<br>');
                     rw.find(finder).html(nwdate);
                 }
                 if (fld == "statusText") {
@@ -665,12 +663,12 @@ let jsPurchases = {
             if (pgnbr > 0) { rw.hide(); }
             i_pos++;
         });
-        mxCount = tempjs.length;
-        for (var i = 0; i < mxCount; i += tableRowCount) {
-            pgnbr = Math.floor(i / tableRowCount);
-            mx = Math.min(i + tableRowCount, mxCount);
-            lbl = "".concat("Records: ", i + 1, " to ", mx);
-            var child = "<option value='~0'>~1</option>".replace("~0", pgnbr).replace("~1", lbl);
+        let mxCount = tempjs.length;
+        for (let i = 0; i < mxCount; i += tableRowCount) {
+            let pgnbr = Math.floor(i / tableRowCount);
+            let mx = Math.min(i + tableRowCount, mxCount);
+            let lbl = "".concat("Records: ", i + 1, " to ", mx);
+            let child = "<option value='~0'>~1</option>".replace("~0", pgnbr).replace("~1", lbl);
             $("#cbo-subcontent-purchases-pager").append(child);
         }
         $("#cbo-subcontent-purchases-pager").val(0);
@@ -678,7 +676,7 @@ let jsPurchases = {
             $("#purchases-history-00").removeClass("d-none");
             $("#purchases-history-00").hide();
         }
-        t_body.find("tr[name='injected-content']").click(function () {
+        t_body.find("tr[name='injected-content']").on('click', function () {
             const dlb = "disabled";
             const dn = "d-none";
             const rwname = "#dv-purchases-history-filter";
@@ -702,24 +700,24 @@ let jsPurchases = {
             $("#purchases-history-01").hide();
             $("#frm-purchase-history-download-button").removeAttr(dlb);
             $("#formFile").val('');
-            aa = txt.indexOf("from");
-            aname = txt.substr(0, aa).trim().split(':')[1].trim();
-            afrom = txt.substr(aa).trim();
-            inbr = $rwi.find("span[name='external-uuid']").text();
+            let aa = txt.indexOf("from");
+            let aname = txt.substring(0, aa).trim().split(':')[1].trim();
+            let afrom = txt.substring(aa).trim();
+            let inbr = $rwi.find("span[name='external-uuid']").text();
             let nwvales = [
                 aname,
                 afrom,
                 inbr,
                 $rwi.find("span[name='external-uuid']").text()
             ];
-            for (var ii = 0; ii < nwvales.length; ii++) {
-                fnd = displays[ii];
+            for (let ii = 0; ii < nwvales.length; ii++) {
+                let fnd = displays[ii];
                 $(fnd).val(nwvales[ii]);
             }
             $("#dv-subcontent-purchases div.card-footer").hide();
             $("#purchases-history-00").fadeIn(500);
-        });
-    },
+        })
+    }
 }
 jsSearchForm.initialize();
 jsPurchases.initialize();

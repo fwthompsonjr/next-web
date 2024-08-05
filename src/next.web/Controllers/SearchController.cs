@@ -53,20 +53,26 @@ namespace next.web.Controllers
         {
             var session = HttpContext.Session;
             var content = await GetAuthenicatedPage(session, "mysearch");
-            var viewer = AppContainer.GetDocumentView(viewName);
-            if (viewer == null)
+            var fallback = new ContentResult
             {
-                return new ContentResult
-                {
-                    ContentType = "text/html",
-                    Content = RemoveHeaderDuplicate(content)
-                };
-            }
+                ContentType = "text/html",
+                Content = RemoveHeaderDuplicate(content)
+            };
+            if (!IsSessionAuthenicated(session)) return fallback;
+            var viewer = AppContainer.GetDocumentView(viewName);
+            if (viewer == null) return fallback;
 
             content = viewer.SetMenu(content);
             content = viewer.SetChildMenu(content);
             content = viewer.SetTab(content);
-
+            fallback = new ContentResult
+            {
+                ContentType = "text/html",
+                Content = RemoveHeaderDuplicate(content)
+            };
+            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
+            if (api == null) return fallback;
+            content = await session.GetPurchases(api, content);
             return new ContentResult
             {
                 ContentType = "text/html",
