@@ -50,19 +50,19 @@
 	</div>
 </div>
 <div id="my-search-options" name="app-sub-menu" class="d-none">
-	<div class="row">
+	<div name="sub-menu-search-search" class="row">
 		<a href="/search">
 			<i class="bi bi-search" title="Search"></i>
 			<span name="child-menu-text">Search</span>
 		</a>
 	</div>
-	<div class="row">
+	<div name="sub-menu-search-active" class="row">
 		<a href="/search/active">
 			<i class="bi bi-search-heart" title="Active Searches"></i>
 			<span name="child-menu-text">Active Searches</span>
 		</a>
 	</div>
-	<div class="row">
+	<div name="sub-menu-search-purchases" class="row">
 		<a href="/search/purchases">
 			<i class="bi bi-receipt" title="Purchases"></i>
 			<span name="child-menu-text">My Purchases</span>

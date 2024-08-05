@@ -11,27 +11,21 @@ namespace next.web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var session = HttpContext.Session;
-            var content = await GetAuthenicatedPage(session, "myaccount");
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = content
-            };
+            return await GetPage("mysearch-home");
         }
 
         [HttpGet]
         [Route("active")]
         public async Task<IActionResult> Active()
         {
-            return await Index();
+            return await GetPage("mysearch-active");
         }
 
         [HttpGet]
         [Route("purchases")]
         public async Task<IActionResult> Purchases()
         {
-            return await Index();
+            return await GetPage("mysearch-purchases");
         }
 
 
@@ -51,6 +45,32 @@ namespace next.web.Controllers
             {
                 ContentType = "text/html",
                 Content = content
+            };
+        }
+
+
+        private async Task<IActionResult> GetPage(string viewName)
+        {
+            var session = HttpContext.Session;
+            var content = await GetAuthenicatedPage(session, "mysearch");
+            var viewer = AppContainer.GetDocumentView(viewName);
+            if (viewer == null)
+            {
+                return new ContentResult
+                {
+                    ContentType = "text/html",
+                    Content = RemoveHeaderDuplicate(content)
+                };
+            }
+
+            content = viewer.SetMenu(content);
+            content = viewer.SetChildMenu(content);
+            content = viewer.SetTab(content);
+
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                Content = RemoveHeaderDuplicate(content)
             };
         }
     }
