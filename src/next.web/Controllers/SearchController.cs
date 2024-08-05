@@ -11,27 +11,21 @@ namespace next.web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var session = HttpContext.Session;
-            var content = await GetAuthenicatedPage(session, "myaccount");
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = content
-            };
+            return await GetPage("mysearch-home");
         }
 
         [HttpGet]
         [Route("active")]
         public async Task<IActionResult> Active()
         {
-            return await Index();
+            return await GetHistory(SearchFilterNames.Active);
         }
 
         [HttpGet]
         [Route("purchases")]
         public async Task<IActionResult> Purchases()
         {
-            return await Index();
+            return await GetHistory(SearchFilterNames.Purchases);
         }
 
 
@@ -39,19 +33,40 @@ namespace next.web.Controllers
         [Route("history")]
         public async Task<IActionResult> History()
         {
+            return await GetHistory();
+        }
+
+
+        private async Task<IActionResult> GetPage(string viewName)
+        {
+            var session = HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) return Redirect("/home");
+            var content = await GetAuthenicatedPage(session, "mysearch");
+            var fallback = GetResult(content);
+            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
+            if (api == null) return fallback;
+            fallback = GetResult(content);
+
+            var viewer = AppContainer.GetDocumentView(viewName);
+            if (viewer == null) return fallback;
+
+            content = viewer.SetMenu(content);
+            content = viewer.SetChildMenu(content);
+
+            return GetResult(content);
+        }
+
+        private async Task<IActionResult> GetHistory(SearchFilterNames searchFilter = SearchFilterNames.History)
+        {
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var content = await GetAuthenicatedPage(session, "viewhistory");
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
             if (api != null)
             {
-                content = await session.GetHistory(api, content);
+                content = await session.GetHistory(api, content, searchFilter);
             }
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = content
-            };
+            return GetResult(content);
         }
     }
 }

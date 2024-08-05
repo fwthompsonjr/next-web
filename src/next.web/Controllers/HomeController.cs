@@ -24,11 +24,7 @@ namespace next.web.Controllers
             {
                 content = home.Sanitize(content);
             }
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = RemoveHeaderDuplicate(content)
-            };
+            return GetResult(content);
         }
 
         public IActionResult Privacy()
@@ -46,11 +42,7 @@ namespace next.web.Controllers
             {
                 content = home.Sanitize(content);
             }
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = RemoveHeaderDuplicate(content)
-            };
+            return GetResult(content);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

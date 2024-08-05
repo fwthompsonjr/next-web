@@ -38,22 +38,14 @@ namespace next.web.Controllers
             var viewer = AppContainer.GetDocumentView(viewName);
             if (viewer == null)
             {
-                return new ContentResult
-                {
-                    ContentType = "text/html",
-                    Content = RemoveHeaderDuplicate(content)
-                };
+                return GetResult(content);
             }
 
             content = viewer.SetMenu(content);
             content = viewer.SetChildMenu(content);
             content = viewer.SetTab(content);
 
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = RemoveHeaderDuplicate(content)
-            };
+            return GetResult(content);
         }
     }
 }

@@ -1,0 +1,22 @@
+
+<tr id="tr-user-interaction-purchased" class="d-none" name="user-interaction" data-context="purchased">
+	<td style="padding: 20px" colspan="2">
+		<hr size="1" noshade="">
+		<p>
+			Your request has been purchased successfully.
+		</p>
+		<br>
+		<p>
+			Click below to download this search.
+		</p>
+		<div class="d-flex justify-content-between">
+			<center style="width: 100%">
+				<button id="btn-user-interaction-download" name="bttn-download" class="btn btn-primary w-75 m-2" onclick="javascript:void(0)" disabled="disabled">
+					<i id="bttn-download-icon" class="bi bi-box-arrow-in-right"></i>
+					<i id="bttn-download-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>
+					<span>Download</span>
+				</button>
+			</center>
+		</div>
+	</td>
+</tr>

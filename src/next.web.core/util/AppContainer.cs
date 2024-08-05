@@ -66,6 +66,13 @@ namespace next.web.core.util
             return svc;
         }
 
+        internal static IReMapContent? GetReMapper(string name)
+        {
+            if (ServiceProvider == null) Build();
+            var svc = ServiceProvider?.GetKeyedService<IReMapContent>(name);
+            return svc;
+        }
+
         private static string GetPermissionApi(IConfiguration configuration)
         {
             var keys = sourceArray.ToList();
@@ -123,6 +130,12 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IDocumentView>("account-home", new DocumentViewAccount());
             services.AddKeyedSingleton<IDocumentView>("account-profile", new DocumentViewProfile());
             services.AddKeyedSingleton<IDocumentView>("account-permissions", new DocumentViewPermissions());
+            services.AddKeyedSingleton<IDocumentView>("mysearch-home", new DocumentViewSearch());
+            services.AddKeyedSingleton<IDocumentView>("mysearch-active", new DocumentViewSearchActive());
+            services.AddKeyedSingleton<IDocumentView>("mysearch-purchases", new DocumentViewSearchPurchases());
+            // content rewrite and beautify
+            services.AddKeyedSingleton<IReMapContent, ReMapStyles>("styles");
+            services.AddKeyedSingleton<IReMapContent, ReMapScripts>("scripts");
 
             // content formatters
             services.AddKeyedSingleton("default", defaultSanitizer);
@@ -131,6 +144,7 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IContentSanitizer>("myaccount", new ContentSanitizerMyAccount());
             services.AddKeyedSingleton<IContentSanitizer>("mailbox", new ContentSanitizerMailBox());
             services.AddKeyedSingleton<IContentSanitizer>("viewhistory", new ContentSanitizerHistory());
+            services.AddKeyedSingleton<IContentSanitizer>("mysearch", new ContentSanitizerSearch());
             // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
             var accounts = new List<string>();

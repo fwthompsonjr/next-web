@@ -1,77 +1,79 @@
-<div id="app-side-menu-border" name="left-menu-border"></div>
-<div id="app-side-menu" name="left-menu">
-	<div data-position-index="0" name="left-menu-icon" class="row">
-		<i class="bi bi-three-dots"></i>
+<div id="menu-container" name="menu-container">
+	<div id="app-side-menu-border" name="left-menu-border"></div>
+	<div id="app-side-menu" name="left-menu">
+		<div data-position-index="0" name="left-menu-icon" class="row">
+			<i class="bi bi-three-dots"></i>
+		</div>
+		<div data-position-index="1" name="left-menu-home" class="row">
+			<a class="text-primary" href="/home">
+				<i class="bi bi-house" title="Home"></i>
+			</a>
+		</div>
+		<div id="my-account-parent-option" data-position-index="10" name="left-menu-account" class="row d-none">
+			<a class="text-primary" href="javascript:void(0);" onclick="javascript:theMenu.show_child(0);">
+				<i class="bi bi-person" title="My Account"></i>
+			</a>
+		</div>
+		<div id="my-search-parent-option" data-position-index="20" name="left-menu-account" class="row d-none">
+			<a class="text-primary" href="javascript:void(0);" onclick="javascript:theMenu.show_child(1);">
+				<i class="bi bi-binoculars" title="Search"></i>
+			</a>
+		</div>
+		<div data-position-index="30" name="left-menu-account" class="row d-none">
+			<a class="text-primary" href="/correspondence">
+				<i class="bi bi-mailbox" title="Messages"></i>
+			</a>
+		</div>
+		<div data-position-index="100" name="left-menu-exit" class="row">
+			<a class="text-primary" href="/logout">
+				<i class="bi bi-box-arrow-left" title="Exit"></i>
+			</a>
+		</div>
 	</div>
-	<div data-position-index="1" name="left-menu-home" class="row">
-		<a href="/home">
-			<i class="bi bi-house" title="Home"></i>
-		</a>
+	<div id="my-account-options" name="app-sub-menu" class="d-none">
+		<div name="sub-menu-account-home" class="row">
+			<a class="text-primary" href="/my-account/home">
+				<i class="bi bi-person" title="Account"></i>
+				<span name="child-menu-text">Account</span>
+			</a>
+		</div>
+		<div name="sub-menu-account-profile" class="row">
+			<a class="text-primary" href="/my-account/profile">
+				<i class="bi bi-person-gear" title="Profile"></i>
+				<span name="child-menu-text">Profile</span>
+			</a>
+		</div>
+		<div name="sub-menu-account-permissions" class="row">
+			<a class="text-primary" href="/my-account/permissions">
+				<i class="bi bi-person-lock" title="Permissions"></i>
+				<span name="child-menu-text">Permissions</span>
+			</a>
+		</div>
 	</div>
-	<div id="my-account-parent-option" data-position-index="10" name="left-menu-account" class="row d-none">
-		<a href="javascript:void(0);" onclick="javascript:theMenu.show_child(0);">
-			<i class="bi bi-person" title="My Account"></i>
-		</a>
-	</div>
-	<div id="my-search-parent-option" data-position-index="20" name="left-menu-account" class="row d-none">
-		<a href="javascript:void(0);" onclick="javascript:theMenu.show_child(1);">
-			<i class="bi bi-binoculars" title="Search"></i>
-		</a>
-	</div>
-	<div data-position-index="30" name="left-menu-account" class="row d-none">
-		<a href="/correspondence">
-			<i class="bi bi-mailbox" title="Messages"></i>
-		</a>
-	</div>
-	<div data-position-index="100" name="left-menu-exit" class="row">
-		<a href="/logout">
-			<i class="bi bi-box-arrow-left" title="Exit"></i>
-		</a>
-	</div>
-</div>
-<div id="my-account-options" name="app-sub-menu" class="d-none">
-	<div name="sub-menu-account-home" class="row">
-		<a href="/my-account/home">
-			<i class="bi bi-person" title="Account"></i>
-			<span name="child-menu-text">Account</span>
-		</a>
-	</div>
-	<div name="sub-menu-account-profile" class="row">
-		<a href="/my-account/profile">
-			<i class="bi bi-person-gear" title="Profile"></i>
-			<span name="child-menu-text">Profile</span>
-		</a>
-	</div>
-	<div name="sub-menu-account-permissions" class="row">
-		<a href="/my-account/permissions">
-			<i class="bi bi-person-lock" title="Permissions"></i>
-			<span name="child-menu-text">Permissions</span>
-		</a>
-	</div>
-</div>
-<div id="my-search-options" name="app-sub-menu" class="d-none">
-	<div class="row">
-		<a href="/search">
-			<i class="bi bi-search" title="Search"></i>
-			<span name="child-menu-text">Search</span>
-		</a>
-	</div>
-	<div class="row">
-		<a href="/search/active">
-			<i class="bi bi-search-heart" title="Active Searches"></i>
-			<span name="child-menu-text">Active Searches</span>
-		</a>
-	</div>
-	<div class="row">
-		<a href="/search/purchases">
-			<i class="bi bi-receipt" title="Purchases"></i>
-			<span name="child-menu-text">My Purchases</span>
-		</a>
-	</div>
-	<div class="row">
-		<a href="/search/history">
-			<i class="bi bi-clock-history" title="History"></i>
-			<span name="child-menu-text">My History</span>
-		</a>
+	<div id="my-search-options" name="app-sub-menu" class="d-none">
+		<div name="sub-menu-search-search" class="row">
+			<a class="text-primary" href="/search">
+				<i class="bi bi-search" title="Search"></i>
+				<span name="child-menu-text">Search</span>
+			</a>
+		</div>
+		<div name="sub-menu-search-active" class="row">
+			<a class="text-primary" href="/search/active">
+				<i class="bi bi-search-heart" title="Active Searches"></i>
+				<span name="child-menu-text">Active Searches</span>
+			</a>
+		</div>
+		<div name="sub-menu-search-purchases" class="row">
+			<a class="text-primary" href="/search/purchases">
+				<i class="bi bi-receipt" title="Purchases"></i>
+				<span name="child-menu-text">My Purchases</span>
+			</a>
+		</div>
+		<div class="row">
+			<a class="text-primary" href="/search/history">
+				<i class="bi bi-clock-history" title="History"></i>
+				<span name="child-menu-text">My History</span>
+			</a>
+		</div>
 	</div>
 </div>

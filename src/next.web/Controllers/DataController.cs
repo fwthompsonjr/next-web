@@ -76,6 +76,7 @@ namespace next.web.Controllers
         [HttpPost("filter-status")]
         public IActionResult Filter(FormSubmissionModel model)
         {
+            const StringComparison oic = StringComparison.OrdinalIgnoreCase;
             var session = HttpContext.Session;
             var response = FormResponses.GetDefault(null);
             var authenicated = IsSessionAuthenicated(session);
@@ -93,12 +94,16 @@ namespace next.web.Controllers
             }
             var recordId = model.Payload.ToInstance<FormStatusFilter>();
             if (recordId == null) { return errResponse; }
-            var filter = session.RetrieveHistoryFilter();
+            var filterType = SearchFilterNames.History;
+            if (recordId.Heading.Contains("active", oic)) filterType = SearchFilterNames.Active;
+            if (recordId.Heading.Contains("purchase", oic)) filterType = SearchFilterNames.Purchases;
+            var filterName = Enum.GetName(filterType) ?? "history";
+            var filter = session.RetrieveFilter(filterType);
             filter.Index = recordId.StatusId;
             filter.County = recordId.CountyName;
-            session.UpdateHistoryFilter(filter);
+            session.UpdateFilter(filter, filterType);
             response.StatusCode = 200;
-            response.Message = $"Please apply filter. Status: {recordId.StatusId}. County: {recordId.CountyName}";
+            response.Message = $"Please apply filter: {filterName}. Status: {recordId.StatusId}. County: {recordId.CountyName}";
             return Json(response);
         }
     }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using next.web.core.models;
 using next.web.core.util;
+using System;
 using System.Text;
 
 namespace next.web.core.extensions
@@ -18,9 +19,17 @@ namespace next.web.core.extensions
             session.Set(SessionKeyNames.UserBo, Encoding.UTF8.GetBytes(json));
             var filter = new UserSearchFilterBo();
             json = JsonConvert.SerializeObject(filter);
-            exists = session.Keys.ToList().Exists(x => x == SessionKeyNames.UserSearchHistoryFilter);
-            if (exists) { session.Remove(SessionKeyNames.UserSearchHistoryFilter); }
-            session.Set(SessionKeyNames.UserSearchHistoryFilter, Encoding.UTF8.GetBytes(json));
+            var filterNames = new List<string> { 
+                SessionKeyNames.UserSearchHistoryFilter,
+                SessionKeyNames.UserSearchPurchaseFilter,
+                SessionKeyNames.UserSearchActiveFilter
+            };
+            filterNames.ForEach(keyName =>
+            {
+                exists = session.Keys.ToList().Exists(x => x == keyName);
+                if (exists) { session.Remove(keyName); }
+                session.Set(keyName, Encoding.UTF8.GetBytes(json));
+            });
         }
 
         public static async Task SaveMail(this UserContextBo userbo, ISession session, IPermissionApi api)
@@ -94,6 +103,24 @@ namespace next.web.core.extensions
             var json = JsonConvert.SerializeObject(timed);
             session.Set(SessionKeyNames.UserSearchHistory, Encoding.UTF8.GetBytes(json));
         }
+
+        public static async Task SaveSearchPurchases(this UserContextBo userbo, ISession session, IPermissionApi api)
+        {
+            var user = userbo.ToUserBo();
+            var payload = user.Applications?.FirstOrDefault() ?? new();
+            var response = await api.Post("search-get-purchases", payload, user);
+            var searches = new List<MyPurchaseBo>();
+            if (response != null && response.StatusCode == 200)
+            {
+                var temp = response.Message.ToInstance<List<MyPurchaseBo>>();
+                if (temp != null) { searches = temp; }
+            }
+            var timed = new UserTimedCollection<List<MyPurchaseBo>>(
+                searches, TimeSpan.FromSeconds(60));
+            var json = JsonConvert.SerializeObject(timed);
+            session.Set(SessionKeyNames.UserSearchPurchases, Encoding.UTF8.GetBytes(json));
+        }
+
         public static async Task<List<MailItem>> RetrieveMail(this ISession session, IPermissionApi api)
         {
             var key = SessionKeyNames.UserMailbox;
@@ -126,10 +153,25 @@ namespace next.web.core.extensions
             var data = session.GetTimedItem<List<UserSearchQueryBo>>(key);
             return data ?? [];
         }
-
-        public static UserSearchFilterBo RetrieveHistoryFilter(this ISession session)
+        public static async Task<List<MyPurchaseBo>> RetrievePurchases(this ISession session, IPermissionApi api)
         {
-            var key = SessionKeyNames.UserSearchHistoryFilter;
+            var key = SessionKeyNames.UserSearchPurchases;
+            var userbo = session.GetContextUser();
+            if (userbo == null) { return []; }
+            var exists = session.IsItemExpired<List<MyPurchaseBo>>(key);
+            if (!exists) { await userbo.SaveSearchPurchases(session, api); }
+            var data = session.GetTimedItem<List<MyPurchaseBo>>(key);
+            return data ?? [];
+        }
+
+        public static UserSearchFilterBo RetrieveFilter(this ISession session, SearchFilterNames searchFilter = SearchFilterNames.History)
+        {
+            var key = searchFilter switch
+            {
+                SearchFilterNames.Purchases => SessionKeyNames.UserSearchPurchaseFilter,
+                SearchFilterNames.Active => SessionKeyNames.UserSearchActiveFilter,
+                _ => SessionKeyNames.UserSearchHistoryFilter
+            };
             var userbo = session.GetContextUser();
             if (userbo == null) { return new(); }
             var exists = session.TryGetValue(key, out var filter);
@@ -143,9 +185,14 @@ namespace next.web.core.extensions
             return data.ToInstance<UserSearchFilterBo>() ?? new();
         }
 
-        public static void UpdateHistoryFilter(this ISession session, UserSearchFilterBo filter)
+        public static void UpdateFilter(this ISession session, UserSearchFilterBo filter, SearchFilterNames searchFilter = SearchFilterNames.History)
         {
-            var key = SessionKeyNames.UserSearchHistoryFilter;
+            var key = searchFilter switch
+            {
+                SearchFilterNames.Purchases => SessionKeyNames.UserSearchPurchaseFilter,
+                SearchFilterNames.Active => SessionKeyNames.UserSearchActiveFilter,
+                _ => SessionKeyNames.UserSearchHistoryFilter
+            };
             var exists = session.TryGetValue(key, out var _);
             if (exists) session.Remove(key);
             session.Set(key, Encoding.UTF8.GetBytes(filter.ToJsonString()));

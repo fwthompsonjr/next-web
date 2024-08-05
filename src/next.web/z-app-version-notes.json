@@ -1,5 +1,11 @@
 [
   {
+    "id": "3.2.4",
+    "notes": [
+      "web: setup search purchases view"
+    ]
+  },
+  {
     "id": "3.2.3",
     "notes": [
       "web: setup history view and data retrieval"
