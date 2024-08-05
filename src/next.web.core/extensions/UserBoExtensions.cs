@@ -19,7 +19,7 @@ namespace next.web.core.extensions
             session.Set(SessionKeyNames.UserBo, Encoding.UTF8.GetBytes(json));
             var filter = new UserSearchFilterBo();
             json = JsonConvert.SerializeObject(filter);
-            var filterNames = new List<string> { 
+            var filterNames = new List<string> {
                 SessionKeyNames.UserSearchHistoryFilter,
                 SessionKeyNames.UserSearchPurchaseFilter,
                 SessionKeyNames.UserSearchActiveFilter
@@ -47,7 +47,7 @@ namespace next.web.core.extensions
             collection.ForEach(c =>
             {
                 var createDate = c.CreateDate.HasValue ?
-                    c.CreateDate.Value.ToString("f").ToDdd() 
+                    c.CreateDate.Value.ToString("f").ToDdd()
                     : " - ";
                 var toAddress = string.IsNullOrEmpty(c.ToAddress) ? string.Empty : c.ToAddress.Replace(gt, gtp).Replace(lt, ltp);
                 var fromAddress = string.IsNullOrEmpty(c.FromAddress) ? string.Empty : c.FromAddress.Replace(gt, gtp).Replace(lt, ltp);
@@ -76,8 +76,8 @@ namespace next.web.core.extensions
                 ThisMonth = 5,
                 ThisYear = 5,
             };
-            if (response != null && response.StatusCode == 200) 
-            { 
+            if (response != null && response.StatusCode == 200)
+            {
                 var temp = response.Message.ToInstance<MySearchRestrictions>();
                 if (temp != null) { restriction = temp; }
             }
@@ -175,8 +175,8 @@ namespace next.web.core.extensions
             var userbo = session.GetContextUser();
             if (userbo == null) { return new(); }
             var exists = session.TryGetValue(key, out var filter);
-            if (!exists) 
-            { 
+            if (!exists)
+            {
                 var tmp = new UserSearchFilterBo();
                 session.Set(key, Encoding.UTF8.GetBytes(tmp.ToJsonString()));
                 return tmp;

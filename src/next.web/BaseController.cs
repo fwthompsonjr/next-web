@@ -40,7 +40,7 @@ namespace next.web
         private static string AlterMenuBorder(string content, string pageName)
         {
             const string clsname = "alternate-border";
-            var alterations = new List<string>() { "mailbox", "viewhistory"};
+            var alterations = new List<string>() { "mailbox", "viewhistory" };
             if (!alterations.Contains(pageName)) return content;
             var doc = content.ToHtml();
             var border = doc.DocumentNode.SelectSingleNode("//*[@id='app-side-menu-border']");
