@@ -18,14 +18,14 @@ namespace next.web.Controllers
         [Route("active")]
         public async Task<IActionResult> Active()
         {
-            return await GetPage("mysearch-active");
+            return await GetHistory(SearchFilterNames.Active);
         }
 
         [HttpGet]
         [Route("purchases")]
         public async Task<IActionResult> Purchases()
         {
-            return await GetPage("mysearch-purchases");
+            return await GetHistory(SearchFilterNames.Purchases);
         }
 
 
@@ -33,50 +33,56 @@ namespace next.web.Controllers
         [Route("history")]
         public async Task<IActionResult> History()
         {
-            var session = HttpContext.Session;
-            if (!IsSessionAuthenicated(session)) return Redirect("/home");
-            var content = await GetAuthenicatedPage(session, "viewhistory");
-            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
-            if (api != null)
-            {
-                content = await session.GetHistory(api, content);
-            }
-            return new ContentResult
-            {
-                ContentType = "text/html",
-                Content = content
-            };
+            return await GetHistory();
         }
 
 
         private async Task<IActionResult> GetPage(string viewName)
         {
             var session = HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var content = await GetAuthenicatedPage(session, "mysearch");
             var fallback = new ContentResult
             {
                 ContentType = "text/html",
                 Content = RemoveHeaderDuplicate(content)
             };
-            if (!IsSessionAuthenicated(session)) return fallback;
-            var viewer = AppContainer.GetDocumentView(viewName);
-            if (viewer == null) return fallback;
+            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
+            if (api == null) return fallback;
 
-            content = viewer.SetMenu(content);
-            content = viewer.SetChildMenu(content);
-            content = viewer.SetTab(content);
             fallback = new ContentResult
             {
                 ContentType = "text/html",
                 Content = RemoveHeaderDuplicate(content)
             };
-            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
-            if (api == null) return fallback;
-            content = await session.GetPurchases(api, content);
+
+            var viewer = AppContainer.GetDocumentView(viewName);
+            if (viewer == null) return fallback;
+
+            content = viewer.SetMenu(content);
+            content = viewer.SetChildMenu(content);
+
             return new ContentResult
             {
                 ContentType = "text/html",
                 Content = RemoveHeaderDuplicate(content)
+            };
+        }
+
+        private async Task<IActionResult> GetHistory(SearchFilterNames searchFilter = SearchFilterNames.History)
+        {
+            var session = HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) return Redirect("/home");
+            var content = await GetAuthenicatedPage(session, "viewhistory");
+            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
+            if (api != null)
+            {
+                content = await session.GetHistory(api, content, searchFilter);
+            }
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                Content = content
             };
         }
     }

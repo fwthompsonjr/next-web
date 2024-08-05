@@ -84,13 +84,16 @@ let historybox = {
     },
     "cbochanged": function () {
         const handler = window.jsHandler;
+        const titlename = "search-history-sub-header";
         const cboname = "cbo-search-history-filter";
         const altcboname = "cbo-search-history-county";
         if (undefined === handler || null === handler || !(handler)) {
             return;
         }
+        const title = document.getElementById(titlename);
         const cbo = document.getElementById(cboname);
         const altcbo = document.getElementById(altcboname);
+        const heading = null == title ? "history" : title.innerText;
         if (null == cbo) return;
         let idx = parseInt(cbo.selectedIndex)
         let vlu = cbo.children[idx].getAttribute('value');
@@ -99,7 +102,8 @@ let historybox = {
         if (avlu == 'None') avlu = '';
         let obj = {
             "statusId": vlu,
-            "countyName": avlu
+            "countyName": avlu,
+            "heading": heading
         }
         let payload = JSON.stringify(obj);
         handler.filter(payload);

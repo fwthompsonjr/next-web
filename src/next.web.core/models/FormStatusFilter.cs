@@ -8,5 +8,7 @@ namespace next.web.core.models
         public int StatusId { get; set; }
         [JsonProperty("countyName")]
         public string CountyName { get; set; } = string.Empty;
+        [JsonProperty("heading")]
+        public string Heading { get; set; } = "history";
     }
 }

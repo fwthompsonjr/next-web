@@ -67,6 +67,7 @@ namespace next.web.core.services
                 await userbo.SaveMail(session, _api);
                 await userbo.SaveHistory(session, _api);
                 await userbo.SaveRestriction(session, _api);
+                await userbo.SaveSearchPurchases(session, _api);
                 return response;
             }
             catch (Exception ex)

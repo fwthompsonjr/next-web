@@ -61,18 +61,18 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div id=&quot;app-side-menu&quot; name=&quot;left-menu&quot;&gt;
-        ///	&lt;div data-position-index=&quot;0&quot; name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
-        ///		&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
-        ///	&lt;/div&gt;
-        ///	&lt;div data-position-index=&quot;1&quot; name=&quot;left-menu-home&quot; class=&quot;row&quot;&gt;
-        ///		&lt;a href=&quot;/home&quot;&gt;
-        ///			&lt;i class=&quot;bi bi-house&quot; title=&quot;Home&quot;&gt;&lt;/i&gt;
-        ///		&lt;/a&gt;
-        ///	&lt;/div&gt;
-        ///	&lt;div id=&quot;my-account-parent-option&quot; data-position-index=&quot;10&quot; name=&quot;left-menu-account&quot; class=&quot;row d-none&quot;&gt;
-        ///		&lt;a href=&quot;javascript:void(0);&quot; onclick=&quot;javascript:theMenu.show_child(0);&quot;&gt;
-        ///			&lt;i class=&quot;bi bi-person [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;div id=&quot;menu-container&quot; name=&quot;menu-container&quot;&gt;
+        ///	&lt;div id=&quot;app-side-menu-border&quot; name=&quot;left-menu-border&quot;&gt;&lt;/div&gt;
+        ///	&lt;div id=&quot;app-side-menu&quot; name=&quot;left-menu&quot;&gt;
+        ///		&lt;div data-position-index=&quot;0&quot; name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
+        ///			&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
+        ///		&lt;/div&gt;
+        ///		&lt;div data-position-index=&quot;1&quot; name=&quot;left-menu-home&quot; class=&quot;row&quot;&gt;
+        ///			&lt;a href=&quot;/home&quot;&gt;
+        ///				&lt;i class=&quot;bi bi-house&quot; title=&quot;Home&quot;&gt;&lt;/i&gt;
+        ///			&lt;/a&gt;
+        ///		&lt;/div&gt;
+        ///		&lt;div id=&quot;my-account-parent-option&quot; data-position-index=&quot;10&quot; name=&quot;left-menu-account&quot; c [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string base_menu {
             get {

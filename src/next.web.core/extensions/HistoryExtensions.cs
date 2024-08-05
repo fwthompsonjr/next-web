@@ -2,7 +2,9 @@
 using legallead.desktop.entities;
 using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
+using next.web.core.util;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace next.web.core.extensions
 {
@@ -11,15 +13,29 @@ namespace next.web.core.extensions
         public static async Task<string> GetHistory(
             this ISession session,
             IPermissionApi api,
-            string source
+            string source,
+            SearchFilterNames searchFilter = SearchFilterNames.History
         )
         {
             var document = source.ToHtml();
             if (document == null) return source;
+            return await GetSearchHtml(session, api, document, searchFilter);
+        }
+
+        private static async Task<string> GetSearchHtml(ISession session, IPermissionApi api, HtmlDocument document, SearchFilterNames searchFilter = SearchFilterNames.History)
+        {
             var list = await session.RetrieveHistory(api);
-            var filter = session.RetrieveHistoryFilter();
+            var purchases = await session.RetrievePurchases(api);
+            list = MapDownloaded(list, purchases);
+            var filter = session.RetrieveFilter(searchFilter);
+            list = list.FindAll(x =>
+            {
+                if (searchFilter == SearchFilterNames.History) return true;
+                if (searchFilter == SearchFilterNames.Purchases) return IsPurchase(x.SearchProgress);
+                if (searchFilter == SearchFilterNames.Active) return IsActive(x.SearchProgress);
+                return false;
+            });
             var restriction = await session.RetrieveRestriction(api);
-            if (list == null) return source;
             if (filter.HasFilter)
             {
                 list = list.FindAll(x =>
@@ -37,7 +53,47 @@ namespace next.web.core.extensions
             ApplyCountyFilter(document, filter);
             ApplyFilterCaption(document, filter);
             ToggleVisibility(nohistory, itemlist, itemview, countattribute, rows, document);
-            return document.DocumentNode.OuterHtml;
+            var title = searchFilter switch
+            {
+                SearchFilterNames.Active => "My Active Searches",
+                SearchFilterNames.Purchases => "My Search Purchases",
+                _ => "Search History"
+            };
+            var node = document.DocumentNode;
+            var subheader = node.SelectSingleNode("//*[@id='search-history-sub-header']");
+            if (subheader != null) subheader.InnerHtml = title;
+            return node.OuterHtml;
+        }
+
+        private static bool IsActive(string? searchProgress)
+        {
+            var find = new List<string> { "submitted", "processing" };
+            if (string.IsNullOrEmpty(searchProgress)) return false;
+            var exists = find.Exists(x => searchProgress.Contains(x, StringComparison.OrdinalIgnoreCase));
+            return exists;
+        }
+
+        private static bool IsPurchase(string? searchProgress)
+        {
+            var find = new List<string> { "purchase", "download" };
+            if (string.IsNullOrEmpty(searchProgress)) return false;
+            var exists = find.Exists(x => searchProgress.Contains(x, StringComparison.OrdinalIgnoreCase));
+            return exists;
+        }
+
+        private static List<UserSearchQueryBo> MapDownloaded(List<UserSearchQueryBo> list, List<MyPurchaseBo> purchases)
+        {
+            const string txt = "5 - Downloaded";
+            var downloads = purchases.FindAll(x =>
+                (x.StatusText ?? string.Empty).Contains("download", StringComparison.OrdinalIgnoreCase));
+            if (downloads.Count == 0) { return list; }
+            var indexed = downloads
+                .Select(x => x.ReferenceId ?? string.Empty)
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Distinct().ToList();
+            var found = list.FindAll(x => indexed.Contains(x.Id ?? string.Empty));
+            found.ForEach(a => a.SearchProgress = txt);
+            return list;
         }
 
         public static string Map(string? history, out int rows)
