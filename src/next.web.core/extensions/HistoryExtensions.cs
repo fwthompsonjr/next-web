@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using next.web.core.util;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 
 namespace next.web.core.extensions
 {
@@ -49,6 +50,7 @@ namespace next.web.core.extensions
             var table = Map(data, out var rows);
             AppendTable(document, itemlist, table);
             AppendRestriction(document, restriction, restrictionstatus);
+            AppendDownloadTemplate(document);
             ApplyStatusFilter(document, filter);
             ApplyCountyFilter(document, filter);
             ApplyFilterCaption(document, filter);
@@ -63,6 +65,23 @@ namespace next.web.core.extensions
             var subheader = node.SelectSingleNode("//*[@id='search-history-sub-header']");
             if (subheader != null) subheader.InnerHtml = title;
             return node.OuterHtml;
+        }
+
+        private static void AppendDownloadTemplate(HtmlDocument document)
+        {
+            const string findtemplate = "//*[@id='tr-user-interaction-purchased']";
+            const string findtable = "//table[@automationid='search-preview-table']";
+            var node = document.DocumentNode;
+            var template = node.SelectSingleNode(findtemplate);
+            if (template != null) return;
+            var table = node.SelectSingleNode(findtable);
+            if (table == null) return;
+            var tbody = table.SelectSingleNode("tbody");
+            if (tbody == null) return;
+            var builder = new StringBuilder(tbody.InnerHtml);
+            builder.AppendLine();
+            builder.AppendLine(DownloadTemplate);
+            tbody.InnerHtml = builder.ToString();
         }
 
         private static bool IsActive(string? searchProgress)
@@ -361,7 +380,12 @@ namespace next.web.core.extensions
             };
 
         }
-
+        private static string DownloadTemplate => _downloadTemplate ??= GetDownloadTemplate();
+        private static string? _downloadTemplate;
+        private static string GetDownloadTemplate()
+        {
+            return Properties.Resources.search_download_template;
+        }
 
     }
 }

@@ -68,11 +68,11 @@ namespace next.web.core.Properties {
         ///			&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
         ///		&lt;/div&gt;
         ///		&lt;div data-position-index=&quot;1&quot; name=&quot;left-menu-home&quot; class=&quot;row&quot;&gt;
-        ///			&lt;a href=&quot;/home&quot;&gt;
+        ///			&lt;a class=&quot;text-primary&quot; href=&quot;/home&quot;&gt;
         ///				&lt;i class=&quot;bi bi-house&quot; title=&quot;Home&quot;&gt;&lt;/i&gt;
         ///			&lt;/a&gt;
         ///		&lt;/div&gt;
-        ///		&lt;div id=&quot;my-account-parent-option&quot; data-position-index=&quot;10&quot; name=&quot;left-menu-account&quot; c [rest of string was truncated]&quot;;.
+        ///		&lt;div id=&quot;my-account-parent-option&quot; data-position-index=&quot;10&quot; name= [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string base_menu {
             get {
@@ -114,6 +114,28 @@ namespace next.web.core.Properties {
         internal static string logout_page {
             get {
                 return ResourceManager.GetString("logout_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///&lt;tr id=&quot;tr-user-interaction-purchased&quot; class=&quot;d-none&quot; name=&quot;user-interaction&quot; data-context=&quot;purchased&quot;&gt;
+        ///	&lt;td style=&quot;padding: 20px&quot; colspan=&quot;2&quot;&gt;
+        ///		&lt;hr size=&quot;1&quot; noshade=&quot;&quot;&gt;
+        ///		&lt;p&gt;
+        ///			Your request has been purchased successfully.
+        ///		&lt;/p&gt;
+        ///		&lt;br&gt;
+        ///		&lt;p&gt;
+        ///			Click below to download this search.
+        ///		&lt;/p&gt;
+        ///		&lt;div class=&quot;d-flex justify-content-between&quot;&gt;
+        ///			&lt;center style=&quot;width: 100%&quot;&gt;
+        ///				&lt;button id=&quot;btn-user-interaction-download&quot; name=&quot;bttn-download&quot; class=&quot;btn btn-primary w-75 m-2&quot; onclick=&quot;javascript:void( [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string search_download_template {
+            get {
+                return ResourceManager.GetString("search_download_template", resourceCulture);
             }
         }
         
