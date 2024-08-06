@@ -13,6 +13,7 @@ namespace next.web.core.extensions
     {
         public static async Task AppendStatus(this ISession session, IPermissionApi api, HtmlDocument document)
         {
+            const string dash = " - ";
             var bo = session.GetContextUser();
             var id = await session.RetrieveIdentity(api);
             var restricted = await session.RetrieveRestriction(api);
@@ -30,10 +31,13 @@ namespace next.web.core.extensions
             
             var islocked = restricted?.IsLocked ?? true;
             var sts = islocked ? "ERROR" : "OK";
+            var userName = string.IsNullOrWhiteSpace(id.UserName) ? dash : id.UserName;
+            var fullName = string.IsNullOrWhiteSpace(id.FullName) ? dash : id.FullName;
+            var commonName = fullName.Equals(dash) ? userName : fullName;
             Dictionary<string, string> headers = new() { 
                 { "current-dt", DateTime.UtcNow.ToString("MM-dd-yyyy")},
-                { "user-level", string.IsNullOrEmpty(id.Role) ? " - " : id.Role },
-                { "user-name", string.IsNullOrEmpty(id.UserName) ? " - " : id.UserName },
+                { "user-level", string.IsNullOrWhiteSpace(id.Role) ? dash : id.Role },
+                { "user-name", commonName },
                 { "user-status", sts }
             };
             headers.Keys.ToList().ForEach(keyname =>
