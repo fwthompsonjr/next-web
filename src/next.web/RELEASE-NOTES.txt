@@ -1,6 +1,7 @@
 
       next.web.application
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      : 3.2.5 - 2024-08-08 - Update account permissions
       : 3.2.4 - 2024-08-06 - Construct user search purchases page
       : 3.2.3 - 2024-08-03 - Construct user search history page
       : 3.2.2 - 2024-08-02 - Construct user mailbox page

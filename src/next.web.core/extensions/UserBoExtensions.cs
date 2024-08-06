@@ -31,6 +31,17 @@ namespace next.web.core.extensions
             });
         }
 
+        public static async Task Save(this UserContextBo userbo, ISession session, IPermissionApi api)
+        {
+            // reset all user cache objects
+            await userbo.SaveUserIdentity(session, api);
+            await userbo.SaveMail(session, api);
+            await userbo.SaveHistory(session, api);
+            await userbo.SaveRestriction(session, api);
+            await userbo.SaveSearchPurchases(session, api);
+        }
+
+
         public static async Task SaveMail(this UserContextBo userbo, ISession session, IPermissionApi api)
         {
             const char gt = '<'; // greater than
@@ -184,6 +195,19 @@ namespace next.web.core.extensions
             return data.ToInstance<UserSearchFilterBo>() ?? new();
         }
 
+        public static async Task<UserIdentityBo> RetrieveIdentity(this ISession session, IPermissionApi api)
+        {
+            var key = SessionKeyNames.UserIdentity;
+            var userbo = session.GetContextUser();
+            if (userbo == null) { return new(); }
+            var exists = session.IsItemExpired<UserIdentityBo>(key);
+            if (!exists) {
+                await userbo.SaveUserIdentity(session, api);
+            }
+            var data = session.GetTimedItem<UserIdentityBo>(key);
+            return data ?? new();
+        }
+
         public static void UpdateFilter(this ISession session, UserSearchFilterBo filter, SearchFilterNames searchFilter = SearchFilterNames.History)
         {
             var key = searchFilter switch
@@ -225,6 +249,38 @@ namespace next.web.core.extensions
                 string.IsNullOrEmpty(data.Message) ||
                 !Guid.TryParse(data.Message, out var _)) return string.Empty;
             return data.Message;
+        }
+        public static async Task<UserIdentityBo> GetUserIdentity(this UserBo user, IPermissionApi api)
+        {
+            const string landing = "get-contact-identity";
+            const string getname = "get-contact-detail";
+            var payload = user.Applications?.FirstOrDefault() ?? new();
+            var response = await api.Post(landing, payload, user);
+            if (response.StatusCode != 200) return new();
+            var data = response.Message.ToInstance<UserIdentityBo>() ?? new();
+            if (!string.IsNullOrEmpty(data.RoleDescription)) data.RoleDescription = string.Empty;
+            var request = new { RequestType = "Name" };
+            response = await api.Post(getname, request, user);
+            if (response.StatusCode != 200) return data;
+            var profile = response.Message.ToInstance<List<ContactProfileResponse>>();
+            if (profile == null) return data;
+            var item = profile.Find(a => a.ResponseType.Equals("Name"))?.Data;
+            if (string.IsNullOrEmpty(item)) return data;
+            var detail = item.ToInstance<List<ContactName>>();
+            if (detail == null) return data;
+            var fname = detail.Find(x => x.NameType == "First")?.Name ?? string.Empty;
+            var lname = detail.Find(x => x.NameType == "Last")?.Name ?? string.Empty;
+            data.FullName = $"{fname} {lname}".Trim();
+            return data;
+        }
+
+        public static async Task SaveUserIdentity(this UserContextBo userbo, ISession session, IPermissionApi api)
+        {
+            var user = userbo.ToUserBo();
+            var identity = await user.GetUserIdentity(api);
+            var timed = new UserTimedCollection<UserIdentityBo>(identity, TimeSpan.FromMinutes(10));
+            var json = JsonConvert.SerializeObject(timed);
+            session.Set(SessionKeyNames.UserIdentity, Encoding.UTF8.GetBytes(json));
         }
         public static UserBo ToUserBo(this UserContextBo user)
         {

@@ -161,5 +161,26 @@ namespace next.web.core.Properties {
                 return ResourceManager.GetString("search_table_layout", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///&lt;table automationId=&quot;user-status-table&quot; name=&quot;user-status-table&quot;&gt;
+        ///	&lt;colgroup&gt;
+        ///		&lt;col name=&quot;current-dt&quot; style=&quot;width: 60px&quot; /&gt;
+        ///		&lt;col name=&quot;user-level&quot; style=&quot;width: 85px&quot; /&gt;
+        ///		&lt;col name=&quot;user-name&quot; /&gt;
+        ///		&lt;col name=&quot;user-status&quot; style=&quot;width: 90px&quot; /&gt;
+        ///	&lt;/colgroup&gt;
+        ///	&lt;tbody&gt;
+        ///		&lt;tr id=&quot;tr-status-information&quot; style=&quot;display: none&quot;&gt;
+        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span name=&quot;current-dt&quot;&gt;~0&lt;/span&gt;&lt;/td&gt;
+        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span name=&quot;user-level&quot;&gt;~1&lt;/span&gt;&lt;/td&gt;
+        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span name=&quot;use [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string status_menu {
+            get {
+                return ResourceManager.GetString("status_menu", resourceCulture);
+            }
+        }
     }
 }
