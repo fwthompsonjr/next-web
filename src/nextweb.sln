@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "publish", "publish", "{DCAB0D7B-1FA1-4391-8BC8-5B74E080613E}"
 	ProjectSection(SolutionItems) = preProject
 		..\web.version.json = ..\web.version.json
+		next.web\z-app-version-notes.json = next.web\z-app-version-notes.json
+		next.web\z-app-version.json = next.web\z-app-version.json
 	EndProjectSection
 EndProject
 Global
