@@ -30,6 +30,14 @@ namespace next.web.core.extensions
                 session.Set(keyName, Encoding.UTF8.GetBytes(json));
             });
         }
+        public static void Save(this ISession session, PermissionChangedResponse response)
+        {
+            var key = SessionKeyNames.UserPermissionChanged;
+            var exists = session.Keys.ToList().Exists(x => x == key);
+            if (exists) { session.Remove(key); }
+            var json =  response.ToJsonString();
+            session.Set(key, Encoding.UTF8.GetBytes(json));
+        }
 
         public static async Task Save(this UserContextBo userbo, ISession session, IPermissionApi api)
         {

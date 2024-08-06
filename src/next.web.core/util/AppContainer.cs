@@ -184,7 +184,8 @@ namespace next.web.core.util
             { "frm-profile-email", "profile-edit-contact-email" },
             { "Changes", "permissions-change-password" },
             { "Discounts", "permissions-set-discount" },
-            { "Subscription", "permissions-set-permission" }
+            { "Subscription", "permissions-set-permission" },
+            { "permissions-set-permission", "permissions-set-permission" }
         };
     }
 }

@@ -13,6 +13,7 @@
         public const string UserSearchHistoryFilter = "user_search_history_filter";
         public const string UserSearchPurchaseFilter = "user_search_purchase_filter";
         public const string UserSearchActiveFilter = "user_search_active_filter";
+        public const string UserPermissionChanged = "permission_changed_invoice_detail";
 
     }
     public enum SearchFilterNames
