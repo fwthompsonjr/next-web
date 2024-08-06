@@ -4,7 +4,6 @@ using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
 using next.web.core.util;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text;
 
 namespace next.web.core.extensions

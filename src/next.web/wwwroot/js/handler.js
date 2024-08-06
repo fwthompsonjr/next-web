@@ -178,6 +178,17 @@ let theMenu = {
     }
 }
 
+function logoutRequested() {
+    const $btn = $('#btn-my-account-logout-show');
+    if ($btn.length !== 0) {
+        $('#btn-my-account-logout-show').trigger('click');
+        return;
+    }
+    let rsp = confirm('Are you sure you want to logout?');
+    if (!rsp) return;
+    verifyAndPost('user', 'logout');
+}
+
 function verifyAndPost(src, target) {
     if (!src || !target) return;
     let command = "".concat(String(src).toLowerCase(), "-", String(target).toLowerCase());
@@ -190,7 +201,9 @@ window.addEventListener('DOMContentLoaded', () => {
     let queries = [
         "body > div.box > div.customrow.content",
         "body > div.box > div.customrow.header",
-        "body > div.box > div.customrow.footer"];
+        "body > div.box > div.customrow.footer",
+        "div.cover-container"
+    ];
     queries.forEach(query => {
         let $element = $(query);
         if ($element.length !== 0) {

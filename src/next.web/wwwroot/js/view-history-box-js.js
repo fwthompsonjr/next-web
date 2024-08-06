@@ -177,6 +177,13 @@ let historybox = {
                     $(uiname).removeClass("d-none");
                 }
                 const isRestriction = $(qrestriction).val() != 'false'
+                // add handling to disply purchased condition#
+                if (stsname === 'purchased' && !isRestriction) {
+                    const uiname = "".concat("#tr-user-interaction-", stsname);
+                    $(uiname).removeClass("d-none");
+                    $("#btn-user-interaction-download").removeAttr("disabled");
+                    return;
+                }
                 if (isRestriction || stsname != 'completed') {
                     return;
                 }

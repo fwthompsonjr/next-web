@@ -1,7 +1,6 @@
 ﻿using legallead.desktop.implementations;
 using legallead.desktop.interfaces;
 using legallead.desktop.utilities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using next.web.core.interfaces;
@@ -147,6 +146,7 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IContentSanitizer>("mysearch", new ContentSanitizerSearch());
             // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
+            services.AddKeyedSingleton<IJsHandler, JsSearchHandler>("frm-search");
             var accounts = new List<string>();
             accounts.AddRange(ProfileForms);
             accounts.AddRange(PermissionForms);
@@ -176,7 +176,7 @@ namespace next.web.core.util
             "permissions-discounts",
             "form-change-password"
         ];
-        public static readonly Dictionary<string, string> AddressMap = new()
+        internal static readonly Dictionary<string, string> AddressMap = new()
         {
             { "frm-profile-personal", "profile-edit-contact-name" },
             { "frm-profile-address", "profile-edit-contact-address" },

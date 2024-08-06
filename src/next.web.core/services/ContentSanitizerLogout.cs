@@ -23,8 +23,8 @@ namespace next.web.core.services
             if (parent == null) return content;
             var current = parent.InnerHtml;
             var injected = string.Concat(
-                closeHeader, 
-                Environment.NewLine, 
+                closeHeader,
+                Environment.NewLine,
                 Properties.Resources.logout_page);
             current = current.Replace(closeHeader, injected);
             parent.InnerHtml = current;

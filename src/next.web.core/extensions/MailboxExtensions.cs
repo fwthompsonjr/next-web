@@ -1,10 +1,10 @@
 ﻿using HtmlAgilityPack;
-using Microsoft.AspNetCore.Http;
 using legallead.desktop.interfaces;
-using next.web.core.models;
-using System.Text;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using next.web.core.models;
 using next.web.core.util;
+using System.Text;
 
 namespace next.web.core.extensions
 {

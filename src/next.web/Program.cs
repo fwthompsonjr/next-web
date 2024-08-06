@@ -29,7 +29,7 @@ namespace next.web
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var app = builder.Build();
-            
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
