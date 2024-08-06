@@ -25,7 +25,7 @@
 			</a>
 		</div>
 		<div data-position-index="100" name="left-menu-exit" class="row">
-			<a class="text-primary" href="/logout">
+			<a class="text-primary" href="javascript:void(0);" onclick="javascript:logoutRequested()">
 				<i class="bi bi-box-arrow-left" title="Exit"></i>
 			</a>
 		</div>

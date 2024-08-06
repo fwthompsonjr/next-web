@@ -118,6 +118,9 @@ namespace next.web
             {
                 content = content.Replace(find, replace);
             }
+            content = AppendHistoryJs(content);
+            
+
             foreach (var map in maps)
             {
                 var mapper = AppContainer.GetReMapper(map);
@@ -136,5 +139,23 @@ namespace next.web
                 Content = RemoveHeaderDuplicate(content)
             };
         }
+
+        private static string AppendHistoryJs(string content)
+        {
+            var sqte = (char)39;
+            const char dbl = '"';
+            var document = content.ToHtml();
+            var node = document.DocumentNode;
+            var head = node.SelectSingleNode("//head");
+            if (head == null) return content;
+            var js = head.SelectSingleNode("//script[@name='site']");
+            if (js != null) return content;
+            var builder = new StringBuilder(head.InnerHtml);
+            builder.AppendLine();
+            builder.AppendLine(historyjs.Replace(sqte, dbl));
+            head.InnerHtml = builder.ToString();
+            return node.OuterHtml;
+        }
+        private const string historyjs = "<script name='site' src='/js/site.js'></script>";
     }
 }

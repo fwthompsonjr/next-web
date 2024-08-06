@@ -92,9 +92,12 @@ h5[name='item-subject'] {
         margin-bottom: 5px;
     }
 
-    .box .customrow.content {
-        flex: 1 1 auto;
-    }
+.box .customrow.content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: calc(100vh - 100px);
+}
 
     .box .customrow.footer {
         flex: 0 1 40px;

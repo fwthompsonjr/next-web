@@ -25,12 +25,19 @@ namespace next.web.Controllers
             if (!ModelState.IsValid || !model.Validate(Request)) return BadRequest();
             if (string.IsNullOrEmpty(model.Payload)) return BadRequest();
             var location = model.Payload.ToInstance<FormLocationModel>();
-            if (location == null || !securepg.Contains(location.Location, StringComparer.OrdinalIgnoreCase)) return BadRequest();
-
+            if (location == null) return BadRequest();
             var authenicated = IsSessionAuthenicated(HttpContext.Session);
-            response.StatusCode = authenicated ? 200 : 408;
-            response.Message = authenicated ? "Session authorized" : "Error session invalid";
-            response.RedirectTo = authenicated ? "" : "/home";
+            if (!securepg.Contains(location.Location, StringComparer.OrdinalIgnoreCase))
+            {
+                response.StatusCode = authenicated ? 200 : 204;
+                response.RedirectTo = string.Empty;
+                response.Message = authenicated ? "Session authorized" : "Error session invalid";
+            }
+            else
+            {
+                response.StatusCode = authenicated ? 200 : 408;
+                response.RedirectTo = authenicated ? "" : "/home";
+            }
             return Json(response);
         }
 
