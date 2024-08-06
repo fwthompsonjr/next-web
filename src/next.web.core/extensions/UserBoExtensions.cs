@@ -286,7 +286,7 @@ namespace next.web.core.extensions
 
 
 
-        private static UserContextBo? GetContextUser(this ISession session)
+        public static UserContextBo? GetContextUser(this ISession session)
         {
             var exists = session.TryGetValue(SessionKeyNames.UserBo, out var user);
             if (!exists) { return null; }

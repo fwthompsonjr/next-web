@@ -9,10 +9,17 @@ using next.web.core.util;
 
 namespace next.web.core.services
 {
-    internal class JsAuthenicateHandler(IPermissionApi api) : IJsHandler
+    internal class JsAuthenicateHandler : IJsHandler
     {
-        protected readonly IPermissionApi _api = api;
+        protected readonly IPermissionApi _api;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", 
+            "IDE0290:Use primary constructor", 
+            Justification = "Primary constructor violates rule CS9136")]
+        public JsAuthenicateHandler(IPermissionApi api)
+        {
+            _api = api;
+        }
         public virtual string Name => "form-login";
         public async virtual Task<FormSubmissionResponse> Submit(FormSubmissionModel model)
         {
@@ -61,7 +68,7 @@ namespace next.web.core.services
                     Expires = token?.Expires
                 };
                 user = userbo.ToUserBo();
-                var userId = await user.GetUserId(api);
+                var userId = await user.GetUserId(_api);
                 userbo.UserId = userId;
                 userbo.Save(session);
                 await userbo.SaveMail(session, _api);
