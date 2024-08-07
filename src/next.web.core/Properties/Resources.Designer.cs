@@ -105,7 +105,7 @@ namespace next.web.core.Properties {
         ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
         ///	&lt;div id=&quot;invoice-card&quot; class=&quot;card&quot;&gt;
         ///		&lt;div class=&quot;card-body text-start&quot;&gt;
-        ///			&lt;h5 class=&quot;card-title text-start&quot;&gt;Invoice&lt;/h5&gt;
+        ///			&lt;h5 id=&quot;invoice-fallback-title&quot; class=&quot;card-title text-start&quot;&gt;Invoice&lt;/h5&gt;
         ///			&lt;div id=&quot;invoice-card-content&quot;&gt;&lt;/div&gt;
         ///		&lt;/div&gt;
         ///	&lt;/div&gt;
@@ -134,30 +134,15 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;script name=&quot;checkout-stripe-js&quot;&gt;
-        ///
-        ///// This is your test publishable API key.
-        ///const stripe = Stripe(&quot;&lt;!-- stripe public key --&gt;&quot;);
-        ///
-        ///// The items the customer wants to buy
-        ///const items = [{ id: &quot;xl-tshirt&quot; }];
-        ///
-        ///let elements;
-        ///
-        ///initialize();
-        ///checkStatus();
-        ///
-        ///document
-        ///  .querySelector(&quot;#payment-form&quot;)
-        ///  .addEventListener(&quot;submit&quot;, handleSubmit);
-        ///
-        ///function getClientSecret() {
-        ///    const jsfmt = &apos;{ &quot;clientSecret&quot;: &quot;~0&quot;}&apos;;
-        ///    let payload = jsfmt.replace(&quot;~0&quot;, &quot;&lt;!-- payment get intent index --&gt;&quot;);        /// [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
+        ///	&lt;div id=&quot;payment-card-content&quot;&gt;
+        ///		
+        ///	&lt;/div&gt;
+        ///&lt;/main&gt;.
         /// </summary>
-        internal static string page_invoice_subscription_js {
+        internal static string payment_confirmation_page {
             get {
-                return ResourceManager.GetString("page_invoice_subscription_js", resourceCulture);
+                return ResourceManager.GetString("payment_confirmation_page", resourceCulture);
             }
         }
         

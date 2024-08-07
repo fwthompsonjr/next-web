@@ -195,6 +195,21 @@ function verifyAndPost(src, target) {
     if (command != 'user-logout') { return; }
     document.location = "/logout";
 }
+
+function changeViewHandler(viewName) {
+    const fallbackPage = '/my-account/home';
+    let constructedPage = '';
+    if (viewName == 'myaccount-home') { constructedPage = '/my-account/home' }
+    if (viewName == 'myaccount-permissions') { constructedPage = '/my-account/permissions' }
+    if (viewName == 'myaccount-profile') { constructedPage = '/my-account/profile' }
+    if (viewName == 'mysearch-home') { constructedPage = '/search' }
+    if (viewName == 'mysearch-active') { constructedPage = '/search/active' }
+    if (viewName == 'mysearch-purchases') { constructedPage = '/search/purchases' }
+    if (viewName == 'mysearch-history') { constructedPage = '/search/history' }
+    if (constructedPage.length === 0) { constructedPage = fallbackPage; }
+    document.location = constructedPage;
+}
+
 window.jsHandler = theHandler;
 
 window.addEventListener('DOMContentLoaded', () => {

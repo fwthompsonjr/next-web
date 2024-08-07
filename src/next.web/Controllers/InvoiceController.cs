@@ -8,13 +8,13 @@ namespace next.web.Controllers
     [Route("/invoice")]
     public class InvoiceController : BaseController
     {
-        private readonly ContentSanitizerSubscription _subscriptionSvc;
+        private readonly ContentSanitizerInvoiceSubscription _subscriptionSvc;
         private readonly IPermissionApi? _api;
         public InvoiceController()
         {
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
             var svc = AppContainer.GetSanitizer("invoice-subscription");
-            if (svc is not ContentSanitizerSubscription subsvc) subsvc = new();
+            if (svc is not ContentSanitizerInvoiceSubscription subsvc) subsvc = new();
             if (api != null) _api = api;
             _subscriptionSvc = subsvc;
         }
@@ -25,8 +25,15 @@ namespace next.web.Controllers
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var content = await GetAuthenicatedPage(session, "blank");
-            content = await _subscriptionSvc.GetContent(session, _api, content);
+            var address = GetWebAddress(Request);
+            content = await _subscriptionSvc.GetContent(session, _api, content, address);
             return GetResult(content);
         }
+
+        private static string GetWebAddress(HttpRequest request)
+        {
+            return $"{request.Scheme}://{request.Host}";
+        }
+
     }
 }

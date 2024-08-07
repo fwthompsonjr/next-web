@@ -1,4 +1,5 @@
-﻿#invoice-card {
+﻿#invoice-card,
+#payment-card-content {
     position: absolute;
     left: 100px;
     top: 60px;

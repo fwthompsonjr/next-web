@@ -8,10 +8,10 @@ using System.Text;
 
 namespace next.web.core.services
 {
-    internal class ContentSanitizerSubscription : ContentSanitizerBase
+    internal class ContentSanitizerInvoiceSubscription : ContentSanitizerBase
     {
 
-        public virtual async Task<string> GetContent(ISession session, IPermissionApi? api, string content)
+        public virtual async Task<string> GetContent(ISession session, IPermissionApi? api, string content, string baseWebAddress = "")
         {
             const string findcheckout = "//script[@name='checkout-stripe-js']";
             var key = SessionKeyNames.UserPermissionChanged;
@@ -47,6 +47,10 @@ namespace next.web.core.services
             var body = doc.DocumentNode.SelectSingleNode(HtmlSelectors.BodyTag);
             if (body == null) return doc.DocumentNode.OuterHtml;
             detail = string.Concat(body.InnerHtml, Environment.NewLine, js);
+            if (!string.IsNullOrEmpty(baseWebAddress)) 
+            {
+                detail = detail.Replace("http://api.legallead.co", baseWebAddress);
+            }
             body.InnerHtml = detail;
             // update invoice heading
             var heading = doc.DocumentNode.SelectSingleNode("//span[@automationid='invoice-label']");
