@@ -44,7 +44,7 @@ let historypager = {
                 selectionMade = true;
             }
         });
-        $(keyname).blur();
+        $(keyname).trigger('blur');
     }
 }
 let historybox = {
@@ -128,7 +128,7 @@ let historybox = {
         $bttn.attr("disabled", "disabled");
         $("#bttn-purchase-icon").addClass("d-none");
         $("#bttn-purchase-icon-spin").removeClass("d-none");
-        handler.fetch(indx);
+        handler.purchase(indx);
     },
     "fetch": {
         "item": function (id) {

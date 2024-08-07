@@ -123,6 +123,14 @@ let theHandler = {
                 window.location = target;
             }
         });
+    },
+    "purchase": function (uuidx) {
+        setTimeout(function () {
+            $("#bttn-purchase-icon").removeClass("d-none");
+            $("#bttn-purchase-icon-spin").addClass("d-none");
+        }, 750);
+        let destination = "/invoice/purchase?id=~0".replace("~0", uuidx);
+        document.location = destination;
     }
 }
 

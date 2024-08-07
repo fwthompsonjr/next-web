@@ -8,7 +8,7 @@ using System.Text;
 
 namespace next.web.core.services
 {
-    internal class ContentSanitizerInvoiceSubscription : ContentSanitizerBase
+    internal class ContentSanitizerInvoice : ContentSanitizerBase
     {
 
         public virtual async Task<string> GetContent(ISession session, IPermissionApi? api, string content, string baseWebAddress = "")
