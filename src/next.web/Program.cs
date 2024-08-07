@@ -1,3 +1,4 @@
+using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Rewrite;
 using next.web.Controllers;
 using next.web.core.services;
@@ -16,7 +17,6 @@ namespace next.web
             AppContainer.Build();
             var services = builder.Services;
             // Add services to the container.
-            services.AddSingleton<ContentSanitizerSubscription>();
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.Configure<RouteOptions>(options =>

@@ -11,8 +11,9 @@ namespace next.web.core.services
     internal class ContentSanitizerSubscription : ContentSanitizerBase
     {
 
-        public async Task<string> GetContent(ISession session, IPermissionApi? api, string content)
+        public virtual async Task<string> GetContent(ISession session, IPermissionApi? api, string content)
         {
+            const string findcheckout = "//script[@name='checkout-stripe-js']";
             var key = SessionKeyNames.UserPermissionChanged;
             var html = Sanitize(content);
             var user = session.GetUser();
@@ -29,11 +30,27 @@ namespace next.web.core.services
             if (paymentElement != null) { paymentElement.InnerHtml = string.Concat(Environment.NewLine, "<!--Stripe.js injects the Payment Element-->"); }
             var invoiceNodes = node.SelectSingleNode("//*[@id='dv-subcontent-invoice']");
             if (invoiceNodes == null || invoiceNodes.ChildNodes.Count == 0) return html;
+            // remove fallback title
+            var title = doc.DocumentNode.SelectSingleNode("//*[@id='invoice-fallback-title']");
+            title?.ParentNode.RemoveChild(title);
+            
+            // populate invoice description
             var detail = invoiceNodes.ChildNodes.ToList()
                 .Find(x => x.Name.Equals("div", StringComparison.OrdinalIgnoreCase))?.InnerHtml ?? string.Empty;
             var target = doc.DocumentNode.SelectSingleNode("//*[@id='invoice-card-content']");
             if (target == null) return html;
             target.InnerHtml = detail;
+            // inject checkout script
+            var checkoutJs = node.SelectSingleNode(findcheckout);
+            if (checkoutJs == null) return doc.DocumentNode.OuterHtml;
+            var js = checkoutJs.OuterHtml;
+            var body = doc.DocumentNode.SelectSingleNode(HtmlSelectors.BodyTag);
+            if (body == null) return doc.DocumentNode.OuterHtml;
+            detail = string.Concat(body.InnerHtml, Environment.NewLine, js);
+            body.InnerHtml = detail;
+            // update invoice heading
+            var heading = doc.DocumentNode.SelectSingleNode("//span[@automationid='invoice-label']");
+            if (heading != null) heading.InnerHtml = heading.InnerHtml.Replace("Legal Lead", "Oxford Lead");
             return doc.DocumentNode.OuterHtml;
         }
 

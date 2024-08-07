@@ -58,6 +58,7 @@ namespace next.web.tests.dep.util
         [InlineData("default")]
         [InlineData("viewhistory")]
         [InlineData("post-login")]
+        [InlineData("invoice-subscription")]
         [InlineData("not-mapped")]
         public void ContainerCanGetSanitizer(string name)
         {

@@ -51,7 +51,7 @@ namespace next.web.core.util
                 }
             }
         }
-        internal static IContentSanitizer? GetSanitizer(string name)
+        internal static IContentSanitizer GetSanitizer(string name)
         {
             if (ServiceProvider == null) Build();
             var svc = ServiceProvider?.GetKeyedService<IContentSanitizer>(name) ?? defaultSanitizer;
@@ -144,6 +144,7 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IContentSanitizer>("mailbox", new ContentSanitizerMailBox());
             services.AddKeyedSingleton<IContentSanitizer>("viewhistory", new ContentSanitizerHistory());
             services.AddKeyedSingleton<IContentSanitizer>("mysearch", new ContentSanitizerSearch());
+            services.AddKeyedSingleton<IContentSanitizer>("invoice-subscription", new ContentSanitizerSubscription());
             // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
             services.AddKeyedSingleton<IJsHandler, JsSearchHandler>("frm-search");
