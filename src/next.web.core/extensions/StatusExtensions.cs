@@ -1,11 +1,7 @@
 ﻿using HtmlAgilityPack;
 using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace next.web.core.extensions
 {
@@ -28,13 +24,13 @@ namespace next.web.core.extensions
             body.InnerHtml = builder.ToString();
             table = node.SelectSingleNode("//table[@automationid='user-status-table']");
             if (table == null) return;
-            
+
             var islocked = restricted?.IsLocked ?? true;
             var sts = islocked ? "ERROR" : "OK";
             var userName = string.IsNullOrWhiteSpace(id.UserName) ? dash : id.UserName;
             var fullName = string.IsNullOrWhiteSpace(id.FullName) ? dash : id.FullName;
             var commonName = fullName.Equals(dash) ? userName : fullName;
-            Dictionary<string, string> headers = new() { 
+            Dictionary<string, string> headers = new() {
                 { "current-dt", DateTime.UtcNow.ToString("MM-dd-yyyy")},
                 { "user-level", string.IsNullOrWhiteSpace(id.Role) ? dash : id.Role },
                 { "user-name", commonName },
@@ -46,7 +42,7 @@ namespace next.web.core.extensions
                 var span = node.SelectSingleNode(find);
                 if (span != null) span.InnerHtml = headers[keyname];
             });
-            
+
         }
         private static string StatusTemplate => _statusTemplate ??= GetTemplate();
         private static string? _statusTemplate;

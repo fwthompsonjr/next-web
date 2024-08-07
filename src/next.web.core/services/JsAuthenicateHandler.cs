@@ -13,8 +13,8 @@ namespace next.web.core.services
     {
         protected readonly IPermissionApi _api;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", 
-            "IDE0290:Use primary constructor", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style",
+            "IDE0290:Use primary constructor",
             Justification = "Primary constructor violates rule CS9136")]
         public JsAuthenicateHandler(IPermissionApi api)
         {

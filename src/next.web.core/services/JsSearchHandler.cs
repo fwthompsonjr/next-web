@@ -49,7 +49,7 @@ namespace next.web.core.services
                 var js = JsSearchSubmissionHelper.Refine(MapPayload(formName, json));
                 if (!AddressMap.TryGetValue(formName, out var address) || string.IsNullOrEmpty(address)) return response; // redirect to login
                 var appsubmission = await api.Post(address, js, user);
-                response.MapResponse(appsubmission);                
+                response.MapResponse(appsubmission);
                 if (appsubmission.StatusCode != 200) response.RedirectTo = ""; // stay on same page
                 // trigger reload page on 200 event
                 var prefix = formName.Split('-')[^1];

@@ -50,7 +50,7 @@ namespace next.web.core.services
             return content;
         }
 
-        private static async Task<string> GetInvoiceHtml(string navigateTo)
+        protected static async Task<string> GetInvoiceHtml(string navigateTo)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace next.web.core.services
             }
         }
 
-        private static string ApplyYearToFooter(string content)
+        protected static string ApplyYearToFooter(string content)
         {
             const string findfooter = "//footer[@class='mastfoot mt-auto']";
             var doc = content.ToHtml();
@@ -80,7 +80,7 @@ namespace next.web.core.services
             p.InnerHtml = $"&copy; {dte} - {text}";
             return node.OuterHtml;
         }
-        private static string AppendStyleStripe(string content, HtmlDocument doc)
+        protected static string AppendStyleStripe(string content, HtmlDocument doc)
         {
             const string common = "<!-- common styles -->";
             var link = $"//script[@name='stripe-services']";
@@ -94,7 +94,7 @@ namespace next.web.core.services
             return doc.DocumentNode.OuterHtml;
         }
 
-        private static string DisplayParentMenus(string content)
+        protected static string DisplayParentMenus(string content)
         {
             const string cls = "class";
             const string positions = "10,20,30";
@@ -115,7 +115,7 @@ namespace next.web.core.services
             return node.OuterHtml;
         }
 
-        private static string AppendMain(string content, HtmlDocument doc)
+        protected static string AppendMain(string content, HtmlDocument doc)
         {
             const string closeHeader = "</header>";
             var find = $"//div[@class='{cover}']";
@@ -131,7 +131,7 @@ namespace next.web.core.services
             return doc.DocumentNode.OuterHtml;
         }
 
-        private static string AppendStyleTag(string content, HtmlDocument doc)
+        protected static string AppendStyleTag(string content, HtmlDocument doc)
         {
             var link = $"//link[@name='cover-css']";
             var style = doc.DocumentNode.SelectSingleNode(link);
@@ -144,7 +144,7 @@ namespace next.web.core.services
             return doc.DocumentNode.OuterHtml;
         }
 
-        private static string AppendStyleInvoice(string content, HtmlDocument doc)
+        protected static string AppendStyleInvoice(string content, HtmlDocument doc)
         {
             var link = $"//link[@name='invoice-css']";
             var style = doc.DocumentNode.SelectSingleNode(link);
@@ -157,7 +157,7 @@ namespace next.web.core.services
             return doc.DocumentNode.OuterHtml;
         }
 
-        private static string GetInvoiceUri(PermissionChangedResponse? response)
+        protected static string GetInvoiceUri(PermissionChangedResponse? response)
         {
             const string landingName = "Subscription";
             const string guest = "guest";
@@ -168,7 +168,7 @@ namespace next.web.core.services
             if (!levelName.Equals(guest, StringComparison.OrdinalIgnoreCase)) { return navigateTo; }
             return BuildUri(landingName, response.Dto);
         }
-        private static string BuildUri(string landing, PermissionChangedItem dto)
+        protected static string BuildUri(string landing, PermissionChangedItem dto)
         {
             var landingName = paymentLandings.Find(x => x.Equals(landing, StringComparison.OrdinalIgnoreCase));
             if (landingName == null) { return none; }
@@ -180,13 +180,13 @@ namespace next.web.core.services
             var url = string.Concat(paymentUrls[id], "?id={1}&sessionid={2}");
             return string.Format(url, hostname, dto.ExternalId, dto.SessionId);
         }
-        private const string cover = "cover-container d-flex h-100 p-3 mx-auto flex-column";
-        private const string coverstyle = "<link rel=\"stylesheet\" name=\"cover-css\" href=\"https://getbootstrap.com/docs/4.0/examples/cover/cover.css\" />";
-        private const string invoicestyle = "<link rel=\"stylesheet\" name=\"invoice-css\" href=\"/css/invoice-css.css\" />";
-        private const string none = "NONE";
-        private static readonly List<string> paymentLandings = ["Discounts", "Subscription"];
-        private static readonly string[] paymentUrls = ["{0}discount-checkout", "{0}subscription-checkout"];
-        private static readonly string[] stripeScript = [
+        protected const string cover = "cover-container d-flex h-100 p-3 mx-auto flex-column";
+        protected const string coverstyle = "<link rel=\"stylesheet\" name=\"cover-css\" href=\"https://getbootstrap.com/docs/4.0/examples/cover/cover.css\" />";
+        protected const string invoicestyle = "<link rel=\"stylesheet\" name=\"invoice-css\" href=\"/css/invoice-css.css\" />";
+        protected const string none = "NONE";
+        protected static readonly List<string> paymentLandings = ["Discounts", "Subscription"];
+        protected static readonly string[] paymentUrls = ["{0}discount-checkout", "{0}subscription-checkout"];
+        protected static readonly string[] stripeScript = [
             "<!-- stripe -->",
             "<script name=\"stripe-services\" src=\"https://js.stripe.com/v3/\"></script>",
             "<!-- common styles -->"

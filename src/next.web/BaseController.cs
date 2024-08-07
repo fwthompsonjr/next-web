@@ -40,7 +40,7 @@ namespace next.web
                 await session.AppendStatus(api, dc);
                 content = dc.DocumentNode.OuterHtml;
             }
-            
+
             return RemoveHeaderDuplicate(content);
         }
 
@@ -126,7 +126,7 @@ namespace next.web
                 content = content.Replace(find, replace);
             }
             content = AppendHistoryJs(content);
-            
+
 
             foreach (var map in maps)
             {

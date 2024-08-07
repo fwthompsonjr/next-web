@@ -35,7 +35,7 @@ namespace next.web.core.extensions
             var key = SessionKeyNames.UserPermissionChanged;
             var exists = session.Keys.ToList().Exists(x => x == key);
             if (exists) { session.Remove(key); }
-            var json =  response.ToJsonString();
+            var json = response.ToJsonString();
             session.Set(key, Encoding.UTF8.GetBytes(json));
         }
 
@@ -215,7 +215,8 @@ namespace next.web.core.extensions
             var userbo = session.GetContextUser();
             if (userbo == null) { return new(); }
             var exists = session.IsItemExpired<UserIdentityBo>(key);
-            if (!exists) {
+            if (!exists)
+            {
                 await userbo.SaveUserIdentity(session, api);
             }
             var data = session.GetTimedItem<UserIdentityBo>(key);
