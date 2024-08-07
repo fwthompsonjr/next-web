@@ -1,5 +1,10 @@
 [
   {
+    "id": "3.2.6",
+    "description": "Update account discounts",
+    "date": "2024-08-10"
+  },
+  {
     "id": "3.2.5",
     "description": "Update account permissions",
     "date": "2024-08-08"

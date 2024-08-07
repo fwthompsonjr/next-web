@@ -1,5 +1,11 @@
 [
   {
+    "id": "3.2.6",
+    "notes": [
+      "web: account allow user to selected discounts"
+    ]
+  },
+  {
     "id": "3.2.5",
     "notes": [
       "web: account allow user to change permission level",
