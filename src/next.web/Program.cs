@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Rewrite;
 using next.web.Controllers;
+using next.web.core.services;
 using next.web.core.util;
 using next.web.Services;
 using System.Diagnostics.CodeAnalysis;
@@ -15,6 +16,7 @@ namespace next.web
             AppContainer.Build();
             var services = builder.Services;
             // Add services to the container.
+            services.AddSingleton<ContentSanitizerInvoice>();
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.Configure<RouteOptions>(options =>

@@ -1,0 +1,8 @@
+<main role="main" class="inner cover">
+	<div id="invoice-card" class="card">
+		<div class="card-body text-start">
+			<h5 class="card-title text-start">Invoice</h5>
+			<p>invoice content is coming soon</p>
+		</div>
+	</div>
+</main>

@@ -103,6 +103,22 @@ namespace next.web.core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
+        ///	&lt;div id=&quot;invoice-card&quot; class=&quot;card&quot;&gt;
+        ///		&lt;div class=&quot;card-body&quot;&gt;
+        ///			&lt;h5 class=&quot;card-title&quot;&gt;Invoice&lt;/h5&gt;
+        ///			&lt;p&gt;You have been successfully logged out of application.&lt;/p&gt;
+        ///		&lt;/div&gt;
+        ///	&lt;/div&gt;
+        ///&lt;/main&gt;.
+        /// </summary>
+        internal static string invoice_page {
+            get {
+                return ResourceManager.GetString("invoice_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
         ///	&lt;div class=&quot;card&quot;&gt;
         ///		&lt;div class=&quot;card-body&quot;&gt;
         ///			&lt;h5 class=&quot;card-title&quot;&gt;Logout&lt;/h5&gt;
@@ -164,7 +180,7 @@ namespace next.web.core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        ///&lt;table automationId=&quot;user-status-table&quot; name=&quot;user-status-table&quot;&gt;
+        ///&lt;table automationid=&quot;user-status-table&quot; name=&quot;user-status-table&quot;&gt;
         ///	&lt;colgroup&gt;
         ///		&lt;col name=&quot;current-dt&quot; style=&quot;width: 60px&quot; /&gt;
         ///		&lt;col name=&quot;user-level&quot; style=&quot;width: 85px&quot; /&gt;
@@ -173,9 +189,8 @@ namespace next.web.core.Properties {
         ///	&lt;/colgroup&gt;
         ///	&lt;tbody&gt;
         ///		&lt;tr id=&quot;tr-status-information&quot; style=&quot;display: none&quot;&gt;
-        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span name=&quot;current-dt&quot;&gt;~0&lt;/span&gt;&lt;/td&gt;
-        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span name=&quot;user-level&quot;&gt;~1&lt;/span&gt;&lt;/td&gt;
-        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span name=&quot;use [rest of string was truncated]&quot;;.
+        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span id=&quot;spn-status-current-dt&quot; name=&quot;current-dt&quot;&gt;~0&lt;/span&gt;&lt;/td&gt;
+        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span id=&quot;spn-status-user-level&quot; name=&quot;user-level&quot;&gt;~1&lt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string status_menu {
             get {

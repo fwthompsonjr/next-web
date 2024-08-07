@@ -1,0 +1,7 @@
+﻿#invoice-card {
+    position: absolute;
+    left: 100px;
+    top: 60px;
+    width: 75%;
+    min-width: 500px;
+}

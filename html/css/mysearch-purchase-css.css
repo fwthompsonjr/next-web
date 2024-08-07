@@ -1,0 +1,20 @@
+﻿#formFile {
+    width: 85%;
+    margin-left: 25px;
+}
+
+#labelItemDescription {
+    position: relative;
+    left: -10px;
+}
+
+#frm-purchase-history-download-button,
+#frm-purchase-history-cancel-button {
+    width: 140px;
+    position: relative;
+    left: 20px;
+    margin-right: 10px;
+}
+#masthead-nav-menu {
+    display: none;
+}
