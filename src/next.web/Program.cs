@@ -16,7 +16,7 @@ namespace next.web
             AppContainer.Build();
             var services = builder.Services;
             // Add services to the container.
-            services.AddSingleton<ContentSanitizerInvoice>();
+            services.AddSingleton<ContentSanitizerSubscription>();
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.Configure<RouteOptions>(options =>

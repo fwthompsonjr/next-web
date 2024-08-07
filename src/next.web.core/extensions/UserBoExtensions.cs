@@ -48,7 +48,13 @@ namespace next.web.core.extensions
             await userbo.SaveRestriction(session, api);
             await userbo.SaveSearchPurchases(session, api);
         }
-
+        public static T? Retrieve<T>(this ISession session, string key)
+        {
+            var exists = session.TryGetValue(key, out var value);
+            if (!exists) return default;
+            var json = Encoding.UTF8.GetString(value);
+            return json.ToInstance<T>();
+        }
 
         public static async Task SaveMail(this UserContextBo userbo, ISession session, IPermissionApi api)
         {
