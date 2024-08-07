@@ -49,17 +49,14 @@ namespace next.web.core.services
                 var js = JsSearchSubmissionHelper.Refine(MapPayload(formName, json));
                 if (!AddressMap.TryGetValue(formName, out var address) || string.IsNullOrEmpty(address)) return response; // redirect to login
                 var appsubmission = await api.Post(address, js, user);
-                response.MapResponse(appsubmission);                
+                response.MapResponse(appsubmission);
                 if (appsubmission.StatusCode != 200) response.RedirectTo = ""; // stay on same page
                 // trigger reload page on 200 event
                 var prefix = formName.Split('-')[^1];
                 if (prefix.Equals("search") && appsubmission.StatusCode == 200)
                 {
                     // reset all user cache objects
-                    await userbo.SaveMail(session, api);
-                    await userbo.SaveHistory(session, api);
-                    await userbo.SaveRestriction(session, api);
-                    await userbo.SaveSearchPurchases(session, api);
+                    await userbo.Save(session, api);
                 }
                 response.RedirectTo = prefix switch
                 {

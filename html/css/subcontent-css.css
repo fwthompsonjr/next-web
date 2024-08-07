@@ -1,0 +1,33 @@
+﻿
+div.subcontent {
+    width: 70%;
+    min-width: 400px;
+    max-width: 1200px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+    div.subcontent.active {
+        display: block;
+    }
+
+div[name="subcontent-home-bullet-list"] {
+    width: 50%;
+    margin-left: 35%;
+    text-align: left;
+    justify-content: left;
+}
+
+div[name="main-content"] {
+    width: 70%;
+    min-width: 800px;
+    max-width: 1200px;
+}
+
+div[name="subcontent-login"],
+div[name="subcontent-register"] {
+    text-align: left;
+    justify-content: left;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}

@@ -103,6 +103,22 @@ namespace next.web.core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
+        ///	&lt;div id=&quot;invoice-card&quot; class=&quot;card&quot;&gt;
+        ///		&lt;div class=&quot;card-body text-start&quot;&gt;
+        ///			&lt;h5 id=&quot;invoice-fallback-title&quot; class=&quot;card-title text-start&quot;&gt;Invoice&lt;/h5&gt;
+        ///			&lt;div id=&quot;invoice-card-content&quot;&gt;&lt;/div&gt;
+        ///		&lt;/div&gt;
+        ///	&lt;/div&gt;
+        ///&lt;/main&gt;.
+        /// </summary>
+        internal static string invoice_page {
+            get {
+                return ResourceManager.GetString("invoice_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
         ///	&lt;div class=&quot;card&quot;&gt;
         ///		&lt;div class=&quot;card-body&quot;&gt;
         ///			&lt;h5 class=&quot;card-title&quot;&gt;Logout&lt;/h5&gt;
@@ -114,6 +130,19 @@ namespace next.web.core.Properties {
         internal static string logout_page {
             get {
                 return ResourceManager.GetString("logout_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
+        ///	&lt;div id=&quot;payment-card-content&quot;&gt;
+        ///		
+        ///	&lt;/div&gt;
+        ///&lt;/main&gt;.
+        /// </summary>
+        internal static string payment_confirmation_page {
+            get {
+                return ResourceManager.GetString("payment_confirmation_page", resourceCulture);
             }
         }
         
@@ -159,6 +188,26 @@ namespace next.web.core.Properties {
         internal static string search_table_layout {
             get {
                 return ResourceManager.GetString("search_table_layout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///&lt;table automationid=&quot;user-status-table&quot; name=&quot;user-status-table&quot;&gt;
+        ///	&lt;colgroup&gt;
+        ///		&lt;col name=&quot;current-dt&quot; style=&quot;width: 60px&quot; /&gt;
+        ///		&lt;col name=&quot;user-level&quot; style=&quot;width: 85px&quot; /&gt;
+        ///		&lt;col name=&quot;user-name&quot; /&gt;
+        ///		&lt;col name=&quot;user-status&quot; style=&quot;width: 90px&quot; /&gt;
+        ///	&lt;/colgroup&gt;
+        ///	&lt;tbody&gt;
+        ///		&lt;tr id=&quot;tr-status-information&quot; style=&quot;display: none&quot;&gt;
+        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span id=&quot;spn-status-current-dt&quot; name=&quot;current-dt&quot;&gt;~0&lt;/span&gt;&lt;/td&gt;
+        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span id=&quot;spn-status-user-level&quot; name=&quot;user-level&quot;&gt;~1&lt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string status_menu {
+            get {
+                return ResourceManager.GetString("status_menu", resourceCulture);
             }
         }
     }

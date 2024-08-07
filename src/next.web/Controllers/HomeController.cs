@@ -6,15 +6,20 @@ using System.Diagnostics;
 
 namespace next.web.Controllers
 {
-    public class HomeController : BaseController
+    [Route("/")]
+    public partial class HomeController : BaseController
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", 
+            "IDE0052:Remove unread private members", 
+            Justification = "This item is planned for future use and part of MVC pattern.")]
         private readonly ILogger<HomeController> _logger;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>")]
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             var helper = AppContainer.GetSanitizer("post-login");
@@ -30,7 +35,7 @@ namespace next.web.Controllers
                 Content = RemoveHeaderDuplicate(content)
             };
         }
-
+        [HttpGet("privacy")]
         public IActionResult Privacy()
         {
             return View();
@@ -52,7 +57,10 @@ namespace next.web.Controllers
                 Content = RemoveHeaderDuplicate(content)
             };
         }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpGet("error")]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

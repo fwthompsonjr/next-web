@@ -1,0 +1,75 @@
+﻿div[name='left-menu-border'] {
+    position: absolute;
+    z-index: 4000;
+    top: 0px;
+    left: 50px;
+    height: 100vh;
+    width: 2px;
+    border-left: 1px solid #444;
+}
+.alternate-border {
+    border-left: 1px solid #888 !important;
+    left: 51px !important;
+}
+div[name='left-menu'] {
+    position: absolute;
+    z-index: 5000;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+}
+    div[name='left-menu'] > div.row {
+        padding: 8px;
+        border-bottom-color: #444;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        border-right-color: #444;
+        border-right-style: solid;
+        border-right-width: 1px;
+        background-color: rgb(51, 51, 51);
+    }
+        div[name='left-menu'] > div.row:hover,
+        div[name='app-sub-menu'] div.row:hover,
+        div[name='left-menu'] > div.row.menu-selected,
+        div.sub-menu-selected {
+            background-color: rgb(31, 31, 31);
+        }
+
+    div[name='left-menu'] > div.row a {
+        margin-left: 6px;
+    }
+#my-account-options {
+    top: 85px;
+}
+
+#my-search-options {
+    top: 110px;
+}
+
+div[name='app-sub-menu'] {
+    width: 180px;
+    font-size: small;
+    z-index: 6000;
+    position: absolute;
+    left: 45px;
+    background-color: rgb(51, 51, 51);
+}
+    div[name='app-sub-menu'].active {
+        background-color: rgb(51, 51, 51);
+    }
+
+div[name='app-sub-menu'] div.row {
+    padding: 4px;
+    border-color: #444;
+    padding-left: 10px;
+    min-width: 185px;
+    border-style: solid;
+    border-width: 1px;
+    text-align: left;
+    background-color: #333;
+}
+    div[name='app-sub-menu'] div.row span {
+        display: inline-block;
+        margin-left: 5px;
+        min-width: 105px;
+    }

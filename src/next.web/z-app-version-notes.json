@@ -1,5 +1,12 @@
 [
   {
+    "id": "3.2.5",
+    "notes": [
+      "web: account allow user to change permission level",
+      "web: display user status bar"
+    ]
+  },
+  {
     "id": "3.2.4",
     "notes": [
       "web: setup search purchases view",

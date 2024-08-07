@@ -124,13 +124,22 @@
   <data name="core_configuration" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\core_configuration.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="invoice_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\invoice_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="logout_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\logout_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="payment_confirmation_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\payment_confirmation_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="search_download_template" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\search_download_template.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="search_table_layout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\search_table_layout.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="status_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\status_menu.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

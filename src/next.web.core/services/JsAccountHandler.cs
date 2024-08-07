@@ -24,8 +24,21 @@ namespace next.web.core.services
                 var appsubmission = await Submit(model, user, failureMessage);
                 response.MapResponse(appsubmission);
                 var formName = model.FormName ?? string.Empty;
-                if (!AppContainer.AddressMap.TryGetValue(formName, out var address)) return response; // redirect to login
+                if (!IsFormNameValid(formName)) return response; // redirect to login
                 if (appsubmission.StatusCode != 200) response.RedirectTo = ""; // stay on same page
+                if (formName == "permissions-subscription-group" && appsubmission.StatusCode == 200)
+                {
+                    // add details to session object
+                    // instruct script to redirect to invoice controller
+                    var obj = appsubmission.Message.ToInstance<PermissionChangedResponse>() ?? new();
+                    session.Save(obj);
+                    response.StatusCode = 200;
+                    response.Message = "permession request received. generating invoice.";
+                    response.RedirectTo = "/invoice/permissions";
+                    return response;
+                }
+                _ = AppContainer.AddressMap.TryGetValue(formName, out var address);
+                address ??= string.Empty;
                 // trigger reload page on 200 event
                 var prefix = address.Split('-')[0];
                 response.RedirectTo = prefix switch

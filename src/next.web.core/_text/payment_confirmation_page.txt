@@ -1,0 +1,5 @@
+<main role="main" class="inner cover">
+	<div id="payment-card-content">
+		
+	</div>
+</main>

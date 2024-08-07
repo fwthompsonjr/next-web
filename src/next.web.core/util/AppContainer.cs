@@ -51,7 +51,7 @@ namespace next.web.core.util
                 }
             }
         }
-        internal static IContentSanitizer? GetSanitizer(string name)
+        internal static IContentSanitizer GetSanitizer(string name)
         {
             if (ServiceProvider == null) Build();
             var svc = ServiceProvider?.GetKeyedService<IContentSanitizer>(name) ?? defaultSanitizer;
@@ -144,6 +144,8 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IContentSanitizer>("mailbox", new ContentSanitizerMailBox());
             services.AddKeyedSingleton<IContentSanitizer>("viewhistory", new ContentSanitizerHistory());
             services.AddKeyedSingleton<IContentSanitizer>("mysearch", new ContentSanitizerSearch());
+            services.AddKeyedSingleton<IContentSanitizer>("invoice-subscription", new ContentSanitizerInvoiceSubscription());
+            services.AddKeyedSingleton<IContentSanitizer>("payment-confirmation", new ContentSanitizerPaymentConfirmation());
             // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
             services.AddKeyedSingleton<IJsHandler, JsSearchHandler>("frm-search");
@@ -184,7 +186,8 @@ namespace next.web.core.util
             { "frm-profile-email", "profile-edit-contact-email" },
             { "Changes", "permissions-change-password" },
             { "Discounts", "permissions-set-discount" },
-            { "Subscription", "permissions-set-permission" }
+            { "Subscription", "permissions-set-permission" },
+            { "permissions-set-permission", "permissions-set-permission" }
         };
     }
 }

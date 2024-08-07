@@ -1,0 +1,17 @@
+
+<table automationid="user-status-table" name="user-status-table">
+	<colgroup>
+		<col name="current-dt" style="width: 60px" />
+		<col name="user-level" style="width: 85px" />
+		<col name="user-name" />
+		<col name="user-status" style="width: 90px" />
+	</colgroup>
+	<tbody>
+		<tr id="tr-status-information" style="display: none">
+			<td class="text-start"><span id="spn-status-current-dt" name="current-dt">~0</span></td>
+			<td class="text-start"><span id="spn-status-user-level" name="user-level">~1</span></td>
+			<td class="text-start"><span id="spn-status-user-name" name="user-name">~2</span></td>
+			<td class="text-end"><span id="spn-status-user-status" name="user-status">~3</span></td>
+		</tr>
+	</tbody>
+</table>

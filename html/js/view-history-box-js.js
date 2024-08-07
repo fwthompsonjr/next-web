@@ -1,0 +1,199 @@
+function getName(find, source) {
+    let kvp = source.split(',');
+    for (const element of kvp) {
+        let collection = element.split(':');
+        for (let i = 0; i < collection.length; i++) {
+            let itm = collection[i].trim();
+            if (itm == find && i + 1 < collection.length) {
+                return collection[i + 1].trim();
+            }
+        }
+    }
+    return '';
+}
+let historypager = {
+    "pagers": ["#cbo-subcontent-history-pager"],
+    "history_row_select": "table[automationid='search-history-table'] tr[data-row-number]",
+    "history_current_row": "table[automationid='search-history-table'] tr[data-row-number='~0']",
+    "preview_name": "table[automationid='search-preview-table']",
+    "preview_content": null,
+    "set_page": function (cboId) {
+        let indx = parseInt(cboId);
+        if (isNaN(indx) || indx < 0 || indx > historypager.pagers.length) {
+            return;
+        }
+        let keyname = historypager.pagers[indx];
+        let pg = $(keyname).val();
+        let rows = $(keyname).closest('table').find('tbody').find('tr[data-page-number]');
+        let selectionMade = false;
+        rows.each(function () {
+            const $current = $(this);
+            const attr = $current.attr("data-page-number");
+            const rwid = $current.attr("data-row-number");
+            const hscls = $current.attr("class");
+            if (typeof hscls !== typeof undefined && hscls !== false) {
+                $current.removeAttr('class');
+            }
+            if (attr == pg) {
+                $current.show()
+            } else {
+                $current.hide();
+            }
+            if (!selectionMade && attr == pg) {
+                historybox.fetch.item(rwid);
+                selectionMade = true;
+            }
+        });
+        $(keyname).blur();
+    }
+}
+let historybox = {
+    "isWorking": false,
+    "controls": {
+        "historylist": "dv-history-item-list",
+        "preview": "dv-history-item-preview",
+        "previewtemplate": "tarea-preview-html"
+    },
+    "init_filters": function () {
+        const caption = document.getElementById('search-history-heading-caption').innerText;
+        const chg = "onchange";
+        let cbonames = ["cbo-search-history-filter", "cbo-search-history-county"];
+        let cbofxns = ["historybox.cbochanged()", "historybox.cbocountychanged()"];
+        let findings = ["Status", "County"];
+        const hasFilter = caption != 'None';
+        for (let i = 0; i < cbonames.length; i++) {
+            const cbo = document.getElementById(cbonames[i]);
+            const changeFunction = cbofxns[i];
+            const find = findings[i];
+            if (null == cbo) continue;
+            const keyvalue = String(getName(find, caption));
+            cbo.removeAttribute(chg);
+            cbo.selectedIndex = 0;
+            if (hasFilter && keyvalue.length !== 0) {
+                for (let o = 0; o < cbo.children.length; o++) {
+                    let opt = cbo.children[o];
+                    let name = opt.getAttribute('name');
+                    if (keyvalue == name) {
+                        cbo.selectedIndex = o;
+                        break;
+                    }
+                }
+            }
+            cbo.setAttribute(chg, changeFunction);
+        }
+    },
+    "cbochanged": function () {
+        const handler = window.jsHandler;
+        const titlename = "search-history-sub-header";
+        const cboname = "cbo-search-history-filter";
+        const altcboname = "cbo-search-history-county";
+        if (undefined === handler || null === handler || !(handler)) {
+            return;
+        }
+        const title = document.getElementById(titlename);
+        const cbo = document.getElementById(cboname);
+        const altcbo = document.getElementById(altcboname);
+        const heading = null == title ? "history" : title.innerText;
+        if (null == cbo) return;
+        let idx = parseInt(cbo.selectedIndex)
+        let vlu = cbo.children[idx].getAttribute('value');
+        let aidx = parseInt(altcbo.selectedIndex)
+        let avlu = altcbo.children[aidx].getAttribute('name');
+        if (avlu == 'None') avlu = '';
+        let obj = {
+            "statusId": vlu,
+            "countyName": avlu,
+            "heading": heading
+        }
+        let payload = JSON.stringify(obj);
+        handler.filter(payload);
+    },
+    "cbocountychanged": function () {
+        historybox.cbochanged();
+    },
+    "invoice": function () {
+        const handler = window.jsHandler;
+        const $destitm = $("#dv-history-item-preview > table:nth-child(1)");
+        if (undefined === handler || null === handler || !(handler)) {
+            return;
+        }
+        if ($destitm.length != 1) {
+            return;
+        }
+        if ($destitm.find("span[name='search-status']").text().trim().toLowerCase() != 'completed') {
+            return;
+        }
+        const indx = $destitm.find("span[name='search-uuid']").text();
+        const $bttn = $("#btn-user-interaction-purchase");
+        $bttn.attr("disabled", "disabled");
+        $("#bttn-purchase-icon").addClass("d-none");
+        $("#bttn-purchase-icon-spin").removeClass("d-none");
+        handler.fetch(indx);
+    },
+    "fetch": {
+        "item": function (id) {
+            const dvdestination = "#dv-history-item-preview";
+            try {
+                const src = 'templates';
+                const dest = 'dv-history-item-preview';
+                const qrestriction = '#user-restriction-status';
+                const dv = document.getElementById(src);
+                const tbl = dv.getElementsByTagName("table")[0];
+                const htm = tbl.outerHTML;
+                // import template 
+                $(dvdestination).hide();
+                document.getElementById(dest).innerHTML = htm;
+                // populate (please change layout of template item retaining span names) 
+                const rowselector = "tr[data-row-number='~0']".replace("~0", id);
+                const src_items = ['a[title="View"]', "span[name='state-abbr']", "span[name='county-name']", "span[name='begin-date']", "span[name='ending-date']", "span[name='search-status']"];
+                const dest_items = ['span[name="requested-date"]', "span[name='state-abbr']", "span[name='county-name']", "span[name='begin-date']", "span[name='ending-date']", "span[name='search-status']"];
+                const $rwitm = $(rowselector);
+                const $destitm = $("#dv-history-item-preview > table:nth-child(1)");
+                const uuindx = $rwitm.attr('search-uuid');
+                const sts = $rwitm.find(src_items[src_items.length - 1]).attr('class');
+                $("tr[data-row-number]").removeClass('selected');
+                $rwitm.addClass('selected');
+                for (let s = 0; s < src_items.length; s++) {
+                    let txt = $rwitm.find(src_items[s]).text().trim();
+                    $destitm.find(dest_items[s]).text(txt);
+                }
+                // re-write date as friendly 
+                const dateRequested = $destitm.find(dest_items[0]).text().trim();
+                const tmpDate = new Date(dateRequested);
+                if (!isNaN(tmpDate)) {
+                    const d1 = tmpDate.toDateString()
+                    const t1 = tmpDate.toLocaleTimeString().split(' ');
+                    const t2 = t1[0].split(':');
+                    const t3 = "".concat(t2[0], ':', t2[1], ' ', t1[1])
+                    const d2 = "".concat(d1, ' ', t3);
+                    $destitm.find(dest_items[0]).text(d2);
+                }
+                $destitm.find("span[name='search-uuid']").text(uuindx);
+                $destitm.find(dest_items[dest_items.length - 1]).attr('class', sts);
+                // display error help text 
+                const stsname = $rwitm.find("span[name='search-status']").text().trim().toLowerCase();
+                if (stsname == 'error' || stsname == 'processing') {
+                    const uiname = "".concat("#tr-user-interaction-", stsname);
+                    $(uiname).removeClass("d-none");
+                }
+                const isRestriction = $(qrestriction).val() != 'false'
+                // add handling to disply purchased condition#
+                if (stsname === 'purchased' && !isRestriction) {
+                    const uiname = "".concat("#tr-user-interaction-", stsname);
+                    $(uiname).removeClass("d-none");
+                    $("#btn-user-interaction-download").removeAttr("disabled");
+                    return;
+                }
+                if (isRestriction || stsname != 'completed') {
+                    return;
+                }
+                $("#btn-user-interaction-purchase").removeAttr("disabled");
+                $("#tr-user-interaction-completed").removeClass("d-none");
+            } catch {
+                historybox.preview.clear();
+            } finally {
+                $(dvdestination).show(350);
+            }
+        }
+    }
+} 

@@ -1,0 +1,576 @@
+<html><head>
+		<script type="text/javascript">
+            try { 
+            CefSharp.BindObjectAsync("jsHandler", "jsHandler"); 
+                } catch {} 
+            function changeViewHandler(viewName){
+		            const nn = "d-none";
+		            const dvnav = "div[name='navigation-alert-message']";
+		            if( $(dvnav).hasClass(nn) ) {
+			            $(dvnav).removeClass(nn);
+			            $(dvnav).hide();
+		            }
+		            let handler = window.jsHandler;
+		            if( undefined === handler || null === handler || !(handler) ) { 
+			            $(dvnav).fadeIn(500);
+			            return;
+		            }
+		            handler.reload(viewName);
+	            }
+
+		</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: invoice</title>
+		
+		<!-- googleapis : fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+		
+		<!-- popper -->
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+		
+		<!-- bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+		
+		<!-- font awesome -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+		
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+		<!-- stripe -->
+        <script src="https://js.stripe.com/v3/"></script>
+
+		<!-- common styles -->
+		<link rel="stylesheet" name="cover-css" href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css">
+		
+		<!-- common styles -->
+		<style name="base-css">
+                    /* 
+                    * Forms 
+                    */ 
+                         .form-control:focus { 
+                         background-color: #444; 
+                         color: rgb(240, 240, 240) 
+                         } 
+                         .form-control { 
+                         background-color: transparent; 
+                         border-color: #555; 
+                         color: ghostwhite; 
+                         } 
+                         .form-control.error { 
+                         border-color: red; 
+                         } 
+                         label.error { 
+                         color: red; 
+                         font-size: small; 
+                         } 
+                         div.help-text { 
+                         font-size: small; 
+                         } 
+                    /* 
+                    * Header 
+                    */ 
+                         div[name="header"] { 
+                         height: 50px; 
+                         border-bottom: #444 solid 1px; 
+                         margin-top: 5px; 
+                         } 
+                    /* 
+                    * Loader 
+                    */ 
+                         div[name="loader"] { 
+                         margin-top: 20px; 
+                         margin-bottom: 20px; 
+                         border: 16px solid #cdcdb1; /* Light grey */ 
+                         border-top: 16px solid #9c9c63; /* Brown-ish */ 
+                         border-radius: 50%; 
+                         width: 120px; 
+                         height: 120px; 
+                         animation: spin 3s linear infinite; 
+                         } 
+                         @keyframes spin { 
+                              0% { transform: rotate(0deg); } 
+                              100% { transform: rotate(360deg); } 
+                         } 
+                    /* 
+                    * Card 
+                    */ 
+                         .card { 
+                         background-color: transparent; 
+                         border-color: #444; 
+                         color: #fff; 
+                         } 
+                         .card .card-body .card-title { 
+                         border-bottom: #444 solid 1px; 
+                         padding-bottom: 5px; 
+                         } 
+                         .card .card-footer { 
+                         border-top: #555 solid 1px; 
+                         } 
+                         @media screen and (max-width: 500px) { 
+                              .card { 
+                              width: 300px; 
+                              margin-left: 40px; 
+                              } 
+                         } 
+                    /* 
+                    * Modal 
+                    */ 
+                         div.modal-content { 
+                         background-color: lightgray; 
+                         color: rgb(240, 240, 240); 
+                         } 
+                    /* 
+                    * Data Tables 
+                    */ 
+                    table[name='search-dt-table'], 
+                         table[automationId='search-preview-table'] { 
+                         font-size: 14px; 
+                         border: 1px solid #444; 
+                         width: 100%; 
+                         margin-left: 5px; 
+                         margin-right: 10px; 
+                         } 
+                    table[name='search-dt-table'] tbody, 
+                    table[name='search-dt-table'] td, 
+                    table[name='search-dt-table'] tfoot, 
+                    table[name='search-dt-table'] th, 
+                    table[name='search-dt-table'] thead, 
+                    table[name='search-dt-table'] tr, 
+                    table[automationId='search-preview-table'] tbody, 
+                    table[automationId='search-preview-table'] td, 
+                    table[automationId='search-preview-table'] tfoot, 
+                    table[automationId='search-preview-table'] th, 
+                    table[automationId='search-preview-table'] thead, 
+                         table[automationId='search-preview-table'] tr { 
+                         border: 1px solid #444; 
+                         } 
+                    table[name='search-dt-table'] td, 
+                         table[automationId='search-preview-table'] td { 
+                         padding-left: 4px; 
+                         padding-right: 4px; 
+                         } 
+                    table[name='search-dt-table'] thead tr, 
+                         table[automationId='search-preview-table'] thead tr { 
+                         background-color: rgba(255, 255, 255, .25); 
+                         } 
+                    table[name='search-dt-table'] tfoot tr td, 
+                         table[automationId='search-preview-table'] tfoot tr td { 
+                         border-top-style: double; 
+                         border-right-style: none; 
+                         border-bottom-style: none; 
+                         border-left-style: none; 
+                         } 
+                    table[name='search-dt-table'] tfoot, 
+                         table[automationId='search-preview-table'] tfoot { 
+                         margin-top: 10px; 
+                         } 
+                         tr[data-position] { 
+                         cursor: pointer; 
+                         } 
+                         tr[data-position]:hover { 
+                         background-color: rgba(255, 255, 255, .25); 
+                         } 
+                         tr[data-position='odd'] { 
+                         background-color: rgba(125, 125, 125, .25); 
+                         } 
+                         tr[data-position] a[name='link-show-details']:hover { 
+                         color: #0a58ca; 
+                         } 
+                         #cbo-subcontent-history-pager { 
+                         background-color: transparent; 
+                         border-color: #555; 
+                         color: ghostwhite; 
+                         } 
+
+
+		</style>
+		<style name="subcontent-css">
+                         div.subcontent { 
+                         width: 50%; 
+                         min-width: 400px; 
+                         max-width: 1200px; 
+                         margin-bottom: 20px; 
+                         display: none; 
+                         } 
+                         div.subcontent.active { 
+                         display: block; 
+                         } 
+                         div[name="subcontent-home-bullet-list"] { 
+                         width: 50%; 
+                         margin-left: 35%; 
+                         text-align: left; 
+                         justify-content: left; 
+                         } 
+                         div[name="main-content"] { 
+                         width: 70%; 
+                         min-width: 800px; 
+                         max-width: 1200px; 
+                         } 
+                    div[name="subcontent-login"], 
+                         div[name="subcontent-register"] { 
+                         text-align: left; 
+                         justify-content: left; 
+                         margin-bottom: 20px; 
+                         margin-left: 20px; 
+                         } 
+
+
+		</style>
+		<style name="stripe-checkout-css">
+		 
+            div[name="payment-place-holder"] form {
+              width: 30vw;
+              min-width: 500px;
+              align-self: center;
+              box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+                0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+              border-radius: 7px;
+              padding: 40px;
+            }
+            
+            /* Buttons and links */
+            div[name="payment-place-holder"] button {
+              background: #5469d4;
+              font-family: Arial, sans-serif;
+              color: #ffffff;
+              border-radius: 4px;
+              border: 0;
+              padding: 12px 16px;
+              font-size: 16px;
+              font-weight: 600;
+              cursor: pointer;
+              display: block;
+              transition: all 0.2s ease;
+              box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+              width: 100%;
+            }
+            div[name="payment-place-holder"] button:hover {
+              filter: contrast(115%);
+            }
+
+            div[name="payment-place-holder"] button:disabled {
+              opacity: 0.5;
+              cursor: default;
+            }
+            .hidden {
+              display: none;
+            }
+            
+            #payment-message {
+              color: rgb(105, 115, 134);
+              font-size: 16px;
+              line-height: 20px;
+              padding-top: 12px;
+              text-align: center;
+            }
+
+            #payment-element {
+              margin-bottom: 24px;
+            }
+            
+            /* spinner/processing state, errors */
+            .spinner,
+            .spinner:before,
+            .spinner:after {
+              border-radius: 50%;
+            }
+            .spinner {
+              color: #ffffff;
+              font-size: 22px;
+              text-indent: -99999px;
+              margin: 0px auto;
+              position: relative;
+              width: 20px;
+              height: 20px;
+              box-shadow: inset 0 0 0 2px;
+              -webkit-transform: translateZ(0);
+              -ms-transform: translateZ(0);
+              transform: translateZ(0);
+            }
+            .spinner:before,
+            .spinner:after {
+              position: absolute;
+              content: "";
+            }
+            .spinner:before {
+              width: 10.4px;
+              height: 20.4px;
+              background: #5469d4;
+              border-radius: 20.4px 0 0 20.4px;
+              top: -0.2px;
+              left: -0.2px;
+              -webkit-transform-origin: 10.4px 10.2px;
+              transform-origin: 10.4px 10.2px;
+              -webkit-animation: loading 2s infinite ease 1.5s;
+              animation: loading 2s infinite ease 1.5s;
+            }
+            .spinner:after {
+              width: 10.4px;
+              height: 10.2px;
+              background: #5469d4;
+              border-radius: 0 10.2px 10.2px 0;
+              top: -0.1px;
+              left: 10.2px;
+              -webkit-transform-origin: 0px 10.2px;
+              transform-origin: 0px 10.2px;
+              -webkit-animation: loading 2s infinite ease;
+              animation: loading 2s infinite ease;
+            }
+            
+            @-webkit-keyframes loading {
+              0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+              }
+              100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+              }
+            }
+            @keyframes loading {
+              0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+              }
+              100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+              }
+            }
+		</style>
+	</head>
+	<body class="text-center">
+		
+		<!-- Logout Modal -->  		 		 		
+		<!-- Button trigger modal -->
+		<button id="btn-my-account-logout-show" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#my-account-logout-modal">
+			Launch static backdrop modal
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="my-account-logout-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="my-account-logout-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5 text-muted" id="my-account-logout-label">Logout</h1>
+						<button id="my-account-logout-x-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-dark">
+						Are you sure you want to log out?
+					</div>
+					<div class="modal-footer">
+						<button id="my-account-logout-bttn-close" type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+						<button id="my-account-logout-bttn" type="button" class="btn btn-primary" onclick="verifyAndPost( 'user', 'logout')">Confirm</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+			<header class="masthead mb-auto" style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+				<div class="inner">
+					<h3 class="masthead-brand">
+						<i class="bi bi-bank2"></i>
+						<span>Legal Lead UI</span>
+					</h3>
+					<nav id="masthead-nav-menu" class="nav nav-masthead justify-content-center">
+						<a name="subcontent-home" class="nav-link" href="javascript:changeViewHandler('myaccount-home')">Home</a>
+						<a name="subcontent-account" class="nav-link" href="javascript:changeViewHandler('myaccount-home')">Account</a>
+						<a name="subcontent-search" class="nav-link" href="javascript:changeViewHandler('mysearch-home')">Search</a>
+					</nav>
+				</div>
+			</header>
+			<main role="main" class="inner cover">
+				<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+                    <div name="navigation-alert-message" class="alert alert-primary d-none" role="alert">
+                      Unable to complete navigation.
+                    </div>
+					<div id="dv-subcontent-invoice" name="subcontent-invoice" class="card">
+						<div class="card-body">
+							<h5 class="card-title text-start">
+								<span name="invoice-label">Invoice:
+								</span>
+								<span automationid="search-uuid" name="invoice" class="text-light">Legal Lead Discounts</span>
+							</h5>
+							<div class="row">
+								<h6 class="text-start">
+									<span name="invoice-date-label" class="text-primary">Invoice Date:
+									</span>
+									<span name="invoice-date" class="ml-2">Wednesday, August 7, 2024 2:10 AM</span>
+								</h6>
+								<h6 class="text-start">
+									<span name="invoice-description-label" class="text-primary">Description:
+									</span>
+									<span name="invoice-description" class="ml-2"><br>
+<span style="margin-left: 10px">States: -None-</span><br>
+<span style="margin-left: 10px">Counties: Denton, Tarrant</span></span>
+								</h6>
+								<h6 class="text-start">
+									<span name="invoice-label" class="text-primary">Total:
+									</span>
+									<span name="invoice-total" class="ml-2">$2.00</span>
+								</h6>
+								<h6 class="text-start" style="margin-left: 15px">
+									<span name="invoice-disclaimer" class="text-secondary">
+                                        <small>Please note: <br>
+                                            Invoice total represents cumulative total of all discounts.<br>
+                                            Sometimes, this value can be negative, if you are cancelling an active discount.
+                                        </small>
+									</span>
+								</h6>
+							</div>
+							<div name="payment-place-holder" class="row">
+                                <!-- Display a payment form -->
+                                <form id="payment-form">
+                                  <div id="payment-element" class="StripeElement"><div class="__PrivateStripeElement" style="margin: -4px 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important; clear: both !important; transition: height 0.35s ease 0s !important;"><iframe name="__privateStripeFrame9274" frameborder="0" allowtransparency="true" scrolling="no" role="presentation" allow="payment *; publickey-credentials-get *" src="https://js.stripe.com/v3/elements-inner-payment-82187f7e04b2fe009c62709b629507c8.html#wait=false&amp;rtl=false&amp;publicOptions[layout]=tabs&amp;componentName=payment&amp;keyMode=test&amp;apiKey=pk_test_51LCZucDhgP60CL9xBNAtEMBdGOdZGMH6OqoxySlG4Cpj8aMTNYVzt6P5R2GtDEZiBVnnUsLLTgEUad9rSgtf21ru00THKrc5YO&amp;referrer=http%3A%2F%2Fapi.legallead.co%2Fdiscount-checkout%3Fsessionid%3Dsub_1PkzK9DhgP60CL9xHriKZkGD%26id%3DwhAPGiWHUrSLp1PQ&amp;controllerId=__privateStripeController9271" title="Secure payment input frame" style="border: 0px !important; margin: -4px; padding: 0px !important; width: calc(100% + 8px); min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; height: 457.609px; opacity: 1; transition: height 0.35s ease 0s, opacity 0.4s ease 0.1s;"></iframe></div></div>
+                                  <button id="submit">
+                                    <div class="spinner hidden" id="spinner"></div>
+                                    <span id="button-text">Pay now</span>
+                                  </button>
+                                  <div id="payment-message" class="hidden"></div>
+                                </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<footer class="mastfoot mt-auto">
+				<div id="footer-copy" class="float-end">
+					<span id="footer-copy-span">(c) 2023, 2024 Legal Lead UI</span>
+				</div>
+				<div id="footer-reload" class="float-start" style="display:none">
+					<a id="footer-reload-link" href="javascript:reloadContent()" class="text-secondary text-decoration-none">Reload</a>
+				</div>
+			</footer>
+		</div>
+		
+	<script name="checkout-stripe-js">
+
+// This is your test publishable API key.
+const stripe = Stripe("pk_test_51LCZucDhgP60CL9xBNAtEMBdGOdZGMH6OqoxySlG4Cpj8aMTNYVzt6P5R2GtDEZiBVnnUsLLTgEUad9rSgtf21ru00THKrc5YO");
+
+// The items the customer wants to buy
+const items = [{ id: "xl-tshirt" }];
+
+let elements;
+
+initialize();
+checkStatus();
+
+document
+  .querySelector("#payment-form")
+  .addEventListener("submit", handleSubmit);
+
+function getClientSecret() {
+    const jsfmt = '{ "clientSecret": "~0"}';
+    let payload = jsfmt.replace("~0", "pi_3PkzK9DhgP60CL9x3roWMra3_secret_GvqKV2b5er0UsYi2MEfbQ3luc");
+    return JSON.parse(payload);
+}
+// Fetches a payment intent and captures the client secret
+async function initialize() {
+    
+  const { clientSecret } = getClientSecret();
+
+  const appearance = {
+    theme: 'flat',
+  };
+  elements = stripe.elements({ appearance, clientSecret });
+
+  const paymentElementOptions = {
+    layout: "tabs",
+  };
+
+  const paymentElement = elements.create("payment", paymentElementOptions);
+  paymentElement.mount("#payment-element");
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  setLoading(true);
+
+  const { error } = await stripe.confirmPayment({
+    elements,
+    confirmParams: {
+      // Make sure to change this to your payment completion page
+      return_url: "http://api.legallead.co/discount-result?session_id=sub_1PkzK9DhgP60CL9xHriKZkGD&sts=success&id=whAPGiWHUrSLp1PQ",
+    },
+  });
+
+  // This point will only be reached if there is an immediate error when
+  // confirming the payment. Otherwise, your customer will be redirected to
+  // your `return_url`. For some payment methods like iDEAL, your customer will
+  // be redirected to an intermediate site first to authorize the payment, then
+  // redirected to the `return_url`.
+  if (error.type === "card_error" || error.type === "validation_error") {
+    showMessage(error.message);
+  } else {
+    showMessage("An unexpected error occurred.");
+  }
+
+  setLoading(false);
+}
+
+// Fetches the payment intent status after payment submission
+async function checkStatus() {
+  const clientSecret = new URLSearchParams(window.location.search).get(
+    "payment_intent_client_secret"
+  );
+
+  if (!clientSecret) {
+    return;
+  }
+
+  const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+
+  switch (paymentIntent.status) {
+    case "succeeded":
+      showMessage("Payment succeeded!");
+      break;
+    case "processing":
+      showMessage("Your payment is processing.");
+      break;
+    case "requires_payment_method":
+      showMessage("Your payment was not successful, please try again.");
+      break;
+    default:
+      showMessage("Something went wrong.");
+      break;
+  }
+}
+
+// ------- UI helpers -------
+
+function showMessage(messageText) {
+  const messageContainer = document.querySelector("#payment-message");
+
+  messageContainer.classList.remove("hidden");
+  messageContainer.textContent = messageText;
+
+  setTimeout(function () {
+    messageContainer.classList.add("hidden");
+    messageContainer.textContent = "";
+  }, 4000);
+}
+
+// Show a spinner on payment submission
+function setLoading(isLoading) {
+  if (isLoading) {
+    // Disable the button and show a spinner
+    document.querySelector("#submit").disabled = true;
+    document.querySelector("#spinner").classList.remove("hidden");
+    document.querySelector("#button-text").classList.add("hidden");
+  } else {
+    document.querySelector("#submit").disabled = false;
+    document.querySelector("#spinner").classList.add("hidden");
+    document.querySelector("#button-text").classList.remove("hidden");
+  }
+}
+
+</script><iframe name="__privateStripeController9271" frameborder="0" allowtransparency="true" scrolling="no" role="presentation" allow="payment *" src="https://js.stripe.com/v3/controller-with-preconnect-70dc5c95da9c55dfc82983a8addd1384.html#apiKey=pk_test_51LCZucDhgP60CL9xBNAtEMBdGOdZGMH6OqoxySlG4Cpj8aMTNYVzt6P5R2GtDEZiBVnnUsLLTgEUad9rSgtf21ru00THKrc5YO&amp;stripeJsId=9ad4b008-dd40-48f8-b3ec-51ea82c1e583&amp;controllerCount=1&amp;isCheckout=false&amp;stripeJsLoadTime=1722996619203&amp;manualBrowserDeprecationRollout=false&amp;mids[guid]=NA&amp;mids[muid]=NA&amp;mids[sid]=NA&amp;referrer=http%3A%2F%2Fapi.legallead.co%2Fdiscount-checkout%3Fsessionid%3Dsub_1PkzK9DhgP60CL9xHriKZkGD%26id%3DwhAPGiWHUrSLp1PQ&amp;controllerId=__privateStripeController9271" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe><iframe name="__privateStripeFrame9273" frameborder="0" allowtransparency="true" scrolling="no" role="presentation" allow="payment *" src="https://js.stripe.com/v3/elements-inner-loader-ui-04eaa60e28a6b54d1650d4537c2291c5.html#referrer=http%3A%2F%2Fapi.legallead.co%2Fdiscount-checkout%3Fsessionid%3Dsub_1PkzK9DhgP60CL9xHriKZkGD%26id%3DwhAPGiWHUrSLp1PQ&amp;controllerId=__privateStripeController9271" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe>
+
+<iframe frameborder="0" allowtransparency="true" scrolling="no" name="hcaptcha-invisible" referrerpolicy="no-referrer" aria-hidden="true" tabindex="-1" src="https://js.stripe.com/v3/hcaptcha-invisible-53381ee03509635a3efc08e241e4f62a.html#debugMode=false&amp;parentOrigin=http%3A%2F%2Fapi.legallead.co" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;" data-initialized="true"></iframe><iframe name="__privateStripeMetricsController9270" frameborder="0" allowtransparency="true" scrolling="no" role="presentation" allow="payment *" src="https://js.stripe.com/v3/m-outer-3437aaddcdf6922d623e172c2d6f9278.html#url=http%3A%2F%2Fapi.legallead.co%2Fdiscount-checkout%3Fsessionid%3Dsub_1PkzK9DhgP60CL9xHriKZkGD%26id%3DwhAPGiWHUrSLp1PQ&amp;title=legallead.ui%3A%20invoice&amp;referrer=&amp;muid=NA&amp;sid=NA&amp;version=6&amp;preview=false" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe></body></html>
