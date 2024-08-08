@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using next.web.core.extensions;
 using System.Text;
 
 namespace next.web.core.services
@@ -12,6 +13,7 @@ namespace next.web.core.services
             content = AppendMain(content, doc);
             content = AppendStyleTag(content, doc);
             var html = RemoveMenuOptions(doc, content);
+            html = RestoreHomeMenu(html);
             return html;
         }
 
@@ -43,7 +45,25 @@ namespace next.web.core.services
             head.InnerHtml = txt.ToString();
             return doc.DocumentNode.OuterHtml;
         }
+        private static string RestoreHomeMenu(string content)
+        {
+            const string findMenu = "//*[@id='menu-container']";
+            var doc = content.ToHtml();
+            var node = doc.DocumentNode;
+            var menu = node.SelectSingleNode(findMenu);
+            if (menu == null) return content;
+            var expected = new List<string> { "//*[@id='app-side-menu']", "//div[@data-position-index='0']" };
+            var ismatched = expected.Exists(x => node.SelectSingleNode(x) != null);
+            if (ismatched) return content;
+            var current = menu.InnerHtml;
+            menu.InnerHtml = string.Concat(current, Environment.NewLine, LogoutContent);
+            return node.OuterHtml;
+        }
+
         private const string cover = "cover-container d-flex h-100 p-3 mx-auto flex-column";
         private const string coverstyle = "<link rel=\"stylesheet\" name=\"cover-css\" href=\"https://getbootstrap.com/docs/4.0/examples/cover/cover.css\" />";
+        private static string? logoutContent;
+        private static string GetLogoutContent => Properties.Resources.base_logout_menu;
+        private static string LogoutContent => logoutContent ??= GetLogoutContent;
     }
 }
