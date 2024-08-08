@@ -131,6 +131,43 @@ let theHandler = {
         }, 1500);
         let destination = "/invoice/purchase?id=~0".replace("~0", uuidx);
         document.location = destination;
+    },
+    "verify": function (uuidx) {
+        setTimeout(function () {
+            $("#bttn-download-icon").removeClass("d-none");
+            $("#bttn-download-icon-spin").addClass("d-none");
+        }, 1500);
+        const landing = "/data/download-verify";
+        let dta = { Id: uuidx };
+        const requested = {
+            "formName": "check-download",
+            "payload": JSON.stringify(dta)
+        };
+        const nne = 'd-none';
+        const boxes = ["#dv-user-download-error", "#dv-user-download-message"];
+        $.ajax({
+            type: "POST",
+            url: landing,
+            data: JSON.stringify(requested),
+            dataType: "json",
+            success: function (resultData) {
+                $("#btn-user-interaction-download").removeAttr("disabled");
+                $("#bttn-download-icon").removeClass(nne);
+                $("#bttn-download-icon-spin").addClass(nne);
+                let rsp = theResponder.translate(resultData);
+                if (rsp.statusCode != 200) {
+                    $(boxes[1]).text(rsp.message);
+                    boxes.forEach(box => { $(box).removeClass(nne); });
+                    return;
+                }
+                document.location = rsp.redirectTo;
+            },
+            error: function () {
+                $(boxes[1]).text("An unexpected error occurred.");
+                boxes.forEach(box => { $(box).removeClass(nne); });
+                $("#btn-user-interaction-download").removeAttr("disabled");
+            }
+        });
     }
 }
 

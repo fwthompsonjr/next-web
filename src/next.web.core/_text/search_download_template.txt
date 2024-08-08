@@ -11,12 +11,16 @@
 		</p>
 		<div class="d-flex justify-content-between">
 			<center style="width: 100%">
-				<button id="btn-user-interaction-download" name="bttn-download" class="btn btn-primary w-75 m-2" onclick="javascript:void(0)" disabled="disabled">
+				<button id="btn-user-interaction-download" name="bttn-download" class="btn btn-primary w-75 m-2" onclick="javascript:historybox.download()">
 					<i id="bttn-download-icon" class="bi bi-box-arrow-in-right"></i>
 					<i id="bttn-download-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>
 					<span>Download</span>
 				</button>
 			</center>
+		</div>
+		<div id="dv-user-download-error" class="row d-none">
+			<hr size="1" noshade="" />
+			<div id="dv-user-download-message" class="d-none text-danger"></div>
 		</div>
 	</td>
 </tr>

@@ -1,9 +1,12 @@
-﻿using legallead.desktop.interfaces;
+﻿using legallead.desktop.entities;
+using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.util;
+using next.web.Models;
+using System.Diagnostics;
 
 namespace next.web.Controllers
 {
@@ -112,6 +115,57 @@ namespace next.web.Controllers
             response.StatusCode = 200;
             response.Message = $"Please apply filter: {filterName}. Status: {recordId.StatusId}. County: {recordId.CountyName}";
             return Json(response);
+        }
+
+        [HttpPost("download-verify")]
+        public async Task<IActionResult> VerifyDownload(FormSubmissionModel model)
+        {
+            var session = HttpContext.Session;
+            var response = FormResponses.GetDefault(null);
+            if (!ModelState.IsValid || !model.Validate(Request)) return BadRequest();
+            if (string.IsNullOrEmpty(model.Payload)) return BadRequest();
+            var location = model.Payload.ToInstance<FetchIntentRequest>();
+            if (location == null) return BadRequest();
+            var authenicated = IsSessionAuthenicated(session);
+            response.StatusCode = authenicated ? 200 : 408;
+            response.RedirectTo = authenicated ? "" : "/home";
+            if (!authenicated) return Json(response);
+            // contact api to get download response
+            var user = session.GetUser();
+            var api = provider?.GetService<IPermissionApi>();
+            if (api == null || user == null) return StatusCode(503);
+            try
+            {
+                var remote = await api.Post("make-search-purchase", location, user);
+                if (remote == null) return Json(response);
+                if (remote.StatusCode != 200)
+                {
+                    response.StatusCode = remote.StatusCode;
+                    response.Message = remote.Message;
+                    return Json(response);
+                }
+                session.SetString("user-download-response", remote.Message);
+                response.StatusCode = remote.StatusCode;
+                response.Message = "Download authorized";
+                response.RedirectTo = "/download";
+                return Json(response);
+            }
+            finally
+            {
+                await RevertDownload(api, location, user);
+            }
+        }
+
+        private static async Task RevertDownload(IPermissionApi api, FetchIntentRequest request, UserBo user)
+        {
+            try
+            {
+                await api.Post("reset-download", request, user);
+            } 
+            catch(Exception e)
+            { 
+                Debug.WriteLine(e);
+            }
         }
     }
 }

@@ -40,6 +40,17 @@ namespace next.web.Controllers
             return Json(new { clientSecret = response.ClientSecret });
         }
 
+        [HttpPost("/download")]
+        public async Task<IActionResult> Download()
+        {
+            var session = HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) return Redirect("/home");
+            var payload = session.GetString("user-download-response");
+            if (string.IsNullOrEmpty(payload)) return Redirect("/error");
+
+            var content = await GetAuthenicatedPage(session, "introduction");
+            return GetResult(content);
+        }
         private async static Task<FetchIntentResponse?> GetIntent(string url, FetchIntentRequest request)
         {
             using var client = new HttpClient();
