@@ -1,18 +1,23 @@
 [
   {
+    "id": "3.2.8",
+    "description": "Allow user to download search records",
+    "date": "2024-08-07"
+  },
+  {
     "id": "3.2.7",
     "description": "Allow user to purchase search records",
-    "date": "2024-08-10"
+    "date": "2024-08-07"
   },
   {
     "id": "3.2.6",
     "description": "Update account discounts",
-    "date": "2024-08-10"
+    "date": "2024-08-07"
   },
   {
     "id": "3.2.5",
     "description": "Update account permissions",
-    "date": "2024-08-08"
+    "date": "2024-08-07"
   },
   {
     "id": "3.2.4",

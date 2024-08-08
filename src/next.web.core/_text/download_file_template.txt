@@ -1,0 +1,62 @@
+<main role="main" class="inner cover">
+	<div id="download-card" class="card">
+		<div class="card-body text-start">
+			<h5 id="download-title" class="card-title text-start">Download</h5>
+			<div id="download-card-content">
+				<div class="row">
+					<div class="text-start">
+						<span class="text-primary data-label">External Id:</span>
+						<span id="spn-download-external-id" name="download-external-id" class="data-value"> - </span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-start">
+						<span class="text-primary data-label">Description:</span>
+						<span id="spn-download-description" name="download-description" class="data-value"> - </span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-start">
+						<span class="text-primary data-label">Create Date:</span>
+						<span id="spn-download-date" name="download-date" class="data-value"> - </span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-start">
+						<span class="text-primary data-label">Status:</span>
+						<span id="spn-download-status" name="download-status" class="data-value"> - </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<div id="download-target" class="d-none">
+	<iframe id="frame-download-target" />
+</div>
+<script name="download-js">
+	let nIntervId;
+	const theframe = "#frame-download-target";
+	const thestatus = "#spn-download-status";
+	$(theframe).on('error', function(){
+		$(thestatus).text('Error: unable to complete download.');
+		$(thestatus).removeClass('text-success');
+		$(thestatus).addClass('text-danger');
+	});
+	setTimeout( function() {
+		$(thestatus).text('Please wait, download begining...');
+	}, 500);
+	
+	setTimeout( function() {
+		$(thestatus).text('Downloading...');
+		if (!nIntervId) { nIntervId = setInterval(checkDownload, 1000); }
+		$(theframe).attr('src', '/download-file');
+	}, 1500);
+
+	function checkDownload() {
+		const landing = '/download-status';
+		clearInterval(nIntervId);
+		nIntervId = null;
+	}
+
+</script>

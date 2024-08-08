@@ -130,6 +130,29 @@ let historybox = {
         $("#bttn-purchase-icon-spin").removeClass("d-none");
         handler.purchase(indx);
     },
+    "download": function () {
+        const handler = window.jsHandler;
+        const $destitm = $("#dv-history-item-preview > table:nth-child(1)");
+        if (undefined === handler || null === handler || !(handler)) {
+            return;
+        }
+        if ($destitm.length != 1) {
+            return;
+        }
+        if ($destitm.find("span[name='search-status']").text().trim().toLowerCase() != 'purchased') {
+            return;
+        }
+        const nne = 'd-none';
+        const indx = $destitm.find("span[name='search-uuid']").text();
+        const $bttn = $("#btn-user-interaction-download");
+        const boxes = ["#dv-user-download-error", "#dv-user-download-message"];
+        boxes.forEach(box => { $(box).addClass(nne); });
+        $bttn.attr("disabled", "disabled");
+        $(boxes[1]).text("");
+        $("#bttn-download-icon").addClass(nne);
+        $("#bttn-download-icon-spin").removeClass(nne);
+        handler.verify(indx);
+    },
     "fetch": {
         "item": function (id) {
             const dvdestination = "#dv-history-item-preview";
