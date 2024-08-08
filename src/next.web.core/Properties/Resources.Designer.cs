@@ -103,6 +103,28 @@ namespace next.web.core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
+        ///	&lt;div id=&quot;download-card&quot; class=&quot;card&quot;&gt;
+        ///		&lt;div class=&quot;card-body text-start&quot;&gt;
+        ///			&lt;h5 id=&quot;download-title&quot; class=&quot;card-title text-start&quot;&gt;Download&lt;/h5&gt;
+        ///			&lt;div id=&quot;download-card-content&quot;&gt;
+        ///				&lt;div class=&quot;row&quot;&gt;
+        ///					&lt;div class=&quot;text-start&quot;&gt;
+        ///						&lt;span class=&quot;text-primary data-label&quot;&gt;External Id:&lt;/span&gt;
+        ///						&lt;span name=&quot;download-external-id&quot; class=&quot;data-value&quot;&gt; - &lt;/span&gt;
+        ///					&lt;/div&gt;
+        ///				&lt;/div&gt;
+        ///				&lt;div class=&quot;row&quot;&gt;
+        ///					&lt;div class=&quot;text-start&quot;&gt;
+        ///						&lt;span clas [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string download_file_template {
+            get {
+                return ResourceManager.GetString("download_file_template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
         ///	&lt;div id=&quot;invoice-card&quot; class=&quot;card&quot;&gt;
         ///		&lt;div class=&quot;card-body text-start&quot;&gt;
         ///			&lt;h5 id=&quot;invoice-fallback-title&quot; class=&quot;card-title text-start&quot;&gt;Invoice&lt;/h5&gt;
@@ -160,7 +182,7 @@ namespace next.web.core.Properties {
         ///		&lt;/p&gt;
         ///		&lt;div class=&quot;d-flex justify-content-between&quot;&gt;
         ///			&lt;center style=&quot;width: 100%&quot;&gt;
-        ///				&lt;button id=&quot;btn-user-interaction-download&quot; name=&quot;bttn-download&quot; class=&quot;btn btn-primary w-75 m-2&quot; onclick=&quot;javascript:void( [rest of string was truncated]&quot;;.
+        ///				&lt;button id=&quot;btn-user-interaction-download&quot; name=&quot;bttn-download&quot; class=&quot;btn btn-primary w-75 m-2&quot; onclick=&quot;javascript:histo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string search_download_template {
             get {

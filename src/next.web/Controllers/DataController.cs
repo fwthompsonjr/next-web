@@ -134,6 +134,9 @@ namespace next.web.Controllers
             var user = session.GetUser();
             var api = provider?.GetService<IPermissionApi>();
             if (api == null || user == null) return StatusCode(503);
+            var thing = (await session.RetrievePurchases(api)).Find(x => (x.ReferenceId ?? "").Equals(location.Id));
+            if (thing != null && !string.IsNullOrEmpty(thing.ExternalId)) location.Id = thing.ExternalId;
+            var isDownloadComplete = false;
             try
             {
                 var remote = await api.Post("make-search-purchase", location, user);
@@ -148,10 +151,12 @@ namespace next.web.Controllers
                 response.StatusCode = remote.StatusCode;
                 response.Message = "Download authorized";
                 response.RedirectTo = "/download";
+                isDownloadComplete = true;
                 return Json(response);
             }
             finally
             {
+                Debug.WriteLine("Download retrieval: {0}, id: {1}", isDownloadComplete, location.Id);
                 await RevertDownload(api, location, user);
             }
         }

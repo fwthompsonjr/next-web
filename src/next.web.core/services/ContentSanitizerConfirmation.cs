@@ -2,7 +2,7 @@
 
 namespace next.web.core.services
 {
-    internal class ContentSanitizerPaymentConfirmation : ContentSanitizerInvoice
+    internal class ContentSanitizerConfirmation : ContentSanitizerInvoice
     {
         public override string Sanitize(string content)
         {

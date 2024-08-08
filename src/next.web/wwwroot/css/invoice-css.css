@@ -1,5 +1,6 @@
 ﻿#invoice-card,
-#payment-card-content {
+#payment-card-content,
+#download-card {
     position: absolute;
     left: 100px;
     top: 60px;
@@ -134,4 +135,15 @@ div[name="payment-place-holder"] button {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
+}
+
+#download-target,
+#frame-download-target {
+    display: none;
+}
+
+span.data-label {
+    display: inline-block;
+    margin-right: 10px;
+    width: 100px;
 }

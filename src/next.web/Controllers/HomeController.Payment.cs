@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AngleSharp.Io;
+using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
+using next.web.core.services;
+using next.web.core.util;
 using next.web.Models;
 
 namespace next.web.Controllers
@@ -40,16 +43,56 @@ namespace next.web.Controllers
             return Json(new { clientSecret = response.ClientSecret });
         }
 
-        [HttpPost("/download")]
+        [HttpGet("/download")]
         public async Task<IActionResult> Download()
         {
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var payload = session.GetString("user-download-response");
             if (string.IsNullOrEmpty(payload)) return Redirect("/error");
-
-            var content = await GetAuthenicatedPage(session, "introduction");
+            var data = payload.ToInstance<DownloadJsResponse>();
+            if (data == null || string.IsNullOrEmpty(data.Content)) return Redirect("/error");
+            var keys = new List<KeyValuePair<string, string>>
+            {
+                new("//*[@id='spn-download-external-id']", data.ExternalId ?? " - "),
+                new("//*[@id='spn-download-description']", data.Description ?? " - "),
+                new("//*[@id='spn-download-date']", data.CreateDate ?? " - "),
+            };
+            var content = await GetAuthenicatedPage(session, "blank");
+            var sanity = AppContainer.GetSanitizer("download");
+            content = sanity.Sanitize(content);
+            content = ContentSanitizerDownload.AppendContext(content, keys);
             return GetResult(content);
+        }
+
+
+        [HttpGet("/download-file")]
+        public IActionResult DownloadFile()
+        {
+            const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var session = HttpContext.Session;
+            var isFileDownload = false;
+            try
+            {
+                if (!IsSessionAuthenicated(session)) return Unauthorized();
+                var payload = session.GetString("user-download-response");
+                if (string.IsNullOrEmpty(payload)) return BadRequest();
+                var data = payload.ToInstance<DownloadJsResponse>();
+                if (data == null || string.IsNullOrEmpty(data.Content)) return BadRequest();
+                var bytes = Convert.FromBase64String(data.Content);
+                var name = data.FileName();
+                isFileDownload = true;
+                return new FileContentResult(bytes, contentType) { FileDownloadName = name };
+            }
+            catch
+            {
+                isFileDownload = false;
+                return BadRequest();
+            }
+            finally
+            {
+                if (isFileDownload) session.Remove("user-download-response");
+            }
         }
         private async static Task<FetchIntentResponse?> GetIntent(string url, FetchIntentRequest request)
         {
