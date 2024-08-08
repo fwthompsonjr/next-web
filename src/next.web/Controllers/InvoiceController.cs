@@ -1,8 +1,9 @@
-﻿using legallead.desktop.interfaces;
+﻿using legallead.desktop.entities;
+using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Mvc;
+using next.web.core.extensions;
 using next.web.core.services;
 using next.web.core.util;
-using System.Web;
 
 namespace next.web.Controllers
 {
@@ -36,8 +37,8 @@ namespace next.web.Controllers
         }
 
         [HttpGet("purchase")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", 
-            "S6967:ModelState.IsValid should be called in controller actions", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell",
+            "S6967:ModelState.IsValid should be called in controller actions",
             Justification = "For http-get query parm is validated")]
         public IActionResult Purchase([FromQuery] string? id)
         {
@@ -56,13 +57,18 @@ namespace next.web.Controllers
             var id = session.GetString(PurchaseRecordId) ?? string.Empty;
             try
             {
+                var user = session.GetUser();
                 var content = await GetAuthenicatedPage(session, "blank");
-                if (!Guid.TryParse(id, out var _))
+                if (!Guid.TryParse(id, out var _) || _api == null || user == null)
                 {
                     content = _subscriptionSvc.Sanitize(content);
                     return GetResult(content);
                 }
-                var remote = await GetRemoteContent(landing, id);
+                var app = await _api.Post("search-get-invoice", new { Id = id }, user);
+                if (app == null || app.StatusCode != 200) return GetResult(content);
+                var detail = app.Message.ToInstance<GenerateInvoiceResponse>();
+                if (detail == null) return GetResult(content);
+                var remote = await GetRemoteContent(landing, detail.ExternalId ?? id);
                 var address = GetWebAddress(Request);
                 content = _paymentSvc.Transform(content, remote, address);
                 return GetResult(content);
@@ -103,7 +109,7 @@ namespace next.web.Controllers
             }
             if (!string.IsNullOrEmpty(id) && !baseAddress.Contains('?'))
             {
-                baseAddress = $"{baseAddress}?id='{HttpUtility.UrlEncode(id)}'";
+                baseAddress = $"{baseAddress}?id={id}";
             }
             return baseAddress;
         }

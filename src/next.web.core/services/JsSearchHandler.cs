@@ -56,7 +56,10 @@ namespace next.web.core.services
                 if (prefix.Equals("search") && appsubmission.StatusCode == 200)
                 {
                     // reset all user cache objects
-                    await userbo.Save(session, api);
+                    await userbo.SaveMail(session, api);
+                    await userbo.SaveHistory(session, api);
+                    await userbo.SaveRestriction(session, api);
+                    await userbo.SaveSearchPurchases(session, api);
                 }
                 response.RedirectTo = prefix switch
                 {

@@ -33,7 +33,7 @@ namespace next.web.core.services
             // remove fallback title
             var title = doc.DocumentNode.SelectSingleNode("//*[@id='invoice-fallback-title']");
             title?.ParentNode.RemoveChild(title);
-            
+
             // populate invoice description
             var detail = invoiceNodes.ChildNodes.ToList()
                 .Find(x => x.Name.Equals("div", StringComparison.OrdinalIgnoreCase))?.InnerHtml ?? string.Empty;
@@ -47,7 +47,7 @@ namespace next.web.core.services
             var body = doc.DocumentNode.SelectSingleNode(HtmlSelectors.BodyTag);
             if (body == null) return doc.DocumentNode.OuterHtml;
             detail = string.Concat(body.InnerHtml, Environment.NewLine, js);
-            if (!string.IsNullOrEmpty(baseWebAddress)) 
+            if (!string.IsNullOrEmpty(baseWebAddress))
             {
                 detail = detail.Replace("http://api.legallead.co", baseWebAddress);
             }

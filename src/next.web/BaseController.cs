@@ -34,13 +34,6 @@ namespace next.web
                 content = await user.MapProfileResponse(api, profiles, content);
                 content = await user.MapPermissionsResponse(api, permissions, content);
             }
-            if (session != null)
-            {
-                var dc = content.ToHtml();
-                await session.AppendStatus(api, dc);
-                content = dc.DocumentNode.OuterHtml;
-            }
-
             return RemoveHeaderDuplicate(content);
         }
 

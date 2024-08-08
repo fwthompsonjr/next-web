@@ -10,8 +10,8 @@ namespace next.web.Controllers
 
         [HttpGet("/subscription-result")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Major Code Smell", 
-            "S6967:ModelState.IsValid should be called in controller actions", 
+            "Major Code Smell",
+            "S6967:ModelState.IsValid should be called in controller actions",
             Justification = "Model is not needed for standard http-get pages")]
         public async Task<IActionResult> UserLevelLanding([FromQuery] string? sts, [FromQuery] string? id)
         {
