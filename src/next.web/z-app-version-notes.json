@@ -1,5 +1,11 @@
 [
   {
+    "id": "3.2.7",
+    "notes": [
+      "web: account allow user to purchase search result"
+    ]
+  },
+  {
     "id": "3.2.6",
     "notes": [
       "web: account allow user to selected discounts"
