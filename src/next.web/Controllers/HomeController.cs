@@ -19,7 +19,7 @@ namespace next.web.Controllers
         {
             _logger = logger;
         }
-        [HttpGet]
+        [HttpGet("home")]
         public IActionResult Index()
         {
             var helper = AppContainer.GetSanitizer("post-login");
@@ -40,6 +40,7 @@ namespace next.web.Controllers
         {
             return View();
         }
+
 
         [HttpGet("logout")]
         public IActionResult Logout()
@@ -64,6 +65,17 @@ namespace next.web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult Test()
+        {
+            var text = ContentSanitizerBase.IndexContent;
+            return new ContentResult
+            {
+                Content = text,
+                ContentType = "text/html",
+            };
         }
     }
 }

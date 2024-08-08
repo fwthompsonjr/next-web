@@ -61,18 +61,35 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;div id=&quot;app-side-menu&quot; name=&quot;left-menu&quot;&gt;
+        ///		&lt;div data-position-index=&quot;0&quot; name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
+        ///			&lt;a class=&quot;text-primary&quot; href=&quot;/&quot;&gt;
+        ///				&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
+        ///			&lt;/a&gt;
+        ///		&lt;/div&gt;
+        ///&lt;/div&gt;.
+        /// </summary>
+        internal static string base_logout_menu {
+            get {
+                return ResourceManager.GetString("base_logout_menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;div id=&quot;menu-container&quot; name=&quot;menu-container&quot;&gt;
         ///	&lt;div id=&quot;app-side-menu-border&quot; name=&quot;left-menu-border&quot;&gt;&lt;/div&gt;
         ///	&lt;div id=&quot;app-side-menu&quot; name=&quot;left-menu&quot;&gt;
         ///		&lt;div data-position-index=&quot;0&quot; name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
-        ///			&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
+        ///			&lt;a class=&quot;text-primary&quot; href=&quot;/&quot;&gt;
+        ///				&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
+        ///			&lt;/a&gt;
         ///		&lt;/div&gt;
         ///		&lt;div data-position-index=&quot;1&quot; name=&quot;left-menu-home&quot; class=&quot;row&quot;&gt;
         ///			&lt;a class=&quot;text-primary&quot; href=&quot;/home&quot;&gt;
         ///				&lt;i class=&quot;bi bi-house&quot; title=&quot;Home&quot;&gt;&lt;/i&gt;
         ///			&lt;/a&gt;
         ///		&lt;/div&gt;
-        ///		&lt;div id=&quot;my-account-parent-option&quot; data-position-index=&quot;10&quot; name= [rest of string was truncated]&quot;;.
+        ///		&lt;div id=&quot;my-accou [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string base_menu {
             get {
@@ -110,16 +127,34 @@ namespace next.web.core.Properties {
         ///				&lt;div class=&quot;row&quot;&gt;
         ///					&lt;div class=&quot;text-start&quot;&gt;
         ///						&lt;span class=&quot;text-primary data-label&quot;&gt;External Id:&lt;/span&gt;
-        ///						&lt;span name=&quot;download-external-id&quot; class=&quot;data-value&quot;&gt; - &lt;/span&gt;
+        ///						&lt;span id=&quot;spn-download-external-id&quot; name=&quot;download-external-id&quot; class=&quot;data-value&quot;&gt; - &lt;/span&gt;
         ///					&lt;/div&gt;
         ///				&lt;/div&gt;
         ///				&lt;div class=&quot;row&quot;&gt;
-        ///					&lt;div class=&quot;text-start&quot;&gt;
-        ///						&lt;span clas [rest of string was truncated]&quot;;.
+        ///					&lt;div class=&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string download_file_template {
             get {
                 return ResourceManager.GetString("download_file_template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;html lang=&quot;en&quot;&gt;
+        ///&lt;head&gt;
+        ///        &lt;meta charset=&quot;utf-8&quot;&gt;
+        ///        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+        ///        &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///        &lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
+        ///        &lt;title&gt;Home - Oxford Legal Leads&lt;/title&gt;
+        ///        &lt;!-- Favicon--&gt;
+        ///        &lt;link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;assets/favicon.ico&quot;&gt;
+        ///        &lt;!-- Bootstrap icons--&gt;
+        ///        &lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css&quot; rel [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string index_page {
+            get {
+                return ResourceManager.GetString("index_page", resourceCulture);
             }
         }
         

@@ -1,0 +1,7 @@
+<div id="app-side-menu" name="left-menu">
+		<div data-position-index="0" name="left-menu-icon" class="row">
+			<a class="text-primary" href="/">
+				<i class="bi bi-three-dots"></i>
+			</a>
+		</div>
+</div>

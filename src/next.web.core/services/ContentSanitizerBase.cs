@@ -12,6 +12,7 @@ namespace next.web.core.services
         {
             return Execute(content);
         }
+        public static string IndexContent => indexContent ??= GetIndexContent;
 
         [ExcludeFromCodeCoverage]
         internal static HtmlDocument? GetDocument(string html)
@@ -273,6 +274,10 @@ namespace next.web.core.services
         private static string? menuContent;
         private static string GetMenuContent => Properties.Resources.base_menu;
         private static string MenuContent => menuContent ??= GetMenuContent;
+
+
+        private static string? indexContent;
+        private static string GetIndexContent => Properties.Resources.index_page;
         private static readonly string linkRelative = "<link name=\"{0}\" href=\"/css/{0}.css\" rel=\"stylesheet\" />";
         private static readonly string scriptTag = "<script name=\"{0}\" src=\"/js/{0}.js\"></script>";
         private static readonly string jsHandlerTag = "<script name=\"handler_js\" src=\"/js/handler.js\"></script>";
