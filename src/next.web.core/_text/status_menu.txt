@@ -11,7 +11,7 @@
 		<tr id="tr-status-information">
 			<td class="text-start"><span id="spn-status-current-dt" name="current-dt">~0</span></td>
 			<td class="text-start"><span id="spn-status-user-level" name="user-level">~1</span></td>
-			<td class="text-start"><span id="spn-status-user-name" name="user-name">~2</span></td>
+			<td class="text-start"><span id="spn-status-user-name" name="user-name" title="">~2</span></td>
 			<td name="user-status" class="text-center"><span id="spn-status-user-status" name="user-status">~3</span></td>
 			<td class="text-center test">
 				<i name="payment-card-back" class="bi bi-credit-card-2-back text-warning"></i>

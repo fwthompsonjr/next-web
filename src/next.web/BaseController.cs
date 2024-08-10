@@ -10,7 +10,7 @@ namespace next.web
 {
     public abstract class BaseController : Controller
     {
-        protected async Task<string> AppendStatus(string content)
+        protected async Task<string> AppendStatus(string content, bool isAlternate = false)
         {
             var session = this.HttpContext.Session;
             if (!IsSessionAuthenicated(session)) { return content; }
@@ -18,7 +18,7 @@ namespace next.web
             if (api == null) { return content; }
 
             var document = content.ToHtml();
-            await session.AppendStatus(api, document);
+            await session.AppendStatus(api, document, isAlternate);
             return document.DocumentNode.OuterHtml;
         }
 

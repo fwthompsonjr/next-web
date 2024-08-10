@@ -16,7 +16,7 @@ namespace next.web.Controllers
             var content = await GetAuthenicatedPage(session, "mailbox");
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
             if (api != null) content = await session.GetMailBox(api, content);
-            content = await AppendStatus(content);
+            content = await AppendStatus(content, true);
             return GetResult(content);
         }
     }
