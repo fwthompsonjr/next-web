@@ -65,7 +65,58 @@ namespace next.web.Controllers
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
             if (api != null) content = await session.GetHistory(api, content, searchFilter);
             content = await AppendStatus(content, true);
+            content = RemoveOption(content, searchFilter);
+            content = SetPageTitle(content, searchFilter);
             return GetResult(content);
+        }
+        protected string RemoveOption(string content, SearchFilterNames searchFilter)
+        {
+            const string vu = "value";
+            const string st = "style";
+            const string dn = "display: none";
+            if (searchFilter == SearchFilterNames.History) return content;
+            const string findcbo = "//*[@id='cbo-search-history-filter']";
+            List<string> indexes = searchFilter switch
+            {
+                SearchFilterNames.Purchases => ["1", "2", "3", "10"],
+                SearchFilterNames.Active => ["4", "5", "10"],
+                _ => [],
+            };
+            var document = content.ToHtml();
+            var node = document.DocumentNode;
+            var cbo = node.SelectSingleNode(findcbo);
+            if (cbo == null || indexes.Count == 0) return node.OuterHtml;
+            var options = cbo.SelectNodes("option").ToList();
+            options.ForEach(option =>
+            {
+                var attrValue = option.Attributes.FirstOrDefault(a => a.Name == vu)?.Value ?? string.Empty;
+                if (indexes.Contains(attrValue))
+                {
+                    var attrStyle = option.Attributes.FirstOrDefault(a => a.Name == st);
+                    if (attrStyle == null) option.Attributes.Add(st, dn);
+                    else attrStyle.Value = dn;
+                }
+            });
+            return node.OuterHtml;
+        }
+        protected string SetPageTitle(string content, SearchFilterNames searchFilter)
+        {
+            const string fmt = "oxford.leads.web: {0}";
+            if (searchFilter == SearchFilterNames.History) return content;
+            var document = content.ToHtml();
+            var node = document.DocumentNode;
+            var head = node.SelectSingleNode("//head");
+            if (head == null) return node.OuterHtml;
+            var title = head.SelectSingleNode("title");
+            if (title == null) return node.OuterHtml;
+            var newtitle = searchFilter switch
+            {
+                SearchFilterNames.Active => string.Format(fmt, "active searches"),
+                SearchFilterNames.Purchases => string.Format(fmt, "purchase history"),
+                _ => "search history"
+            };
+            title.InnerHtml = newtitle;
+            return node.OuterHtml;
         }
     }
 }
