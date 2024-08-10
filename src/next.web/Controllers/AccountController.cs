@@ -44,7 +44,7 @@ namespace next.web.Controllers
             content = viewer.SetMenu(content);
             content = viewer.SetChildMenu(content);
             content = viewer.SetTab(content);
-
+            content = await AppendStatus(content);
             return GetResult(content);
         }
     }

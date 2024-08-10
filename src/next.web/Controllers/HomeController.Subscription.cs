@@ -22,7 +22,7 @@ namespace next.web.Controllers
             return page;
         }
 
-        protected static async Task<IActionResult> GetLanding(
+        protected async Task<IActionResult> GetLanding(
             ISession session, string landing, string? sts, string? id)
         {
             var sanitizer = AppContainer.GetSanitizer("payment-confirmation");
@@ -32,6 +32,7 @@ namespace next.web.Controllers
             if (!string.IsNullOrEmpty(remote))
             {
                 content = Inject("//div[@name='main-content']", remote, content);
+                content = await AppendStatus(content);
                 await UpdateUserSession(session);
             }
             return GetResult(content);

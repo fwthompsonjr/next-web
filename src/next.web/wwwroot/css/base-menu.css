@@ -73,3 +73,34 @@ div[name='app-sub-menu'] div.row {
         margin-left: 5px;
         min-width: 105px;
     }
+
+#sidemnu-table-user-status {
+    position: absolute;
+    z-index: 5000;
+    left: 1px;
+    bottom: -10px;
+    font-size: small;
+    width: 40%;
+    max-width: 300px;
+    background-color: rgb(51, 51, 51) !important;
+    border-color: #444;
+}
+#tr-status-information > td {
+    background-color: rgb(51, 51, 51) !important;
+    border-color: #444;
+    cursor: default;
+    white-space: nowrap;
+    overflow-x: hidden;
+    vertical-align: middle;
+}
+
+#spn-status-user-name {
+    display: inline-block;
+    width: 95%;
+}
+span[name="current-dt"],
+span[name="user-level"],
+span[name="user-name"],
+span[name="user-status"] {
+    color: var(--bs-gray-600);
+}

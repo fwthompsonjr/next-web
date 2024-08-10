@@ -52,6 +52,7 @@ namespace next.web.Controllers
 
             content = viewer.SetMenu(content);
             content = viewer.SetChildMenu(content);
+            content = await AppendStatus(content);
 
             return GetResult(content);
         }
@@ -62,10 +63,8 @@ namespace next.web.Controllers
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var content = await GetAuthenicatedPage(session, "viewhistory");
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
-            if (api != null)
-            {
-                content = await session.GetHistory(api, content, searchFilter);
-            }
+            if (api != null) content = await session.GetHistory(api, content, searchFilter);
+            content = await AppendStatus(content);
             return GetResult(content);
         }
     }

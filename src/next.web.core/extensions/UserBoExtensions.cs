@@ -150,8 +150,8 @@ namespace next.web.core.extensions
             var key = SessionKeyNames.UserMailbox;
             var userbo = session.GetContextUser();
             if (userbo == null) { return []; }
-            var exists = session.IsItemExpired<List<MailItem>>(key);
-            if (!exists) { await userbo.SaveMail(session, api); }
+            var expired = session.IsItemExpired<List<MailItem>>(key);
+            if (expired) { await userbo.SaveMail(session, api); }
             var data = session.GetTimedItem<List<MailItem>>(key);
             return data ?? [];
         }
@@ -161,8 +161,8 @@ namespace next.web.core.extensions
             var key = SessionKeyNames.UserRestriction;
             var userbo = session.GetContextUser();
             if (userbo == null) { return new(); }
-            var exists = session.IsItemExpired<MySearchRestrictions>(key);
-            if (!exists) { await userbo.SaveRestriction(session, api); }
+            var expired = session.IsItemExpired<MySearchRestrictions>(key);
+            if (expired) { await userbo.SaveRestriction(session, api); }
             var data = session.GetTimedItem<MySearchRestrictions>(key);
             return data ?? new();
         }
@@ -172,8 +172,8 @@ namespace next.web.core.extensions
             var key = SessionKeyNames.UserSearchHistory;
             var userbo = session.GetContextUser();
             if (userbo == null) { return []; }
-            var exists = session.IsItemExpired<List<UserSearchQueryBo>>(key);
-            if (!exists) { await userbo.SaveHistory(session, api); }
+            var expired = session.IsItemExpired<List<UserSearchQueryBo>>(key);
+            if (expired) { await userbo.SaveHistory(session, api); }
             var data = session.GetTimedItem<List<UserSearchQueryBo>>(key);
             return data ?? [];
         }
@@ -182,8 +182,8 @@ namespace next.web.core.extensions
             var key = SessionKeyNames.UserSearchPurchases;
             var userbo = session.GetContextUser();
             if (userbo == null) { return []; }
-            var exists = session.IsItemExpired<List<MyPurchaseBo>>(key);
-            if (!exists) { await userbo.SaveSearchPurchases(session, api); }
+            var expired = session.IsItemExpired<List<MyPurchaseBo>>(key);
+            if (expired) { await userbo.SaveSearchPurchases(session, api); }
             var data = session.GetTimedItem<List<MyPurchaseBo>>(key);
             return data ?? [];
         }
@@ -214,8 +214,8 @@ namespace next.web.core.extensions
             var key = SessionKeyNames.UserIdentity;
             var userbo = session.GetContextUser();
             if (userbo == null) { return new(); }
-            var exists = session.IsItemExpired<UserIdentityBo>(key);
-            if (!exists)
+            var expired = session.IsItemExpired<UserIdentityBo>(key);
+            if (expired)
             {
                 await userbo.SaveUserIdentity(session, api);
             }

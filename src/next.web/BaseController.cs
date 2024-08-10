@@ -10,6 +10,17 @@ namespace next.web
 {
     public abstract class BaseController : Controller
     {
+        protected async Task<string> AppendStatus(string content)
+        {
+            var session = this.HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) { return content; }
+            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
+            if (api == null) { return content; }
+
+            var document = content.ToHtml();
+            await session.AppendStatus(api, document);
+            return document.DocumentNode.OuterHtml;
+        }
 
         internal static async Task<string> GetAuthenicatedPage(ISession? session, string pageName)
         {

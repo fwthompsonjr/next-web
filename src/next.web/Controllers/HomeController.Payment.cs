@@ -1,5 +1,4 @@
-﻿using AngleSharp.Io;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.services;
 using next.web.core.util;
@@ -62,6 +61,7 @@ namespace next.web.Controllers
             var sanity = AppContainer.GetSanitizer("download");
             content = sanity.Sanitize(content);
             content = ContentSanitizerDownload.AppendContext(content, keys);
+            content = await AppendStatus(content);
             return GetResult(content);
         }
 
