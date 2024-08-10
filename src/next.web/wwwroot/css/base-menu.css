@@ -73,3 +73,44 @@ div[name='app-sub-menu'] div.row {
         margin-left: 5px;
         min-width: 105px;
     }
+
+#sidemnu-table-user-status {
+    position: absolute;
+    z-index: 5000;
+    left: 1px;
+    bottom: -10px;
+    font-size: small;
+    width: 40%;
+    max-width: 300px;
+    border-color: transparent !important;
+}
+#tr-status-information > td {
+    cursor: default;
+    white-space: nowrap;
+    overflow-x: hidden;
+    vertical-align: middle;
+}
+#spn-status-user-name {
+    display: inline-block;
+    width: 95%;
+}
+span[name="current-dt"],
+span[name="user-level"],
+span[name="user-name"],
+span[name="user-status"] {
+    color: var(--bs-gray-600);
+}
+/* alternate-view */
+
+table.default-view,
+table.default-view tr,
+table.default-view td {
+    background-color: rgb(51, 51, 51) !important;
+}
+
+
+table.alternate-view,
+table.alternate-view tr,
+table.alternate-view td {
+    background-color: rgb(68, 68, 68) !important;
+}

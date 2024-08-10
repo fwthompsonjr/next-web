@@ -10,6 +10,17 @@ namespace next.web
 {
     public abstract class BaseController : Controller
     {
+        protected async Task<string> AppendStatus(string content, bool isAlternate = false)
+        {
+            var session = this.HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) { return content; }
+            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
+            if (api == null) { return content; }
+
+            var document = content.ToHtml();
+            await session.AppendStatus(api, document, isAlternate);
+            return document.DocumentNode.OuterHtml;
+        }
 
         internal static async Task<string> GetAuthenicatedPage(ISession? session, string pageName)
         {
@@ -133,13 +144,45 @@ namespace next.web
 
         protected static ContentResult GetResult(string content)
         {
+            var html = RemoveHeaderDuplicate(content);
+            html = RemoveDuplicateLinks(html);
             return new ContentResult
             {
                 ContentType = "text/html",
-                Content = RemoveHeaderDuplicate(content)
+                Content = html
             };
         }
-
+        private static string RemoveDuplicateLinks(string content)
+        {
+            const string find = "//link[@name]";
+            var doc = content.ToHtml();
+            var node = doc.DocumentNode;
+            var links = node.SelectNodes(find).ToList();
+            var names = links.Select(x =>
+            {
+                var attr = x.Attributes.FirstOrDefault(a => a.Name == "name")?.Value ?? string.Empty;
+                return attr;
+            }).Where(x => !string.IsNullOrEmpty(x));
+            if (!names.Any()) { return content; }
+            foreach (var name in names)
+            {
+                var collection = links.FindAll(a =>
+                {
+                    var attr = a.Attributes.FirstOrDefault(aa => aa.Name == "name")?.Value ?? string.Empty;
+                    return attr == name;
+                });
+                if (collection == null || collection.Count <= 1) continue;
+                var remove = collection.FindAll(c => collection.IndexOf(c) != 0);
+                var count = remove.Count - 1;
+                while (count >= 0)
+                {
+                    var r = remove[count--];
+                    if (r == null || r.ParentNode == null) continue;
+                    r.ParentNode.RemoveChild(r);
+                }
+            }
+            return node.OuterHtml;
+        }
         private static string AppendHistoryJs(string content)
         {
             var sqte = (char)39;

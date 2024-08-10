@@ -33,6 +33,7 @@ namespace next.web.Controllers
             var content = await GetAuthenicatedPage(session, "blank");
             var address = GetWebAddress(Request);
             content = await _subscriptionSvc.GetContent(session, _api, content, address);
+            content = await AppendStatus(content);
             return GetResult(content);
         }
 
@@ -71,6 +72,7 @@ namespace next.web.Controllers
                 var remote = await GetRemoteContent(landing, detail.ExternalId ?? id);
                 var address = GetWebAddress(Request);
                 content = _paymentSvc.Transform(content, remote, address);
+                content = await AppendStatus(content);
                 return GetResult(content);
             }
             finally

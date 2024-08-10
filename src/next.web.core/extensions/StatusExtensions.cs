@@ -7,7 +7,7 @@ namespace next.web.core.extensions
 {
     internal static class StatusExtensions
     {
-        public static async Task AppendStatus(this ISession session, IPermissionApi api, HtmlDocument document)
+        public static async Task AppendStatus(this ISession session, IPermissionApi api, HtmlDocument document, bool isAlternateLayout = false)
         {
             const string dash = " - ";
             var bo = session.GetContextUser();
@@ -24,7 +24,7 @@ namespace next.web.core.extensions
             body.InnerHtml = builder.ToString();
             table = node.SelectSingleNode("//table[@automationid='user-status-table']");
             if (table == null) return;
-
+            AppendTableCss(isAlternateLayout, table);
             var islocked = restricted?.IsLocked ?? true;
             var sts = islocked ? "ERROR" : "OK";
             var userName = string.IsNullOrWhiteSpace(id.UserName) ? dash : id.UserName;
@@ -44,6 +44,20 @@ namespace next.web.core.extensions
             });
 
         }
+
+        private static void AppendTableCss(bool isAlternateLayout, HtmlNode? table)
+        {
+            if (table == null) return;
+            var tablecss = isAlternateLayout ? "alternate-view" : "default-view";
+            var attr = table.Attributes.FirstOrDefault(x => x.Name == "class");
+            if (attr != null)
+            {
+                var clss = attr.Value.Split(' ').ToList();
+                if (!clss.Contains(tablecss)) clss.Add(tablecss);
+                attr.Value = string.Join(" ", clss);
+            }
+        }
+
         private static string StatusTemplate => _statusTemplate ??= GetTemplate();
         private static string? _statusTemplate;
         private static string GetTemplate()

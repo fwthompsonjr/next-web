@@ -15,10 +15,8 @@ namespace next.web.Controllers
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var content = await GetAuthenicatedPage(session, "mailbox");
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
-            if (api != null)
-            {
-                content = await session.GetMailBox(api, content);
-            }
+            if (api != null) content = await session.GetMailBox(api, content);
+            content = await AppendStatus(content, true);
             return GetResult(content);
         }
     }

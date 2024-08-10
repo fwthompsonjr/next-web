@@ -20,7 +20,7 @@ namespace next.web.Controllers
             _logger = logger;
         }
         [HttpGet("home")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var helper = AppContainer.GetSanitizer("post-login");
             var content = Introduction;
@@ -28,6 +28,7 @@ namespace next.web.Controllers
             if (IsSessionAuthenicated(HttpContext.Session) && helper is ContentSanitizerHome home)
             {
                 content = home.Sanitize(content);
+                content = await AppendStatus(content);
             }
             return new ContentResult
             {

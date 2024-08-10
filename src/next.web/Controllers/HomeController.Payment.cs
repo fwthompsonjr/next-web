@@ -1,5 +1,4 @@
-﻿using AngleSharp.Io;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.services;
 using next.web.core.util;
@@ -48,7 +47,7 @@ namespace next.web.Controllers
         {
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
-            var payload = session.GetString("user-download-response");
+            var payload = session.GetString(SessionKeyNames.UserDownloadResponse);
             if (string.IsNullOrEmpty(payload)) return Redirect("/error");
             var data = payload.ToInstance<DownloadJsResponse>();
             if (data == null || string.IsNullOrEmpty(data.Content)) return Redirect("/error");
@@ -62,6 +61,7 @@ namespace next.web.Controllers
             var sanity = AppContainer.GetSanitizer("download");
             content = sanity.Sanitize(content);
             content = ContentSanitizerDownload.AppendContext(content, keys);
+            content = await AppendStatus(content);
             return GetResult(content);
         }
 
@@ -75,7 +75,7 @@ namespace next.web.Controllers
             try
             {
                 if (!IsSessionAuthenicated(session)) return Unauthorized();
-                var payload = session.GetString("user-download-response");
+                var payload = session.GetString(SessionKeyNames.UserDownloadResponse);
                 if (string.IsNullOrEmpty(payload)) return BadRequest();
                 var data = payload.ToInstance<DownloadJsResponse>();
                 if (data == null || string.IsNullOrEmpty(data.Content)) return BadRequest();
@@ -91,7 +91,7 @@ namespace next.web.Controllers
             }
             finally
             {
-                if (isFileDownload) session.Remove("user-download-response");
+                if (isFileDownload) session.Remove(SessionKeyNames.UserDownloadResponse);
             }
         }
         private async static Task<FetchIntentResponse?> GetIntent(string url, FetchIntentRequest request)

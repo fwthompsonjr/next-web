@@ -23,7 +23,7 @@ namespace next.web.tests.controllers
                 var sut = GetProvider().GetRequiredService<HomeController>();
                 var result = landing switch
                 {
-                    "home" => sut.Index(),
+                    "home" => sut.Index().Result,
                     "privacy" => sut.Privacy(),
                     "error" => sut.Error(),
                     "logout" => sut.Logout(),

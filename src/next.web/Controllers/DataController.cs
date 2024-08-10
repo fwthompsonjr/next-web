@@ -147,11 +147,18 @@ namespace next.web.Controllers
                     response.Message = remote.Message;
                     return Json(response);
                 }
-                session.SetString("user-download-response", remote.Message);
+                session.SetString(SessionKeyNames.UserDownloadResponse, remote.Message);
                 response.StatusCode = remote.StatusCode;
                 response.Message = "Download authorized";
                 response.RedirectTo = "/download";
                 isDownloadComplete = true;
+                return Json(response);
+            }
+            catch(Exception ex)
+            {
+                isDownloadComplete=false;
+                Debug.WriteLine("Download retrieval: {0}, id: {1}", isDownloadComplete, location.Id);
+                Debug.WriteLine("Download error: {0}}", ex.Message);
                 return Json(response);
             }
             finally
@@ -159,6 +166,24 @@ namespace next.web.Controllers
                 Debug.WriteLine("Download retrieval: {0}, id: {1}", isDownloadComplete, location.Id);
                 await RevertDownload(api, location, user);
             }
+        }
+
+        [HttpPost("download-file-status")]
+        public IActionResult DownloadCompleted()
+        {
+            var session = HttpContext.Session;
+            var response = FormResponses.GetDefault(null);
+            response.StatusCode = 404;
+            response.Message = "No content found";
+            response.RedirectTo = "";
+            if (!IsSessionAuthenicated(session)) return Json(response);
+            var keyvalue = session.GetString(SessionKeyNames.UserDownloadResponse);
+            if (!string.IsNullOrEmpty(keyvalue)) {
+                response.StatusCode = 200;
+                response.Message = "Item download is in progress";
+                response.RedirectTo = "/search/history";
+            }
+            return Json(response);
         }
 
         private static async Task RevertDownload(IPermissionApi api, FetchIntentRequest request, UserBo user)

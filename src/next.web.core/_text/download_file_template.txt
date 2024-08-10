@@ -49,14 +49,33 @@
 	
 	setTimeout( function() {
 		$(thestatus).text('Downloading...');
-		if (!nIntervId) { nIntervId = setInterval(checkDownload, 1000); }
+		if (!nIntervId) { nIntervId = setInterval(checkDownload, 750); }
 		$(theframe).attr('src', '/download-file');
 	}, 1500);
 
 	function checkDownload() {
-		const landing = '/download-status';
-		clearInterval(nIntervId);
-		nIntervId = null;
+		const landing = '/data/download-file-status';
+		$.ajax({
+			type: "POST",
+			url: landing,
+			success: function (resultData) {
+				let rsp = theResponder.translate(resultData);
+				if (rsp.statusCode == 404) {
+					$(thestatus).text('Download completed.');
+					$(thestatus).removeClass('text-danger');
+					$(thestatus).addClass('text-success');
+					clearInterval(nIntervId);
+					nIntervId = null;
+				}
+			},
+			error: function () {
+				$(thestatus).text('Error...');
+				$(thestatus).removeClass('text-success');
+				$(thestatus).addClass('text-danger');
+				clearInterval(nIntervId);
+				nIntervId = null;
+			}
+		});
 	}
 
 </script>
