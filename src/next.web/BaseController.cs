@@ -173,7 +173,13 @@ namespace next.web
                 });
                 if (collection == null || collection.Count <= 1) continue;
                 var remove = collection.FindAll(c => collection.IndexOf(c) != 0);
-                remove.ForEach(r => r.ParentNode.RemoveChild(r));
+                var count = remove.Count - 1;
+                while (count >= 0)
+                {
+                    var r = remove[count--];
+                    if (r == null || r.ParentNode == null) continue;
+                    r.ParentNode.RemoveChild(r);
+                }
             }
             return node.OuterHtml;
         }

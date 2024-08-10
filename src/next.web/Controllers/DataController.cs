@@ -154,6 +154,13 @@ namespace next.web.Controllers
                 isDownloadComplete = true;
                 return Json(response);
             }
+            catch(Exception ex)
+            {
+                isDownloadComplete=false;
+                Debug.WriteLine("Download retrieval: {0}, id: {1}", isDownloadComplete, location.Id);
+                Debug.WriteLine("Download error: {0}}", ex.Message);
+                return Json(response);
+            }
             finally
             {
                 Debug.WriteLine("Download retrieval: {0}, id: {1}", isDownloadComplete, location.Id);
