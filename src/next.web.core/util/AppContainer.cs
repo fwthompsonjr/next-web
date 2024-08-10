@@ -151,6 +151,7 @@ namespace next.web.core.util
 
             // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
+            services.AddKeyedSingleton<IJsHandler, JsRegistrationHandler>("form-register");
             services.AddKeyedSingleton<IJsHandler, JsSearchHandler>("frm-search");
             var accounts = new List<string>();
             accounts.AddRange(ProfileForms);
