@@ -28,6 +28,11 @@ namespace next.web
                 options.IdleTimeout = TimeSpan.FromMinutes(15);
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = 308;
+                options.HttpsPort = 443;
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
