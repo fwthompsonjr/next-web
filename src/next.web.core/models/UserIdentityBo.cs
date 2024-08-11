@@ -21,5 +21,13 @@ namespace next.web.core.models
 
         [JsonProperty("fullName", NullValueHandling = NullValueHandling.Ignore)]
         public string FullName { get; set; } = string.Empty;
+
+        public string GetCaption()
+        {
+            const string dash = " - ";
+            if (string.IsNullOrWhiteSpace(Email)) return dash;
+            if (string.IsNullOrWhiteSpace(UserName)) return dash;
+            return $"{UserName} ({Email})";
+        }
     }
 }

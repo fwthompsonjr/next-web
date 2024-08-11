@@ -74,16 +74,25 @@ div[name='app-sub-menu'] div.row {
         min-width: 105px;
     }
 
-#sidemnu-table-user-status {
+#sidemnu-table-user-status,
+#sidemnu-div-user-status {
     position: absolute;
     z-index: 5000;
     left: 1px;
-    bottom: -10px;
+    bottom: -8px;
     font-size: small;
     width: 40%;
     max-width: 300px;
+}
+
+#sidemnu-div-user-status {
+    border-color: #555 !important;
+}
+
+#sidemnu-table-user-status {
     border-color: transparent !important;
 }
+
 #tr-status-information > td {
     cursor: default;
     white-space: nowrap;
