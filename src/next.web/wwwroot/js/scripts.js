@@ -5,3 +5,9 @@
 */
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
+const httpsRedirect = () => {
+    if (location.protocol !== 'https:')
+        location.replace('https://' + location.href.split('//')[1]);
+};
+
+httpsRedirect();
