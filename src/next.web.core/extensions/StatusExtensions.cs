@@ -42,7 +42,12 @@ namespace next.web.core.extensions
                 var span = node.SelectSingleNode(find);
                 if (span != null) span.InnerHtml = headers[keyname];
             });
-
+            const string namelabel = $"//*[@id='spn-status-user-name']";
+            var username = node.SelectSingleNode(namelabel);
+            if (username == null) return;
+            var attr = username.Attributes.FirstOrDefault(x => x.Name == "title");
+            if (attr == null) return;
+            attr.Value = id.GetCaption();
         }
 
         private static void AppendTableCss(bool isAlternateLayout, HtmlNode? table)

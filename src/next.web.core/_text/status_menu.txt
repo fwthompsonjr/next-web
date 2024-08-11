@@ -1,4 +1,4 @@
-
+<div id="sidemnu-div-user-status">
 <table id="sidemnu-table-user-status"  class="table table-sm table-bordered" automationid="user-status-table" name="user-status-table">
 	<colgroup>
 		<col name="current-dt" style="width: 100px" />
@@ -19,3 +19,4 @@
 		</tr>
 	</tbody>
 </table>
+</div>
