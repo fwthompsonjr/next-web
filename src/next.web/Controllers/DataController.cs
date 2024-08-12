@@ -186,6 +186,36 @@ namespace next.web.Controllers
             return Json(response);
         }
 
+        [HttpPost("reset-cache")]
+        public async Task<IActionResult> ResetCache(FormSubmissionModel model)
+        {
+            var session = HttpContext.Session;
+            var response = FormResponses.GetDefault(null);
+            var api = provider?.GetService<IPermissionApi>();
+            if (!ModelState.IsValid || !model.Validate(Request)) return BadRequest();
+            if (api == null || string.IsNullOrEmpty(model.Payload)) return BadRequest();
+            var location = model.Payload.ToInstance<CacheUpdateRequest>();
+            if (location == null || !ResetCacheNames.Contains(location.Name)) return BadRequest();
+            var authenicated = IsSessionAuthenicated(session);
+            response.StatusCode = authenicated ? 200 : 408;
+            response.RedirectTo = authenicated ? "" : "/home";
+            if (!authenicated) return Json(response);
+            if (location.Name == ResetCacheNames[0])
+            {
+                session.Remove(SessionKeyNames.UserMailbox);
+                _ = await session.RetrieveMail(api);
+            }
+            if (location.Name == ResetCacheNames[1])
+            {
+                session.Remove(SessionKeyNames.UserSearchPurchases);
+                session.Remove(SessionKeyNames.UserSearchHistory);
+                _ = await session.RetrievePurchases(api);
+                _ = await session.RetrieveHistory(api);
+            }
+            return Json(response);
+
+        }
+
         private static async Task RevertDownload(IPermissionApi api, FetchIntentRequest request, UserBo user)
         {
             try
@@ -197,5 +227,6 @@ namespace next.web.Controllers
                 Debug.WriteLine(e);
             }
         }
+        private static readonly List<string> ResetCacheNames = ["correspondence" , "history"];
     }
 }

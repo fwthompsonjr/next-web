@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using next.web.core.extensions;
 using next.web.core.util;
 
 namespace next.web.Controllers
@@ -40,6 +41,10 @@ namespace next.web.Controllers
             if (!IsSessionAuthenicated(session)) Redirect("/home");
             var sanitizer = AppContainer.GetSanitizer(name);
             var content = sanitizer.Sanitize(string.Empty);
+            content = await AppendStatus(content, true);
+            var doc = content.ToHtml();
+            session.InjectSessionKeys(doc);
+            content = doc.DocumentNode.OuterHtml;
             return GetResult(content);
         }
 

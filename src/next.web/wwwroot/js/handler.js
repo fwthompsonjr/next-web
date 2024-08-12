@@ -255,6 +255,35 @@ function changeViewHandler(viewName) {
     document.location = constructedPage;
 }
 
+function resetCacheItem(text) {
+    const landing = "/data/reset-cache";
+    const dtable = "#detail-table";
+    let dta = { Name: String(text) };
+    const requested = {
+        "formName": "form-cache-manager",
+        "payload": JSON.stringify(dta)
+    };
+    $(dtable).fadeOut('slow');
+    $.ajax({
+        type: "POST",
+        url: landing,
+        data: JSON.stringify(requested),
+        dataType: "json",
+        success: function (resultData) {
+            let rsp = theResponder.translate(resultData);
+            if (rsp.statusCode == 200 || rsp.statusCode == 408) {
+                document.location.reload();
+            }
+            else {
+                $(dtable).fadeIn('slow');
+            }
+        },
+        error: function() {
+            $(dtable).fadeIn('slow');
+        }
+    });
+}
+
 window.jsHandler = theHandler;
 
 window.addEventListener('DOMContentLoaded', () => {

@@ -1,7 +1,4 @@
 ﻿using HtmlAgilityPack;
-using next.web.core.extensions;
-using System.Text;
-using System.Windows.Markup;
 
 namespace next.web.core.services
 {
@@ -21,7 +18,9 @@ namespace next.web.core.services
             const char space = ' ';
             const string dnone = "d-none";
             const string cls = "class";
+            const string alt = "alternate-border";
             const string findnames = "//div[@name='left-menu-account']";
+            const string findsidemenu = "//*[@id='app-side-menu-border']";
             var node = doc.DocumentNode;
             var dvs = node.SelectNodes(findnames).ToList();
             dvs.ForEach(d =>
@@ -34,13 +33,25 @@ namespace next.web.core.services
                     attr.Value = string.Join(" ", clss);
                 }
             });
+            var menu = node.SelectSingleNode(findsidemenu);
+            if (menu == null) return;
+            var attr = menu.Attributes.FirstOrDefault(x => x.Name == cls);
+            if (attr == null)
+            {
+                menu.Attributes.Add(cls, alt);
+                return;
+            }
+            var clss = attr.Value.Split(space).ToList();
+            if (clss.Contains(alt)) return;
+            clss.Add(alt);
+            attr.Value = string.Join(" ", clss);
         }
 
         private static void AppendMenu(HtmlDocument doc)
         {
             var node = doc.DocumentNode;
             var body = node.SelectSingleNode("//body");
-            if(body == null) return;
+            if (body == null) return;
             var txt = string.Concat(
                 TheMenu,
                 Environment.NewLine,

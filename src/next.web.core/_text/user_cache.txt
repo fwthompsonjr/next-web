@@ -21,6 +21,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
 		
 		<!-- custom styles -->
+		<link name="base-css" href="/css/base-css.css" rel="stylesheet">
 		<link name="base-menu" href="/css/base-menu.css" rel="stylesheet">
 		<link name="user-cache" href="/css/user-cache.css" rel="stylesheet">
 		<!-- jquery -->
@@ -51,7 +52,7 @@
 						<colgroup>
 							<col name="item" style="min-width: 100px;"/>
 							<col name="item-count" style="width: 100px;"/>
-							<col name="item-expires" style="width: 125px;"/>
+							<col name="item-expires" style="width: 175px;"/>
 							<col name="item-minutes" style="width: 50px;"/>
 							<col name="item-reset" style="width: 125px;"/>
 						</colgroup>
@@ -65,12 +66,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr name="detail-tbody-trow">
-								<td name="item"><span>&nbsp;Item</span></td>
-								<td name="item-count"><span>&nbsp;Count</span></td>
-								<td name="item-expires"><span>&nbsp;Expiration</span></td>
-								<td name="item-minutes"><span>&nbsp;Minutes</span></td>
-								<td name="item-reset"><span>&nbsp;Reset</span></td>
+							<tr name="detail-tbody-trow" class="small">
+								<td name="item"><span>~0</span></td>
+								<td name="item-count" class="text-end"><span>~1</span></td>
+								<td name="item-expires"><span>~2</span></td>
+								<td name="item-minutes" class="text-end"><span>~3</span></td>
+								<td name="item-reset" class="text-end"><a class="active" onclick="javascript:resetCacheItem('~4')">Reset</a></td>
 							</tr>
 						</tbody>
 					</table>
