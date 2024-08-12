@@ -6,7 +6,6 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<title>oxford.leads.web: cache manager</title>
-		<!-- user-cache.html -->
 		<!-- googleapis : fonts -->
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
 		
@@ -21,13 +20,13 @@
 		<!-- font awesome -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
 		
-		<!-- custom styles -->.
-		<link name="base-menu" href="./css/base-menu.css" rel="stylesheet">
-		<link name="user-cache" href="./css/user-cache.css" rel="stylesheet">
+		<!-- custom styles -->
+		<link name="base-menu" href="/css/base-menu.css" rel="stylesheet">
+		<link name="user-cache" href="/css/user-cache.css" rel="stylesheet">
 		<!-- jquery -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
-		<script name="site" src="./js/site.js"></script>
+		<script name="site" src="/js/site.js"></script>
 	</head>
 	<body class="text-center">
 		<div class="box">
