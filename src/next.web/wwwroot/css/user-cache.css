@@ -1,0 +1,72 @@
+﻿
+html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    margin-top: 10px;
+    background: #444;
+    color: white;
+    margin-bottom: 10px;
+    overflow-x: clip
+}
+
+#footer-copy {
+    padding-top: 10px;
+}
+
+#templates {
+    display: none;
+}
+
+div[name="cache-manager-header"] {
+    margin: 10px;
+	width: 95%;
+}
+
+div[name="cache-manager-callout"] {
+    margin: 15px;
+	margin-left: 50px;
+	width: 95%;
+}
+
+div[name="cache-manager-details"] {
+    margin: 15px;
+	margin-left: 70px;
+	width: 95%;
+}
+
+table[name='detail-table'] {
+	width: 75%;
+	margin: 15px;
+}
+.box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.box .customrow.header {
+    flex: 0 1 auto;
+    border-bottom: 1px solid #888;
+    margin-bottom: 5px;
+}
+
+.box .customrow.content {
+    flex: 1 1 auto;
+}
+
+.box .customrow.footer {
+    flex: 0 1 40px;
+}
+
+div[name='cache-manager-sub-header'],
+div[name='cache-manager-filter'],
+div[name='cache-manager-grid'],
+
+#cache-manager-sub-header {
+    position: relative;
+    left: 50px;
+}
+

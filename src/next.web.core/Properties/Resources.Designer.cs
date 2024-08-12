@@ -150,7 +150,7 @@ namespace next.web.core.Properties {
         ///        &lt;!-- Favicon--&gt;
         ///        &lt;link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;assets/favicon.ico&quot;&gt;
         ///        &lt;!-- Bootstrap icons--&gt;
-        ///        &lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css&quot; rel [rest of string was truncated]&quot;;.
+        ///        &lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icon [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string index_page {
             get {
@@ -249,22 +249,44 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///&lt;table automationid=&quot;user-status-table&quot; name=&quot;user-status-table&quot;&gt;
+        ///   Looks up a localized string similar to &lt;div id=&quot;sidemnu-div-user-status&quot;&gt;
+        ///&lt;table id=&quot;sidemnu-table-user-status&quot;  class=&quot;table table-sm table-bordered&quot; automationid=&quot;user-status-table&quot; name=&quot;user-status-table&quot;&gt;
         ///	&lt;colgroup&gt;
-        ///		&lt;col name=&quot;current-dt&quot; style=&quot;width: 60px&quot; /&gt;
+        ///		&lt;col name=&quot;current-dt&quot; style=&quot;width: 100px&quot; /&gt;
         ///		&lt;col name=&quot;user-level&quot; style=&quot;width: 85px&quot; /&gt;
         ///		&lt;col name=&quot;user-name&quot; /&gt;
-        ///		&lt;col name=&quot;user-status&quot; style=&quot;width: 90px&quot; /&gt;
+        ///		&lt;col name=&quot;user-status&quot; style=&quot;width: 60px&quot; /&gt;
+        ///		&lt;col name=&quot;payment-status&quot; style=&quot;width: 24px&quot; /&gt;
         ///	&lt;/colgroup&gt;
         ///	&lt;tbody&gt;
-        ///		&lt;tr id=&quot;tr-status-information&quot; style=&quot;display: none&quot;&gt;
-        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span id=&quot;spn-status-current-dt&quot; name=&quot;current-dt&quot;&gt;~0&lt;/span&gt;&lt;/td&gt;
-        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span id=&quot;spn-status-user-level&quot; name=&quot;user-level&quot;&gt;~1&lt; [rest of string was truncated]&quot;;.
+        ///		&lt;tr id=&quot;tr-status-information&quot;&gt;
+        ///			&lt;td class=&quot;text-start&quot;&gt;&lt;span id=&quot;s [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string status_menu {
             get {
                 return ResourceManager.GetString("status_menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///&lt;html&gt;
+        ///	&lt;head&gt;
+        ///		&lt;meta charset=&quot;utf-8&quot;&gt;
+        ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+        ///		&lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///		&lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
+        ///		&lt;title&gt;oxford.leads.web: cache manager&lt;/title&gt;
+        ///		&lt;!-- user-cache.html --&gt;
+        ///		&lt;!-- googleapis : fonts --&gt;
+        ///		&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+        ///		
+        ///		&lt;!-- popper --&gt;
+        ///		&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@poppe [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string user_cache {
+            get {
+                return ResourceManager.GetString("user_cache", resourceCulture);
             }
         }
     }

@@ -31,6 +31,18 @@ namespace next.web.Controllers
             return await GetPage("account-permissions");
         }
 
+        [HttpGet]
+        [Route("cache-manager")]
+        public async Task<IActionResult> CacheManagement()
+        {
+            const string name = "cache-manager";
+            var session = HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) Redirect("/home");
+            var sanitizer = AppContainer.GetSanitizer(name);
+            var content = sanitizer.Sanitize(string.Empty);
+            return GetResult(content);
+        }
+
         private async Task<IActionResult> GetPage(string viewName)
         {
             var session = HttpContext.Session;

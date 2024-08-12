@@ -51,6 +51,12 @@
 				<span name="child-menu-text">Permissions</span>
 			</a>
 		</div>
+		<div name="sub-menu-account-cache" class="row">
+			<a class="text-primary" href="/my-account/cache-manager">
+				<i class="bi bi-collection" title="Cache Management"></i>
+				<span name="child-menu-text">Cache Management</span>
+			</a>
+		</div>
 	</div>
 	<div id="my-search-options" name="app-sub-menu" class="d-none">
 		<div name="sub-menu-search-search" class="row">
