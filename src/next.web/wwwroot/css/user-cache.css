@@ -70,3 +70,6 @@ div[name='cache-manager-grid'],
     left: 50px;
 }
 
+a[name="link-item-reset"] {
+    cursor: pointer;
+}

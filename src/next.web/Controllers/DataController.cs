@@ -200,6 +200,7 @@ namespace next.web.Controllers
             response.StatusCode = authenicated ? 200 : 408;
             response.RedirectTo = authenicated ? "" : "/home";
             if (!authenicated) return Json(response);
+            var usrbo = session.GetContextUser();
             if (location.Name == ResetCacheNames[0])
             {
                 session.Remove(SessionKeyNames.UserMailbox);
@@ -211,6 +212,11 @@ namespace next.web.Controllers
                 session.Remove(SessionKeyNames.UserSearchHistory);
                 _ = await session.RetrievePurchases(api);
                 _ = await session.RetrieveHistory(api);
+            }
+            if (usrbo != null && location.Name == ResetCacheNames[2])
+            {
+                session.Remove(SessionKeyNames.UserIdentity);
+                await usrbo.SaveUserIdentity(session, api);
             }
             return Json(response);
 
@@ -227,6 +233,6 @@ namespace next.web.Controllers
                 Debug.WriteLine(e);
             }
         }
-        private static readonly List<string> ResetCacheNames = ["correspondence" , "history"];
+        private static readonly List<string> ResetCacheNames = ["correspondence" , "history", "identity"];
     }
 }

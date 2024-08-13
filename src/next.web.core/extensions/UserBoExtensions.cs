@@ -410,12 +410,20 @@ namespace next.web.core.extensions
                 new (SessionKeyNames.UserMailbox, session),
                 new (SessionKeyNames.UserSearchActive, session),
                 new (SessionKeyNames.UserSearchPurchases, session),
-                new (SessionKeyNames.UserSearchHistory, session)
+                new (SessionKeyNames.UserSearchHistory, session),
+                new (SessionKeyNames.UserIdentity, session)
             };
+            // UserIdentityBo
             var builder = new StringBuilder(Environment.NewLine);
             data.ForEach(d =>
             {
-                var target = data.IndexOf(d) == 0 ? "correspondence" : "history";
+                var indx = data.IndexOf(d);
+                var target = indx switch
+                {
+                    0 => "correspondence",
+                    4 => "identity",
+                    _ => "history"
+                };
                 var template = row
                 .Replace("~0", d.ItemName)
                 .Replace("~1", d.ItemCount.ToString())

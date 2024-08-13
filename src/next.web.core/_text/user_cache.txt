@@ -71,7 +71,9 @@
 								<td name="item-count" class="text-end"><span>~1</span></td>
 								<td name="item-expires"><span>~2</span></td>
 								<td name="item-minutes" class="text-end"><span>~3</span></td>
-								<td name="item-reset" class="text-end"><a class="active" onclick="javascript:resetCacheItem('~4')">Reset</a></td>
+								<td name="item-reset" class="text-end">
+									<a name="link-item-reset" class="link-primary" onclick="javascript:resetCacheItem('~4')">Reset</a>
+								</td>
 							</tr>
 						</tbody>
 					</table>
