@@ -1,5 +1,4 @@
-﻿using next.web.core.models;
-using next.web.core.reponses;
+﻿using next.web.core.reponses;
 
 namespace next.web.tests.dep.models
 {

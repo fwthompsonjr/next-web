@@ -1,5 +1,4 @@
-﻿using legallead.desktop.entities;
-using next.web.core.models;
+﻿using next.web.core.models;
 using next.web.core.util;
 
 namespace next.web.tests.dep.models

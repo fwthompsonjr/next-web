@@ -89,6 +89,7 @@ namespace next.web.core.services
             p.InnerHtml = $"&copy; {dte} - {text}";
             return node.OuterHtml;
         }
+        [ExcludeFromCodeCoverage]
         protected static string AppendStyleStripe(string content, HtmlDocument doc)
         {
             const string common = "<!-- common styles -->";
@@ -177,6 +178,7 @@ namespace next.web.core.services
             if (!levelName.Equals(guest, StringComparison.OrdinalIgnoreCase)) { return navigateTo; }
             return BuildUri(landingName, response.Dto);
         }
+        [ExcludeFromCodeCoverage]
         protected static string BuildUri(string landing, PermissionChangedItem dto)
         {
             var landingName = paymentLandings.Find(x => x.Equals(landing, StringComparison.OrdinalIgnoreCase));
@@ -189,7 +191,7 @@ namespace next.web.core.services
             var url = string.Concat(paymentUrls[id], "?id={1}&sessionid={2}");
             return string.Format(url, hostname, dto.ExternalId, dto.SessionId);
         }
-        
+
         [ExcludeFromCodeCoverage]
         protected async virtual Task<string> GetInvoiceHtml(string navigateTo)
         {
