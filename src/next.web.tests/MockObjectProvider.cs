@@ -22,7 +22,7 @@ namespace next.web.tests
         private static Faker<T>? GetFaker<T>() where T : class, new()
         {
             var requested = typeof(T);
-            if (Supported.Contains(requested)) return null;
+            if (!Supported.Contains(requested)) return null;
             var indx = Supported.IndexOf(requested);
             object? faker = indx switch
             {
@@ -31,6 +31,8 @@ namespace next.web.tests
                 2 => fkMyPurchaseBo,
                 3 => fkUserIdentityBo,
                 4 => fkMySearchRestrictions,
+                5 => fkMailItemBody,
+                6 => fkPermissionChangedItem,
                 _ => null
             };
             if (faker is not Faker<T> actual) return null;
@@ -49,6 +51,10 @@ namespace next.web.tests
             {
                 a.CreateDt = a.CreateDate.GetValueOrDefault().ToString("f");
             });
+
+        private static readonly Faker<MailItemBody> fkMailItemBody = new Faker<MailItemBody>()
+            .RuleFor(x => x.Id, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Body, y => y.Lorem.Sentence(10, 15));
 
         private static readonly Faker<UserSearchQueryBo> fkUserSearchQueryBo =
             new Faker<UserSearchQueryBo>()
@@ -101,6 +107,19 @@ namespace next.web.tests
             .RuleFor(x => x.ThisMonth, y => y.Random.Int(1, 40))
             .RuleFor(x => x.ThisYear, y => y.Random.Int(1000, 4500));
 
+        private static readonly Faker<PermissionChangedItem> fkPermissionChangedItem =
+            new Faker<PermissionChangedItem>()
+            .RuleFor(x => x.Id, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.UserId, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.CustomerId, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.ExternalId, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.InvoiceUri, y => y.Random.AlphaNumeric(75))
+            .RuleFor(x => x.LevelName, y => y.Lorem.Word())
+            .RuleFor(x => x.SessionId, y => y.Random.Int(1, 5000).ToString())
+            .RuleFor(x => x.IsPaymentSuccess, y => y.Random.Bool())
+            .RuleFor(x => x.CompletionDate, y => y.Date.Recent(180))
+            .RuleFor(x => x.CreateDate, y => y.Date.Recent(180));
+
         private static readonly List<Type> Supported =
         [
             typeof(MailItem),
@@ -108,6 +127,8 @@ namespace next.web.tests
             typeof(MyPurchaseBo),
             typeof(UserIdentityBo),
             typeof(MySearchRestrictions),
+            typeof(MailItemBody),
+            typeof(PermissionChangedItem)
         ];
 
 

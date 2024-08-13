@@ -34,7 +34,7 @@ namespace next.web.tests
 
         public MockUserSession With(MailItem? item)
         {
-            var count = new Faker().Random.Int(10, 100);
+            var count = new Faker().Random.Int(100, 500);
             var list = MockObjectProvider.GetList<MailItem>(count) ?? [];
             if (item != null)
             {
@@ -69,6 +69,22 @@ namespace next.web.tests
             return this;
         }
 
+        public MockUserSession With(UserSearchQueryBo? item)
+        {
+            var count = new Faker().Random.Int(100, 500);
+            var list = MockObjectProvider.GetList<UserSearchQueryBo>(count) ?? [];
+            if (item != null)
+            {
+                list.ForEach(i => i.UserId = item.UserId);
+            }
+            var keyname = SessionKeyNames.UserSearchHistory;
+            var timed = new UserTimedCollection<List<UserSearchQueryBo>>(list, TimeSpan.FromMinutes(10));
+            var json = JsonConvert.SerializeObject(timed);
+            var bytes = Encoding.UTF8.GetBytes(json);
+            MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            return this;
+        }
+
         public Mock<ISession> MqSession { get; set; } = new();
 
         private static readonly Faker<UserContextBo> fakeUser =
@@ -81,5 +97,12 @@ namespace next.web.tests
             .RuleFor(x => x.RefreshToken, y => y.Random.AlphaNumeric(16))
             .RuleFor(x => x.Expires, y => y.Date.Future(1));
 
+        private static bool IsActive(string? searchProgress)
+        {
+            var find = new List<string> { "submitted", "processing" };
+            if (string.IsNullOrEmpty(searchProgress)) return false;
+            var exists = find.Exists(x => searchProgress.Contains(x, StringComparison.OrdinalIgnoreCase));
+            return exists;
+        }
     }
 }
