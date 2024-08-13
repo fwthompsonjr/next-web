@@ -1,5 +1,11 @@
 [
   {
+    "id": "3.2.9",
+    "notes": [
+      "web: add landing to manage cache onjects"
+    ]
+  },
+  {
     "id": "3.2.8",
     "notes": [
       "web: account allow user to download search result"

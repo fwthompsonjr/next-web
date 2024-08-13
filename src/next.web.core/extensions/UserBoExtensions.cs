@@ -1,4 +1,5 @@
-﻿using legallead.desktop.entities;
+﻿using HtmlAgilityPack;
+using legallead.desktop.entities;
 using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -383,6 +384,55 @@ namespace next.web.core.extensions
             var obj = data.ToInstance<UserTimedCollection<T>>();
             if (obj != null) return obj.GetValue();
             return default;
+        }
+
+        public static DateTime? GetExpirationDate<T>(this ISession session, string keyName)
+        {
+            var exists = session.TryGetValue(keyName, out var bytes);
+            if (!exists) return default;
+            var data = Encoding.UTF8.GetString(bytes);
+            var obj = data.ToInstance<UserTimedCollection<T>>();
+            if (obj != null) return obj.ExpirationDate;
+            return default;
+        }
+
+        public static void InjectSessionKeys(this ISession session, HtmlDocument document)
+        {
+            const string findtable = "//*[@id='detail-table']";
+            const string findrows = "//table/tbody/tr[@name='detail-tbody-trow']";
+            var node = document.DocumentNode;
+            var table = node.SelectSingleNode(findtable);
+            var rows = node.SelectNodes(findrows);
+            var tbody = table?.SelectSingleNode("tbody");
+            if (table == null || tbody == null || rows == null || rows.Count == 0) return;
+            var row = rows[0].OuterHtml;
+            var data = new List<KeyNameDetail> {
+                new (SessionKeyNames.UserMailbox, session),
+                new (SessionKeyNames.UserSearchActive, session),
+                new (SessionKeyNames.UserSearchPurchases, session),
+                new (SessionKeyNames.UserSearchHistory, session),
+                new (SessionKeyNames.UserIdentity, session)
+            };
+            // UserIdentityBo
+            var builder = new StringBuilder(Environment.NewLine);
+            data.ForEach(d =>
+            {
+                var indx = data.IndexOf(d);
+                var target = indx switch
+                {
+                    0 => "correspondence",
+                    4 => "identity",
+                    _ => "history"
+                };
+                var template = row
+                .Replace("~0", d.ItemName)
+                .Replace("~1", d.ItemCount.ToString())
+                .Replace("~2", d.ExpirationDate)
+                .Replace("~3", d.ExpirationMinutes)
+                .Replace("~4", target);
+                builder.AppendLine(template);
+            });
+            tbody.InnerHtml = builder.ToString();
         }
 
         private static string ToDdd(this string date)

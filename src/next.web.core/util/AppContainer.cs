@@ -148,7 +148,7 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IContentSanitizer>("payment-confirmation", new ContentSanitizerConfirmation());
             services.AddKeyedSingleton<IContentSanitizer>("payment-checkout", new ContentSanitizerPayment());
             services.AddKeyedSingleton<IContentSanitizer>("download", new ContentSanitizerDownload());
-
+            services.AddKeyedSingleton<IContentSanitizer>("cache-manager", new ContentSanitizerCache());
             // form submission handlers
             services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
             services.AddKeyedSingleton<IJsHandler, JsRegistrationHandler>("form-register");

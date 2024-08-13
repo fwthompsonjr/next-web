@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using next.web.core.extensions;
 using next.web.core.util;
 
 namespace next.web.Controllers
@@ -29,6 +30,22 @@ namespace next.web.Controllers
         public async Task<IActionResult> Permissions()
         {
             return await GetPage("account-permissions");
+        }
+
+        [HttpGet]
+        [Route("cache-manager")]
+        public async Task<IActionResult> CacheManagement()
+        {
+            const string name = "cache-manager";
+            var session = HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) Redirect("/home");
+            var sanitizer = AppContainer.GetSanitizer(name);
+            var content = sanitizer.Sanitize(string.Empty);
+            content = await AppendStatus(content, true);
+            var doc = content.ToHtml();
+            session.InjectSessionKeys(doc);
+            content = doc.DocumentNode.OuterHtml;
+            return GetResult(content);
         }
 
         private async Task<IActionResult> GetPage(string viewName)

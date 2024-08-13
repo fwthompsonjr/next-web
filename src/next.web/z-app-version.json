@@ -1,5 +1,10 @@
 [
   {
+    "id": "3.2.9",
+    "description": "Allow user to manage cache objects",
+    "date": "2024-08-12"
+  },
+  {
     "id": "3.2.8",
     "description": "Allow user to download search records",
     "date": "2024-08-07"
