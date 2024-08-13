@@ -9,8 +9,8 @@ namespace next.web.Controllers
     [Route("/")]
     public partial class HomeController : BaseController
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", 
-            "IDE0052:Remove unread private members", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
+            "IDE0052:Remove unread private members",
             Justification = "This item is planned for future use and part of MVC pattern.")]
         private readonly ILogger<HomeController> _logger;
 

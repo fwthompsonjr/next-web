@@ -94,7 +94,8 @@ namespace next.web.core.services
             if (string.IsNullOrWhiteSpace(matchedName)) return failed;
             var data = (model.Payload ?? string.Empty).ToInstance<FormRegistrationModel>();
             if (data == null) return failed;
-            var obj = new {
+            var obj = new
+            {
                 userName = data.UserName,
                 password = data.Password,
                 email = data.Email

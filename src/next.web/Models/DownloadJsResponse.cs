@@ -11,7 +11,7 @@
         public string FileName()
         {
             var fallback = $"{Path.GetFileNameWithoutExtension(Path.GetRandomFileName())}.xlsx";
-            List<string> expected = [ ":", "-", " to ", " on" ];
+            List<string> expected = [":", "-", " to ", " on"];
             if (string.IsNullOrEmpty(Description)) return fallback;
             var missing = expected.Count(x => !Description.Contains(x));
             if (missing > 0) return fallback;
