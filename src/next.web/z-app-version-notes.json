@@ -1,5 +1,11 @@
 [
   {
+    "id": "3.2.10",
+    "notes": [
+      "core: add code coverage"
+    ]
+  },
+  {
     "id": "3.2.9",
     "notes": [
       "web: add landing to manage cache onjects"
