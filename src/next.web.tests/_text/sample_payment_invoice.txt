@@ -1,0 +1,252 @@
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>oxford.leads.web</title>
+		
+		<!-- googleapis : fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+		
+		<!-- bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+		
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		
+		<!-- stripe -->
+		<script name="stripe-services" src="https://js.stripe.com/v3/"></script>
+		
+		<!-- common styles -->
+		<link name="base-css" href="/css/base-css.css?id=638591721598515058" rel="stylesheet">
+		<link name="base-menu" href="/css/base-menu.css?id=638591721598515058" rel="stylesheet">
+		<script name="site" src="/js/site.js?id=638591721598661613"></script>
+		<link rel="stylesheet" name="invoice-css" href="/css/invoice-css.css?id=638591721598515058">
+		<link rel="stylesheet" name="cover-css" href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css">
+	</head>
+	<body class="text-center">
+		<div id="menu-container" name="menu-container">
+			<div id="app-side-menu-border" name="left-menu-border"></div>
+			<div id="app-side-menu" name="left-menu">
+				<div data-position-index="0" name="left-menu-icon" class="row">
+					<a class="text-primary" href="/">
+						<i class="bi bi-three-dots"></i>
+					</a>
+				</div>
+				<div data-position-index="1" name="left-menu-home" class="row">
+					<a class="text-primary" href="/home">
+						<i class="bi bi-house" title="Home"></i>
+					</a>
+				</div>
+				<div id="my-account-parent-option" data-position-index="10" name="left-menu-account" class="row">
+					<a class="text-primary" href="javascript:void(0);" onclick="javascript:theMenu.show_child(0);">
+						<i class="bi bi-person" title="My Account"></i>
+					</a>
+				</div>
+				<div id="my-search-parent-option" data-position-index="20" name="left-menu-account" class="row">
+					<a class="text-primary" href="javascript:void(0);" onclick="javascript:theMenu.show_child(1);">
+						<i class="bi bi-binoculars" title="Search"></i>
+					</a>
+				</div>
+				<div data-position-index="30" name="left-menu-account" class="row">
+					<a class="text-primary" href="/correspondence">
+						<i class="bi bi-mailbox" title="Messages"></i>
+					</a>
+				</div>
+				<div data-position-index="100" name="left-menu-exit" class="row">
+					<a class="text-primary" href="javascript:void(0);" onclick="javascript:logoutRequested()">
+						<i class="bi bi-box-arrow-left" title="Exit"></i>
+					</a>
+				</div>
+			</div>
+			<div id="my-account-options" name="app-sub-menu" class="d-none">
+				<div name="sub-menu-account-home" class="row">
+					<a class="text-primary" href="/my-account/home">
+						<i class="bi bi-person" title="Account"></i>
+						<span name="child-menu-text">Account</span>
+					</a>
+				</div>
+				<div name="sub-menu-account-profile" class="row">
+					<a class="text-primary" href="/my-account/profile">
+						<i class="bi bi-person-gear" title="Profile"></i>
+						<span name="child-menu-text">Profile</span>
+					</a>
+				</div>
+				<div name="sub-menu-account-permissions" class="row">
+					<a class="text-primary" href="/my-account/permissions">
+						<i class="bi bi-person-lock" title="Permissions"></i>
+						<span name="child-menu-text">Permissions</span>
+					</a>
+				</div>
+				<div name="sub-menu-account-cache" class="row">
+					<a class="text-primary" href="/my-account/cache-manager">
+						<i class="bi bi-collection" title="Cache Management"></i>
+						<span name="child-menu-text">Cache Management</span>
+					</a>
+				</div>
+			</div>
+			<div id="my-search-options" name="app-sub-menu" class="d-none">
+				<div name="sub-menu-search-search" class="row">
+					<a class="text-primary" href="/search">
+						<i class="bi bi-search" title="Search"></i>
+						<span name="child-menu-text">Search</span>
+					</a>
+				</div>
+				<div name="sub-menu-search-active" class="row">
+					<a class="text-primary" href="/search/active">
+						<i class="bi bi-search-heart" title="Active Searches"></i>
+						<span name="child-menu-text">Active Searches</span>
+					</a>
+				</div>
+				<div name="sub-menu-search-purchases" class="row">
+					<a class="text-primary" href="/search/purchases">
+						<i class="bi bi-receipt" title="Purchases"></i>
+						<span name="child-menu-text">My Purchases</span>
+					</a>
+				</div>
+				<div class="row">
+					<a class="text-primary" href="/search/history">
+						<i class="bi bi-clock-history" title="History"></i>
+						<span name="child-menu-text">My History</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+			<header class="masthead mb-auto" style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+				<div class="inner">
+					<h3 class="masthead-brand">
+						<i class="bi bi-bank2"></i>
+						<span>Oxford Legal Lead UI</span>
+					</h3>
+				</div>
+			</header>
+			<main role="main" class="inner cover">
+				<div id="invoice-card">
+					<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+						<div name="navigation-alert-message" class="alert alert-primary d-none" role="alert">
+							Unable to complete navigation.
+						</div>
+						<div id="dv-subcontent-invoice" name="subcontent-invoice" class="card">
+							<div class="card-body">
+								<h5 class="card-title text-start">
+									<span name="invoice-label">Invoice:
+									</span>
+									<span automationid="search-uuid" name="invoice" class="text-light">32CBC942AAED-LPSU-0169CDE5</span>
+								</h5>
+								<div class="row">
+									<h6 class="text-start">
+										<span name="invoice-date-label" class="text-primary">Invoice Date:
+										</span>
+										<span name="invoice-date" class="ml-2">Tuesday, August 13, 2024 6:58 PM</span>
+									</h6>
+									<h6 class="text-start">
+										<span name="invoice-description-label" class="text-primary">Description:
+										</span>
+										<span name="invoice-description" class="ml-2">Search:  DENTON TX - 2023-10-01 to 2023-10-07 on 2024-07-13 00:36:55</span>
+									</h6>
+									<h6 class="text-start">
+										<span name="invoice-label" class="text-primary">Total:
+										</span>
+										<span name="invoice-total" class="ml-2">$5.89</span>
+									</h6>
+								</div>
+								<div name="payment-place-holder" class="row">
+									
+									<!-- Display a payment form -->
+									<form id="payment-form">
+										<div id="payment-element">
+											
+											<!--Stripe.js injects the Payment Element-->
+										</div>
+										<button id="submit">
+											<div class="spinner hidden" id="spinner"></div>
+											<span id="button-text">Pay now</span>
+										</button>
+										<div id="payment-message" class="hidden"></div>
+									</form>
+								</div>
+								<div class="row">
+									<hr>
+									<h5>Payment Details</h5>
+									<ul name="invoice-line-items" class="list-group text-start w-75 m-2" style="background: transparent">
+										<li style="background: transparent; border-color: #444" class="list-group-item text-white">
+											<span>Search - Level: Platinum</span>
+											<br>
+											<span style="margin-left: 10px">241 records</span>
+											<br>
+											<span style="margin-left: 10px">$7.23</span>
+											<br>
+										</li>
+										<li style="background: transparent; border-color: #444" class="list-group-item text-white">
+											<span>County Discount</span>
+											<br>
+											<span style="margin-left: 10px">10.00 %</span>
+											<br>
+											<span style="margin-left: 10px">($0.72)</span>
+											<br>
+										</li>
+										<li style="background: transparent; border-color: #444" class="list-group-item text-white">
+											<span>State Discount</span>
+											<br>
+											<span style="margin-left: 10px">15.00 %</span>
+											<br>
+											<span style="margin-left: 10px">($1.08)</span>
+											<br>
+										</li>
+										<li style="background: transparent; border-color: #444" class="list-group-item text-white">
+											<span>Sales Tax</span>
+											<br>
+											<span style="margin-left: 10px">$0.46</span>
+											<br>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<footer class="mastfoot mt-auto">
+				<div class="inner">
+					<p>© 2024 - Oxford Legal Lead UI</p>
+				</div>
+			</footer>
+		</div>
+		<script name="handler_js" src="/js/handler.js?id=638591721598661613"></script>
+		<div id="sidemnu-div-user-status">
+			<table id="sidemnu-table-user-status" class="table table-sm table-bordered default-view" automationid="user-status-table" name="user-status-table">
+				<colgroup>
+					<col name="current-dt" style="width: 100px">
+					<col name="user-level" style="width: 85px">
+					<col name="user-name">
+					<col name="user-status" style="width: 60px">
+					<col name="payment-status" style="width: 24px">
+				</colgroup>
+				<tbody>
+					<tr id="tr-status-information">
+						<td class="text-start">
+							<span id="spn-status-current-dt" name="current-dt">08-13-2024</span>
+						</td>
+						<td class="text-start">
+							<span id="spn-status-user-level" name="user-level">Platinum</span>
+						</td>
+						<td class="text-start">
+							<span id="spn-status-user-name" name="user-name" title="test.account (user@example.com)">John Lowe</span>
+						</td>
+						<td name="user-status" class="text-center">
+							<span id="spn-status-user-status" name="user-status">OK</span>
+						</td>
+						<td class="text-center test">
+							<i name="payment-card-back" class="bi bi-credit-card-2-back text-warning"></i>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</body>
+</html>

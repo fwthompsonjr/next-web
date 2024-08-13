@@ -1,5 +1,4 @@
-﻿using Bogus;
-using next.web.core.models;
+﻿using next.web.core.models;
 
 namespace next.web.tests.dep.models
 {

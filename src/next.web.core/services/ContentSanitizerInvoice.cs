@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using next.web.core.extensions;
 using next.web.core.models;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace next.web.core.services
@@ -71,19 +72,6 @@ namespace next.web.core.services
             return content;
         }
 
-        protected static async Task<string> GetInvoiceHtml(string navigateTo)
-        {
-            try
-            {
-                using var client = new HttpClient();
-                var response = await client.GetStringAsync(navigateTo);
-                return response;
-            }
-            catch (Exception)
-            {
-                return none;
-            }
-        }
 
         protected static string ApplyYearToFooter(string content)
         {
@@ -177,7 +165,7 @@ namespace next.web.core.services
             head.InnerHtml = txt.ToString();
             return doc.DocumentNode.OuterHtml;
         }
-
+        [ExcludeFromCodeCoverage]
         protected static string GetInvoiceUri(PermissionChangedResponse? response)
         {
             const string landingName = "Subscription";
@@ -201,6 +189,22 @@ namespace next.web.core.services
             var url = string.Concat(paymentUrls[id], "?id={1}&sessionid={2}");
             return string.Format(url, hostname, dto.ExternalId, dto.SessionId);
         }
+        
+        [ExcludeFromCodeCoverage]
+        protected async virtual Task<string> GetInvoiceHtml(string navigateTo)
+        {
+            try
+            {
+                using var client = new HttpClient();
+                var response = await client.GetStringAsync(navigateTo);
+                return response;
+            }
+            catch (Exception)
+            {
+                return none;
+            }
+        }
+
         protected const string cover = "cover-container d-flex h-100 p-3 mx-auto flex-column";
         protected const string coverstyle = "<link rel=\"stylesheet\" name=\"cover-css\" href=\"https://getbootstrap.com/docs/4.0/examples/cover/cover.css\" />";
         protected const string invoicestyle = "<link rel=\"stylesheet\" name=\"invoice-css\" href=\"/css/invoice-css.css\" />";

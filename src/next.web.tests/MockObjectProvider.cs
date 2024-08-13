@@ -1,6 +1,8 @@
 ﻿using Bogus;
-using next.web.core.models;
 using legallead.desktop.entities;
+using next.web.core.models;
+using next.web.core.reponses;
+using next.web.core.util;
 
 namespace next.web.tests
 {
@@ -19,6 +21,13 @@ namespace next.web.tests
             if (faker == null) return [];
             return faker.Generate(count);
         }
+
+        public static string GetContent(string pageName)
+        {
+            var content = ContentHandler.GetLocalContent(pageName);
+            return content?.Content ?? string.Empty;
+        }
+
         private static Faker<T>? GetFaker<T>() where T : class, new()
         {
             var requested = typeof(T);
@@ -33,6 +42,8 @@ namespace next.web.tests
                 4 => fkMySearchRestrictions,
                 5 => fkMailItemBody,
                 6 => fkPermissionChangedItem,
+                7 => fkPermissionChangedResponse,
+                8 => fkFormSubmissionResponse,
                 _ => null
             };
             if (faker is not Faker<T> actual) return null;
@@ -120,6 +131,23 @@ namespace next.web.tests
             .RuleFor(x => x.CompletionDate, y => y.Date.Recent(180))
             .RuleFor(x => x.CreateDate, y => y.Date.Recent(180));
 
+        private static readonly Faker<PermissionChangedResponse> fkPermissionChangedResponse =
+            new Faker<PermissionChangedResponse>()
+            .RuleFor(x => x.Name, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Email, y => y.Person.Email)
+            .RuleFor(x => x.Request, y => y.Random.Guid().ToString())
+            .FinishWith((f, a) =>
+            {
+                a.Dto = fkPermissionChangedItem.Generate();
+            });
+
+        private static readonly Faker<FormSubmissionResponse> fkFormSubmissionResponse =
+            new Faker<FormSubmissionResponse>()
+            .RuleFor(x => x.StatusCode, y => y.Random.Int(100, 600))
+            .RuleFor(x => x.Message, y => y.Hacker.Phrase())
+            .RuleFor(x => x.RedirectTo, y => y.Internet.Url())
+            .RuleFor(x => x.OriginalFormName, y => y.Person.FullName);
+
         private static readonly List<Type> Supported =
         [
             typeof(MailItem),
@@ -128,7 +156,9 @@ namespace next.web.tests
             typeof(UserIdentityBo),
             typeof(MySearchRestrictions),
             typeof(MailItemBody),
-            typeof(PermissionChangedItem)
+            typeof(PermissionChangedItem),
+            typeof(PermissionChangedResponse),
+            typeof(FormSubmissionResponse)
         ];
 
 

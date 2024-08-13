@@ -1,0 +1,238 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			try {
+				CefSharp.BindObjectAsync("jsHandler", "jsHandler");
+			} catch {}		
+		</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui</title>
+		<!-- googleapis : fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+		<!-- bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+		<!-- jquery -->
+		<script 
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" 
+			integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+			crossorigin="anonymous" 
+			referrerpolicy="no-referrer"></script>
+		<!-- common styles -->	
+		<link rel="stylesheet" name="cover-css" href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css" />
+		<style name="common-css">
+						
+			/*
+			 * Card
+			 */
+			 .card {
+				width: 600px;
+				background-color: transparent;
+				border-color: #444;
+				color: #fff;
+			 }
+			 .card .card-body .card-title {
+				border-bottom: #444 solid 1px;
+				padding-bottom: 5px;
+			 }
+			 .card .card-footer {
+				border-top: #555 solid 1px;
+			 }
+			@media screen and (max-width: 500px) {
+			  .card {
+				width: 300px;
+				margin-left: 40px;
+			 }
+			}
+			@media screen and (min-height: 100px) and (max-height: 665px) {
+				div[name="main-content"] {
+					position: relative;
+					top: 10px;
+				}
+			}
+			@media screen and (min-height: 670px) {
+				div[name="main-content"] {
+					position: relative;
+					top: -200px
+				}
+			}
+		</style>
+	</head>
+	<body class="text-center">
+
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header 
+		class="masthead mb-auto" 
+		style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+		<div class="inner">
+			<h3 class="masthead-brand">
+				<i class="bi bi-bank2"></i>
+				<span>Legal Lead UI</span>
+			</h3>
+		</div>
+      </header>
+
+      <main role="main" class="inner cover">
+        <div name="navigation-alert-message" class="alert alert-primary d-none" role="alert">
+            Unable to complete navigation.
+        </div>
+		<div name='main-content' class="card">
+			<div class="card-body">
+				<h5 class="card-title text-danger">Error - Invalid Request</h5>	
+				<div class="row">
+					<div class="col-3 text-start">User Name:</div>
+					<div id="account-user-name" class="col-8 text-secondary text-start">
+						<span name="account-user-name"> - </span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 text-start">Email:</div>
+					<div id="account-user-email" class="col-8 text-secondary text-start">
+						<span name="account-user-email"> - </span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 text-start">Details:</div>
+					<div id="payment-details" class="col-8 text-secondary text-start">
+						<div name="payment-details-data" style="position: relative; left: -80px">
+							<div class="row" style="visibility:hidden"> - </div>
+							<div class="row">
+								<div class="col-5">:</div>
+								<div name="payment-details-payment-date" class="col-6 ml-2 text-secondary">
+									<p class="text-muted">
+										One or more of your values are invalid. Please check submission and retry.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>
+			<div class="card-footer">
+				<div id="dv-row-return-search" name="row-return-search">
+					<button 
+						id="bttn-row-return-search" 
+						name="row-return-search" 
+						class="btn btn-primary"
+						onclick="changeViewHandler('mysearch-home')">
+						Return
+					</button>
+				</div>
+			</div>
+		</div>
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p name="product-copy-footer">(c) 2023, 2024 - Legal Lead UI</p>
+        </div>
+      </footer>
+    </div>
+	<script name="checkout-stripe-js">
+                    // This is your test publishable API key. 
+                    const stripe = Stripe("pk_test_51LCZucDhgP60CL9xBNAtEMBdGOdZGMH6OqoxySlG4Cpj8aMTNYVzt6P5R2GtDEZiBVnnUsLLTgEUad9rSgtf21ru00THKrc5YO"); 
+                    // The items the customer wants to buy 
+                         const items = [{ id: "xl-tshirt" }]; 
+                    let elements; 
+                    initialize(); 
+                    checkStatus(); 
+                    document 
+                    .querySelector("#payment-form") 
+                    .addEventListener("submit", handleSubmit); 
+                    // Fetches a payment intent and captures the client secret 
+                         async function initialize() { 
+                              let obj = { id: "32CBC942AAED-LPSU-0169CDE5" } 
+                              const response = await fetch("/payment-fetch-intent", { 
+                              method: "POST", 
+                                   headers: { "Content-Type": "application/json" }, 
+                              body: JSON.stringify(obj), 
+                              }); 
+                              const { clientSecret } = await response.json(); 
+                              const appearance = { 
+                              theme: 'flat', 
+                              }; 
+                              elements = stripe.elements({ appearance, clientSecret }); 
+                              const paymentElementOptions = { 
+                              layout: "tabs", 
+                              }; 
+                         const paymentElement = elements.create("payment", paymentElementOptions); 
+                         paymentElement.mount("#payment-element"); 
+                         } 
+                         async function handleSubmit(e) { 
+                         e.preventDefault(); 
+                         setLoading(true); 
+                              const { error } = await stripe.confirmPayment({ 
+                         elements, 
+                              confirmParams: { 
+                              // Make sure to change this to your payment completion page 
+                              return_url: "https://localhost:7002/payment-result?sts=success&id=32CBC942AAED-LPSU-0169CDE5", 
+                              }, 
+                         }); 
+                    // This point will only be reached if there is an immediate error when 
+                    // confirming the payment. Otherwise, your customer will be redirected to 
+                    // your `return_url`. For some payment methods like iDEAL, your customer will 
+                    // be redirected to an intermediate site first to authorize the payment, then 
+                    // redirected to the `return_url`. 
+                         if (error.type === "card_error" || error.type === "validation_error") { 
+                         showMessage(error.message); 
+                              } else { 
+                         showMessage("An unexpected error occurred."); 
+                         } 
+                    setLoading(false); 
+                    } 
+                    // Fetches the payment intent status after payment submission 
+                         async function checkStatus() { 
+                         const clientSecret = new URLSearchParams(window.location.search).get( 
+                         "payment_intent_client_secret" 
+                         ); 
+                              if (!clientSecret) { 
+                              return; 
+                              } 
+                              const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret); 
+                              switch (paymentIntent.status) { 
+                              case "succeeded": 
+                              showMessage("Payment succeeded!"); 
+                              break; 
+                              case "processing": 
+                              showMessage("Your payment is processing."); 
+                              break; 
+                              case "requires_payment_method": 
+                              showMessage("Your payment was not successful, please try again."); 
+                              break; 
+                              default: 
+                              showMessage("Something went wrong."); 
+                              break; 
+                              } 
+                         } 
+                    // ------- UI helpers ------- 
+                         function showMessage(messageText) { 
+                         const messageContainer = document.querySelector("#payment-message"); 
+                         messageContainer.classList.remove("hidden"); 
+                         messageContainer.textContent = messageText; 
+                              setTimeout(function () { 
+                              messageContainer.classList.add("hidden"); 
+                              messageContainer.textContent = ""; 
+                              }, 4000); 
+                         } 
+                    // Show a spinner on payment submission 
+                         function setLoading(isLoading) { 
+                              if (isLoading) { 
+                              // Disable the button and show a spinner 
+                              document.querySelector("#submit").disabled = true; 
+                              document.querySelector("#spinner").classList.remove("hidden"); 
+                              document.querySelector("#button-text").classList.add("hidden"); 
+                                   } else { 
+                              document.querySelector("#submit").disabled = false; 
+                              document.querySelector("#spinner").classList.add("hidden"); 
+                              document.querySelector("#button-text").classList.remove("hidden"); 
+                              } 
+                         } 
+
+
+		</script>
+  </body>
+</html>

@@ -31,19 +31,10 @@ namespace next.web.tests.dep.models
             Assert.Null(error);
         }
 
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         private static MockUserSession GetSession()
         {
-
-            var session = new MockUserSession()
-                .With((UserContextBo)null)
-                .With((UserIdentityBo)null)
-                .With((MyPurchaseBo)null)
-                .With((MySearchRestrictions)null)
-                .With((UserSearchQueryBo)null)
-                .With((MailItem)null);
+            var session = MockUserSession.GetInstance();
             return session;
         }
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
     }
 }

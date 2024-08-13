@@ -1,8 +1,8 @@
 ﻿using Bogus;
+using legallead.desktop.entities;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Newtonsoft.Json;
-using legallead.desktop.entities;
 using next.web.core.extensions;
 using next.web.core.models;
 using next.web.core.util;
@@ -10,9 +10,23 @@ using System.Text;
 
 namespace next.web.tests
 {
+
+#pragma warning disable CS8600 // null values used to manage With overloads in builder pattern
+
     internal class MockUserSession
     {
-
+        public static MockUserSession GetInstance()
+        {
+            var session = new MockUserSession()
+                .With((UserContextBo)null)
+                .With((UserIdentityBo)null)
+                .With((MyPurchaseBo)null)
+                .With((MySearchRestrictions)null)
+                .With((UserSearchQueryBo)null)
+                .With((MailItem)null)
+                .With((PermissionChangedResponse)null);
+            return session;
+        }
         public MockUserSession With(UserContextBo? bo)
         {
             bo ??= fakeUser.Generate();
@@ -85,6 +99,17 @@ namespace next.web.tests
             return this;
         }
 
+        public MockUserSession With(PermissionChangedResponse? bo)
+        {
+            bo ??= MockObjectProvider.GetSingle<PermissionChangedResponse>();
+            var keyname = SessionKeyNames.UserPermissionChanged;
+            var timed = new UserTimedCollection<PermissionChangedResponse>(bo, TimeSpan.FromMinutes(10));
+            var json = JsonConvert.SerializeObject(timed);
+            var bytes = Encoding.UTF8.GetBytes(json);
+            MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            return this;
+        }
+
         public Mock<ISession> MqSession { get; set; } = new();
 
         private static readonly Faker<UserContextBo> fakeUser =
@@ -97,12 +122,7 @@ namespace next.web.tests
             .RuleFor(x => x.RefreshToken, y => y.Random.AlphaNumeric(16))
             .RuleFor(x => x.Expires, y => y.Date.Future(1));
 
-        private static bool IsActive(string? searchProgress)
-        {
-            var find = new List<string> { "submitted", "processing" };
-            if (string.IsNullOrEmpty(searchProgress)) return false;
-            var exists = find.Exists(x => searchProgress.Contains(x, StringComparison.OrdinalIgnoreCase));
-            return exists;
-        }
     }
+
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 }
