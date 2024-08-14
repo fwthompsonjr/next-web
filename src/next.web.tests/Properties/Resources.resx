@@ -121,6 +121,48 @@
   <data name="payment_confirmation_sample" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\payment_confirmation_sample.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="request_frm_profile_email" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\request_frm_profile_email.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="request_permissions_change_password" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\request_permissions_change_password.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="request_permissions_set_discount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\request_permissions_set_discount.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="request_permissions_set_permission" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\request_permissions_set_permission.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="request_profile_edit_contact_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\request_profile_edit_contact_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="request_profile_edit_contact_name" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\request_profile_edit_contact_name.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="request_profile_edit_contact_phone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\request_profile_edit_contact_phone.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="response_frm_profile_email" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\response_frm_profile_email.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="response_permissions_change_password" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\response_permissions_change_password.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="response_permissions_set_discount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\response_permissions_set_discount.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="response_permissions_set_permission" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\response_permissions_set_permission.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="response_profile_edit_contact_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\response_profile_edit_contact_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="response_profile_edit_contact_name" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\response_profile_edit_contact_name.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="response_profile_edit_contact_phone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\response_profile_edit_contact_phone.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="sample_payment_invoice" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\sample_payment_invoice.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

@@ -83,6 +83,227 @@ namespace next.web.tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///    {
+        ///        &quot;EmailType&quot;: &quot;Personal&quot;,
+        ///        &quot;Email&quot;: &quot;{{$PersonalEmail}}&quot;
+        ///    },    
+        ///    {
+        ///        &quot;EmailType&quot;: &quot;Business&quot;,
+        ///        &quot;Email&quot;: &quot;{{$BusinessEmail}}&quot;
+        ///    },    
+        ///    {
+        ///        &quot;EmailType&quot;: &quot;Other&quot;,
+        ///        &quot;Email&quot;: &quot;{{$OtherEmail}}&quot;
+        ///    }
+        ///].
+        /// </summary>
+        internal static string request_frm_profile_email {
+            get {
+                return ResourceManager.GetString("request_frm_profile_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;userName&quot;: &quot;{{DefaultUserName}}&quot;,
+        ///  &quot;oldPassword&quot;: &quot;{{DefaultPassword}}&quot;,
+        ///  &quot;newPassword&quot;: &quot;{{DefaultPassword}}&quot;,
+        ///  &quot;confirmPassword&quot;: &quot;{{DefaultPassword}}&quot;
+        ///}.
+        /// </summary>
+        internal static string request_permissions_change_password {
+            get {
+                return ResourceManager.GetString("request_permissions_change_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;Choices&quot;: [
+        ///        { &quot;StateName&quot;: &quot;TX&quot;, &quot;IsSelected&quot;: true },
+        ///        { &quot;StateName&quot;: &quot;TX&quot;, &quot;CountyName&quot;: &quot;Tarrant&quot;, &quot;IsSelected&quot;: false },
+        ///        { &quot;StateName&quot;: &quot;TX&quot;, &quot;CountyName&quot;: &quot;Collin&quot;, &quot;IsSelected&quot;: true },
+        ///        { &quot;StateName&quot;: &quot;TX&quot;, &quot;CountyName&quot;: &quot;Denton&quot;, &quot;IsSelected&quot;: true },
+        ///        { &quot;StateName&quot;: &quot;TX&quot;, &quot;CountyName&quot;: &quot;Collin&quot;, &quot;IsSelected&quot;: true }
+        ///    ]
+        ///}.
+        /// </summary>
+        internal static string request_permissions_set_discount {
+            get {
+                return ResourceManager.GetString("request_permissions_set_discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;Level&quot;: &quot;Guest&quot;
+        ///}.
+        /// </summary>
+        internal static string request_permissions_set_permission {
+            get {
+                return ResourceManager.GetString("request_permissions_set_permission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///    {
+        ///        &quot;AddressType&quot;: &quot;Mailing&quot;,
+        ///        &quot;Address&quot;: &quot;{{$randomStreetAddress}} {{$randomCity}}, {{$randomCountry}} {{$randomInt}}&quot;
+        ///    },    
+        ///    {
+        ///        &quot;AddressType&quot;: &quot;Billing&quot;,
+        ///        &quot;Address&quot;: &quot;{{$randomStreetAddress}} {{$randomCity}}, {{$randomCountry}} {{$randomInt}}&quot;
+        ///    }
+        ///].
+        /// </summary>
+        internal static string request_profile_edit_contact_address {
+            get {
+                return ResourceManager.GetString("request_profile_edit_contact_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///    {
+        ///        &quot;NameType&quot;: &quot;First&quot;,
+        ///        &quot;Name&quot;: &quot;{{$randomFirstName}}&quot;
+        ///    },
+        ///    {
+        ///        &quot;NameType&quot;: &quot;Last&quot;,
+        ///        &quot;Name&quot;: &quot;{{$randomLastName}}&quot;
+        ///    },    
+        ///    {
+        ///        &quot;NameType&quot;: &quot;Company&quot;,
+        ///        &quot;Name&quot;: &quot;{{$randomCompanyName}}&quot;
+        ///    }
+        ///].
+        /// </summary>
+        internal static string request_profile_edit_contact_name {
+            get {
+                return ResourceManager.GetString("request_profile_edit_contact_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///    {
+        ///        &quot;PhoneType&quot;: &quot;Personal&quot;,
+        ///        &quot;Phone&quot;: &quot;{{$randomPhoneNumber1}}&quot;
+        ///    },
+        ///    {
+        ///        &quot;PhoneType&quot;: &quot;Business&quot;,
+        ///        &quot;Phone&quot;: &quot;{{$randomPhoneNumber2}}&quot;
+        ///    },    
+        ///    {
+        ///        &quot;PhoneType&quot;: &quot;Other&quot;,
+        ///        &quot;Phone&quot;: &quot;{{$randomPhoneNumber3}}&quot;
+        ///    }
+        ///].
+        /// </summary>
+        internal static string request_profile_edit_contact_phone {
+            get {
+                return ResourceManager.GetString("request_profile_edit_contact_phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;key&quot;: true,
+        ///    &quot;value&quot;: &quot;{\&quot;Email\&quot;:\&quot;user@example.com\&quot;,\&quot;Name\&quot;:\&quot;Email\&quot;,\&quot;Message\&quot;:\&quot;Contact details updated successfully.\&quot;,\&quot;JsonData\&quot;:\&quot;[{\\\&quot;EmailType\\\&quot;:\\\&quot;Personal\\\&quot;,\\\&quot;Email\\\&quot;:\\\&quot;Patricia94@hotmail.com\\\&quot;},{\\\&quot;EmailType\\\&quot;:\\\&quot;Business\\\&quot;,\\\&quot;Email\\\&quot;:\\\&quot;Britney_Lemke63@yahoo.com\\\&quot;},{\\\&quot;EmailType\\\&quot;:\\\&quot;Other\\\&quot;,\\\&quot;Email\\\&quot;:\\\&quot;Eleanore_Wehner@yahoo.com\\\&quot;}]\&quot;}&quot;
+        ///}.
+        /// </summary>
+        internal static string response_frm_profile_email {
+            get {
+                return ResourceManager.GetString("response_frm_profile_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to test.account.
+        /// </summary>
+        internal static string response_permissions_change_password {
+            get {
+                return ResourceManager.GetString("response_permissions_change_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;name&quot;: &quot;Discount&quot;,
+        ///    &quot;email&quot;: &quot;user@example.com&quot;,
+        ///    &quot;request&quot;: &quot;{\&quot;Choices\&quot;:[{\&quot;StateName\&quot;:\&quot;TX\&quot;,\&quot;CountyName\&quot;:\&quot;\&quot;,\&quot;IsSelected\&quot;:true},{\&quot;StateName\&quot;:\&quot;TX\&quot;,\&quot;CountyName\&quot;:\&quot;Tarrant\&quot;,\&quot;IsSelected\&quot;:false},{\&quot;StateName\&quot;:\&quot;TX\&quot;,\&quot;CountyName\&quot;:\&quot;Collin\&quot;,\&quot;IsSelected\&quot;:true},{\&quot;StateName\&quot;:\&quot;TX\&quot;,\&quot;CountyName\&quot;:\&quot;Denton\&quot;,\&quot;IsSelected\&quot;:true},{\&quot;StateName\&quot;:\&quot;TX\&quot;,\&quot;CountyName\&quot;:\&quot;Collin\&quot;,\&quot;IsSelected\&quot;:true}]}&quot;,
+        ///    &quot;dto&quot;: {
+        ///        &quot;id&quot;: &quot;15e9d380-59d0-11ef-99ce-0af7a01f52e9&quot;,
+        ///      [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string response_permissions_set_discount {
+            get {
+                return ResourceManager.GetString("response_permissions_set_discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;name&quot;: &quot;PermissionLevel&quot;,
+        ///    &quot;email&quot;: &quot;user@example.com&quot;,
+        ///    &quot;request&quot;: &quot;{\&quot;Level\&quot;:\&quot;Guest\&quot;}&quot;,
+        ///    &quot;dto&quot;: {
+        ///        &quot;id&quot;: &quot;30ee4c06-59d0-11ef-99ce-0af7a01f52e9&quot;,
+        ///        &quot;userId&quot;: &quot;cf35094a-ad64-41dd-9f2d-32cbc942aaed&quot;,
+        ///        &quot;customerId&quot;: &quot;cus_PgO7oP4YD73gx9&quot;,
+        ///        &quot;externalId&quot;: &quot;hIzMImN7aqPUTWvZ&quot;,
+        ///        &quot;invoiceUri&quot;: &quot;NONE&quot;,
+        ///        &quot;levelName&quot;: &quot;guest&quot;,
+        ///        &quot;sessionId&quot;: &quot;NONE&quot;,
+        ///        &quot;isPaymentSuccess&quot;: true,
+        ///        &quot;completionDate&quot;: &quot;2024-08-14T00:00:18&quot;,
+        ///        &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string response_permissions_set_permission {
+            get {
+                return ResourceManager.GetString("response_permissions_set_permission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;key&quot;: true,
+        ///    &quot;value&quot;: &quot;{\&quot;Email\&quot;:\&quot;user@example.com\&quot;,\&quot;Name\&quot;:\&quot;Address\&quot;,\&quot;Message\&quot;:\&quot;Contact details updated successfully.\&quot;,\&quot;JsonData\&quot;:\&quot;[{\\\&quot;AddressType\\\&quot;:\\\&quot;Mailing\\\&quot;,\\\&quot;Address\\\&quot;:\\\&quot;82671 Rose Square Port Malachi, Seychelles 809\\\&quot;},{\\\&quot;AddressType\\\&quot;:\\\&quot;Billing\\\&quot;,\\\&quot;Address\\\&quot;:\\\&quot;721 Shanel Brooks East Kris, Sweden 720\\\&quot;}]\&quot;}&quot;
+        ///}.
+        /// </summary>
+        internal static string response_profile_edit_contact_address {
+            get {
+                return ResourceManager.GetString("response_profile_edit_contact_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;key&quot;: true,
+        ///    &quot;value&quot;: &quot;{\&quot;Email\&quot;:\&quot;user@example.com\&quot;,\&quot;Name\&quot;:\&quot;Name\&quot;,\&quot;Message\&quot;:\&quot;Contact details updated successfully.\&quot;,\&quot;JsonData\&quot;:\&quot;[{\\\&quot;NameType\\\&quot;:\\\&quot;First\\\&quot;,\\\&quot;Name\\\&quot;:\\\&quot;Adolphus\\\&quot;},{\\\&quot;NameType\\\&quot;:\\\&quot;Last\\\&quot;,\\\&quot;Name\\\&quot;:\\\&quot;Pacocha\\\&quot;},{\\\&quot;NameType\\\&quot;:\\\&quot;Company\\\&quot;,\\\&quot;Name\\\&quot;:\\\&quot;Dibbert, Pollich and Hartmann\\\&quot;}]\&quot;}&quot;
+        ///}.
+        /// </summary>
+        internal static string response_profile_edit_contact_name {
+            get {
+                return ResourceManager.GetString("response_profile_edit_contact_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;key&quot;: true,
+        ///    &quot;value&quot;: &quot;{\&quot;Email\&quot;:\&quot;user@example.com\&quot;,\&quot;Name\&quot;:\&quot;Name\&quot;,\&quot;Message\&quot;:\&quot;Contact details updated successfully.\&quot;,\&quot;JsonData\&quot;:\&quot;[{\\\&quot;NameType\\\&quot;:\\\&quot;First\\\&quot;,\\\&quot;Name\\\&quot;:\\\&quot;Adolphus\\\&quot;},{\\\&quot;NameType\\\&quot;:\\\&quot;Last\\\&quot;,\\\&quot;Name\\\&quot;:\\\&quot;Pacocha\\\&quot;},{\\\&quot;NameType\\\&quot;:\\\&quot;Company\\\&quot;,\\\&quot;Name\\\&quot;:\\\&quot;Dibbert, Pollich and Hartmann\\\&quot;}]\&quot;}&quot;
+        ///}.
+        /// </summary>
+        internal static string response_profile_edit_contact_phone {
+            get {
+                return ResourceManager.GetString("response_profile_edit_contact_phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 
         ///&lt;html&gt;
         ///	&lt;head&gt;

@@ -1,0 +1,4 @@
+{
+    "key": true,
+    "value": "{\"Email\":\"user@example.com\",\"Name\":\"Address\",\"Message\":\"Contact details updated successfully.\",\"JsonData\":\"[{\\\"AddressType\\\":\\\"Mailing\\\",\\\"Address\\\":\\\"82671 Rose Square Port Malachi, Seychelles 809\\\"},{\\\"AddressType\\\":\\\"Billing\\\",\\\"Address\\\":\\\"721 Shanel Brooks East Kris, Sweden 720\\\"}]\"}"
+}

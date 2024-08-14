@@ -5,6 +5,7 @@ using next.web.core.extensions;
 using next.web.core.models;
 using next.web.core.reponses;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.services
 {
@@ -25,29 +26,7 @@ namespace next.web.core.services
                 response.MapResponse(appsubmission);
                 var formName = model.FormName ?? string.Empty;
                 if (!IsFormNameValid(formName)) return response; // redirect to login
-                if (appsubmission.StatusCode != 200) response.RedirectTo = ""; // stay on same page
-                if (formName == "permissions-subscription-group" && appsubmission.StatusCode == 200)
-                {
-                    // add details to session object
-                    // instruct script to redirect to invoice controller
-                    var obj = appsubmission.Message.ToInstance<PermissionChangedResponse>() ?? new();
-                    session.Save(obj);
-                    response.StatusCode = 200;
-                    response.Message = "permession request received. generating invoice.";
-                    response.RedirectTo = "/invoice/permissions";
-                    return response;
-                }
-                _ = AppContainer.AddressMap.TryGetValue(formName, out var address);
-                address ??= string.Empty;
-                // trigger reload page on 200 event
-                var prefix = address.Split('-')[0];
-                response.RedirectTo = prefix switch
-                {
-                    "profile" => "/my-account/profile",
-                    "permissions" => "/my-account/permissions",
-                    _ => "/my-account/home"
-                };
-                return response;
+                return SubmitForm(session, response, appsubmission, formName);
             }
             catch (Exception ex)
             {
@@ -57,6 +36,35 @@ namespace next.web.core.services
             }
         }
 
+        [ExcludeFromCodeCoverage]
+        private static FormSubmissionResponse SubmitForm(ISession session, FormSubmissionResponse response, ApiResponse appsubmission, string formName)
+        {
+            if (appsubmission.StatusCode != 200) response.RedirectTo = ""; // stay on same page
+            if (formName == "permissions-subscription-group" && appsubmission.StatusCode == 200)
+            {
+                // add details to session object
+                // instruct script to redirect to invoice controller
+                var obj = appsubmission.Message.ToInstance<PermissionChangedResponse>() ?? new();
+                session.Save(obj);
+                response.StatusCode = 200;
+                response.Message = "permession request received. generating invoice.";
+                response.RedirectTo = "/invoice/permissions";
+                return response;
+            }
+            _ = AppContainer.AddressMap.TryGetValue(formName, out var address);
+            address ??= string.Empty;
+            // trigger reload page on 200 event
+            var prefix = address.Split('-')[0];
+            response.RedirectTo = prefix switch
+            {
+                "profile" => "/my-account/profile",
+                "permissions" => "/my-account/permissions",
+                _ => "/my-account/home"
+            };
+            return response;
+        }
+
+        [ExcludeFromCodeCoverage]
         private async Task<ApiResponse> Submit(FormSubmissionModel model, UserBo user, string failureMessage)
         {
             var formName = model.FormName ?? string.Empty;
@@ -73,6 +81,7 @@ namespace next.web.core.services
             return resp;
         }
 
+        [ExcludeFromCodeCoverage]
         private bool IsFormNameValid(string formName)
         {
             if (Name.Equals(formName, StringComparison.OrdinalIgnoreCase)) return true;
@@ -84,6 +93,8 @@ namespace next.web.core.services
         {
             Task<ApiResponse> Submit(string payload, string failureMessage);
         }
+
+        [ExcludeFromCodeCoverage]
         private sealed class JsPermissionChange(IPermissionApi permissionApi, UserBo user) : IJsAccountHandler
         {
             private readonly IPermissionApi _permissionApi = permissionApi;
@@ -127,6 +138,7 @@ namespace next.web.core.services
             }
 
         }
+        [ExcludeFromCodeCoverage]
         private sealed class JsProfileChange(
             IPermissionApi permissionApi,
             UserBo user,

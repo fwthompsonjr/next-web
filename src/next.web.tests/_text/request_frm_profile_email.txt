@@ -1,0 +1,14 @@
+[
+    {
+        "EmailType": "Personal",
+        "Email": "{{$PersonalEmail}}"
+    },    
+    {
+        "EmailType": "Business",
+        "Email": "{{$BusinessEmail}}"
+    },    
+    {
+        "EmailType": "Other",
+        "Email": "{{$OtherEmail}}"
+    }
+]

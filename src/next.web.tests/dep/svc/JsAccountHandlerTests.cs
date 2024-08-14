@@ -1,75 +1,70 @@
-﻿using legallead.desktop.entities;
-using legallead.desktop.interfaces;
-using Microsoft.AspNetCore.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using next.web.core.models;
+using next.web.core.services;
 
 namespace next.web.tests.dep.svc
 {
     public class JsAccountHandlerTests
     {
-
-        private sealed class AccountApi(int statusCode) : IPermissionApi
+        [Theory]
+        [InlineData(200)]
+        public void HandlerCanBeCreated(int code)
         {
-            private readonly int _statusCode = statusCode;
-
-
-            public IInternetStatus? InternetUtility => throw new NotImplementedException();
-
-            public KeyValuePair<bool, ApiResponse> CanGet(string name)
+            var error = Record.Exception(() =>
             {
-                return new(true, new());
-            }
+                var api = new MockAccountApi(code);
+                _ = new JsAccountHandler(api);
+            });
+            Assert.Null(error);
+        }
 
-            public KeyValuePair<bool, ApiResponse> CanPost(string name, object payload, UserBo user)
+        [Theory]
+        [InlineData(200, "profile_edit_contact_name")]
+        [InlineData(200, "profile_edit_contact_address")]
+        [InlineData(200, "profile_edit_contact_phone")]
+        [InlineData(200, "frm_profile_email")]
+        [InlineData(200, "permissions_change_password")]
+        [InlineData(200, "permissions_set_discount")]
+        [InlineData(200, "permissions_set_permission")]
+        public void HandlerCanSetPayload(int code, string formName)
+        {
+            var error = Record.Exception(() =>
             {
-                return new(true, new());
-            }
+                var api = new MockAccountApi(code);
+                var json = GetPayload(formName);
+                _ = new JsAccountHandler(api);
+                Assert.False(string.IsNullOrEmpty(json));
+            });
+            Assert.Null(error);
+        }
 
-            public ApiResponse CheckAddress(string name)
+        [Theory]
+        [InlineData(200, "profile_edit_contact_name")]
+        [InlineData(200, "profile_edit_contact_address")]
+        [InlineData(200, "profile_edit_contact_phone")]
+        [InlineData(200, "frm_profile_email")]
+        [InlineData(200, "permissions_change_password")]
+        [InlineData(200, "permissions_set_discount")]
+        [InlineData(200, "permissions_set_permission")]
+        public async Task HandlerCanSetPost(int code, string formName)
+        {
+            var session = MockUserSession.GetInstance();
+            var error = await Record.ExceptionAsync(async () =>
             {
-                throw new();
-            }
-
-            public Task<ApiResponse> Get(string name, UserBo user)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task<ApiResponse> Get(string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task<ApiResponse> Get(string name, Dictionary<string, string> parameters)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task<ApiResponse> Get(string name, UserBo user, Dictionary<string, string> parameters)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task<ApiResponse> Post(string name, object payload, UserBo user)
-            {
-                var response = new ApiResponse { StatusCode = _statusCode };
-                response.Message = name switch
+                var api = new MockAccountApi(code);
+                var json = GetPayload(formName);
+                var request = new FormSubmissionModel
                 {
-                    "profile-edit-contact-name" => string.Empty,
-                    "profile-edit-contact-address" => string.Empty,
-                    "profile-edit-contact-phone" => string.Empty,
-                    "frm-profile-email" => string.Empty,
-                    "permissions-change-password" => string.Empty,
-                    "permissions-set-discount" => string.Empty,
-                    "permissions-set-permission" => string.Empty,
-                    _ => "Response is not mapped."
+                    FormName = formName,
+                    Payload = json
                 };
-                return Task.FromResult(response);
-            }
+                var svc = new JsAccountHandler(api);
+                _ = await svc.Submit(request, session.MqSession.Object);
+            });
+            Assert.Null(error);
+        }
+        private static string GetPayload(string name)
+        {
+            return MockAccountApi.GetPayload(name);
         }
     }
 }

@@ -1,0 +1,4 @@
+{
+    "key": true,
+    "value": "{\"Email\":\"user@example.com\",\"Name\":\"Email\",\"Message\":\"Contact details updated successfully.\",\"JsonData\":\"[{\\\"EmailType\\\":\\\"Personal\\\",\\\"Email\\\":\\\"Patricia94@hotmail.com\\\"},{\\\"EmailType\\\":\\\"Business\\\",\\\"Email\\\":\\\"Britney_Lemke63@yahoo.com\\\"},{\\\"EmailType\\\":\\\"Other\\\",\\\"Email\\\":\\\"Eleanore_Wehner@yahoo.com\\\"}]\"}"
+}
