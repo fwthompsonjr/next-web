@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using next.web.core.models;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace next.web.core.extensions
@@ -277,18 +278,9 @@ namespace next.web.core.extensions
             if (!string.IsNullOrEmpty(data.RoleDescription)) data.RoleDescription = string.Empty;
             var request = new { RequestType = "Name" };
             response = await api.Post(getname, request, user);
-            if (response.StatusCode != 200) return data;
-            var profile = response.Message.ToInstance<List<ContactProfileResponse>>();
-            if (profile == null) return data;
-            var item = profile.Find(a => a.ResponseType.Equals("Name"))?.Data;
-            if (string.IsNullOrEmpty(item)) return data;
-            var detail = item.ToInstance<List<ContactName>>();
-            if (detail == null) return data;
-            var fname = detail.Find(x => x.NameType == "First")?.Name ?? string.Empty;
-            var lname = detail.Find(x => x.NameType == "Last")?.Name ?? string.Empty;
-            data.FullName = $"{fname} {lname}".Trim();
-            return data;
+            return GetIdentityResponse(response, data);
         }
+        
 
         public static async Task SaveUserIdentity(this UserContextBo userbo, ISession session, IPermissionApi api)
         {
@@ -315,6 +307,8 @@ namespace next.web.core.extensions
             };
             return response;
         }
+
+        [ExcludeFromCodeCoverage(Justification = "Wrapper function tested elsewhere.")]
         public static async Task<string> MapProfileResponse(this UserBo user, IPermissionApi api, IUserProfileMapper service, string response)
         {
             try
@@ -329,6 +323,7 @@ namespace next.web.core.extensions
             }
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Wrapper function tested elsewhere.")]
         public static async Task<string> MapPermissionsResponse(this UserBo user, IPermissionApi api, IUserPermissionsMapper service, string response)
         {
             try
@@ -342,21 +337,6 @@ namespace next.web.core.extensions
                 return response;
             }
         }
-
-
-
-
-
-        private static async Task<string?> GetMail(IPermissionApi api, UserBo user)
-        {
-            if (!user.IsAuthenicated) return null;
-            var payload = new { RequestType = "messages" };
-            var response = await api.Post("message-list", payload, user);
-            if (response == null || response.StatusCode != 200) return null;
-            return response.Message;
-        }
-
-
 
         public static UserContextBo? GetContextUser(this ISession session)
         {
@@ -396,6 +376,7 @@ namespace next.web.core.extensions
             return default;
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Function tested in intergration.")]
         public static void InjectSessionKeys(this ISession session, HtmlDocument document)
         {
             const string findtable = "//*[@id='detail-table']";
@@ -443,6 +424,32 @@ namespace next.web.core.extensions
             components[0] = components[0].Substring(0, 3);
             return string.Join(comma, components);
         }
+
+        private static async Task<string?> GetMail(IPermissionApi api, UserBo user)
+        {
+            if (!user.IsAuthenicated) return null;
+            var payload = new { RequestType = "messages" };
+            var response = await api.Post("message-list", payload, user);
+            if (response == null || response.StatusCode != 200) return null;
+            return response.Message;
+        }
+
+        [ExcludeFromCodeCoverage]
+        private static UserIdentityBo GetIdentityResponse(ApiResponse response, UserIdentityBo data)
+        {
+            if (response.StatusCode != 200) return data;
+            var profile = response.Message.ToInstance<List<ContactProfileResponse>>();
+            if (profile == null) return data;
+            var item = profile.Find(a => a.ResponseType.Equals("Name"))?.Data;
+            if (string.IsNullOrEmpty(item)) return data;
+            var detail = item.ToInstance<List<ContactName>>();
+            if (detail == null) return data;
+            var fname = detail.Find(x => x.NameType == "First")?.Name ?? string.Empty;
+            var lname = detail.Find(x => x.NameType == "Last")?.Name ?? string.Empty;
+            data.FullName = $"{fname} {lname}".Trim();
+            return data;
+        }
+
 
     }
 }

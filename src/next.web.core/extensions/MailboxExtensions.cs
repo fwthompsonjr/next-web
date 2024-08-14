@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using next.web.core.models;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace next.web.core.extensions
 {
+    [ExcludeFromCodeCoverage(Justification = "Tested in integration testing only.")]
     internal static class MailboxExtensions
     {
         public static async Task<string> GetMailBox(

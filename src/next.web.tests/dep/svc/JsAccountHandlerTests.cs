@@ -1,4 +1,5 @@
-﻿using next.web.core.models;
+﻿using next.web.core.extensions;
+using next.web.core.models;
 using next.web.core.services;
 
 namespace next.web.tests.dep.svc
@@ -27,11 +28,14 @@ namespace next.web.tests.dep.svc
         [InlineData(200, "permissions_set_permission")]
         public void HandlerCanSetPayload(int code, string formName)
         {
+            var type = typeof(JsAccountHandler);
             var error = Record.Exception(() =>
             {
                 var api = new MockAccountApi(code);
                 var json = GetPayload(formName);
                 _ = new JsAccountHandler(api);
+                var obj = json.ToInstance(type);
+                _ = obj.ToJsonString();
                 Assert.False(string.IsNullOrEmpty(json));
             });
             Assert.Null(error);

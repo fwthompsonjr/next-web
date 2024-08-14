@@ -44,6 +44,7 @@ namespace next.web.tests
                 6 => fkPermissionChangedItem,
                 7 => fkPermissionChangedResponse,
                 8 => fkFormSubmissionResponse,
+                9 => fkUserSearchFilterBo,
                 _ => null
             };
             if (faker is not Faker<T> actual) return null;
@@ -147,6 +148,11 @@ namespace next.web.tests
             .RuleFor(x => x.Message, y => y.Hacker.Phrase())
             .RuleFor(x => x.RedirectTo, y => y.Internet.Url())
             .RuleFor(x => x.OriginalFormName, y => y.Person.FullName);
+
+        private static readonly Faker<UserSearchFilterBo> fkUserSearchFilterBo =
+            new Faker<UserSearchFilterBo>()
+            .RuleFor(x => x.Index, y => y.PickRandom(StatusIndexes))
+            .RuleFor(x => x.County, y => y.PickRandom(CountyNames));
 
         private static readonly List<Type> Supported =
         [

@@ -25,7 +25,18 @@ namespace next.web.tests
                 .With((UserSearchQueryBo)null)
                 .With((MailItem)null)
                 .With((PermissionChangedResponse)null);
+            var keys = new List<string>(session.Keys);
+            session.MqSession.SetupGet(s => s.Keys).Returns(keys);
             return session;
+        }
+        public MockUserSession()
+        {
+            MqSession.Setup(x => x.Remove(It.IsAny<string>()))
+                .Callback((string keyname) => Remove(keyname));
+            MqSession.Setup(x => x.Set(It.IsAny<string>(), It.IsAny<byte[]>())).Callback((string a, byte[] b) =>
+            {
+                Append(a, b);
+            });
         }
         public MockUserSession With(UserContextBo? bo)
         {
@@ -33,6 +44,8 @@ namespace next.web.tests
             var keyname = SessionKeyNames.UserBo;
             var bytes = Encoding.UTF8.GetBytes(bo.ToJsonString());
             MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname)) return this;
+            Book.Add(keyname, bytes);
             return this;
         }
         public MockUserSession With(UserIdentityBo? bo)
@@ -43,6 +56,8 @@ namespace next.web.tests
             var json = JsonConvert.SerializeObject(timed);
             var bytes = Encoding.UTF8.GetBytes(json);
             MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname)) return this;
+            Book.Add(keyname, bytes);
             return this;
         }
 
@@ -59,6 +74,8 @@ namespace next.web.tests
             var json = JsonConvert.SerializeObject(timed);
             var bytes = Encoding.UTF8.GetBytes(json);
             MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname)) return this;
+            Book.Add(keyname, bytes);
             return this;
         }
         public MockUserSession With(MyPurchaseBo? item)
@@ -70,6 +87,8 @@ namespace next.web.tests
             var json = JsonConvert.SerializeObject(timed);
             var bytes = Encoding.UTF8.GetBytes(json);
             MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname)) return this;
+            Book.Add(keyname, bytes);
             return this;
         }
         public MockUserSession With(MySearchRestrictions? bo)
@@ -80,6 +99,8 @@ namespace next.web.tests
             var json = JsonConvert.SerializeObject(timed);
             var bytes = Encoding.UTF8.GetBytes(json);
             MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname)) return this;
+            Book.Add(keyname, bytes);
             return this;
         }
 
@@ -96,6 +117,8 @@ namespace next.web.tests
             var json = JsonConvert.SerializeObject(timed);
             var bytes = Encoding.UTF8.GetBytes(json);
             MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname)) return this;
+            Book.Add(keyname, bytes);
             return this;
         }
 
@@ -107,10 +130,15 @@ namespace next.web.tests
             var json = JsonConvert.SerializeObject(timed);
             var bytes = Encoding.UTF8.GetBytes(json);
             MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname)) return this;
+            Book.Add(keyname, bytes);
             return this;
         }
 
         public Mock<ISession> MqSession { get; set; } = new();
+
+        public List<string> Keys => Book.Keys.ToList();
+
 
         private static readonly Faker<UserContextBo> fakeUser =
             new Faker<UserContextBo>()
@@ -122,6 +150,26 @@ namespace next.web.tests
             .RuleFor(x => x.RefreshToken, y => y.Random.AlphaNumeric(16))
             .RuleFor(x => x.Expires, y => y.Date.Future(1));
 
+        private void Remove(string keyname)
+        {
+            var exists = MqSession.Object.TryGetValue(keyname, out var bytes);
+            if (exists)
+            {
+                byte[]? empty = null;
+                MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out empty)).Returns(false);
+            }
+        }
+        private void Append(string keyname, byte[] bytes)
+        {
+            MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname))
+            {
+                Book[keyname] = bytes;
+                return;
+            }
+            Book.Add(keyname, bytes);
+        }
+        private readonly  Dictionary<string, byte[]?> Book = [];
     }
 
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.

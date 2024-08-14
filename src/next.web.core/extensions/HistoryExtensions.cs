@@ -8,6 +8,7 @@ using System.Text;
 
 namespace next.web.core.extensions
 {
+    [ExcludeFromCodeCoverage(Justification = "Tested in integration testing only.")]
     internal static class HistoryExtensions
     {
         public static async Task<string> GetHistory(
@@ -238,7 +239,7 @@ namespace next.web.core.extensions
                 rowdata.Attributes.Add(pgnumber);
                 rowdata.Attributes.Add(attrwpos);
                 if (pg > 0) rowdata.Attributes.Add(rwstyle);
-                var row = template.InnerHtml.Replace("~0", r.ToString()).Replace("~7", r.ToString()); ;
+                var row = template.InnerHtml.Replace("~0", r.ToString()).Replace("~7", r.ToString());
                 for (var i = 1; i < substitutions.Targets + 1; i++)
                 {
                     var search = $"~{i}";
@@ -388,6 +389,3 @@ namespace next.web.core.extensions
 
     }
 }
-/*
-
-*/
