@@ -7,9 +7,11 @@ using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.reponses;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.services
 {
+    [ExcludeFromCodeCoverage(Justification = "Integration only. Might cover at later date.")]
     internal class JsSearchHandler : IJsHandler
     {
         private readonly IPermissionApi api;

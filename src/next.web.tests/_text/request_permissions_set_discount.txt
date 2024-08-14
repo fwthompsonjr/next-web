@@ -1,0 +1,9 @@
+{
+    "Choices": [
+        { "StateName": "TX", "IsSelected": true },
+        { "StateName": "TX", "CountyName": "Tarrant", "IsSelected": false },
+        { "StateName": "TX", "CountyName": "Collin", "IsSelected": true },
+        { "StateName": "TX", "CountyName": "Denton", "IsSelected": true },
+        { "StateName": "TX", "CountyName": "Collin", "IsSelected": true }
+    ]
+}

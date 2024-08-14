@@ -1,0 +1,14 @@
+[
+    {
+        "PhoneType": "Personal",
+        "Phone": "{{$randomPhoneNumber1}}"
+    },
+    {
+        "PhoneType": "Business",
+        "Phone": "{{$randomPhoneNumber2}}"
+    },    
+    {
+        "PhoneType": "Other",
+        "Phone": "{{$randomPhoneNumber3}}"
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "NameType": "First",
+        "Name": "{{$randomFirstName}}"
+    },
+    {
+        "NameType": "Last",
+        "Name": "{{$randomLastName}}"
+    },    
+    {
+        "NameType": "Company",
+        "Name": "{{$randomCompanyName}}"
+    }
+]

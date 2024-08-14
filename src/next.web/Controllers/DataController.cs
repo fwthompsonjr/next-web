@@ -7,10 +7,12 @@ using next.web.core.models;
 using next.web.core.util;
 using next.web.Models;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.Controllers
 {
     [Route("/data")]
+    [ExcludeFromCodeCoverage(Justification = "These methods are tested in integration. Unit coverage to provide in future.")]
     public class DataController : BaseController
     {
         private readonly IServiceProvider? provider;
@@ -154,9 +156,9 @@ namespace next.web.Controllers
                 isDownloadComplete = true;
                 return Json(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                isDownloadComplete=false;
+                isDownloadComplete = false;
                 Debug.WriteLine("Download retrieval: {0}, id: {1}", isDownloadComplete, location.Id);
                 Debug.WriteLine("Download error: {0}}", ex.Message);
                 return Json(response);
@@ -178,7 +180,8 @@ namespace next.web.Controllers
             response.RedirectTo = "";
             if (!IsSessionAuthenicated(session)) return Json(response);
             var keyvalue = session.GetString(SessionKeyNames.UserDownloadResponse);
-            if (!string.IsNullOrEmpty(keyvalue)) {
+            if (!string.IsNullOrEmpty(keyvalue))
+            {
                 response.StatusCode = 200;
                 response.Message = "Item download is in progress";
                 response.RedirectTo = "/search/history";
@@ -227,12 +230,12 @@ namespace next.web.Controllers
             try
             {
                 await api.Post("reset-download", request, user);
-            } 
-            catch(Exception e)
-            { 
+            }
+            catch (Exception e)
+            {
                 Debug.WriteLine(e);
             }
         }
-        private static readonly List<string> ResetCacheNames = ["correspondence" , "history", "identity"];
+        private static readonly List<string> ResetCacheNames = ["correspondence", "history", "identity"];
     }
 }

@@ -1,0 +1,17 @@
+{
+    "name": "Discount",
+    "email": "user@example.com",
+    "request": "{\"Choices\":[{\"StateName\":\"TX\",\"CountyName\":\"\",\"IsSelected\":true},{\"StateName\":\"TX\",\"CountyName\":\"Tarrant\",\"IsSelected\":false},{\"StateName\":\"TX\",\"CountyName\":\"Collin\",\"IsSelected\":true},{\"StateName\":\"TX\",\"CountyName\":\"Denton\",\"IsSelected\":true},{\"StateName\":\"TX\",\"CountyName\":\"Collin\",\"IsSelected\":true}]}",
+    "dto": {
+        "id": "15e9d380-59d0-11ef-99ce-0af7a01f52e9",
+        "userId": "cf35094a-ad64-41dd-9f2d-32cbc942aaed",
+        "customerId": "cus_PgO7oP4YD73gx9",
+        "externalId": "yPAXyL5fKTtqlGDE",
+        "invoiceUri": "ERROR",
+        "levelName": "{\\\"Choices\\\":[{\\\"MonthlyBillingCode\\\":\\\"price_1OvfK7DhgP60CL9xlL9DcGYr\\\",\\\"AnnualBillingCode\\\":\\\"price_1OvfK7DhgP60CL9x0wmJcmxi\\\",\\\"StateName\\\":\\\"TX\\\",\\\"CountyName\\\":\\\"\\\",\\\"IsSelected\\\":true},{\\\"MonthlyBillingCode\\\":null,\\\"AnnualBillingCode\\\":null,\\\"StateName\\\":\\\"TX\\\",\\\"CountyName\\\":\\\"Tarrant\\\",\\\"IsSelected\\\":false},{\\\"MonthlyBillingCode\\\":\\\"price_1Ot1RhDhgP60CL9xJs8UswkN\\\",\\\"AnnualBillingCode\\\":\\\"price_1Ot1RiDhgP60CL9xgMUYyvLV\\\",\\\"StateName\\\":\\\"TX\\\",\\\"CountyName\\\":\\\"Collin\\\",\\\"IsSelected\\\":true},{\\\"MonthlyBillingCode\\\":\\\"price_1Ot1RiDhgP60CL9xd1w60ZsC\\\",\\\"AnnualBillingCode\\\":\\\"price_1Ot1RiDhgP60CL9xFU8azDHr\\\",\\\"StateName\\\":\\\"TX\\\",\\\"CountyName\\\":\\\"Denton\\\",\\\"IsSelected\\\":true},{\\\"MonthlyBillingCode\\\":\\\"price_1Ot1RhDhgP60CL9xJs8UswkN\\\",\\\"AnnualBillingCode\\\":\\\"price_1Ot1RiDhgP60CL9xgMUYyvLV\\\",\\\"StateName\\\":\\\"TX\\\",\\\"CountyName\\\":\\\"Collin\\\",\\\"IsSelected\\\":true}]}",
+        "sessionId": "00000000-0000-0000-0000-000000000000",
+        "isPaymentSuccess": false,
+        "completionDate": null,
+        "createDate": "2024-08-13T23:59:32"
+    }
+}

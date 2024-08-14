@@ -6,9 +6,11 @@ using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.reponses;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.services
 {
+    [ExcludeFromCodeCoverage(Justification = "Integration only. Might cover at later date.")]
     internal class JsRegistrationHandler : IJsHandler
     {
         protected readonly IPermissionApi _api;
@@ -94,7 +96,8 @@ namespace next.web.core.services
             if (string.IsNullOrWhiteSpace(matchedName)) return failed;
             var data = (model.Payload ?? string.Empty).ToInstance<FormRegistrationModel>();
             if (data == null) return failed;
-            var obj = new {
+            var obj = new
+            {
                 userName = data.UserName,
                 password = data.Password,
                 email = data.Email

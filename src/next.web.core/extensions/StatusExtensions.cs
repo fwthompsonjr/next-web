@@ -1,10 +1,12 @@
 ﻿using HtmlAgilityPack;
 using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace next.web.core.extensions
 {
+    [ExcludeFromCodeCoverage(Justification = "Tested in integration testing only.")]
     internal static class StatusExtensions
     {
         public static async Task AppendStatus(this ISession session, IPermissionApi api, HtmlDocument document, bool isAlternateLayout = false)

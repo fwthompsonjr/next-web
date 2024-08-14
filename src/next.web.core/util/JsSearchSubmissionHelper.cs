@@ -1,7 +1,9 @@
 ﻿using legallead.desktop.entities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.util
 {
+    [ExcludeFromCodeCoverage(Justification = "Integration only. Might cover at later date.")]
     internal static class JsSearchSubmissionHelper
     {
         public static object Refine(object payload)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using next.web.core.extensions;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.models
 {
@@ -42,6 +43,8 @@ namespace next.web.core.models
         public DateTime ExpirationDt { get; }
         public string ExpirationDate => ExpirationDt.ToString(DateFormat);
         public string ExpirationMinutes => ExpirationDt.Subtract(DateTime.UtcNow).TotalMinutes.ToString("F3");
+
+        [ExcludeFromCodeCoverage]
         private static int GetCount<T>(ISession session, string key, bool activeFilter = false)
         {
             var collection = session.Retrieve<UserTimedCollection<List<T>>>(key);

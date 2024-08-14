@@ -1,0 +1,17 @@
+{
+    "name": "PermissionLevel",
+    "email": "user@example.com",
+    "request": "{\"Level\":\"Guest\"}",
+    "dto": {
+        "id": "30ee4c06-59d0-11ef-99ce-0af7a01f52e9",
+        "userId": "cf35094a-ad64-41dd-9f2d-32cbc942aaed",
+        "customerId": "cus_PgO7oP4YD73gx9",
+        "externalId": "hIzMImN7aqPUTWvZ",
+        "invoiceUri": "NONE",
+        "levelName": "guest",
+        "sessionId": "NONE",
+        "isPaymentSuccess": true,
+        "completionDate": "2024-08-14T00:00:18",
+        "createDate": "2024-08-14T00:00:18"
+    }
+}

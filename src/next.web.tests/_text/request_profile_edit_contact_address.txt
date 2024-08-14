@@ -1,0 +1,10 @@
+[
+    {
+        "AddressType": "Mailing",
+        "Address": "{{$randomStreetAddress}} {{$randomCity}}, {{$randomCountry}} {{$randomInt}}"
+    },    
+    {
+        "AddressType": "Billing",
+        "Address": "{{$randomStreetAddress}} {{$randomCity}}, {{$randomCountry}} {{$randomInt}}"
+    }
+]
