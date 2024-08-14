@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.services;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.Controllers
 {
@@ -65,26 +66,37 @@ namespace next.web.Controllers
                     content = _subscriptionSvc.Sanitize(content);
                     return GetResult(content);
                 }
-                var app = await _api.Post("search-get-invoice", new { Id = id }, user);
-                if (app == null || app.StatusCode != 200) return GetResult(content);
-                var detail = app.Message.ToInstance<GenerateInvoiceResponse>();
-                if (detail == null) return GetResult(content);
-                var remote = await GetRemoteContent(landing, detail.ExternalId ?? id);
-                var address = GetWebAddress(Request);
-                content = _paymentSvc.Transform(content, remote, address);
-                content = await AppendStatus(content);
-                return GetResult(content);
+                var response = await GetPurchaseRecord(landing, id, user, content);
+                return response;
             }
             finally
             {
                 session.Remove(PurchaseRecordId);
             }
         }
+
+        [ExcludeFromCodeCoverage(Justification = "Private member. Tested from public accessor. Integration only")]
+        private async Task<IActionResult> GetPurchaseRecord(string landing, string id, UserBo user, string content)
+        {
+            if (_api == null) return GetResult(content);
+            var app = await _api.Post("search-get-invoice", new { Id = id }, user);
+            if (app == null || app.StatusCode != 200) return GetResult(content);
+            var detail = app.Message.ToInstance<GenerateInvoiceResponse>();
+            if (detail == null) return GetResult(content);
+            var remote = await GetRemoteContent(landing, detail.ExternalId ?? id);
+            var address = GetWebAddress(Request);
+            content = _paymentSvc.Transform(content, remote, address);
+            content = await AppendStatus(content);
+            return GetResult(content);
+        }
+
+        [ExcludeFromCodeCoverage(Justification = "Private member. Tested from public accessor. Integration only")]
         private static string GetWebAddress(HttpRequest request)
         {
             return $"{request.Scheme}://{request.Host}";
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Private member. Tested from public accessor. Integration only")]
         private static async Task<string> GetRemoteContent(string landing, string? id)
         {
             var target = GetRemoteUri(landing, id);

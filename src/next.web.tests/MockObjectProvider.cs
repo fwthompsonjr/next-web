@@ -112,7 +112,7 @@ namespace next.web.tests
             .RuleFor(x => x.UserName, y => y.Person.UserName)
             .RuleFor(x => x.Email, y => y.Person.Email)
             .RuleFor(x => x.Created, y => y.Date.Recent(180).ToString("s"))
-            .RuleFor(x => x.Role, y => y.Random.Int(1, 10).ToString())
+            .RuleFor(x => x.Role, y => y.Random.Int(1, 200000).ToString())
             .RuleFor(x => x.RoleDescription, y => y.Hacker.Phrase())
             .RuleFor(x => x.FullName, y => y.Person.FullName);
 
