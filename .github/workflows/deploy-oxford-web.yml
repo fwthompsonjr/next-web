@@ -9,19 +9,23 @@ on:
     types: [ "closed" ]
 
 jobs:
-  build:
+  deploy:
     runs-on: windows-latest
     steps:
 
     - name: Checkout source code
+      if: contains( github.event.pull_request.labels.*.name, 'approved')
       uses: actions/checkout@v4
 
     - name: Setup .NET
+      if: contains( github.event.pull_request.labels.*.name, 'approved')
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
     - name: Configure AWS Credentials
+      id: configure_aws
+      if: contains( github.event.pull_request.labels.*.name, 'approved')
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
