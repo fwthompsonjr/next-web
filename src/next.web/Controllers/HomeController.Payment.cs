@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
+using next.web.core.interfaces;
 using next.web.core.services;
 using next.web.core.util;
 using next.web.Models;
+using System.Diagnostics;
 
 namespace next.web.Controllers
 {
@@ -37,7 +39,7 @@ namespace next.web.Controllers
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var url = GetRemoteUri(landing, null, null);
-            var response = await GetIntent(url, request);
+            var response = await GetIntent(_intentSvc, url, request);
             if (response == null) return Redirect("/error");
             return Json(new { clientSecret = response.ClientSecret });
         }
@@ -45,24 +47,33 @@ namespace next.web.Controllers
         [HttpGet("/download")]
         public async Task<IActionResult> Download()
         {
-            var session = HttpContext.Session;
-            if (!IsSessionAuthenicated(session)) return Redirect("/home");
-            var payload = session.GetString(SessionKeyNames.UserDownloadResponse);
-            if (string.IsNullOrEmpty(payload)) return Redirect("/error");
-            var data = payload.ToInstance<DownloadJsResponse>();
-            if (data == null || string.IsNullOrEmpty(data.Content)) return Redirect("/error");
-            var keys = new List<KeyValuePair<string, string>>
+            try
             {
-                new("//*[@id='spn-download-external-id']", data.ExternalId ?? " - "),
-                new("//*[@id='spn-download-description']", data.Description ?? " - "),
-                new("//*[@id='spn-download-date']", data.CreateDate ?? " - "),
-            };
-            var content = await GetAuthenicatedPage(session, "blank");
-            var sanity = AppContainer.GetSanitizer("download");
-            content = sanity.Sanitize(content);
-            content = ContentSanitizerDownload.AppendContext(content, keys);
-            content = await AppendStatus(content);
-            return GetResult(content);
+                var session = HttpContext.Session;
+                if (!IsSessionAuthenicated(session)) return Redirect("/home");
+                var wrapper = _sessionStringWrapper ?? new SessionStringWrapper(session);
+                var payload = wrapper.GetString(SessionKeyNames.UserDownloadResponse);
+                if (string.IsNullOrEmpty(payload)) return Redirect("/error");
+                var data = payload.ToInstance<DownloadJsResponse>();
+                if (data == null || string.IsNullOrEmpty(data.Content)) return Redirect("/error");
+                var keys = new List<KeyValuePair<string, string>>
+                {
+                    new("//*[@id='spn-download-external-id']", data.ExternalId ?? " - "),
+                    new("//*[@id='spn-download-description']", data.Description ?? " - "),
+                    new("//*[@id='spn-download-date']", data.CreateDate ?? " - "),
+                };
+                var content = await GetAuthenicatedPage(session, "blank");
+                var sanity = AppContainer.GetSanitizer("download");
+                content = sanity.Sanitize(content);
+                content = ContentSanitizerDownload.AppendContext(content, keys);
+                content = await AppendStatus(content);
+                return GetResult(content);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return Redirect("/error");
+            }
         }
 
 
@@ -71,11 +82,12 @@ namespace next.web.Controllers
         {
             const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var session = HttpContext.Session;
+            var wrapper = _sessionStringWrapper ?? new SessionStringWrapper(session);
             var isFileDownload = false;
             try
             {
                 if (!IsSessionAuthenicated(session)) return Unauthorized();
-                var payload = session.GetString(SessionKeyNames.UserDownloadResponse);
+                var payload = wrapper.GetString(SessionKeyNames.UserDownloadResponse);
                 if (string.IsNullOrEmpty(payload)) return BadRequest();
                 var data = payload.ToInstance<DownloadJsResponse>();
                 if (data == null || string.IsNullOrEmpty(data.Content)) return BadRequest();
@@ -91,16 +103,18 @@ namespace next.web.Controllers
             }
             finally
             {
-                if (isFileDownload) session.Remove(SessionKeyNames.UserDownloadResponse);
+                if (isFileDownload) wrapper.Remove(SessionKeyNames.UserDownloadResponse);
             }
         }
-        private async static Task<FetchIntentResponse?> GetIntent(string url, FetchIntentRequest request)
+        private async static Task<FetchIntentResponse?> GetIntent(
+            IFetchIntentService service,
+            string url,
+            FetchIntentRequest request)
         {
-            using var client = new HttpClient();
-            var response = await client.PostAsJsonAsync(url, request);
-            if (!response.IsSuccessStatusCode) return null;
-            var json = await response.Content.ReadAsStringAsync();
-            return json.ToInstance<FetchIntentResponse>();
+            var js = request.ToJsonString();
+            var response = await service.GetIntent(url, js);
+            if (string.IsNullOrEmpty(response)) return null;
+            return response.ToInstance<FetchIntentResponse>();
         }
     }
 }

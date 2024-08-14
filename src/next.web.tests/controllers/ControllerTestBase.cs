@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using next.web.Controllers;
+using next.web.core.interfaces;
 
 namespace next.web.tests.controllers
 {
@@ -23,24 +24,65 @@ namespace next.web.tests.controllers
             var httpContext = Mock.Of<HttpContext>(_ =>
                 _.Request == request.Object
             );
-
+            var mock = MockUserSession.GetInstance();
+            httpContext.Session = mock.MqSession.Object;
             //Controller needs a controller context
             var controllerContext = new ControllerContext()
             {
                 HttpContext = httpContext,
             };
+            var mwrapper = new Mock<ISessionStringWrapper>();
+            var iwrapper = new Mock<IFetchIntentService>();
             var homeLogger = new Mock<ILogger<HomeController>>();
             var collection = new ServiceCollection();
             collection.AddScoped(s => request);
+            collection.AddScoped(s => mock);
             collection.AddScoped(s => homeLogger);
             collection.AddScoped(s => homeLogger.Object);
+            collection.AddScoped(s => mwrapper);
+            collection.AddScoped(s => mwrapper.Object);
+            collection.AddScoped(s => iwrapper);
+            collection.AddScoped(s => iwrapper.Object);
             collection.AddScoped(a =>
             {
                 var logger = a.GetRequiredService<ILogger<HomeController>>();
-                return new HomeController(logger)
+                var controller = new HomeController(logger, mwrapper.Object, iwrapper.Object)
                 {
                     ControllerContext = controllerContext
                 };
+                return controller;
+            });
+            collection.AddScoped(a =>
+            {
+                var controller = new AccountController()
+                {
+                    ControllerContext = controllerContext
+                };
+                return controller;
+            });
+            collection.AddScoped(a =>
+            {
+                var controller = new MailController()
+                {
+                    ControllerContext = controllerContext
+                };
+                return controller;
+            });
+            collection.AddScoped(a =>
+            {
+                var controller = new SearchController()
+                {
+                    ControllerContext = controllerContext
+                };
+                return controller;
+            });
+            collection.AddScoped(a =>
+            {
+                var controller = new InvoiceController()
+                {
+                    ControllerContext = controllerContext
+                };
+                return controller;
             });
             _serviceProvider = collection.BuildServiceProvider();
             return _serviceProvider;

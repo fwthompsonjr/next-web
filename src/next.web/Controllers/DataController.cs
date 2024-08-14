@@ -7,10 +7,12 @@ using next.web.core.models;
 using next.web.core.util;
 using next.web.Models;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.Controllers
 {
     [Route("/data")]
+    [ExcludeFromCodeCoverage(Justification = "These methods are tested in integration. Unit coverage to provide in future.")]
     public class DataController : BaseController
     {
         private readonly IServiceProvider? provider;

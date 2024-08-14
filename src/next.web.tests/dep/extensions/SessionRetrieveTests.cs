@@ -128,19 +128,14 @@ namespace next.web.tests.dep.extensions
             var context = session.GetContextUser();
             Assert.NotNull(context);
             await context.Save(session, api);
-            return new Harness
-            {
-                Session = session,
-                PermissionApi = api,
-                User = context
-            };
+            return new Harness(session, api, context);
         }
 
-        private sealed class Harness
+        private sealed class Harness(ISession session, IPermissionApi api, UserContextBo user)
         {
-            public ISession Session { get; set; }
-            public IPermissionApi PermissionApi { get; set; }
-            public UserContextBo User { get; set; }
+            public ISession Session { get; set; } = session;
+            public IPermissionApi PermissionApi { get; set; } = api;
+            public UserContextBo User { get; set; } = user;
         }
     }
 }

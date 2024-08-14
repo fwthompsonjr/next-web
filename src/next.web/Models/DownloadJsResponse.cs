@@ -16,7 +16,7 @@
             var missing = expected.Count(x => !Description.Contains(x));
             if (missing > 0) return fallback;
             var a = Description.IndexOf(" on ");
-            var line = Description.Substring(0, a).Split(':')[^1].Replace(" to ", "-").Replace(" ", "").ToUpper();
+            var line = Description[..a].Split(':')[^1].Replace(" to ", "-").Replace(" ", "").ToUpper();
             return $"{line}.xlsx";
         }
     }

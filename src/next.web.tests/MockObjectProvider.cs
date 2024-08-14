@@ -3,6 +3,7 @@ using legallead.desktop.entities;
 using next.web.core.models;
 using next.web.core.reponses;
 using next.web.core.util;
+using next.web.Models;
 
 namespace next.web.tests
 {
@@ -45,6 +46,11 @@ namespace next.web.tests
                 7 => fkPermissionChangedResponse,
                 8 => fkFormSubmissionResponse,
                 9 => fkUserSearchFilterBo,
+                10 => fkFetchIntentResponse,
+                11 => fkFetchIntentRequest,
+                12 => fkErrorViewModel,
+                13 => fkDownloadJsResponse,
+                14 => fkCacheUpdateRequest,
                 _ => null
             };
             if (faker is not Faker<T> actual) return null;
@@ -154,17 +160,47 @@ namespace next.web.tests
             .RuleFor(x => x.Index, y => y.PickRandom(StatusIndexes))
             .RuleFor(x => x.County, y => y.PickRandom(CountyNames));
 
+        private static readonly Faker<FetchIntentResponse> fkFetchIntentResponse =
+            new Faker<FetchIntentResponse>()
+            .RuleFor(x => x.ClientSecret, y => y.Random.Guid().ToString());
+
+        private static readonly Faker<FetchIntentRequest> fkFetchIntentRequest =
+            new Faker<FetchIntentRequest>()
+            .RuleFor(x => x.Id, y => y.Random.Guid().ToString());
+
+        private static readonly Faker<ErrorViewModel> fkErrorViewModel =
+            new Faker<ErrorViewModel>()
+            .RuleFor(x => x.RequestId, y => y.Random.Guid().ToString());
+
+        private static readonly Faker<DownloadJsResponse> fkDownloadJsResponse =
+            new Faker<DownloadJsResponse>()
+            .RuleFor(x => x.ExternalId, y => y.Random.Int(100, 600).ToString())
+            .RuleFor(x => x.Description, y => y.Hacker.Phrase())
+            .RuleFor(x => x.Content, y => y.Internet.Url())
+            .RuleFor(x => x.Error, y => y.Internet.Url())
+            .RuleFor(x => x.CreateDate, y => y.Date.Future().ToString("s"));
+
+        private static readonly Faker<CacheUpdateRequest> fkCacheUpdateRequest =
+            new Faker<CacheUpdateRequest>()
+            .RuleFor(x => x.Name, y => y.Person.FullName);
+
         private static readonly List<Type> Supported =
         [
-            typeof(MailItem),
-            typeof(UserSearchQueryBo),
-            typeof(MyPurchaseBo),
-            typeof(UserIdentityBo),
-            typeof(MySearchRestrictions),
-            typeof(MailItemBody),
-            typeof(PermissionChangedItem),
-            typeof(PermissionChangedResponse),
-            typeof(FormSubmissionResponse)
+            typeof(MailItem), // -- 0
+            typeof(UserSearchQueryBo), // -- 1
+            typeof(MyPurchaseBo), // -- 2
+            typeof(UserIdentityBo), // -- 3
+            typeof(MySearchRestrictions), // -- 4
+            typeof(MailItemBody), // -- 5
+            typeof(PermissionChangedItem), // -- 6
+            typeof(PermissionChangedResponse), // -- 7
+            typeof(FormSubmissionResponse), // -- 8
+            typeof(UserSearchFilterBo), // -- 9
+            typeof(FetchIntentResponse), // -- 10
+            typeof(FetchIntentRequest), // -- 11
+            typeof(ErrorViewModel), // -- 12
+            typeof(DownloadJsResponse), // -- 13
+            typeof(CacheUpdateRequest), // -- 14
         ];
 
 

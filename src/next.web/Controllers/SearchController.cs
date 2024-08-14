@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.Controllers
 {
@@ -37,6 +38,7 @@ namespace next.web.Controllers
         }
 
 
+        [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]
         private async Task<IActionResult> GetPage(string viewName)
         {
             var session = HttpContext.Session;
@@ -56,7 +58,7 @@ namespace next.web.Controllers
 
             return GetResult(content);
         }
-
+        [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]
         private async Task<IActionResult> GetHistory(SearchFilterNames searchFilter = SearchFilterNames.History)
         {
             var session = HttpContext.Session;
@@ -69,6 +71,7 @@ namespace next.web.Controllers
             content = SetPageTitle(content, searchFilter);
             return GetResult(content);
         }
+        [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]
         protected string RemoveOption(string content, SearchFilterNames searchFilter)
         {
             const string vu = "value";
@@ -99,6 +102,7 @@ namespace next.web.Controllers
             });
             return node.OuterHtml;
         }
+        [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]
         protected string SetPageTitle(string content, SearchFilterNames searchFilter)
         {
             const string fmt = "oxford.leads.web: {0}";

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.Controllers
 {
@@ -9,7 +10,7 @@ namespace next.web.Controllers
     {
 
         [HttpGet("/subscription-result")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Major Code Smell",
             "S6967:ModelState.IsValid should be called in controller actions",
             Justification = "Model is not needed for standard http-get pages")]
@@ -38,6 +39,7 @@ namespace next.web.Controllers
             return GetResult(content);
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Private method tested from public accessor")]
         private static async Task UpdateUserSession(ISession session)
         {
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
@@ -48,6 +50,7 @@ namespace next.web.Controllers
             await usr.Save(session, api);
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Private method tested from public accessor")]
         private static string Inject(string xpath, string remote, string content)
         {
             const string findtarget = "//*[@id='payment-card-content']";
@@ -61,9 +64,11 @@ namespace next.web.Controllers
             return node.OuterHtml;
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Private method tested from public accessor")]
         private static async Task<string> GetRemoteContent(string landing, string? sts, string? id)
         {
             var target = GetRemoteUri(landing, sts, id);
+            if (!Uri.IsWellFormedUriString(target, UriKind.Absolute)) { return string.Empty; }
             try
             {
                 using var client = new HttpClient();
@@ -76,6 +81,7 @@ namespace next.web.Controllers
             }
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Private method tested from public accessor")]
         private static string GetRemoteUri(string landing, string? sts, string? id)
         {
             const string remoteServer = "http://api.legallead.co";

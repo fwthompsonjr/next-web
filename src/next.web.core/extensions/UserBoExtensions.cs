@@ -66,8 +66,8 @@ namespace next.web.core.extensions
             const char ltp = ')'; // less than replacement
             var user = userbo.ToUserBo();
             var mailjs = await GetMail(api, user);
-            List<MailItem> collection = (string.IsNullOrWhiteSpace(mailjs) ? new() :
-                mailjs.ToInstance<List<MailItem>>()) ?? new();
+            List<MailItem> collection = (string.IsNullOrWhiteSpace(mailjs) ? [] :
+                mailjs.ToInstance<List<MailItem>>()) ?? [];
             var exists = session.Keys.ToList().Exists(x => x == SessionKeyNames.UserMailbox);
             if (exists) { session.Remove(SessionKeyNames.UserMailbox); }
             collection.ForEach(c =>
@@ -421,7 +421,7 @@ namespace next.web.core.extensions
             const char comma = ',';
             if (string.IsNullOrEmpty(date) || !date.Contains(comma)) { return date; }
             var components = date.Split(comma);
-            components[0] = components[0].Substring(0, 3);
+            components[0] = components[0][..3];
             return string.Join(comma, components);
         }
 

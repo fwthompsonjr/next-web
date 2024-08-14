@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using next.web.core.interfaces;
 using next.web.core.services;
 using next.web.core.util;
 using next.web.Models;
@@ -13,11 +14,16 @@ namespace next.web.Controllers
             "IDE0052:Remove unread private members",
             Justification = "This item is planned for future use and part of MVC pattern.")]
         private readonly ILogger<HomeController> _logger;
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>")]
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ISessionStringWrapper? _sessionStringWrapper;
+        private readonly IFetchIntentService _intentSvc;
+        public HomeController(ILogger<HomeController> logger, 
+            ISessionStringWrapper? wrapper = null,
+            IFetchIntentService? intentSvc = null)
         {
             _logger = logger;
+            if (wrapper != null) _sessionStringWrapper = wrapper;
+            if (intentSvc == null) _intentSvc = new FetchIntentService();
+            else _intentSvc = intentSvc;
         }
         [HttpGet("home")]
         public async Task<IActionResult> Index()

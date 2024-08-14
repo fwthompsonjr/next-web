@@ -209,6 +209,17 @@ namespace next.web.tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UEsDBBQABgAIAAAAIQBi7p1oXgEAAJAEAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIooAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ///AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ///AAAAAAAAAAAAAAAAAAAAAAAA [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string response_excel_file {
+            get {
+                return ResourceManager.GetString("response_excel_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///    &quot;key&quot;: true,
         ///    &quot;value&quot;: &quot;{\&quot;Email\&quot;:\&quot;user@example.com\&quot;,\&quot;Name\&quot;:\&quot;Email\&quot;,\&quot;Message\&quot;:\&quot;Contact details updated successfully.\&quot;,\&quot;JsonData\&quot;:\&quot;[{\\\&quot;EmailType\\\&quot;:\\\&quot;Personal\\\&quot;,\\\&quot;Email\\\&quot;:\\\&quot;Patricia94@hotmail.com\\\&quot;},{\\\&quot;EmailType\\\&quot;:\\\&quot;Business\\\&quot;,\\\&quot;Email\\\&quot;:\\\&quot;Britney_Lemke63@yahoo.com\\\&quot;},{\\\&quot;EmailType\\\&quot;:\\\&quot;Other\\\&quot;,\\\&quot;Email\\\&quot;:\\\&quot;Eleanore_Wehner@yahoo.com\\\&quot;}]\&quot;}&quot;
