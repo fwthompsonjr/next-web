@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Moq;
-using next.web.Services;
+﻿using next.web.Services;
 
 namespace next.web.tests.dep.svc
 {
@@ -40,7 +38,7 @@ namespace next.web.tests.dep.svc
                     1 => await sut.Get("a", session),
                     _ => await sut.Get("a")
                 };
-                
+
                 Assert.Equal(expected, response.StatusCode);
             });
             Assert.Null(error);

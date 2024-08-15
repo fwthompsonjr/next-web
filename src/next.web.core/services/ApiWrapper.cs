@@ -51,6 +51,15 @@ namespace next.web.Services
             return MapFrom(response);
         }
 
+        internal static ApiResponse MapTo(ApiAnswer response)
+        {
+            return new()
+            {
+                Message = response.Message,
+                StatusCode = response.StatusCode,
+            };
+        }
+
         private static ApiAnswer MapFrom(ApiResponse response)
         {
             return new()
@@ -68,5 +77,7 @@ namespace next.web.Services
                 StatusCode = (int)HttpStatusCode.Unauthorized,
             };
         }
+
+
     }
 }

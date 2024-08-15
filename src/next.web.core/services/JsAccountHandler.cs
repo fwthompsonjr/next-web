@@ -14,7 +14,7 @@ namespace next.web.core.services
         public override string Name => "permissions-subscription-group";
 
 
-        public override async Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session)
+        public override async Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session, IApiWrapper? wrapper = null)
         {
             var response = FormResponses.GetDefault(model.FormName) ?? new();
             try

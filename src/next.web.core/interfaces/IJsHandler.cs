@@ -9,6 +9,6 @@ namespace next.web.core.interfaces
         string Name { get; }
 
         Task<FormSubmissionResponse> Submit(FormSubmissionModel model);
-        Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session);
+        Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session, IApiWrapper? wrapper = null);
     }
 }

@@ -15,7 +15,7 @@ namespace next.web.core.services
     {
         protected readonly IPermissionApi _api;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style",
+        [SuppressMessage("Style",
             "IDE0290:Use primary constructor",
             Justification = "Primary constructor violates rule CS9136")]
         public JsRegistrationHandler(IPermissionApi api)
@@ -44,7 +44,7 @@ namespace next.web.core.services
             }
         }
 
-        public async virtual Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session)
+        public async virtual Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session, IApiWrapper? wrapper = null)
         {
             var response = FormResponses.GetDefault(model.FormName) ?? new();
             try

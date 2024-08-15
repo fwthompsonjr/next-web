@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore;
 
 namespace next.web.tests.web
 {

@@ -12,13 +12,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace next.web.core.services
 {
     [ExcludeFromCodeCoverage(Justification = "Integration only. Might cover at later date.")]
-    internal class JsSearchHandler : IJsHandler
+    internal class JsSearchHandler(IPermissionApi permissionApi) : IJsHandler
     {
-        private readonly IPermissionApi api;
-        public JsSearchHandler(IPermissionApi permissionApi)
-        {
-            api = permissionApi;
-        }
+        private readonly IPermissionApi api = permissionApi;
+
         public string Name => "frm-search";
 
         public Task<FormSubmissionResponse> Submit(FormSubmissionModel model)
@@ -28,7 +25,7 @@ namespace next.web.core.services
             return Task.FromResult(response);
         }
 
-        public async Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session)
+        public async Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session, IApiWrapper? wrapper = null)
         {
             var formName = model.FormName ?? string.Empty;
             var json = model.Payload ?? string.Empty;
