@@ -18,19 +18,25 @@ namespace next.web.tests.controllers
         }
         [Theory]
         [InlineData("home")]
+        [InlineData("home", false)]
         [InlineData("error")]
         [InlineData("privacy")]
         [InlineData("logout")]
+        [InlineData("logout", false)]
         [InlineData("test")]
         [InlineData("discount-result")]
+        [InlineData("discount-result", false)]
         [InlineData("subscription-result")]
+        [InlineData("subscription-result", false)]
         [InlineData("payment-result")]
+        [InlineData("payment-result", false)]
         [InlineData("payment-fetch-intent")]
-        public void ControllerCanGetContent(string landing)
+        [InlineData("payment-fetch-intent", false)]
+        public void ControllerCanGetContent(string landing, bool authorized = true)
         {
             var error = Record.Exception(() =>
             {
-                var sut = GetProvider().GetRequiredService<HomeController>();
+                var sut = GetProvider(authorized).GetRequiredService<HomeController>();
                 var request = MockObjectProvider.GetSingle<FetchIntentRequest>();
                 var result = landing switch
                 {

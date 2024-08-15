@@ -1,5 +1,6 @@
 ﻿using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Rewrite;
+using next.web.core.interfaces;
 using next.web.core.util;
 using next.web.Services;
 using System.Diagnostics.CodeAnalysis;
@@ -20,6 +21,11 @@ namespace next.web
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(15));
             services.AddSingleton(a => api);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            var provider = AppContainer.ServiceProvider;
+            if (provider == null) return;
+            var handlers = provider.GetServices<IJsHandler>()?.ToList();
+            if (handlers == null || handlers.Count == 0) return;
+            handlers.ForEach(h => h.Wrapper = api);
         }
 
         public static void ConfigureApp(this WebApplication app)

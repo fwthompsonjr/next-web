@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.util;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.Controllers
@@ -34,20 +35,27 @@ namespace next.web.Controllers
             {
                 content = Inject("//div[@name='main-content']", remote, content);
                 content = await AppendStatus(content);
-                await UpdateUserSession(session);
+                await UpdateUserSession(session, apiwrapper);
             }
             return GetResult(content);
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private method tested from public accessor")]
-        private static async Task UpdateUserSession(ISession session)
+        private static async Task UpdateUserSession(ISession session, IApiWrapper? wrapper = null)
         {
-            var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
-            if (api == null) return;
-            // reset session variables
-            var usr = session.GetContextUser();
-            if (usr == null) return;
-            await usr.Save(session, api);
+            try
+            {
+                var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
+                if (api == null) return;
+                // reset session variables
+                var usr = session.GetContextUser();
+                if (usr == null) return;
+                await usr.Save(session, api, wrapper);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private method tested from public accessor")]

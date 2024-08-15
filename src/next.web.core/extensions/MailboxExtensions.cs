@@ -15,7 +15,8 @@ namespace next.web.core.extensions
         public static async Task<string> GetMailBox(
             this ISession session,
             IPermissionApi api,
-            string source
+            string source,
+            IApiWrapper? wrapper = null
         )
         {
 
@@ -23,11 +24,11 @@ namespace next.web.core.extensions
             const string findFrame = "//*[@id=\"dv-mail-item-preview\"]";
             var document = source.ToHtml();
             if (document == null) return source;
-            var list = await session.RetrieveMail(api);
+            var list = await session.RetrieveMail(api, wrapper);
             var data = JsonConvert.SerializeObject(list);
             var recordId = list.Count == 0 ? string.Empty : list[0].Id ?? string.Empty;
             var content = list.Count == 0 ?
-                string.Empty : (await session.FetchMailBody(api, recordId));
+                string.Empty : (await session.FetchBodyAsync(api, recordId, wrapper));
             var selected = list.Find(x => (x.Id ?? "--").Equals(recordId, StringComparison.OrdinalIgnoreCase));
             AppendCount(document, list, selected);
             AppendList(list, document, findList);
@@ -56,6 +57,25 @@ namespace next.web.core.extensions
             return body.Body ?? string.Empty;
         }
 
+        public static async Task<string> FetchMailBody(this ISession session, IApiWrapper api, string recordId)
+        {
+            var keyname = string.Format(SessionKeyNames.UserMailboxItemFormat, recordId);
+            if (!session.IsItemExpired<MailItemBody>(keyname))
+            {
+                var item = session.GetTimedItem<MailItemBody>(keyname) ?? new();
+                return item.Body ?? string.Empty;
+            }
+            var user = session.GetUser();
+            if (user == null) { return string.Empty; }
+            var body = await session.GetMailBody(api, recordId);
+            if (body == null) return string.Empty;
+            // add item to session
+            var timed = new UserTimedCollection<MailItemBody>(body, TimeSpan.FromDays(2));
+            var json = JsonConvert.SerializeObject(timed);
+            session.Set(keyname, Encoding.UTF8.GetBytes(json));
+
+            return body.Body ?? string.Empty;
+        }
 
         internal static string RestyleBlue(string content)
         {
@@ -217,5 +237,16 @@ namespace next.web.core.extensions
             viewFrame.InnerHtml = RestyleBlue(content);
         }
 
+        private static async Task<string> FetchBodyAsync(
+            this ISession session,
+            IPermissionApi api,
+            string recordId,
+            IApiWrapper? wrapper = null)
+        {
+            var response = wrapper == null ?
+                await session.FetchMailBody(api, recordId) :
+                await session.FetchMailBody(wrapper, recordId);
+            return response;
+        }
     }
 }

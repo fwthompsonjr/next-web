@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using next.web.Controllers;
 using next.web.core.interfaces;
+using next.web.core.util;
+using next.web.Services;
 
 namespace next.web.tests.controllers
 {
@@ -31,10 +33,19 @@ namespace next.web.tests.controllers
             {
                 HttpContext = httpContext,
             };
+            var statusCode = authorized ? 200 : 401;
             var mwrapper = new Mock<ISessionStringWrapper>();
             var iwrapper = new Mock<IFetchIntentService>();
             var homeLogger = new Mock<ILogger<HomeController>>();
             var apiWrapper = new Mock<IApiWrapper>();
+            var concrete = new ApiWrapper(new MockAccountApi(statusCode));
+            apiWrapper.Setup(x => x.Post(
+                It.IsAny<string>(),
+                It.IsAny<object>(),
+                It.IsAny<ISession>())).Callback(async (string a, object obj, ISession session) =>
+                {
+                    await concrete.Post(a, obj, session);
+                });
             var collection = new ServiceCollection();
             collection.AddScoped(s => request);
             collection.AddScoped(s => mock);
@@ -95,6 +106,8 @@ namespace next.web.tests.controllers
                 };
                 return controller;
             });
+            var svc = AppContainer.ServiceProvider?.GetServices<IJsHandler>().ToList();
+            svc?.ForEach(s => s.Wrapper = concrete);
             _serviceProvider = collection.BuildServiceProvider();
             return _serviceProvider;
         }

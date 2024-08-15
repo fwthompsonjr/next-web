@@ -5,6 +5,7 @@ using next.web.core.extensions;
 using next.web.core.models;
 using next.web.core.reponses;
 using next.web.core.util;
+using next.web.Services;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.services
@@ -20,13 +21,14 @@ namespace next.web.core.services
             try
             {
                 const string failureMessage = "Unable to parse form submission data.";
+                if (wrapper == null && Wrapper != null) wrapper = Wrapper;
                 var user = session.GetUser();
                 if (user == null || user.Applications == null || user.Applications.Length == 0) return response;
-                var appsubmission = await Submit(model, user, failureMessage);
+                var appsubmission = await Submit(model, user, failureMessage, session, wrapper);
                 response.MapResponse(appsubmission);
                 var formName = model.FormName ?? string.Empty;
                 if (!IsFormNameValid(formName)) return response; // redirect to login
-                return SubmitForm(session, response, appsubmission, formName);
+                return MapApiResponse(session, response, appsubmission, formName);
             }
             catch (Exception ex)
             {
@@ -37,7 +39,7 @@ namespace next.web.core.services
         }
 
         [ExcludeFromCodeCoverage]
-        private static FormSubmissionResponse SubmitForm(ISession session, FormSubmissionResponse response, ApiResponse appsubmission, string formName)
+        private static FormSubmissionResponse MapApiResponse(ISession session, FormSubmissionResponse response, ApiResponse appsubmission, string formName)
         {
             if (appsubmission.StatusCode != 200) response.RedirectTo = ""; // stay on same page
             if (formName == "permissions-subscription-group" && appsubmission.StatusCode == 200)
@@ -65,7 +67,12 @@ namespace next.web.core.services
         }
 
         [ExcludeFromCodeCoverage]
-        private async Task<ApiResponse> Submit(FormSubmissionModel model, UserBo user, string failureMessage)
+        private async Task<ApiResponse> Submit(
+            FormSubmissionModel model, 
+            UserBo user,
+            string failureMessage,
+            ISession session,
+            IApiWrapper? wrapper)
         {
             var formName = model.FormName ?? string.Empty;
             var payload = model.Payload ?? string.Empty;
@@ -74,8 +81,8 @@ namespace next.web.core.services
             var isPermissions = AppContainer.PermissionForms.Contains(formName, StringComparer.OrdinalIgnoreCase);
             IJsAccountHandler handler = isPermissions switch
             {
-                true => new JsPermissionChange(_api, user),
-                _ => new JsProfileChange(_api, user, formName),
+                true => new JsPermissionChange(_api, user, session, wrapper),
+                _ => new JsProfileChange(_api, user, formName, session, wrapper),
             };
             var resp = await handler.Submit(payload, failureMessage);
             return resp;
@@ -95,10 +102,16 @@ namespace next.web.core.services
         }
 
         [ExcludeFromCodeCoverage]
-        private sealed class JsPermissionChange(IPermissionApi permissionApi, UserBo user) : IJsAccountHandler
+        private sealed class JsPermissionChange(
+            IPermissionApi permissionApi, 
+            UserBo user,
+            ISession session,
+            IApiWrapper? wrapper = null) : IJsAccountHandler
         {
             private readonly IPermissionApi _permissionApi = permissionApi;
             private readonly UserBo _userBo = user;
+            private readonly ISession _session = session;
+            private readonly IApiWrapper? _wrapper = wrapper;
 
             public async Task<ApiResponse> Submit(string payload, string failureMessage)
             {
@@ -108,7 +121,10 @@ namespace next.web.core.services
                 if (!AppContainer.AddressMap.TryGetValue(submission.SubmissionName, out var landing)) return failed;
                 var js = MapPayload(submission);
                 if (string.IsNullOrEmpty(landing)) return failed;
-                var response = await _permissionApi.Post(landing, js, _userBo);
+                var response =
+                    _wrapper == null ?
+                    await _permissionApi.Post(landing, js, _userBo) :
+                    ApiWrapper.MapTo(await _wrapper.Post(landing, js, _session));
                 return response;
             }
             private static object MapPayload(UserPermissionChangeRequest request)
@@ -142,11 +158,15 @@ namespace next.web.core.services
         private sealed class JsProfileChange(
             IPermissionApi permissionApi,
             UserBo user,
-            string formName) : IJsAccountHandler
+            string formName,
+            ISession session,
+            IApiWrapper? wrapper = null) : IJsAccountHandler
         {
             private readonly IPermissionApi _permissionApi = permissionApi;
             private readonly UserBo _userBo = user;
             private readonly string _formName = formName;
+            private readonly ISession _session = session;
+            private readonly IApiWrapper? _wrapper = wrapper;
             public async Task<ApiResponse> Submit(string payload, string failureMessage)
             {
                 var failed = new ApiResponse { StatusCode = 402, Message = failureMessage };
@@ -155,7 +175,9 @@ namespace next.web.core.services
                 if (submission == null) return failed;
                 if (!AppContainer.AddressMap.TryGetValue(_formName, out var landing)) return failed;
                 if (string.IsNullOrEmpty(landing)) return failed;
-                var response = await _permissionApi.Post(landing, submission, _userBo);
+                var response = _wrapper == null ?
+                    await _permissionApi.Post(landing, submission, _userBo) :
+                    ApiWrapper.MapTo(await _wrapper.Post(landing, submission, _session));
                 return response;
             }
             private static readonly Dictionary<string, Type> PayloadMap = new()

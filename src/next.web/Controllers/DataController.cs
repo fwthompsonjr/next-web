@@ -51,7 +51,7 @@ namespace next.web.Controllers
             }
             var handler = provider?.GetKeyedService<IJsHandler>(model.FormName);
             if (handler == null) return Json(response);
-            response = await handler.Submit(model, this.HttpContext.Session);
+            response = await handler.Submit(model, this.HttpContext.Session, apiwrapper);
             return Json(response);
         }
 

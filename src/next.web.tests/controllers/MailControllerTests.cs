@@ -14,11 +14,12 @@ namespace next.web.tests.controllers
         }
         [Theory]
         [InlineData("home")]
-        public async Task ControllerCanGetContent(string landing)
+        [InlineData("home", false)]
+        public async Task ControllerCanGetContent(string landing, bool authorized = true)
         {
             var error = await Record.ExceptionAsync(async () =>
             {
-                var sut = GetProvider().GetRequiredService<MailController>();
+                var sut = GetProvider(authorized).GetRequiredService<MailController>();
                 IActionResult? result = landing switch
                 {
                     "home" => await sut.Index(),
