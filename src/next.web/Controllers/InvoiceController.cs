@@ -14,7 +14,7 @@ namespace next.web.Controllers
         private readonly ContentSanitizerInvoice _subscriptionSvc;
         private readonly ContentSanitizerPayment _paymentSvc;
         private readonly IPermissionApi? _api;
-        public InvoiceController()
+        public InvoiceController(IApiWrapper apiwrapper) : base(apiwrapper)
         {
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
             var svc = AppContainer.GetSanitizer("invoice-subscription");

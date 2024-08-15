@@ -1,14 +1,8 @@
-﻿using Bogus.DataSets;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using next.web.core.extensions;
 using next.web.core.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace next.web.tests.dep.extensions
 {

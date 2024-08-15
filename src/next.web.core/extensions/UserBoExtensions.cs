@@ -280,7 +280,7 @@ namespace next.web.core.extensions
             response = await api.Post(getname, request, user);
             return GetIdentityResponse(response, data);
         }
-        
+
 
         public static async Task SaveUserIdentity(this UserContextBo userbo, ISession session, IPermissionApi api)
         {

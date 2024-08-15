@@ -87,16 +87,13 @@ namespace next.web.core.util
 
         private static string GetPaymentKey(IConfiguration configuration)
         {
-            var keys = new[] {
-              "stripe.payment:key",
-              "stripe.payment:names:test",
-              "stripe.payment:names:prod", }.ToList();
+            var keys = PaymentKeyNames;
             var keyvalues = new List<string> { };
-            foreach (var item in keys)
+            keys.ForEach(item =>
             {
                 var value = configuration[item] ?? string.Empty;
                 keyvalues.Add(value);
-            }
+            });
             if (string.IsNullOrEmpty(keyvalues[0])) return string.Empty;
             return keyvalues[0] == "test" ? keyvalues[1] : keyvalues[2];
         }
@@ -193,5 +190,11 @@ namespace next.web.core.util
             { "Subscription", "permissions-set-permission" },
             { "permissions-set-permission", "permissions-set-permission" }
         };
+        private static readonly List<string> PaymentKeyNames =
+        [
+          "stripe.payment:key",
+          "stripe.payment:names:test",
+          "stripe.payment:names:prod"
+         ];
     }
 }

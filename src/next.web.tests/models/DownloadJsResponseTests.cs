@@ -1,5 +1,4 @@
-﻿using next.web.core.reponses;
-using next.web.Models;
+﻿using next.web.Models;
 
 namespace next.web.tests.dep.models
 {
@@ -18,6 +17,17 @@ namespace next.web.tests.dep.models
                 Assert.NotEqual(sut[0].Error, sut[1].Error);
                 Assert.NotEqual(sut[0].CreateDate, sut[1].CreateDate);
                 _ = sut[0].FileName();
+            });
+            Assert.Null(error);
+        }
+        [Fact]
+        public void ModelCanParseFileName()
+        {
+            var error = Record.Exception(() =>
+            {
+                var sut = MockObjectProvider.GetSingle<DownloadJsResponse>();
+                sut.Description = "Record Search : TARRANT TX - 2024-06-24 to 2024-06-25 on 2024-06-26 15:32:00";
+                _ = sut.FileName();
             });
             Assert.Null(error);
         }

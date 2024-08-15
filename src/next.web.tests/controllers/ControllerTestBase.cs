@@ -11,7 +11,7 @@ namespace next.web.tests.controllers
     public abstract class ControllerTestBase
     {
         private static IServiceProvider? _serviceProvider;
-        protected static IServiceProvider GetProvider()
+        protected static IServiceProvider GetProvider(bool authorized = true)
         {
             if (_serviceProvider != null) { return _serviceProvider; }
 
@@ -24,7 +24,7 @@ namespace next.web.tests.controllers
             var httpContext = Mock.Of<HttpContext>(_ =>
                 _.Request == request.Object
             );
-            var mock = MockUserSession.GetInstance();
+            var mock = MockUserSession.GetInstance(authorized);
             httpContext.Session = mock.MqSession.Object;
             //Controller needs a controller context
             var controllerContext = new ControllerContext()
@@ -34,6 +34,7 @@ namespace next.web.tests.controllers
             var mwrapper = new Mock<ISessionStringWrapper>();
             var iwrapper = new Mock<IFetchIntentService>();
             var homeLogger = new Mock<ILogger<HomeController>>();
+            var apiWrapper = new Mock<IApiWrapper>();
             var collection = new ServiceCollection();
             collection.AddScoped(s => request);
             collection.AddScoped(s => mock);
@@ -43,10 +44,12 @@ namespace next.web.tests.controllers
             collection.AddScoped(s => mwrapper.Object);
             collection.AddScoped(s => iwrapper);
             collection.AddScoped(s => iwrapper.Object);
+            collection.AddScoped(s => apiWrapper);
+            collection.AddScoped(s => apiWrapper.Object);
             collection.AddScoped(a =>
             {
                 var logger = a.GetRequiredService<ILogger<HomeController>>();
-                var controller = new HomeController(logger, mwrapper.Object, iwrapper.Object)
+                var controller = new HomeController(logger, apiWrapper.Object, mwrapper.Object, iwrapper.Object)
                 {
                     ControllerContext = controllerContext
                 };
@@ -54,7 +57,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new AccountController()
+                var controller = new AccountController(apiWrapper.Object)
                 {
                     ControllerContext = controllerContext
                 };
@@ -62,7 +65,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new MailController()
+                var controller = new MailController(apiWrapper.Object)
                 {
                     ControllerContext = controllerContext
                 };
@@ -70,7 +73,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new SearchController()
+                var controller = new SearchController(apiWrapper.Object)
                 {
                     ControllerContext = controllerContext
                 };
@@ -78,7 +81,15 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new InvoiceController()
+                var controller = new InvoiceController(apiWrapper.Object)
+                {
+                    ControllerContext = controllerContext
+                };
+                return controller;
+            });
+            collection.AddScoped(a =>
+            {
+                var controller = new DataController(apiWrapper.Object)
                 {
                     ControllerContext = controllerContext
                 };

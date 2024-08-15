@@ -6,7 +6,7 @@ using next.web.core.util;
 namespace next.web.Controllers
 {
     [Route("/my-account")]
-    public class AccountController : BaseController
+    public class AccountController(IApiWrapper wrapper) : BaseController(wrapper)
     {
         [HttpGet]
         [Route("home")]

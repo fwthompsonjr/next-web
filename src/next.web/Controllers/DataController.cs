@@ -13,14 +13,9 @@ namespace next.web.Controllers
 {
     [Route("/data")]
     [ExcludeFromCodeCoverage(Justification = "These methods are tested in integration. Unit coverage to provide in future.")]
-    public class DataController : BaseController
+    public class DataController(IApiWrapper wrapper) : BaseController(wrapper)
     {
-        private readonly IServiceProvider? provider;
-
-        public DataController()
-        {
-            provider = AppContainer.ServiceProvider;
-        }
+        private readonly IServiceProvider? provider = AppContainer.ServiceProvider;
 
         [HttpPost("session-check")]
         public IActionResult Check(FormSubmissionModel model)

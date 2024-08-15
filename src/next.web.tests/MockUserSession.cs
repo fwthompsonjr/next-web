@@ -15,8 +15,10 @@ namespace next.web.tests
 
     internal class MockUserSession
     {
-        public static MockUserSession GetInstance()
+        public static MockUserSession GetInstance(bool authorized = true)
         {
+            if (!authorized) return new MockUserSession();
+
             var session = new MockUserSession()
                 .With((UserContextBo)null)
                 .With((UserIdentityBo)null)
@@ -169,7 +171,7 @@ namespace next.web.tests
             }
             Book.Add(keyname, bytes);
         }
-        private readonly  Dictionary<string, byte[]?> Book = [];
+        private readonly Dictionary<string, byte[]?> Book = [];
     }
 
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.

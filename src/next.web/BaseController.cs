@@ -8,8 +8,10 @@ using System.Text;
 
 namespace next.web
 {
-    public abstract class BaseController : Controller
+    public abstract class BaseController(IApiWrapper wrapper) : Controller
     {
+        protected readonly IApiWrapper apiwrapper = wrapper;
+
         protected async Task<string> AppendStatus(string content, bool isAlternate = false)
         {
             var session = this.HttpContext.Session;

@@ -1,11 +1,9 @@
 ﻿using Bogus;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.web.Controllers;
 using next.web.core.extensions;
 using next.web.core.interfaces;
-using next.web.core.util;
 using next.web.Models;
 
 namespace next.web.tests.controllers
@@ -91,7 +89,8 @@ namespace next.web.tests.controllers
                     mock.Setup(s => s
                         .GetString(It.IsAny<string>()))
                         .Returns(json);
-                } else
+                }
+                else
                 {
                     mock.Setup(s => s
                         .GetString(It.IsAny<string>()))
