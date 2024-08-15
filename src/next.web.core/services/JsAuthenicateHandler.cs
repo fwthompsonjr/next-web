@@ -104,7 +104,7 @@ namespace next.web.core.services
             var loginResponse =
                 wrapper == null || session == null ?
                 await _api.Post(address, obj, user) :
-                ApiWrapper.MapTo(await wrapper.Post(address, obj, session));
+                ApiWrapper.MapTo(await wrapper.Post(address, obj, session, user.ToJsonString()));
             return loginResponse;
         }
 

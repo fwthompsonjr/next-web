@@ -30,7 +30,7 @@ namespace next.web.Services
             return Task.FromResult(response);
         }
 
-        public Task<ApiAnswer> Post(string name, object payload, ISession session)
+        public Task<ApiAnswer> Post(string name, object payload, ISession session, string? userjs = null)
         {
             var response = NotAvailableResponse();
             return Task.FromResult(response);

@@ -43,9 +43,13 @@ namespace next.web.Services
             return MapFrom(response);
         }
 
-        public async Task<ApiAnswer> Post(string name, object payload, ISession session)
+        public async Task<ApiAnswer> Post(string name, object payload, ISession session, string? userjs = null)
         {
+            var jsuser = 
+                string.IsNullOrEmpty(userjs) ? null : 
+                userjs.ToInstance<UserBo>();
             var user = session.GetUser();
+            user ??= jsuser;
             if (user == null) return NotAuthorizedResponse();
             var response = await permissionApi.Post(name, payload, user);
             return MapFrom(response);
