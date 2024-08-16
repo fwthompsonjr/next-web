@@ -1,5 +1,10 @@
 [
   {
+    "id": "3.2.11",
+    "description": "Web project code coverage",
+    "date": "2024-08-16"
+  },
+  {
     "id": "3.2.10",
     "description": "Core project code coverage",
     "date": "2024-08-13"
