@@ -152,17 +152,20 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IContentSanitizer>("download", new ContentSanitizerDownload());
             services.AddKeyedSingleton<IContentSanitizer>("cache-manager", new ContentSanitizerCache());
             // form submission handlers
-            services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login", (s, o) => {
+            services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login", (s, o) =>
+            {
                 var item = s.GetServices<IJsHandler>().FirstOrDefault(w => w.GetType() == typeof(JsAuthenicateHandler));
                 if (item is JsAuthenicateHandler handler) return handler;
                 return new JsAuthenicateHandler(permissionapi);
-                });
-            services.AddKeyedSingleton<IJsHandler, JsRegistrationHandler>("form-register", (s, o) => {
+            });
+            services.AddKeyedSingleton<IJsHandler, JsRegistrationHandler>("form-register", (s, o) =>
+            {
                 var item = s.GetServices<IJsHandler>().FirstOrDefault(w => w.GetType() == typeof(JsRegistrationHandler));
                 if (item is JsRegistrationHandler handler) return handler;
                 return new JsRegistrationHandler(permissionapi);
             });
-            services.AddKeyedSingleton<IJsHandler, JsSearchHandler>("frm-search", (s, o) => {
+            services.AddKeyedSingleton<IJsHandler, JsSearchHandler>("frm-search", (s, o) =>
+            {
                 var item = s.GetServices<IJsHandler>().FirstOrDefault(w => w.GetType() == typeof(JsSearchHandler));
                 if (item is JsSearchHandler handler) return handler;
                 return new JsSearchHandler(permissionapi);
@@ -172,7 +175,8 @@ namespace next.web.core.util
             accounts.AddRange(PermissionForms);
             accounts.ForEach(acct =>
             {
-                services.AddKeyedSingleton<IJsHandler, JsAccountHandler>(acct, (s, o) => {
+                services.AddKeyedSingleton<IJsHandler, JsAccountHandler>(acct, (s, o) =>
+                {
                     var item = s.GetServices<IJsHandler>().FirstOrDefault(w => w.GetType() == typeof(JsAccountHandler));
                     if (item is JsAccountHandler handler) return handler;
                     return new JsAccountHandler(permissionapi);

@@ -68,7 +68,7 @@ namespace next.web.core.services
 
         [ExcludeFromCodeCoverage]
         private async Task<ApiResponse> Submit(
-            FormSubmissionModel model, 
+            FormSubmissionModel model,
             UserBo user,
             string failureMessage,
             ISession session,
@@ -103,7 +103,7 @@ namespace next.web.core.services
 
         [ExcludeFromCodeCoverage]
         private sealed class JsPermissionChange(
-            IPermissionApi permissionApi, 
+            IPermissionApi permissionApi,
             UserBo user,
             ISession session,
             IApiWrapper? wrapper = null) : IJsAccountHandler

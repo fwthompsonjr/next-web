@@ -9,12 +9,14 @@ namespace next.web.core.extensions
         public static bool Validate(this FormSubmissionModel model, HttpRequest request)
         {
             if (model.IsValid) return true;
-            var keys = request.Form.Keys.ToList();
+            var form = request.Form;
+            var keys = form?.Keys.ToList();
+            if (form == null || keys == null || keys.Count == 0) return false;
             var isMapped = false;
             keys.ForEach(key =>
             {
                 var tmp = key.ToInstance<FormSubmissionModel>();
-                tmp ??= GetFormKeyValue(request.Form, key).ToInstance<FormSubmissionModel>();
+                tmp ??= GetFormKeyValue(form, key).ToInstance<FormSubmissionModel>();
                 if (!isMapped && tmp != null)
                 {
                     model.FormName = tmp.FormName;

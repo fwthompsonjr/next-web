@@ -1,5 +1,4 @@
-﻿using legallead.desktop.entities;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using next.web.core.models;
 
 namespace next.web

@@ -12,11 +12,9 @@ namespace next.web.tests.controllers
 {
     public abstract class ControllerTestBase
     {
-        private static IServiceProvider? _serviceProvider;
-        protected static IServiceProvider GetProvider(bool authorized = true)
-        {
-            if (_serviceProvider != null) { return _serviceProvider; }
 
+        protected static IServiceProvider GetProvider(bool authorized = true, string downloadId = "")
+        {
             //Arrange
             var request = new Mock<HttpRequest>();
             request.Setup(x => x.Scheme).Returns("http");
@@ -26,7 +24,7 @@ namespace next.web.tests.controllers
             var httpContext = Mock.Of<HttpContext>(_ =>
                 _.Request == request.Object
             );
-            var mock = MockUserSession.GetInstance(authorized);
+            var mock = MockUserSession.GetInstance(authorized, downloadId);
             httpContext.Session = mock.MqSession.Object;
             //Controller needs a controller context
             var controllerContext = new ControllerContext()
@@ -109,8 +107,7 @@ namespace next.web.tests.controllers
             });
             var svc = AppContainer.ServiceProvider?.GetServices<IJsHandler>().ToList();
             svc?.ForEach(s => s.Wrapper = concrete);
-            _serviceProvider = collection.BuildServiceProvider();
-            return _serviceProvider;
+            return collection.BuildServiceProvider();
         }
     }
 }

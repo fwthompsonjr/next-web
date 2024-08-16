@@ -26,6 +26,10 @@ let theHandler = {
                 if (setIconState) { setIconState(0, true); }
                 if (setStatusMessage) { setStatusMessage(0, 'Sending form data', true); }
                 break;
+            case "form-register":
+                if (setIconState) { setIconState(1, true); }
+                if (setStatusMessage) { setStatusMessage(1, 'Sending form data', true); }
+                break;
             default:
         }
     },
@@ -35,6 +39,10 @@ let theHandler = {
                 if (setIconState) { setIconState(0, false); }
                 if (setStatusMessage) { setStatusMessage(0, '', false); }
                 if (loginCompletedAction) { loginCompletedAction(); }
+                break;
+            case "form-register":
+                if (setIconState) { setIconState(1, false); }
+                if (setStatusMessage) { setStatusMessage(1, '', false); }
                 break;
             default:
         }
@@ -69,7 +77,7 @@ let theHandler = {
             data: JSON.stringify(requested),
             dataType: "json",
             success: function (resultData) {
-                if (!mailbox || !mailbox.controls || !mailbox.controls.preview) { return; }
+                if (!mailbox?.controls?.preview) { return; }
                 const answer = theResponder.translate(resultData);
                 if (answer.statusCode != 200) { return; }
                 let message = answer.message;

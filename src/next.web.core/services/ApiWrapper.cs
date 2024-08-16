@@ -45,8 +45,8 @@ namespace next.web.Services
 
         public async Task<ApiAnswer> Post(string name, object payload, ISession session, string? userjs = null)
         {
-            var jsuser = 
-                string.IsNullOrEmpty(userjs) ? null : 
+            var jsuser =
+                string.IsNullOrEmpty(userjs) ? null :
                 userjs.ToInstance<UserBo>();
             var user = session.GetUser();
             user ??= jsuser;
@@ -57,6 +57,7 @@ namespace next.web.Services
 
         internal static ApiResponse MapTo(ApiAnswer response)
         {
+            response ??= NotAuthorizedResponse();
             return new()
             {
                 Message = response.Message,
