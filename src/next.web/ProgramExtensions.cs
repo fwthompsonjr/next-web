@@ -22,10 +22,7 @@ namespace next.web
             services.AddSingleton(a => api);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var provider = AppContainer.ServiceProvider;
-            if (provider == null) return;
-            var handlers = provider.GetServices<IJsHandler>()?.ToList();
-            if (handlers == null || handlers.Count == 0) return;
-            handlers.ForEach(h => h.Wrapper = api);
+            ConfigureJsHandlers(api, provider);
         }
 
         public static void ConfigureApp(this WebApplication app)
@@ -61,6 +58,15 @@ namespace next.web
             var permissions = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
             api ??= permissions == null ? new UnavailableApiWrapper() : new ApiWrapper(permissions);
             return api;
+        }
+
+        [ExcludeFromCodeCoverage(Justification = "Private member tested through public accessor.")]
+        private static void ConfigureJsHandlers(IApiWrapper? api, IServiceProvider? provider)
+        {
+            if (provider == null) return;
+            var handlers = provider.GetServices<IJsHandler>()?.ToList();
+            if (handlers == null || handlers.Count == 0) return;
+            handlers.ForEach(h => h.Wrapper = api);
         }
     }
 }
