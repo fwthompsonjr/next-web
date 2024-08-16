@@ -1,6 +1,7 @@
 
       next.web.application
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      : 3.2.11 - 2024-08-16 - Web project code coverage
       : 3.2.10 - 2024-08-13 - Core project code coverage
       : 3.2.9 - 2024-08-12 - Allow user to manage cache objects
       : 3.2.8 - 2024-08-07 - Allow user to download search records

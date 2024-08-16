@@ -148,7 +148,8 @@ function loginCompletedAction() {
     let dverr = pound + formName + "-error-message"
     $(dverr).addClass(hddn);
     $(dverr).html(emptymessage);
-    $("#username, #login-password").val("");
+    $("#login-password").val("");
+    $("#username, #login-password").attr("disabled", "disabled");
 }
 function formButtonClicked(formIndex) {
     let indx = parseInt(formIndex);

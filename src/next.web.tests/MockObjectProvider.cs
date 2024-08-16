@@ -51,6 +51,7 @@ namespace next.web.tests
                 12 => fkErrorViewModel,
                 13 => fkDownloadJsResponse,
                 14 => fkCacheUpdateRequest,
+                15 => fkFormStatusFilter,
                 _ => null
             };
             if (faker is not Faker<T> actual) return null;
@@ -184,6 +185,16 @@ namespace next.web.tests
             new Faker<CacheUpdateRequest>()
             .RuleFor(x => x.Name, y => y.Person.FullName);
 
+        private readonly static Faker<FormStatusFilter> fkFormStatusFilter =
+            new Faker<FormStatusFilter>()
+            .RuleFor(x => x.StatusId, y =>
+            {
+                if (y.Random.Bool()) return 0;
+                return y.PickRandom(StatusIndexes);
+            })
+            .RuleFor(x => x.CountyName, y => y.PickRandom(CountyNames))
+            .RuleFor(x => x.Heading, y => y.Random.AlphaNumeric(15));
+
         private static readonly List<Type> Supported =
         [
             typeof(MailItem), // -- 0
@@ -201,6 +212,7 @@ namespace next.web.tests
             typeof(ErrorViewModel), // -- 12
             typeof(DownloadJsResponse), // -- 13
             typeof(CacheUpdateRequest), // -- 14
+            typeof(FormStatusFilter), // -- 15
         ];
 
 

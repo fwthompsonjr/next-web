@@ -29,22 +29,22 @@ namespace next.web.tests
 
         public Task<ApiResponse> Get(string name, UserBo user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(GenericHtmlResponse(_statusCode));
         }
 
         public Task<ApiResponse> Get(string name)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(GenericHtmlResponse(_statusCode));
         }
 
         public Task<ApiResponse> Get(string name, Dictionary<string, string> parameters)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(GenericHtmlResponse(_statusCode));
         }
 
         public Task<ApiResponse> Get(string name, UserBo user, Dictionary<string, string> parameters)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(GenericHtmlResponse(_statusCode));
         }
 
         public Task<ApiResponse> Post(string name, object payload, UserBo user)
@@ -89,11 +89,21 @@ namespace next.web.tests
                 { "{{$randomPhoneNumber3}}", faker.Person.Phone },
             };
             var builder = new StringBuilder(content);
-            keys.Keys.ToList().ForEach(key => {
+            keys.Keys.ToList().ForEach(key =>
+            {
                 var replacement = keys[key];
                 builder.Replace(key, replacement);
             });
             return builder.ToString();
+        }
+
+        private static ApiResponse GenericHtmlResponse(int status = 200)
+        {
+            return new()
+            {
+                StatusCode = status,
+                Message = "<html><body></body></html>"
+            };
         }
     }
 

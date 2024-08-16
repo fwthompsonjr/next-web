@@ -7,8 +7,8 @@ namespace next.web.core.interfaces
     internal interface IJsHandler
     {
         string Name { get; }
-
+        IApiWrapper? Wrapper { get; set; }
         Task<FormSubmissionResponse> Submit(FormSubmissionModel model);
-        Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session);
+        Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session, IApiWrapper? wrapper = null);
     }
 }

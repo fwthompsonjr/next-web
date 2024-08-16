@@ -15,8 +15,10 @@ namespace next.web.tests
 
     internal class MockUserSession
     {
-        public static MockUserSession GetInstance()
+        public static MockUserSession GetInstance(bool authorized = true, string downloadId = "")
         {
+            if (!authorized) return new MockUserSession();
+
             var session = new MockUserSession()
                 .With((UserContextBo)null)
                 .With((UserIdentityBo)null)
@@ -24,7 +26,8 @@ namespace next.web.tests
                 .With((MySearchRestrictions)null)
                 .With((UserSearchQueryBo)null)
                 .With((MailItem)null)
-                .With((PermissionChangedResponse)null);
+                .With((PermissionChangedResponse)null)
+                .With(downloadId);
             var keys = new List<string>(session.Keys);
             session.MqSession.SetupGet(s => s.Keys).Returns(keys);
             return session;
@@ -135,9 +138,20 @@ namespace next.web.tests
             return this;
         }
 
+        public MockUserSession With(string downloadResponse)
+        {
+            if (string.IsNullOrEmpty(downloadResponse)) return this;
+            var keyname = SessionKeyNames.UserDownloadResponse;
+            var bytes = Encoding.UTF8.GetBytes(downloadResponse);
+            MqSession.Setup(s => s.TryGetValue(It.Is<string>(s => s.Equals(keyname)), out bytes)).Returns(true);
+            if (Book.ContainsKey(keyname)) return this;
+            Book.Add(keyname, bytes);
+            return this;
+        }
+
         public Mock<ISession> MqSession { get; set; } = new();
 
-        public List<string> Keys => Book.Keys.ToList();
+        public List<string> Keys => [.. Book.Keys];
 
 
         private static readonly Faker<UserContextBo> fakeUser =
@@ -169,7 +183,7 @@ namespace next.web.tests
             }
             Book.Add(keyname, bytes);
         }
-        private readonly  Dictionary<string, byte[]?> Book = [];
+        private readonly Dictionary<string, byte[]?> Book = [];
     }
 
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.

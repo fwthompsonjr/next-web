@@ -87,16 +87,13 @@ namespace next.web.core.util
 
         private static string GetPaymentKey(IConfiguration configuration)
         {
-            var keys = new[] {
-              "stripe.payment:key",
-              "stripe.payment:names:test",
-              "stripe.payment:names:prod", }.ToList();
+            var keys = PaymentKeyNames;
             var keyvalues = new List<string> { };
-            foreach (var item in keys)
+            keys.ForEach(item =>
             {
                 var value = configuration[item] ?? string.Empty;
                 keyvalues.Add(value);
-            }
+            });
             if (string.IsNullOrEmpty(keyvalues[0])) return string.Empty;
             return keyvalues[0] == "test" ? keyvalues[1] : keyvalues[2];
         }
@@ -104,6 +101,7 @@ namespace next.web.core.util
         private static void ConfigureServices(IServiceCollection services)
         {
             var provider = DesktopCoreServiceProvider.Provider;
+            var permissionapi = new PermissionPageClient(PermissionApiBase ?? string.Empty);
             services.AddTransient<IPermissionApi>(s => new PermissionPageClient(PermissionApiBase ?? string.Empty));
             services.AddSingleton<ISearchBuilder>(s =>
             {
@@ -125,6 +123,10 @@ namespace next.web.core.util
             services.AddSingleton(s => provider.GetRequiredService<IUserMailboxMapper>());
             services.AddSingleton(s => provider.GetRequiredService<CommonMessageList>());
             services.AddSingleton(s => provider.GetRequiredService<IHistoryPersistence>());
+            // form submission handlers
+            services.AddSingleton<IJsHandler, JsAuthenicateHandler>();
+            services.AddSingleton<IJsHandler, JsRegistrationHandler>();
+            services.AddSingleton<IJsHandler, JsSearchHandler>();
             // content view selectors
             services.AddKeyedSingleton<IDocumentView>("account-home", new DocumentViewAccount());
             services.AddKeyedSingleton<IDocumentView>("account-profile", new DocumentViewProfile());
@@ -150,15 +152,35 @@ namespace next.web.core.util
             services.AddKeyedSingleton<IContentSanitizer>("download", new ContentSanitizerDownload());
             services.AddKeyedSingleton<IContentSanitizer>("cache-manager", new ContentSanitizerCache());
             // form submission handlers
-            services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login");
-            services.AddKeyedSingleton<IJsHandler, JsRegistrationHandler>("form-register");
-            services.AddKeyedSingleton<IJsHandler, JsSearchHandler>("frm-search");
+            services.AddKeyedSingleton<IJsHandler, JsAuthenicateHandler>("form-login", (s, o) =>
+            {
+                var item = s.GetServices<IJsHandler>().FirstOrDefault(w => w.GetType() == typeof(JsAuthenicateHandler));
+                if (item is JsAuthenicateHandler handler) return handler;
+                return new JsAuthenicateHandler(permissionapi);
+            });
+            services.AddKeyedSingleton<IJsHandler, JsRegistrationHandler>("form-register", (s, o) =>
+            {
+                var item = s.GetServices<IJsHandler>().FirstOrDefault(w => w.GetType() == typeof(JsRegistrationHandler));
+                if (item is JsRegistrationHandler handler) return handler;
+                return new JsRegistrationHandler(permissionapi);
+            });
+            services.AddKeyedSingleton<IJsHandler, JsSearchHandler>("frm-search", (s, o) =>
+            {
+                var item = s.GetServices<IJsHandler>().FirstOrDefault(w => w.GetType() == typeof(JsSearchHandler));
+                if (item is JsSearchHandler handler) return handler;
+                return new JsSearchHandler(permissionapi);
+            });
             var accounts = new List<string>();
             accounts.AddRange(ProfileForms);
             accounts.AddRange(PermissionForms);
             accounts.ForEach(acct =>
             {
-                services.AddKeyedSingleton<IJsHandler, JsAccountHandler>(acct);
+                services.AddKeyedSingleton<IJsHandler, JsAccountHandler>(acct, (s, o) =>
+                {
+                    var item = s.GetServices<IJsHandler>().FirstOrDefault(w => w.GetType() == typeof(JsAccountHandler));
+                    if (item is JsAccountHandler handler) return handler;
+                    return new JsAccountHandler(permissionapi);
+                });
             });
 
         }
@@ -193,5 +215,11 @@ namespace next.web.core.util
             { "Subscription", "permissions-set-permission" },
             { "permissions-set-permission", "permissions-set-permission" }
         };
+        private static readonly List<string> PaymentKeyNames =
+        [
+          "stripe.payment:key",
+          "stripe.payment:names:test",
+          "stripe.payment:names:prod"
+         ];
     }
 }

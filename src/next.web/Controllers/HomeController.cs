@@ -16,9 +16,11 @@ namespace next.web.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ISessionStringWrapper? _sessionStringWrapper;
         private readonly IFetchIntentService _intentSvc;
-        public HomeController(ILogger<HomeController> logger, 
+        public HomeController(ILogger<HomeController> logger,
+            IApiWrapper apiWrapper,
             ISessionStringWrapper? wrapper = null,
-            IFetchIntentService? intentSvc = null)
+            IFetchIntentService? intentSvc = null
+            ) : base(apiWrapper)
         {
             _logger = logger;
             if (wrapper != null) _sessionStringWrapper = wrapper;

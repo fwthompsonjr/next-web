@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.interfaces;
 using next.web.core.models;
+using next.web.core.reponses;
 using next.web.core.util;
 using next.web.Models;
 using System.Diagnostics;
@@ -12,15 +13,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace next.web.Controllers
 {
     [Route("/data")]
-    [ExcludeFromCodeCoverage(Justification = "These methods are tested in integration. Unit coverage to provide in future.")]
-    public class DataController : BaseController
+    public class DataController(IApiWrapper wrapper) : BaseController(wrapper)
     {
-        private readonly IServiceProvider? provider;
-
-        public DataController()
-        {
-            provider = AppContainer.ServiceProvider;
-        }
+        private readonly IServiceProvider? provider = AppContainer.ServiceProvider;
 
         [HttpPost("session-check")]
         public IActionResult Check(FormSubmissionModel model)
@@ -56,7 +51,7 @@ namespace next.web.Controllers
             }
             var handler = provider?.GetKeyedService<IJsHandler>(model.FormName);
             if (handler == null) return Json(response);
-            response = await handler.Submit(model, this.HttpContext.Session);
+            response = await handler.Submit(model, this.HttpContext.Session, apiwrapper);
             return Json(response);
         }
 
@@ -79,7 +74,7 @@ namespace next.web.Controllers
                 return errResponse;
             }
             var recordId = model.Payload ?? string.Empty;
-            var message = await session.FetchMailBody(api, recordId);
+            var message = await session.FetchMailBody(apiwrapper, recordId);
             response.StatusCode = 200;
             response.Message = message;
             return Json(response);
@@ -136,25 +131,14 @@ namespace next.web.Controllers
             var user = session.GetUser();
             var api = provider?.GetService<IPermissionApi>();
             if (api == null || user == null) return StatusCode(503);
-            var thing = (await session.RetrievePurchases(api)).Find(x => (x.ReferenceId ?? "").Equals(location.Id));
+            var thing = (await session.RetrievePurchases(api, apiwrapper)).Find(x => (x.ReferenceId ?? "").Equals(location.Id));
             if (thing != null && !string.IsNullOrEmpty(thing.ExternalId)) location.Id = thing.ExternalId;
             var isDownloadComplete = false;
             try
             {
-                var remote = await api.Post("make-search-purchase", location, user);
-                if (remote == null) return Json(response);
-                if (remote.StatusCode != 200)
-                {
-                    response.StatusCode = remote.StatusCode;
-                    response.Message = remote.Message;
-                    return Json(response);
-                }
-                session.SetString(SessionKeyNames.UserDownloadResponse, remote.Message);
-                response.StatusCode = remote.StatusCode;
-                response.Message = "Download authorized";
-                response.RedirectTo = "/download";
-                isDownloadComplete = true;
-                return Json(response);
+                var verification = await DownloadVerification(session, response, location);
+                isDownloadComplete = verification.StatusCode == 200;
+                return Json(verification);
             }
             catch (Exception ex)
             {
@@ -207,19 +191,19 @@ namespace next.web.Controllers
             if (location.Name == ResetCacheNames[0])
             {
                 session.Remove(SessionKeyNames.UserMailbox);
-                _ = await session.RetrieveMail(api);
+                _ = await session.RetrieveMail(api, apiwrapper);
             }
             if (location.Name == ResetCacheNames[1])
             {
                 session.Remove(SessionKeyNames.UserSearchPurchases);
                 session.Remove(SessionKeyNames.UserSearchHistory);
-                _ = await session.RetrievePurchases(api);
-                _ = await session.RetrieveHistory(api);
+                _ = await session.RetrievePurchases(api, apiwrapper);
+                _ = await session.RetrieveHistory(api, apiwrapper);
             }
             if (usrbo != null && location.Name == ResetCacheNames[2])
             {
                 session.Remove(SessionKeyNames.UserIdentity);
-                await usrbo.SaveUserIdentity(session, api);
+                await usrbo.SaveUserIdentity(session, api, apiwrapper);
             }
             return Json(response);
 
@@ -236,6 +220,26 @@ namespace next.web.Controllers
                 Debug.WriteLine(e);
             }
         }
+
+
+        [ExcludeFromCodeCoverage]
+        private async Task<FormSubmissionResponse> DownloadVerification(ISession session, FormSubmissionResponse response, FetchIntentRequest location)
+        {
+            var remote = await apiwrapper.Post("make-search-purchase", location, session);
+            if (remote == null) return response;
+            if (remote.StatusCode != 200)
+            {
+                response.StatusCode = remote.StatusCode;
+                response.Message = remote.Message;
+                return response;
+            }
+            session.SetString(SessionKeyNames.UserDownloadResponse, remote.Message);
+            response.StatusCode = remote.StatusCode;
+            response.Message = "Download authorized";
+            response.RedirectTo = "/download";
+            return response;
+        }
+
         private static readonly List<string> ResetCacheNames = ["correspondence", "history", "identity"];
     }
 }

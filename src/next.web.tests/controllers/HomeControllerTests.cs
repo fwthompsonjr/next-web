@@ -1,11 +1,9 @@
 ﻿using Bogus;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.web.Controllers;
 using next.web.core.extensions;
 using next.web.core.interfaces;
-using next.web.core.util;
 using next.web.Models;
 
 namespace next.web.tests.controllers
@@ -20,19 +18,25 @@ namespace next.web.tests.controllers
         }
         [Theory]
         [InlineData("home")]
+        [InlineData("home", false)]
         [InlineData("error")]
         [InlineData("privacy")]
         [InlineData("logout")]
+        [InlineData("logout", false)]
         [InlineData("test")]
         [InlineData("discount-result")]
+        [InlineData("discount-result", false)]
         [InlineData("subscription-result")]
+        [InlineData("subscription-result", false)]
         [InlineData("payment-result")]
+        [InlineData("payment-result", false)]
         [InlineData("payment-fetch-intent")]
-        public void ControllerCanGetContent(string landing)
+        [InlineData("payment-fetch-intent", false)]
+        public void ControllerCanGetContent(string landing, bool authorized = true)
         {
             var error = Record.Exception(() =>
             {
-                var sut = GetProvider().GetRequiredService<HomeController>();
+                var sut = GetProvider(authorized).GetRequiredService<HomeController>();
                 var request = MockObjectProvider.GetSingle<FetchIntentRequest>();
                 var result = landing switch
                 {
@@ -91,7 +95,8 @@ namespace next.web.tests.controllers
                     mock.Setup(s => s
                         .GetString(It.IsAny<string>()))
                         .Returns(json);
-                } else
+                }
+                else
                 {
                     mock.Setup(s => s
                         .GetString(It.IsAny<string>()))

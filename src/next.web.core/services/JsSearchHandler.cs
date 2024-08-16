@@ -3,32 +3,29 @@ using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using next.web.core.extensions;
-using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.reponses;
 using next.web.core.util;
+using next.web.Services;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.services
 {
     [ExcludeFromCodeCoverage(Justification = "Integration only. Might cover at later date.")]
-    internal class JsSearchHandler : IJsHandler
+    internal class JsSearchHandler(IPermissionApi permissionApi) : BaseJsHandler
     {
-        private readonly IPermissionApi api;
-        public JsSearchHandler(IPermissionApi permissionApi)
-        {
-            api = permissionApi;
-        }
-        public string Name => "frm-search";
+        private readonly IPermissionApi api = permissionApi;
 
-        public Task<FormSubmissionResponse> Submit(FormSubmissionModel model)
+        public override string Name => "frm-search";
+
+        public override Task<FormSubmissionResponse> Submit(FormSubmissionModel model)
         {
             var formName = model.FormName ?? string.Empty;
             var response = FormResponses.GetDefault(formName) ?? new();
             return Task.FromResult(response);
         }
 
-        public async Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session)
+        public async override Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session, IApiWrapper? wrapper = null)
         {
             var formName = model.FormName ?? string.Empty;
             var json = model.Payload ?? string.Empty;
@@ -37,6 +34,7 @@ namespace next.web.core.services
             try
             {
                 const string failureMessage = "Unable to parse form submission data.";
+                if (wrapper == null && Wrapper != null) wrapper = Wrapper;
                 response.Message = failureMessage;
                 var user = session.GetUser();
                 var userbo = session.GetContextUser();
@@ -50,7 +48,12 @@ namespace next.web.core.services
                     ) return response;
                 var js = JsSearchSubmissionHelper.Refine(MapPayload(formName, json));
                 if (!AddressMap.TryGetValue(formName, out var address) || string.IsNullOrEmpty(address)) return response; // redirect to login
-                var appsubmission = await api.Post(address, js, user);
+
+                var appsubmission =
+                    wrapper == null ?
+                    await api.Post(address, js, user) :
+                    ApiWrapper.MapTo(await wrapper.Post(address, js, session));
+
                 response.MapResponse(appsubmission);
                 if (appsubmission.StatusCode != 200) response.RedirectTo = ""; // stay on same page
                 // trigger reload page on 200 event
@@ -58,10 +61,10 @@ namespace next.web.core.services
                 if (prefix.Equals("search") && appsubmission.StatusCode == 200)
                 {
                     // reset all user cache objects
-                    await userbo.SaveMail(session, api);
-                    await userbo.SaveHistory(session, api);
-                    await userbo.SaveRestriction(session, api);
-                    await userbo.SaveSearchPurchases(session, api);
+                    await userbo.SaveMail(session, api, wrapper);
+                    await userbo.SaveHistory(session, api, wrapper);
+                    await userbo.SaveRestriction(session, api, wrapper);
+                    await userbo.SaveSearchPurchases(session, api, wrapper);
                 }
                 response.RedirectTo = prefix switch
                 {

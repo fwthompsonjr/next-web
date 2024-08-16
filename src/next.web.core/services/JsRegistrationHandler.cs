@@ -2,58 +2,39 @@
 using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
 using next.web.core.extensions;
-using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.reponses;
 using next.web.core.util;
+using next.web.Services;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.services
 {
     [ExcludeFromCodeCoverage(Justification = "Integration only. Might cover at later date.")]
-    internal class JsRegistrationHandler : IJsHandler
+    internal class JsRegistrationHandler : BaseJsHandler
     {
         protected readonly IPermissionApi _api;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style",
+        [SuppressMessage("Style",
             "IDE0290:Use primary constructor",
             Justification = "Primary constructor violates rule CS9136")]
         public JsRegistrationHandler(IPermissionApi api)
         {
             _api = api;
         }
-        public virtual string Name => "form-register";
-        public async virtual Task<FormSubmissionResponse> Submit(FormSubmissionModel model)
-        {
-            var response = FormResponses.GetDefault(model.FormName) ?? new();
-            try
-            {
-                const string failureMessage = "Unable to parse form submission data.";
-                var appsubmission = await Submit(model, failureMessage);
-                response.MapResponse(appsubmission);
-                if (response.StatusCode != 200) return response;
-                response.Message = "Login completed";
-                response.RedirectTo = AppContainer.PostLoginPage ?? "/my-acount/home";
-                return response;
-            }
-            catch (Exception ex)
-            {
-                response.StatusCode = 500;
-                response.Message = ex.Message;
-                return response;
-            }
-        }
+        public override string Name => "form-register";
 
-        public async virtual Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session)
+        public async override Task<FormSubmissionResponse> Submit(FormSubmissionModel model, ISession session, IApiWrapper? wrapper = null)
         {
             var response = FormResponses.GetDefault(model.FormName) ?? new();
             try
             {
                 const string failureMessage = "Unable to parse form submission data.";
+                if (wrapper == null && Wrapper != null) wrapper = Wrapper;
                 var user = GetUser();
                 var data = (model.Payload ?? string.Empty).ToInstance<FormRegistrationModel>();
                 if (data == null || user.Applications == null || user.Applications.Length == 0) return response;
-                var appsubmission = await Submit(model, failureMessage);
+                var appsubmission = await Submit(model, failureMessage, session, wrapper);
                 response.MapResponse(appsubmission);
                 if (response.StatusCode != 200) return response;
                 response.Message = "Login completed";
@@ -73,10 +54,10 @@ namespace next.web.core.services
                 var userId = await user.GetUserId(_api);
                 userbo.UserId = userId;
                 userbo.Save(session);
-                await userbo.SaveMail(session, _api);
-                await userbo.SaveHistory(session, _api);
-                await userbo.SaveRestriction(session, _api);
-                await userbo.SaveSearchPurchases(session, _api);
+                await userbo.SaveMail(session, _api, wrapper);
+                await userbo.SaveHistory(session, _api, wrapper);
+                await userbo.SaveRestriction(session, _api, wrapper);
+                await userbo.SaveSearchPurchases(session, _api, wrapper);
                 return response;
             }
             catch (Exception ex)
@@ -87,8 +68,9 @@ namespace next.web.core.services
             }
         }
 
-        private async Task<ApiResponse> Submit(FormSubmissionModel model, string failureMessage)
+        private async Task<ApiResponse> Submit(FormSubmissionModel model, string failureMessage, ISession session, IApiWrapper? wrapper = null)
         {
+            const string address = "register";
             var user = GetUser();
             var formName = model.FormName ?? string.Empty;
             var failed = new ApiResponse { StatusCode = 402, Message = failureMessage };
@@ -102,7 +84,10 @@ namespace next.web.core.services
                 password = data.Password,
                 email = data.Email
             };
-            var loginResponse = await _api.Post("register", obj, user) ?? failed;
+            var loginResponse =
+                wrapper == null || session == null ?
+                await _api.Post(address, obj, user) :
+                ApiWrapper.MapTo(await wrapper.Post(address, obj, session));
             return loginResponse;
         }
 

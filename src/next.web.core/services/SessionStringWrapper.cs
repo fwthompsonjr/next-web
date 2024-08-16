@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using next.web.core.interfaces;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace next.web.core.services
 {
+    [ExcludeFromCodeCoverage(Justification = "Wrapper class. All functions are pass through to a tested entity.")]
     public class SessionStringWrapper(ISession session) : ISessionStringWrapper
     {
         private readonly ISession _session = session;
