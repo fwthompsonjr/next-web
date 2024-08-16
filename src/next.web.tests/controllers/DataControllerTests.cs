@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using next.web.Controllers;
 using next.web.core.extensions;
 using next.web.core.models;
+using next.web.Models;
 
 namespace next.web.tests.controllers
 {
@@ -50,6 +51,10 @@ namespace next.web.tests.controllers
         [InlineData("download-file-status", false, 500)]
         [InlineData("download-file-status", true, 500)]
         [InlineData("reset-cache", true, 600)]
+        [InlineData("reset-cache", false, 600)]
+        [InlineData("reset-cache", true, 601)]
+        [InlineData("reset-cache", true, 602)]
+        [InlineData("reset-cache", true, 603)]
         public async Task ControllerCanGetContent(
             string landing,
             bool authorized = true,
@@ -90,6 +95,7 @@ namespace next.web.tests.controllers
             if (modelId >= 300 && modelId < 400) category = 300;
             if (modelId >= 400 && modelId < 500) category = 400;
             if (modelId >= 500 && modelId < 600) category = 500;
+            if (modelId >= 600 && modelId < 700) category = 600;
             var formName = category switch
             {
                 0 => "check-session",
@@ -98,6 +104,7 @@ namespace next.web.tests.controllers
                 200 => "mailbox",
                 300 => "history-filter",
                 400 => "check-download",
+                600 => "form-cache-manager",
                 _ => string.Empty
             };
             return new FormSubmissionModel { FormName = formName };
@@ -161,10 +168,18 @@ namespace next.web.tests.controllers
                     MockObjectProvider.GetSingle<FormStatusFilter>().ToJsonString();
             if (modelId == 400) payload =
                     (new { Id = theFaker.Random.Guid().ToString() }).ToJsonString();
+            if (modelId == 600) payload =
+                    new CacheUpdateRequest { Name = "correspondence" }.ToJsonString();
+            if (modelId == 601) payload =
+                    new CacheUpdateRequest { Name = "history" }.ToJsonString();
+            if (modelId == 602) payload =
+                    new CacheUpdateRequest { Name = "identity" }.ToJsonString();
+            if (modelId == 603) payload =
+                    new CacheUpdateRequest { Name = "not-mapped" }.ToJsonString();
 
             return payload;
         }
 
-        private static readonly Faker theFaker = new Faker();
+        private static readonly Faker theFaker = new();
     }
 }
