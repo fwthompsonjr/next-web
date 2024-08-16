@@ -42,9 +42,10 @@ namespace next.web.tests.controllers
             apiWrapper.Setup(x => x.Post(
                 It.IsAny<string>(),
                 It.IsAny<object>(),
-                It.IsAny<ISession>())).Callback(async (string a, object obj, ISession session) =>
+                It.IsAny<ISession>(),
+                It.IsAny<string?>())).Callback(async (string a, object obj, ISession session, string? js) =>
                 {
-                    await concrete.Post(a, obj, session);
+                    await concrete.Post(a, obj, session, js);
                 });
             var collection = new ServiceCollection();
             collection.AddScoped(s => request);
