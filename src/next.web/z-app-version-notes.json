@@ -4,7 +4,8 @@
     "notes": [
       "web: add code coverage",
       "web: add dependency injection",
-      "web: approve deployment"
+      "web: approve deployment",
+      "web: code clean up"
     ]
   },
   {
