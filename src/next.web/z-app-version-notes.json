@@ -3,7 +3,9 @@
     "id": "3.2.11",
     "notes": [
       "web: add code coverage",
-      "web: add dependency injection"
+      "web: add dependency injection",
+      "web: approve deployment",
+      "web: code clean up"
     ]
   },
   {
