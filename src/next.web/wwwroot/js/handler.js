@@ -311,8 +311,11 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 const httpsRedirect = () => {
+    return;
+    /*
     if (location.protocol !== 'https:')
         location.replace('https://' + location.href.split('//')[1]);
+    */
 };
 
 httpsRedirect();
