@@ -23,7 +23,11 @@
     </PropertyGroup>
   </Target>
   <ItemGroup>
+    <Content Remove="wwwroot\js\app.js" />
+  </ItemGroup>
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\base-menu.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\app.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
@@ -33,5 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\assets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\js\app.js" />
   </ItemGroup>
 </Project>

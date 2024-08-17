@@ -1,5 +1,12 @@
 [
   {
+    "id": "3.2.12",
+    "notes": [
+      "web: update permission core assembly",
+      "web: modification to https redirect process"
+    ]
+  },
+  {
     "id": "3.2.11",
     "notes": [
       "web: add code coverage",
