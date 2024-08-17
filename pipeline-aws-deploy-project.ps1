@@ -5,7 +5,7 @@ param (
     [bool]$getTools = $false
 )
 if( [string]::IsNullOrWhiteSpace( $searchPattern ) -eq $true ) {
-    $searchPattern = '*.web.csproj';
+    $searchPattern = '*next.web.csproj';
 }
 if( [string]::IsNullOrWhiteSpace( $buildNumber ) -eq $true ) {
     $buildNumber = '0';
@@ -49,9 +49,15 @@ function getVersionNumber( $source ){
 function executeDeployment( $source ){
     $currentLocation = Get-Location
     try {
+        $projectName = [System.IO.Path]::GetFileName( $source );
         $projectDirectory = [System.IO.Path]::GetDirectoryName( $source );
         $configurationFile = [System.IO.Path]::Combine( $projectDirectory, "aws-beanstalk-tools-defaults.json" );
+        if ([System.IO.File]::Exists( $configurationFile ) -eq $false ) {
+            Write-Output "No configuration file is found."
+            return;
+        }
         Set-Location $projectDirectory
+        Write-Output "Executing Deployment: $projectName"
         dotnet eb deploy-environment -c Release -cfg $configurationFile --version-label $versionLabel
     } finally {
         Set-Location $currentLocation

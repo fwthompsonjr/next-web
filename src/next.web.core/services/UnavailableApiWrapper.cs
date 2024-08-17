@@ -6,6 +6,11 @@ namespace next.web.Services
 {
     public class UnavailableApiWrapper : IApiWrapper
     {
+
+        public Task<string> InjectHttpsRedirect(string content, ISession session)
+        {
+            return Task.FromResult(content);
+        }
         public Task<ApiAnswer> Get(string name)
         {
             var response = NotAvailableResponse();

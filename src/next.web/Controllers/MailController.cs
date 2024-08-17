@@ -17,6 +17,7 @@ namespace next.web.Controllers
             var api = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
             if (api != null) content = await session.GetMailBox(api, content, apiwrapper);
             content = await AppendStatus(content, true);
+            content = GetHttpRedirect(content, session);
             return GetResult(content);
         }
     }

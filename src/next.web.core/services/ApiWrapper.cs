@@ -10,11 +10,32 @@ namespace next.web.Services
     public class ApiWrapper : IApiWrapper
     {
         private readonly IPermissionApi permissionApi;
-        internal ApiWrapper(IPermissionApi api)
+        private readonly IContentParser parser;
+        internal ApiWrapper(IPermissionApi api, IContentParser content)
         {
             permissionApi = api;
+            parser = content;
         }
 
+        public async Task<string> InjectHttpsRedirect(string content, ISession session)
+        {
+            const string landing = "setting-application-key";
+            const string script = "<script name='app' src='/js/app.js'></script>";
+            var payload = new { keyName = "HTTP_REDIRECT_ENABLED" };
+            var response = await Post(landing, payload, session, GetUserJson());
+            if (response == null || response.StatusCode != 200) return content;
+            var model = response.Message.ToInstance<AppSettingModel>();
+            if (model == null || !model.KeyValue.Equals("true", StringComparison.OrdinalIgnoreCase)) return content;
+            var doc = content.ToHtml();
+            var node = doc.DocumentNode;
+            var body = node.SelectSingleNode("//body");
+            var html = body.InnerHtml;
+            html = string.Concat(html, Environment.NewLine, script);
+            body.InnerHtml = html;
+            var revised = node.OuterHtml;
+            revised = parser.BeautfyHTML(revised);
+            return revised;
+        }
         public async Task<ApiAnswer> Get(string name)
         {
             var response = await permissionApi.Get(name);
@@ -83,6 +104,17 @@ namespace next.web.Services
             };
         }
 
+        private static string GetUserJson()
+        {
+            var apps = new List<ApiContext>
+            {
+                new(){ Id = "d6450506-3479-4c02-92c7-de59f6e7091e", Name = "legallead.permissions.api" }
+            }.ToArray();
+            return new UserBo()
+            {
+                Applications = apps
+            }.ToJsonString();
+        }
 
     }
 }

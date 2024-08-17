@@ -35,6 +35,7 @@ namespace next.web.Controllers
             var address = GetWebAddress(Request);
             content = await _subscriptionSvc.GetContent(session, _api, content, address);
             content = await AppendStatus(content);
+            content = GetHttpRedirect(content, session);
             return GetResult(content);
         }
 
