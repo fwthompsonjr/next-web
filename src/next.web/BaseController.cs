@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.models;
 using next.web.core.util;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace next.web
@@ -110,6 +111,21 @@ namespace next.web
             var converted = Encoding.UTF8.GetString(bytes);
             if (string.IsNullOrEmpty(converted)) return null;
             return converted.ToInstance<UserContextBo>();
+        }
+        [ExcludeFromCodeCoverage(Justification = "Protected method tested from public accessor")]
+        protected string GetHttpRedirect(string content, ISession session)
+        {
+            try
+            {
+                if (apiwrapper == null) return content;
+                var response = apiwrapper.InjectHttpsRedirect(content, session).GetAwaiter().GetResult();
+                if (string.IsNullOrEmpty(response)) return content;
+                return response;
+            }
+            catch (Exception)
+            {
+                return content;
+            }
         }
 
         protected static string Introduction => _introduction ??= GetIntroduction();

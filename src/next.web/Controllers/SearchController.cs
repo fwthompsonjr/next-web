@@ -55,7 +55,7 @@ namespace next.web.Controllers
             content = viewer.SetMenu(content);
             content = viewer.SetChildMenu(content);
             content = await AppendStatus(content);
-
+            content = GetHttpRedirect(content, session);
             return GetResult(content);
         }
         [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]
@@ -69,6 +69,7 @@ namespace next.web.Controllers
             content = await AppendStatus(content, true);
             content = RemoveOption(content, searchFilter);
             content = SetPageTitle(content, searchFilter);
+            content = GetHttpRedirect(content, session);
             return GetResult(content);
         }
         [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]

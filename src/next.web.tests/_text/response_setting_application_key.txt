@@ -1,0 +1,4 @@
+{
+    "keyName": "HTTP_REDIRECT_ENABLED",
+    "keyValue": "TRUE"
+}

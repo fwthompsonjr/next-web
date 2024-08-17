@@ -62,6 +62,7 @@ namespace next.web.Controllers
             content = viewer.SetChildMenu(content);
             content = viewer.SetTab(content);
             content = await AppendStatus(content);
+            content = GetHttpRedirect(content, session);
             return GetResult(content);
         }
     }

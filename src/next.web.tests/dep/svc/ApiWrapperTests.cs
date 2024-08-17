@@ -1,4 +1,8 @@
-﻿using next.web.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using next.web.core.util;
+using next.web.Services;
+using legallead.desktop.interfaces;
+using Moq;
 
 namespace next.web.tests.dep.svc
 {
@@ -19,9 +23,11 @@ namespace next.web.tests.dep.svc
         {
             var error = await Record.ExceptionAsync(async () =>
             {
+                var parser = AppContainer.ServiceProvider?
+                    .GetService<IContentParser>() ?? new Mock<IContentParser>().Object;
                 var expected = authorized ? 200 : 401;
                 var api = new MockAccountApi(expected);
-                var sut = new ApiWrapper(api);
+                var sut = new ApiWrapper(api, parser);
                 var mock = MockUserSession.GetInstance(authorized);
                 var mocksession = mock.MqSession;
                 var session = mocksession.Object;

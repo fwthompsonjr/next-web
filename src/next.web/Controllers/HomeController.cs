@@ -32,12 +32,14 @@ namespace next.web.Controllers
         {
             var helper = AppContainer.GetSanitizer("post-login");
             var content = Introduction;
+            var session = HttpContext.Session;
             if (string.IsNullOrWhiteSpace(content)) return View();
-            if (IsSessionAuthenicated(HttpContext.Session) && helper is ContentSanitizerHome home)
+            if (IsSessionAuthenicated(session) && helper is ContentSanitizerHome home)
             {
                 content = home.Sanitize(content);
                 content = await AppendStatus(content);
             }
+            content = GetHttpRedirect(content, session);
             return new ContentResult
             {
                 ContentType = "text/html",
@@ -56,11 +58,13 @@ namespace next.web.Controllers
         {
             var helper = AppContainer.GetSanitizer("logout");
             var content = GetPageOrDefault("blank");
-            if (HttpContext != null && HttpContext.Session != null) HttpContext.Session.Clear();
+            var session = HttpContext.Session;
+            if (HttpContext != null && session != null) session.Clear();
             if (helper is ContentSanitizerLogout home)
             {
                 content = home.Sanitize(content);
             }
+            if (session != null) content = GetHttpRedirect(content, session);
             return new ContentResult
             {
                 ContentType = "text/html",
@@ -79,7 +83,9 @@ namespace next.web.Controllers
         [HttpGet]
         public IActionResult Test()
         {
+            var session = HttpContext.Session;
             var text = ContentSanitizerBase.IndexContent;
+            text = apiwrapper.InjectHttpsRedirect(text, session).GetAwaiter().GetResult();
             return new ContentResult
             {
                 Content = text,

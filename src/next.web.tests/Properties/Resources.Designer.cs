@@ -315,6 +315,18 @@ namespace next.web.tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;keyName&quot;: &quot;HTTP_REDIRECT_ENABLED&quot;,
+        ///    &quot;keyValue&quot;: &quot;TRUE&quot;
+        ///}.
+        /// </summary>
+        internal static string response_setting_application_key {
+            get {
+                return ResourceManager.GetString("response_setting_application_key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 
         ///&lt;html&gt;
         ///	&lt;head&gt;

@@ -7,7 +7,8 @@ using next.web.Controllers;
 using next.web.core.interfaces;
 using next.web.core.util;
 using next.web.Services;
-
+using legallead.desktop.interfaces;
+using legallead.desktop.implementations;
 namespace next.web.tests.controllers
 {
     public abstract class ControllerTestBase
@@ -36,7 +37,10 @@ namespace next.web.tests.controllers
             var iwrapper = new Mock<IFetchIntentService>();
             var homeLogger = new Mock<ILogger<HomeController>>();
             var apiWrapper = new Mock<IApiWrapper>();
-            var concrete = new ApiWrapper(new MockAccountApi(statusCode));
+
+            var parser = AppContainer.ServiceProvider?
+                .GetService<IContentParser>() ?? new ContentParser();
+            var concrete = new ApiWrapper(new MockAccountApi(statusCode), parser);
             apiWrapper.Setup(x => x.Post(
                 It.IsAny<string>(),
                 It.IsAny<object>(),
@@ -45,6 +49,13 @@ namespace next.web.tests.controllers
                 {
                     await concrete.Post(a, obj, session, js);
                 });
+            apiWrapper.Setup(x => x.InjectHttpsRedirect(
+                It.IsAny<string>(),
+                It.IsAny<ISession>())
+            ).Callback(async (string a, ISession session) =>
+            {
+                await concrete.InjectHttpsRedirect(a, session);
+            });
             var collection = new ServiceCollection();
             collection.AddScoped(s => request);
             collection.AddScoped(s => mock);

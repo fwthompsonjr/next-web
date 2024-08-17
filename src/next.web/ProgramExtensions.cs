@@ -1,4 +1,5 @@
-﻿using legallead.desktop.interfaces;
+﻿using legallead.desktop.implementations;
+using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Rewrite;
 using next.web.core.interfaces;
 using next.web.core.util;
@@ -56,7 +57,8 @@ namespace next.web
         private static IApiWrapper ConfigureApiWrapper(IApiWrapper? api)
         {
             var permissions = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
-            api ??= permissions == null ? new UnavailableApiWrapper() : new ApiWrapper(permissions);
+            var parser = AppContainer.ServiceProvider?.GetService<IContentParser>() ?? new ContentParser();
+            api ??= permissions == null ? new UnavailableApiWrapper() : new ApiWrapper(permissions, parser);
             return api;
         }
 

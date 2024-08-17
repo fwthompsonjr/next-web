@@ -5,6 +5,7 @@ namespace next.web
 {
     public interface IApiWrapper
     {
+        Task<string> InjectHttpsRedirect(string content, ISession session);
         Task<ApiAnswer> Get(string name);
         Task<ApiAnswer> Get(string name, ISession session);
         Task<ApiAnswer> Get(string name, Dictionary<string, string> parameters);
