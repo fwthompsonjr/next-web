@@ -5,7 +5,7 @@ param (
     [bool]$getTools = $false
 )
 if( [string]::IsNullOrWhiteSpace( $searchPattern ) -eq $true ) {
-    $searchPattern = '*next.web.csproj';
+    $searchPattern = '*next.maintenance.web.csproj';
 }
 if( [string]::IsNullOrWhiteSpace( $buildNumber ) -eq $true ) {
     $buildNumber = '0';

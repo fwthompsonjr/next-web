@@ -1,0 +1,77 @@
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>oxford.leads.web: maintenance</title>
+		<!-- user-cache.html -->
+		<!-- googleapis : fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+		
+		<!-- popper -->
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+		
+		<!-- bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+		
+		<!-- font awesome -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+		
+		<!-- custom styles -->
+		<link name="user-cache" href="/css/user-cache.css" rel="stylesheet">
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+		<script>
+			table tr td, 
+			table tr th,
+			tbody
+			{ 
+				background-color: transparent !important; 
+			}
+		</script>
+	</head>
+	<body class="text-center">
+		<div class="box">
+			<div class="customrow header">
+				<h3 class="masthead-brand">
+					<i class="bi bi-bank2"></i>
+					<span>Oxford Legal Leads</span>
+				</h3>
+			</div>
+			<div class="customrow content">
+				<div name="cache-manager-header" class="text-start">
+					<h5 id="cache-manager-sub-header">System Maintenance</h5>
+				</div>
+				<div name="cache-manager-callout" class="row text-start">
+					<table>
+						<colgroup>
+							<col style="width: 25%; min-width: 300px;" />
+							<col />
+						</colgroup>
+						<tbody>
+							<tr>
+								<td valign="top">
+									<img class="image-responsive" src="/img/under-construction.png" alt="under construction" />
+								</td>
+								<td align="left" valign="middle">
+									<p>We are performing scheduled maintenance.</p>
+									<p>We should be back online shortly.</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="customrow footer">
+				<div id="footer-copy" class="float-center">
+					<span id="footer-copy-span">© 2023, 2024 Oxford Legal Leads</span>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
