@@ -1,6 +1,7 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
 USER app
 WORKDIR /app
 EXPOSE 8080
@@ -23,7 +24,4 @@ RUN dotnet publish "./next.processor.api.csproj" -c $BUILD_CONFIGURATION -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y firefox
-ENV DISPLAY=:0
 ENTRYPOINT ["dotnet", "next.processor.api.dll"]
