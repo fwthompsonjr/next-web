@@ -19,8 +19,8 @@ namespace next.processor.api.utility
         private static List<NamedServiceSetting> GetSettings()
         {
             var list = JsonConvert.DeserializeObject<List<NamedServiceSetting>>(BackgroundSetting) ?? [];
-            if (list.Count == 0) list.Add(new ());
-			return list;
+            if (list.Count == 0) list.Add(new());
+            return list;
         }
         private static string GetBackgroundSettings()
         {

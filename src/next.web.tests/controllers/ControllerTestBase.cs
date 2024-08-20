@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using legallead.desktop.implementations;
+using legallead.desktop.interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -7,8 +9,6 @@ using next.web.Controllers;
 using next.web.core.interfaces;
 using next.web.core.util;
 using next.web.Services;
-using legallead.desktop.interfaces;
-using legallead.desktop.implementations;
 namespace next.web.tests.controllers
 {
     public abstract class ControllerTestBase

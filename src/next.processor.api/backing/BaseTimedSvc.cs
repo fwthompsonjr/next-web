@@ -1,8 +1,8 @@
 ﻿using next.processor.api.interfaces;
 using next.processor.api.services;
 using next.processor.api.utility;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.processor.api.backing
 {

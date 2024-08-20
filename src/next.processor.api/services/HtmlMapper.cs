@@ -17,11 +17,11 @@ namespace next.processor.api.services
             };
             var keys = substitutions.Keys.ToList();
             keys.ForEach(key =>
-            { 
+            {
                 var indx = keys.IndexOf(key);
                 var find = node.SelectSingleNode(key);
                 if (find != null)
-                { 
+                {
                     find.InnerHtml = substitutions[key];
                     if (indx == 2) AlterNodeClass(find, health);
                 }

@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using legallead.desktop.interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using next.web.core.util;
 using next.web.Services;
-using legallead.desktop.interfaces;
-using Moq;
 
 namespace next.web.tests.dep.svc
 {

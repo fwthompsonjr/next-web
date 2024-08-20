@@ -23,7 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "website", "website", "{803A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "processor", "processor", "{D7A928D2-730C-47BA-A58C-3A3D6D3132F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "next.processor.api", "next.processor.api\next.processor.api.csproj", "{6A9ADC2D-468D-449A-BD9C-FD0645306C59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.processor.api", "next.processor.api\next.processor.api.csproj", "{6A9ADC2D-468D-449A-BD9C-FD0645306C59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "next.processor.api.tests", "next.processor.api.tests\next.processor.api.tests.csproj", "{8AB500B2-2975-4B85-9077-67068C244476}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{6A9ADC2D-468D-449A-BD9C-FD0645306C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A9ADC2D-468D-449A-BD9C-FD0645306C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A9ADC2D-468D-449A-BD9C-FD0645306C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB500B2-2975-4B85-9077-67068C244476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB500B2-2975-4B85-9077-67068C244476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB500B2-2975-4B85-9077-67068C244476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB500B2-2975-4B85-9077-67068C244476}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{6143949A-FC3F-48B1-9802-D102C78AADAC} = {803AA786-F3AE-4BAB-B73B-A2CC3D4884A7}
 		{22348ECB-1D91-48BA-80B3-18926C332DCA} = {803AA786-F3AE-4BAB-B73B-A2CC3D4884A7}
 		{6A9ADC2D-468D-449A-BD9C-FD0645306C59} = {D7A928D2-730C-47BA-A58C-3A3D6D3132F3}
+		{8AB500B2-2975-4B85-9077-67068C244476} = {D7A928D2-730C-47BA-A58C-3A3D6D3132F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F894833-1B26-4FA5-9B61-20A6C1EAFFE6}
