@@ -9,11 +9,21 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="legallead.jdbc" Version="3.2.*" />
+		<PackageReference Include="legallead.json.db" Version="3.2.*" />
+		<PackageReference Include="legallead.logging" Version="3.2.*" />
+		<PackageReference Include="legallead.models.v1" Version="3.2.*" />
+		<PackageReference Include="legallead.records.search" Version="3.2.*" />
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.63" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="PortableFirefox" Version="129.0.17" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.34.0" />
 	</ItemGroup>
 
 	<ItemGroup>
