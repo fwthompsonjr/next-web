@@ -61,6 +61,32 @@ namespace next.processor.api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;name&quot;: &quot;default&quot;,
+        ///		&quot;setting&quot;: {
+        ///			&quot;enabled&quot;: true,
+        ///			&quot;delay&quot;: 30,
+        ///			&quot;interval&quot;: 5
+        ///		}
+        ///	},
+        ///	{
+        ///		&quot;name&quot;: &quot;record.processor&quot;,
+        ///		&quot;setting&quot;: {
+        ///			&quot;enabled&quot;: true,
+        ///			&quot;delay&quot;: 30,
+        ///			&quot;interval&quot;: 1
+        ///		}
+        ///	}
+        ///].
+        /// </summary>
+        internal static string background_settings_list {
+            get {
+                return ResourceManager.GetString("background_settings_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;html&gt;
         ///	&lt;head&gt;
         ///		&lt;meta charset=&quot;utf-8&quot;&gt;
