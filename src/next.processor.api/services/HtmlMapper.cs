@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.processor.api.services
 {
@@ -40,6 +41,20 @@ namespace next.processor.api.services
                 "unhealthy" => "text-danger",
                 _ => secondary
             };
+            AddOrUpdateAttribute(node, cls, secondary, clsname);
+        }
+
+
+        private static HtmlDocument ToDocument(this string content)
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml(content);
+            return document;
+        }
+
+        [ExcludeFromCodeCoverage]
+        private static void AddOrUpdateAttribute(HtmlNode node, string cls, string secondary, string clsname)
+        {
             var clss = node.Attributes.FirstOrDefault(x => x.Name == cls);
             if (clss == null)
             {
@@ -50,12 +65,6 @@ namespace next.processor.api.services
             items.Remove(secondary);
             items.Add(clsname);
             clss.Value = string.Join(" ", items);
-        }
-        private static HtmlDocument ToDocument(this string content)
-        {
-            var document = new HtmlDocument();
-            document.LoadHtml(content);
-            return document;
         }
     }
 }
