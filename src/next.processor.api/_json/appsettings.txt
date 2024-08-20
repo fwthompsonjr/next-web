@@ -1,0 +1,15 @@
+{
+  "api.permissions": {
+    "destination": "remote",
+    "remote": "http://api.legallead.co/",
+    "local": "https://localhost:44345/"
+  },
+  "post_address":{
+    "initialize": "api/queue/initialize",
+    "update": "api/queue/update",
+    "fetch": "api/queue/fetch",
+    "start": "api/queue/start",
+    "status": "api/queue/status",
+    "finalize": "api/queue/finalize"
+  }
+}

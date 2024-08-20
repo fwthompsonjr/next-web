@@ -61,6 +61,21 @@ namespace next.processor.api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;api.permissions&quot;: {
+        ///    &quot;destination&quot;: &quot;remote&quot;,
+        ///    &quot;remote&quot;: &quot;http://api.legallead.co/&quot;,
+        ///    &quot;local&quot;: &quot;https://localhost:44345/&quot;
+        ///  }
+        ///}.
+        /// </summary>
+        internal static string appsettings {
+            get {
+                return ResourceManager.GetString("appsettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [
         ///	{
         ///		&quot;name&quot;: &quot;default&quot;,

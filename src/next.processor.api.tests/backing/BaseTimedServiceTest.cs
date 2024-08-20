@@ -18,7 +18,7 @@
         [Theory]
         [InlineData(true, 15, 5)]
         [InlineData(false, 15, 5)]
-        public async Task SeriveCanBeStarted(bool b, int i, int j)
+        public async Task SeriveCanBeStartedAsync(bool b, int i, int j)
         {
             var error = await Record.ExceptionAsync(async () =>
             {
@@ -32,7 +32,7 @@
         [Theory]
         [InlineData(true, 15, 5)]
         [InlineData(false, 15, 5)]
-        public async Task SeriveCanBeStartedAndStopped(bool b, int i, int j)
+        public async Task SeriveCanBeStartedAndStoppedAsync(bool b, int i, int j)
         {
             var error = await Record.ExceptionAsync(async () =>
             {
@@ -59,7 +59,7 @@
         [Theory]
         [InlineData(true, 15, 5)]
         [InlineData(false, 15, 5)]
-        public async Task SeriveCanBeStopped(bool b, int i, int j)
+        public async Task SeriveCanBeStoppedAsync(bool b, int i, int j)
         {
             var error = await Record.ExceptionAsync(async () =>
             {

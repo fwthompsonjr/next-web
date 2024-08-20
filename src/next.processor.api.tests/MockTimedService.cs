@@ -7,7 +7,7 @@ namespace next.processor.api.tests
         bool isEnabled = true,
         int delay = 30,
         int interval = 2,
-        bool isNull = false) : 
+        bool isNull = false) :
         BaseTimedSvc<MockTimedService>(GetSetting(isEnabled, delay, interval, isNull))
     {
 
