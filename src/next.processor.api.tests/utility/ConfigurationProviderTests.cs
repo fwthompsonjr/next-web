@@ -25,6 +25,15 @@ namespace next.processor.api.tests.utility
         [InlineData("post_address:start")]
         [InlineData("post_address:status")]
         [InlineData("post_address:finalize")]
+        [InlineData("queue_process:fetch")]
+        [InlineData("queue_process:process")]
+        [InlineData("queue_process:complete")]
+        [InlineData("item_process:start")]
+        [InlineData("item_process:get_parameter")]
+        [InlineData("item_process:convert_parameter")]
+        [InlineData("item_process:execute_search")]
+        [InlineData("item_process:translate_excel")]
+        [InlineData("item_process:serialize")]
         public void ConfigContainsKey(string keyname)
         {
             var error = Record.Exception(() =>
