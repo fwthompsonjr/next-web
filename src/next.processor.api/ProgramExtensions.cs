@@ -11,6 +11,7 @@ namespace next.processor.api
             services.AddControllersWithViews();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
             services.Configure<RouteOptions>(
                 options => options.LowercaseUrls = true);
         }
