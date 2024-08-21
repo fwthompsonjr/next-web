@@ -13,9 +13,10 @@ namespace next.processor.api.tests.services
         [Fact]
         public void ApiCanGetWrapper()
         {
-            var error = Record.Exception(() => { 
-            var service = new MockApiWrapperService();
-            _ = service.GetFakeWrapper();
+            var error = Record.Exception(() =>
+            {
+                var service = new MockApiWrapperService();
+                _ = service.GetFakeWrapper();
             });
             Assert.Null(error);
         }
@@ -41,10 +42,10 @@ namespace next.processor.api.tests.services
                 var json = messageId switch
                 {
                     0 => null,
-	                1 => string.Empty,
-	                2 => "    ",
-	                _ => data.ToJsonString()
-                 };
+                    1 => string.Empty,
+                    2 => "    ",
+                    _ => data.ToJsonString()
+                };
                 var message = GetMockResponse(httpCode, statusCode, json);
                 mock.Setup(m => m.PostAsJsonAsync<object?>(
                     It.IsAny<HttpClient>(),

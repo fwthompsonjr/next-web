@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using next.processor.api.models;
 using next.processor.api.extensions;
+using next.processor.api.models;
 
 namespace next.processor.api.tests.models
 {

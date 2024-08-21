@@ -2,13 +2,12 @@
 using next.processor.api.interfaces;
 using next.processor.api.models;
 using next.processor.api.utility;
-using System.Diagnostics.CodeAnalysis;
 
 namespace next.processor.api.services
 {
     public class ApiWrapperService : IApiWrapper
     {
-        
+
         public virtual IHttpClientWrapper GetClientWrapper(HttpClient client)
         {
             return new HttpClientWrapper(client);
