@@ -24,7 +24,7 @@ namespace next.processor.api.utility
                 if (string.IsNullOrEmpty(destination)) return null;
                 var id = destination.Equals("local") ? 1 : 2;
                 _baseapi = values[id];
-                return _baseapi; 
+                return _baseapi;
             }
         }
 
@@ -52,12 +52,12 @@ namespace next.processor.api.utility
                     }
                 });
                 _postaddresses = values;
-                return _postaddresses; 
+                return _postaddresses;
             }
         }
 
         private static string? _baseapi;
         private static List<ApiAddress>? _postaddresses;
-        private static readonly object locker = new ();
+        private static readonly object locker = new();
     }
 }

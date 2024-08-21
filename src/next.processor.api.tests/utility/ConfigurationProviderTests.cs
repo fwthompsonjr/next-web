@@ -15,6 +15,7 @@ namespace next.processor.api.tests.utility
         }
 
         [Theory]
+        [InlineData("api.source")]
         [InlineData("api.permissions:destination")]
         [InlineData("api.permissions:remote")]
         [InlineData("api.permissions:local")]
