@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [ "main" ]
     types: [ "closed" ]
+    paths:
+      - "src/website/next.web/**"
+      - "src/website/next.web.core/**"
+      - "src/website/next.web.tests/**"
 
 jobs:
   deploy:

@@ -50,8 +50,8 @@ function getChanges($arr)
 }
 
 $workfolder = [System.IO.Path]::GetDirectoryName( $MyInvocation.MyCommand.Path );
-$versionFile = [System.IO.Path]::Combine( $workfolder, "src/next.web/z-app-version.json" );
-$versionNoteFile = [System.IO.Path]::Combine( $workfolder, "src/next.web/z-app-version-notes.json" );
+$versionFile = [System.IO.Path]::Combine( $workfolder, "src/website/next.web/z-app-version.json" );
+$versionNoteFile = [System.IO.Path]::Combine( $workfolder, "src/website/next.web/z-app-version-notes.json" );
 $version = getVersion -source $versionFile
 $versionNotes = getVersionNotes -source $versionNoteFile -nbr $version
 $found = getChanges -arr $versionNotes

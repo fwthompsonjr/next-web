@@ -1,0 +1,99 @@
+[
+  {
+    "id": "3.2.14",
+    "notes": [
+      "web: change icontent parser implementation",
+      "web: solution restructure",
+      "web: rename build job"
+    ]
+  },
+  {
+    "id": "3.2.12",
+    "notes": [
+      "web: update permission core assembly",
+      "web: modification to https redirect process"
+    ]
+  },
+  {
+    "id": "3.2.11",
+    "notes": [
+      "web: add code coverage",
+      "web: add dependency injection",
+      "web: approve deployment",
+      "web: code clean up"
+    ]
+  },
+  {
+    "id": "3.2.10",
+    "notes": [
+      "core: add code coverage"
+    ]
+  },
+  {
+    "id": "3.2.9",
+    "notes": [
+      "web: add landing to manage cache onjects"
+    ]
+  },
+  {
+    "id": "3.2.8",
+    "notes": [
+      "web: account allow user to download search result"
+    ]
+  },
+  {
+    "id": "3.2.7",
+    "notes": [
+      "web: account allow user to purchase search result"
+    ]
+  },
+  {
+    "id": "3.2.6",
+    "notes": [
+      "web: account allow user to selected discounts"
+    ]
+  },
+  {
+    "id": "3.2.5",
+    "notes": [
+      "web: account allow user to change permission level",
+      "web: display user status bar"
+    ]
+  },
+  {
+    "id": "3.2.4",
+    "notes": [
+      "web: setup search purchases view",
+      "web: search wire submit to backend controller",
+      "web: prevent back-button",
+      "web: add confirmation to logout"
+    ]
+  },
+  {
+    "id": "3.2.3",
+    "notes": [
+      "web: setup history view and data retrieval"
+    ]
+  },
+  {
+    "id": "3.2.2",
+    "notes": [
+      "web: setup mailbox view and data retrieval"
+    ]
+  },
+  {
+    "id": "3.2.1",
+    "notes": [
+      "core: inherit presentation assembly",
+      "core: setup initial dependency injection"
+    ]
+  },
+  {
+    "id": "3.2.0",
+    "notes": [
+      "web: initial project setup",
+      "test: can application build on ubuntu server.",
+      "test: change solution path."
+    ]
+  }
+]

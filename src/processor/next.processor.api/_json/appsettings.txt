@@ -1,0 +1,47 @@
+{
+  "api.permissions": {
+    "destination": "remote",
+    "remote": "http://api.legallead.co/",
+    "local": "https://localhost:44345/"
+  },
+  "post_address":{
+    "initialize": "api/queue/initialize",
+    "update": "api/queue/update",
+    "fetch": "api/queue/fetch",
+    "start": "api/queue/start",
+    "status": "api/queue/status",
+    "complete": "api/queue/complete",
+    "finalize": "api/queue/finalize",
+    "save": "api/queue/save"
+  },
+  "api.source": "oxford.leads.data.services",
+  "queue_process":{
+    "fetch": "get available records from remote server",
+    "process": "iterate through each available record",
+    "complete": "report status of records executed"
+  },
+  "item_process": {
+    "start": "report status as beginning for this record",
+    "get_parameter": "translate user request into search parameter",
+    "convert_parameter": "map parameter into a web request",
+    "execute_search": "read remote data from source repository",
+    "translate_excel": "convert remote data into excel layout",
+    "serialize": "translate excel content to serialized string",
+    "complete": "save serialized output to remote repository"
+  },
+  "message_names": {
+    "0": "{0} : process beginning: {1}",
+    "1": "{0} : parameter evaluation: {1}",
+    "2": "{0} : parameter conversion to search request: {1}",
+    "3": "{0} : search request processing: {1}",
+    "4": "{0} : excel content conversion: {1}",
+    "5": "{0} : excel content serialization: {1}",
+    "6": "{0} : process complete: {1}",
+  },
+  "status_names": {
+    "-1": "intialize",
+    "0": "begin",
+    "1": "complete",
+    "2": "failed",
+  }
+}
