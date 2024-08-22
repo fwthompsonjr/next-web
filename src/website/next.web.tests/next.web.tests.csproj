@@ -26,6 +26,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\next.web.core\next.web.core.csproj" />
+	  <ProjectReference Include="..\next.web\next.web.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Properties\Resources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>

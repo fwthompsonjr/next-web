@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35201.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.processor.api", "next.processor.api\next.processor.api.csproj", "{E1D1822C-B71F-4365-99E8-676ACB438C32}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.processor.api.tests", "next.processor.api.tests\next.processor.api.tests.csproj", "{17AAC5FF-4E7B-4B84-9180-8F966EB0773F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1D1822C-B71F-4365-99E8-676ACB438C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1D1822C-B71F-4365-99E8-676ACB438C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1D1822C-B71F-4365-99E8-676ACB438C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1D1822C-B71F-4365-99E8-676ACB438C32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AAC5FF-4E7B-4B84-9180-8F966EB0773F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AAC5FF-4E7B-4B84-9180-8F966EB0773F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AAC5FF-4E7B-4B84-9180-8F966EB0773F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AAC5FF-4E7B-4B84-9180-8F966EB0773F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA9373FB-FCE9-48A6-9B6F-CEA795001A54}
+	EndGlobalSection
+EndGlobal
