@@ -108,7 +108,8 @@ namespace next.web.core.util
                 var api = s.GetRequiredService<IPermissionApi>();
                 return new SearchBuilder(api);
             });
-            if (provider == null) return;
+            services.AddTransient<IBeautificationService, BeautificationService>();
+            if (provider == null) return; 
             services.AddTransient(s => provider.GetRequiredService<IContentParser>());
             services.AddSingleton(s => provider.GetRequiredService<IInternetStatus>());
             services.AddSingleton(s => provider.GetRequiredService<IErrorContentProvider>());

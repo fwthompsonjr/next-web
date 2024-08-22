@@ -1,12 +1,11 @@
-﻿using legallead.desktop.implementations;
-using legallead.desktop.interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using next.web.Controllers;
 using next.web.core.interfaces;
+using next.web.core.services;
 using next.web.core.util;
 using next.web.Services;
 namespace next.web.tests.controllers
@@ -39,7 +38,7 @@ namespace next.web.tests.controllers
             var apiWrapper = new Mock<IApiWrapper>();
 
             var parser = AppContainer.ServiceProvider?
-                .GetService<IContentParser>() ?? new ContentParser();
+                .GetService<IBeautificationService>() ?? new BeautificationService();
             var concrete = new ApiWrapper(new MockAccountApi(statusCode), parser);
             apiWrapper.Setup(x => x.Post(
                 It.IsAny<string>(),
@@ -57,6 +56,7 @@ namespace next.web.tests.controllers
                 await concrete.InjectHttpsRedirect(a, session);
             });
             var collection = new ServiceCollection();
+            collection.AddScoped(s => parser);
             collection.AddScoped(s => request);
             collection.AddScoped(s => mock);
             collection.AddScoped(s => homeLogger);

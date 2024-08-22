@@ -1,6 +1,7 @@
 ﻿using legallead.desktop.entities;
 using legallead.desktop.interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using next.web.core.interfaces;
 
 namespace next.web.core.util
 {
@@ -24,7 +25,7 @@ namespace next.web.core.util
             var cleaner = AppContainer.GetSanitizer(name);
             var html = cleaner?.Sanitize(raw.Content) ?? raw.Content;
             raw.Content = html;
-            var beutifier = provider?.GetRequiredService<IContentParser>();
+            var beutifier = provider?.GetRequiredService<IBeautificationService>();
             if (beutifier == null) return raw;
             raw.Content = beutifier.BeautfyHTML(html);
             return raw;

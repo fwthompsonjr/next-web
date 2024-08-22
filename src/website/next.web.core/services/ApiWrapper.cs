@@ -2,6 +2,7 @@
 using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Http;
 using next.web.core.extensions;
+using next.web.core.interfaces;
 using next.web.core.models;
 using System.Net;
 
@@ -10,8 +11,8 @@ namespace next.web.Services
     public class ApiWrapper : IApiWrapper
     {
         private readonly IPermissionApi permissionApi;
-        private readonly IContentParser parser;
-        internal ApiWrapper(IPermissionApi api, IContentParser content)
+        private readonly IBeautificationService parser;
+        internal ApiWrapper(IPermissionApi api, IBeautificationService content)
         {
             permissionApi = api;
             parser = content;

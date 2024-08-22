@@ -1,12 +1,11 @@
-﻿using legallead.desktop.interfaces;
-using next.web.core.extensions;
+﻿using next.web.core.extensions;
 using next.web.core.interfaces;
 namespace next.web.core.services
 {
-    internal class ReMapStyles(IContentParser parser) : IReMapContent
+    internal class ReMapStyles(IBeautificationService parser) : IReMapContent
     {
         protected string Index { get; } = DateTime.UtcNow.Ticks.ToString();
-        protected IContentParser Parser { get; } = parser;
+        protected IBeautificationService Parser { get; } = parser;
 
         public virtual string Map(string source)
         {

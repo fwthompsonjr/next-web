@@ -25,7 +25,7 @@ namespace next.web.tests.dep.util
         [Theory]
         [InlineData(typeof(IPermissionApi))]
         [InlineData(typeof(ISearchBuilder))]
-        [InlineData(typeof(IContentParser))]
+        [InlineData(typeof(IBeautificationService))]
         [InlineData(typeof(IErrorContentProvider))]
         [InlineData(typeof(IUserProfileMapper))]
         [InlineData(typeof(IUserPermissionsMapper))]

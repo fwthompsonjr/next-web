@@ -1,7 +1,7 @@
-﻿using legallead.desktop.implementations;
-using legallead.desktop.interfaces;
+﻿using legallead.desktop.interfaces;
 using Microsoft.AspNetCore.Rewrite;
 using next.web.core.interfaces;
+using next.web.core.services;
 using next.web.core.util;
 using next.web.Services;
 using System.Diagnostics.CodeAnalysis;
@@ -22,6 +22,7 @@ namespace next.web
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(15));
             services.AddSingleton(a => api);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IBeautificationService, BeautificationService>();
             var provider = AppContainer.ServiceProvider;
             ConfigureJsHandlers(api, provider);
         }
@@ -57,7 +58,7 @@ namespace next.web
         private static IApiWrapper ConfigureApiWrapper(IApiWrapper? api)
         {
             var permissions = AppContainer.ServiceProvider?.GetService<IPermissionApi>();
-            var parser = AppContainer.ServiceProvider?.GetService<IContentParser>() ?? new ContentParser();
+            var parser = AppContainer.ServiceProvider?.GetService<IBeautificationService>() ?? new BeautificationService();
             api ??= permissions == null ? new UnavailableApiWrapper() : new ApiWrapper(permissions, parser);
             return api;
         }

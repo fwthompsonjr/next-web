@@ -1,9 +1,9 @@
-﻿using legallead.desktop.interfaces;
-using next.web.core.extensions;
+﻿using next.web.core.extensions;
+using next.web.core.interfaces;
 
 namespace next.web.core.services
 {
-    internal class ReMapScripts(IContentParser parser) : ReMapStyles(parser)
+    internal class ReMapScripts(IBeautificationService parser) : ReMapStyles(parser)
     {
         public override string Map(string source)
         {
