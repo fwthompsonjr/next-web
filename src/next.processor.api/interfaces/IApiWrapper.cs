@@ -9,5 +9,10 @@ namespace next.processor.api.interfaces
         /// </summary>
         /// <returns></returns>
         Task<List<QueuedRecord>?> FetchAsync();
+        Task PostSaveContentAsync(QueuedRecord dto, byte[] content);
+        Task PostStatusAsync(QueuedRecord dto, int messageId, int statusId);
+        Task PostStepCompletionAsync(QueuedRecord dto, int messageId, int statusId);
+        Task PostStepFinalizedAsync(QueuedRecord dto, List<QueuePersonItem> people);
+        Task StartAsync(QueuedRecord dto);
     }
 }
