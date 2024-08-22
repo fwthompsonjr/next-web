@@ -1,5 +1,12 @@
 [
   {
+    "id": "3.2.14",
+    "notes": [
+      "web: change icontent parser implementation",
+      "web: solution restructure"
+    ]
+  },
+  {
     "id": "3.2.12",
     "notes": [
       "web: update permission core assembly",

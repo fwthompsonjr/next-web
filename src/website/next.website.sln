@@ -11,6 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.web", "next.web\next.w
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.web.tests", "next.web.tests\next.web.tests.csproj", "{DB8D8B4D-396B-4283-8810-4145D7512A16}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "publish", "publish", "{3A72F7B3-FF63-4F61-9B0E-55FD591B0829}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\web.version.json = ..\..\web.version.json
+		next.web\z-app-version-notes.json = next.web\z-app-version-notes.json
+		next.web\z-app-version.json = next.web\z-app-version.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
