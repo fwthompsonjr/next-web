@@ -9,9 +9,9 @@ namespace next.processor.api.models
     public class QueueProcessResponses(List<QueuedRecord> records)
     {
         public List<QueuedRecord> CurrentBatch { get; } = records;
+        public int CurrentIndex { get; private set; } = -1;
         public string? UniqueId { get; private set; }
         public QueuedRecord? QueuedRecord { get; private set; }
-        public int CurrentIndex { get; private set; } = -1;
 
         public WebInteractive? WebReader { get; set; }
         public UserSearchRequest? UserRequest { get; set; }
@@ -29,7 +29,7 @@ namespace next.processor.api.models
             FetchResult = null;
             Addresses = null;
             var id = CurrentIndex + 1;
-            if (CurrentBatch == null || id > CurrentBatch.Count - 1) return false;
+            if (CurrentBatch.Count == 0 || id > CurrentBatch.Count - 1) return false;
             CurrentIndex = id;
             QueuedRecord = CurrentBatch[id];
             UniqueId = CurrentBatch[id].Id ?? string.Empty;
