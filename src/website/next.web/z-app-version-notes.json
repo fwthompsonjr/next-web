@@ -3,7 +3,8 @@
     "id": "3.2.14",
     "notes": [
       "web: change icontent parser implementation",
-      "web: solution restructure"
+      "web: solution restructure",
+      "web: rename build job"
     ]
   },
   {

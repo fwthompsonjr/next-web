@@ -14,7 +14,7 @@ env:
   NUGET_CERT_REVOCATION_MODE: offline
 
 jobs:
-  build_and_test:
+  build:
     strategy:
       matrix:
         location: ["src/website/next.website.sln", "src/processor/next.processor.sln"]
