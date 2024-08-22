@@ -33,7 +33,7 @@ namespace next.processor.api.backing
             }
             try
             {
-                
+
                 // set timestamp for step started
                 await apiWrapper.PostStatusAsync(item, processIndex, StatusIndexes.Begin);
                 await apiWrapper.PostStatusAsync(item, processIndex, StatusIndexes.Complete);
@@ -46,7 +46,8 @@ namespace next.processor.api.backing
                 // iterate next step name
                 processIndex = MessageIndexes.ParameterConversion;
                 await apiWrapper.PostStatusAsync(item, processIndex, StatusIndexes.Begin);
-                if (user != null) { 
+                if (user != null)
+                {
                     record.UserRequest = user;
                     record.WebReader = QueueMapper.MapFrom<UserSearchRequest, WebInteractive>(user);
                 }
@@ -54,7 +55,7 @@ namespace next.processor.api.backing
                 IsSuccess = record.WebReader != null;
                 AllowIterateNext = IsSuccess;
                 return record;
-            } 
+            }
             catch (Exception ex)
             {
                 // report error details to server

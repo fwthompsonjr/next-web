@@ -2,7 +2,7 @@
 
 namespace next.processor.api.interfaces
 {
-    public interface IQueueProcess
+    public interface IQueueProcess : IDisposable
     {
         int Index { get; }
         string Name { get; }

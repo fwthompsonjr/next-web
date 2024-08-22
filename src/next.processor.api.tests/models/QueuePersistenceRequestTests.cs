@@ -42,7 +42,8 @@ namespace next.processor.api.tests.models
         private static readonly Faker<QueuePersistenceRequest> faker =
             new Faker<QueuePersistenceRequest>()
             .RuleFor(x => x.Id, y => y.Random.AlphaNumeric(16))
-            .RuleFor(x => x.Content, y => {
+            .RuleFor(x => x.Content, y =>
+            {
                 var content = y.Lorem.Sentence(5);
                 return System.Text.Encoding.UTF8.GetBytes(content);
             });

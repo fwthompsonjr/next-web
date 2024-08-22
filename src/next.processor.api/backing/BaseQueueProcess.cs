@@ -9,6 +9,7 @@ namespace next.processor.api.backing
     public abstract class BaseQueueProcess(IApiWrapper wrapper) : IQueueProcess
     {
         protected readonly IApiWrapper apiWrapper = wrapper;
+        private bool disposedValue;
 
         public abstract int Index { get; }
         public abstract string Name { get; }
@@ -44,6 +45,26 @@ namespace next.processor.api.backing
             public const int Begin = 0;
             public const int Complete = 1;
             public const int Failed = 2;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // no managed objects are used in base class
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code.
+            // Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

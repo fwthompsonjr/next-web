@@ -22,7 +22,7 @@ namespace next.processor.api.utility
                 var json = Properties.Resources.county_list_json;
                 var values = JsonConvert.DeserializeObject<List<LocalCountyItem>>(json) ?? [];
                 values.ForEach(x =>
-                { 
+                {
                     var webid = GetWebIndex(x.Name, x.StateCode);
                     if (webid != null) x.WebId = webid;
                 });

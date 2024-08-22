@@ -2,7 +2,6 @@
 using Moq;
 using next.processor.api.extensions;
 using next.processor.api.models;
-using System.Net.Http.Formatting;
 using System.Text.Json;
 
 namespace next.processor.api.tests.services
@@ -360,7 +359,8 @@ namespace next.processor.api.tests.services
         private static readonly Faker<QueuePersistenceRequest> persistencefaker =
             new Faker<QueuePersistenceRequest>()
             .RuleFor(x => x.Id, y => y.Random.AlphaNumeric(16))
-            .RuleFor(x => x.Content, y => {
+            .RuleFor(x => x.Content, y =>
+            {
                 var content = y.Lorem.Sentence(5);
                 return System.Text.Encoding.UTF8.GetBytes(content);
             });

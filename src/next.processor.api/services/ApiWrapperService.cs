@@ -2,7 +2,6 @@
 using next.processor.api.interfaces;
 using next.processor.api.models;
 using next.processor.api.utility;
-using System;
 using System.Globalization;
 using System.Text;
 
@@ -112,6 +111,7 @@ namespace next.processor.api.services
             obj.AppendSource();
             return obj;
         }
+
         private static string GetMessage(string? payload, int messageId, int statusId)
         {
             if (messageId < 0 && !string.IsNullOrEmpty(payload))
@@ -142,10 +142,7 @@ namespace next.processor.api.services
 
         private async Task<ApiResponse?> GetApiResponseAsync(object? payload, string uri)
         {
-            if (!Uri.IsWellFormedUriString(uri, UriKind.RelativeOrAbsolute))
-            {
-                return null;
-            }
+            if (!Uri.IsWellFormedUriString(uri, UriKind.RelativeOrAbsolute)) return null;
 
             using var client = new HttpClient();
             using var wrp = GetClientWrapper(client);
