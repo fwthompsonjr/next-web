@@ -10,23 +10,25 @@ on:
       - "src/**"
 
 env:
-  SOLUTION_NAME: ${{ github.workspace }}/src/nextweb.sln
   NET_VERSION: "8.0.x"
   NUGET_CERT_REVOCATION_MODE: offline
 
 jobs:
-  build:
+  build_and_test:
+    strategy:
+      matrix:
+        location: ["src/nextweb.sln", "src/nextweb.processor.sln"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: dotnet restore ${{ env.SOLUTION_NAME }}
+      - run: dotnet restore ${{ github.workspace }}/{{ matrix.location }}
         id: dotnet-restore
         name: DotNet Restore
 
-      - run: dotnet build ${{ env.SOLUTION_NAME }} --no-restore -c Release
+      - run: dotnet build ${{ github.workspace }}/{{ matrix.location }} --no-restore -c Release
         id: dotnet-build
         name: DotNet Build
 
-      - run: dotnet test ${{ env.SOLUTION_NAME }} --no-restore -c Release
+      - run: dotnet test ${{ github.workspace }}/{{ matrix.location }} --no-restore -c Release
         id: dotnet-test
         name: DotNet Test
