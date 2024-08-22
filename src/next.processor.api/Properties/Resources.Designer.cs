@@ -66,8 +66,19 @@ namespace next.processor.api.Properties {
         ///    &quot;destination&quot;: &quot;remote&quot;,
         ///    &quot;remote&quot;: &quot;http://api.legallead.co/&quot;,
         ///    &quot;local&quot;: &quot;https://localhost:44345/&quot;
-        ///  }
-        ///}.
+        ///  },
+        ///  &quot;post_address&quot;:{
+        ///    &quot;initialize&quot;: &quot;api/queue/initialize&quot;,
+        ///    &quot;update&quot;: &quot;api/queue/update&quot;,
+        ///    &quot;fetch&quot;: &quot;api/queue/fetch&quot;,
+        ///    &quot;start&quot;: &quot;api/queue/start&quot;,
+        ///    &quot;status&quot;: &quot;api/queue/status&quot;,
+        ///    &quot;complete&quot;: &quot;api/queue/complete&quot;,
+        ///    &quot;finalize&quot;: &quot;api/queue/finalize&quot;
+        ///  },
+        ///  &quot;api.source&quot;: &quot;oxford.leads.data.services&quot;,
+        ///  &quot;queue_process&quot;:{
+        ///    &quot;fetch&quot;: &quot;g [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string appsettings {
             get {
@@ -98,6 +109,43 @@ namespace next.processor.api.Properties {
         internal static string background_settings_list {
             get {
                 return ResourceManager.GetString("background_settings_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;Name&quot;: &quot;Aleutians East&quot;,
+        ///    &quot;Index&quot;: 10,
+        ///    &quot;StateCode&quot;: &quot;AK&quot;,
+        ///    &quot;ShortName&quot;: null,
+        ///    &quot;IsActive&quot;: false
+        ///  },
+        ///  {
+        ///    &quot;Name&quot;: &quot;Aleutians West&quot;,
+        ///    &quot;Index&quot;: 20,
+        ///    &quot;StateCode&quot;: &quot;AK&quot;,
+        ///    &quot;ShortName&quot;: null,
+        ///    &quot;IsActive&quot;: false
+        ///  },
+        ///  {
+        ///    &quot;Name&quot;: &quot;Anchorage&quot;,
+        ///    &quot;Index&quot;: 30,
+        ///    &quot;StateCode&quot;: &quot;AK&quot;,
+        ///    &quot;ShortName&quot;: null,
+        ///    &quot;IsActive&quot;: false
+        ///  },
+        ///  {
+        ///    &quot;Name&quot;: &quot;Bethel&quot;,
+        ///    &quot;Index&quot;: 40,
+        ///    &quot;StateCode&quot;: &quot;AK&quot;,
+        ///    &quot;ShortName&quot;: null,
+        ///    &quot;IsActive&quot;: false
+        ///  }, [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string county_list_json {
+            get {
+                return ResourceManager.GetString("county_list_json", resourceCulture);
             }
         }
         

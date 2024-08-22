@@ -27,6 +27,7 @@ namespace next.processor.api.tests.utility
         [InlineData("start")]
         [InlineData("status")]
         [InlineData("finalize")]
+        [InlineData("save")]
         public void CollectionContainsAddress(string prefix)
         {
             var list = PostAddressProvider.PostAddresses();

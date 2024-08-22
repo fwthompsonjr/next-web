@@ -24,6 +24,7 @@ namespace next.processor.api.tests.utility
         [InlineData("post_address:fetch")]
         [InlineData("post_address:start")]
         [InlineData("post_address:status")]
+        [InlineData("post_address:complete")]
         [InlineData("post_address:finalize")]
         [InlineData("queue_process:fetch")]
         [InlineData("queue_process:process")]

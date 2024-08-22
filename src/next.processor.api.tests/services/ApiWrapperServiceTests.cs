@@ -31,8 +31,6 @@ namespace next.processor.api.tests.services
         [InlineData(200, 20, 200, 2)]
         public async Task ApiCanFetchAsync(int statusCode, int recordCount, int httpCode = 200, int messageId = 10)
         {
-            Mock<MediaTypeFormatter> formatterMock = new();
-            formatterMock.Setup(p => p.CanWriteType(It.IsAny<Type>())).Returns(true);
             var data = recordfaker.Generate(recordCount);
             data.ForEach(d => d.Payload = searchrequestfaker.Generate().ToJsonString());
             var error = await Record.ExceptionAsync(async () =>
@@ -58,6 +56,41 @@ namespace next.processor.api.tests.services
             Assert.Null(error);
         }
 
+        [Theory]
+        [InlineData(200)]
+        [InlineData(400)]
+        [InlineData(200, 400)]
+        [InlineData(200, 401)]
+        [InlineData(200, 200, 0)]
+        [InlineData(200, 200, 1)]
+        [InlineData(200, 200, 2)]
+        public async Task ApiCanStartAsync(int statusCode, int httpCode = 200, int messageId = 10)
+        {
+            var data = recordfaker.Generate();
+            data.Payload = searchrequestfaker.Generate().ToJsonString();
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                var json = messageId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    2 => "    ",
+                    _ => data.ToJsonString()
+                };
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                await service.StartAsync(data);
+            });
+            Assert.Null(error);
+        }
+
         private static HttpResponseMessage GetMockResponse(int httpCode, int statusCode, string? json)
         {
             var response = new { StatusCode = statusCode, Message = json };
@@ -73,6 +106,114 @@ namespace next.processor.api.tests.services
             };
         }
 
+        [Theory]
+        [InlineData(200)]
+        [InlineData(400)]
+        [InlineData(200, 400)]
+        [InlineData(200, 401)]
+        [InlineData(200, 200, 0)]
+        [InlineData(200, 200, 1)]
+        [InlineData(200, 200, 2)]
+        [InlineData(200, 200, 15, -1)]
+        [InlineData(200, 200, 15, 0)]
+        [InlineData(200, 200, 15, 1)]
+        [InlineData(200, 200, 15, 2)]
+        [InlineData(200, 200, 15, 3)]
+        [InlineData(200, 200, 15, 4)]
+        [InlineData(200, 200, 15, 5)]
+        [InlineData(200, 200, 15, 6)]
+        [InlineData(200, 200, 15, 7)]
+        [InlineData(200, 200, 20, 1, -1)]
+        [InlineData(200, 200, 20, 1, 0)]
+        [InlineData(200, 200, 20, 1, 1)]
+        [InlineData(200, 200, 20, 1, 2)]
+        [InlineData(200, 200, 20, 1, 5)]
+        public async Task ApiCanPostStatusAsync(
+            int statusCode,
+            int httpCode = 200,
+            int payloadId = 10,
+            int messageId = 0,
+            int statusId = 1)
+        {
+            var data = recordfaker.Generate();
+            data.Payload = searchrequestfaker.Generate().ToJsonString();
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                var json = payloadId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    2 => "    ",
+                    _ => data.ToJsonString()
+                };
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                await service.PostStatusAsync(data, messageId, statusId);
+            });
+            Assert.Null(error);
+        }
+
+
+        [Theory]
+        [InlineData(200)]
+        [InlineData(400)]
+        [InlineData(200, 400)]
+        [InlineData(200, 401)]
+        [InlineData(200, 200, 0)]
+        [InlineData(200, 200, 1)]
+        [InlineData(200, 200, 2)]
+        [InlineData(200, 200, 15, -1)]
+        [InlineData(200, 200, 15, 0)]
+        [InlineData(200, 200, 15, 1)]
+        [InlineData(200, 200, 15, 2)]
+        [InlineData(200, 200, 15, 3)]
+        [InlineData(200, 200, 15, 4)]
+        [InlineData(200, 200, 15, 5)]
+        [InlineData(200, 200, 15, 6)]
+        [InlineData(200, 200, 15, 7)]
+        [InlineData(200, 200, 20, 1, -1)]
+        [InlineData(200, 200, 20, 1, 0)]
+        [InlineData(200, 200, 20, 1, 1)]
+        [InlineData(200, 200, 20, 1, 2)]
+        [InlineData(200, 200, 20, 1, 5)]
+        public async Task ApiCanPostStepCompletionAsync(
+            int statusCode,
+            int httpCode = 200,
+            int payloadId = 10,
+            int messageId = 0,
+            int statusId = 1)
+        {
+            var data = recordfaker.Generate();
+            data.Payload = searchrequestfaker.Generate().ToJsonString();
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                var json = payloadId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    2 => "    ",
+                    _ => data.ToJsonString()
+                };
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                await service.PostStepCompletionAsync(data, messageId, statusId);
+            });
+            Assert.Null(error);
+        }
         private static readonly Faker<QueueSearchItem> searchrequestfaker =
             new Faker<QueueSearchItem>()
             .RuleFor(x => x.WebId, y => y.Random.Int(1, 500000))
