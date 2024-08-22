@@ -21,14 +21,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: dotnet restore ${{ github.workspace }}/{{ matrix.location }}
+      - run: dotnet restore "${{ github.workspace }}/${{ matrix.location }}"
         id: dotnet-restore
         name: DotNet Restore
 
-      - run: dotnet build ${{ github.workspace }}/{{ matrix.location }} --no-restore -c Release
+      - run: dotnet build "${{ github.workspace }}/${{ matrix.location }}" --no-restore -c Release
         id: dotnet-build
         name: DotNet Build
 
-      - run: dotnet test ${{ github.workspace }}/{{ matrix.location }} --no-restore -c Release
+      - run: dotnet test "${{ github.workspace }}/${{ matrix.location }}" --no-restore -c Release
         id: dotnet-test
         name: DotNet Test
