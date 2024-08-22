@@ -243,6 +243,88 @@ namespace next.processor.api.tests.services
             Assert.Null(error);
         }
 
+        [Theory]
+        [InlineData(200)]
+        [InlineData(400)]
+        [InlineData(200, 400)]
+        [InlineData(200, 401)]
+        [InlineData(200, 200, 0)]
+        [InlineData(200, 200, 1)]
+        [InlineData(200, 200, 2)]
+        public async Task ApiCanPostStepFinalizedAsync(int statusCode, int httpCode = 200, int messageId = 10)
+        {
+            var data = recordfaker.Generate();
+            var people = personfaker.Generate(10);
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                data.Id = messageId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    _ => data.Id
+                };
+                var json = messageId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    2 => "    ",
+                    _ => data.ToJsonString()
+                };
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                await service.PostStepFinalizedAsync(data, people);
+            });
+            Assert.Null(error);
+        }
+
+        [Theory]
+        [InlineData(200)]
+        [InlineData(400)]
+        [InlineData(200, 400)]
+        [InlineData(200, 401)]
+        [InlineData(200, 200, 0)]
+        [InlineData(200, 200, 1)]
+        [InlineData(200, 200, 2)]
+        public async Task ApiCanReportIssueAsync(int statusCode, int httpCode = 200, int messageId = 10)
+        {
+            var data = recordfaker.Generate();
+            var exception = new Faker().System.Exception();
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                data.Id = messageId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    _ => data.Id
+                };
+                var json = messageId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    2 => "    ",
+                    _ => data.ToJsonString()
+                };
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                await service.ReportIssueAsync(data, exception);
+            });
+            Assert.Null(error);
+        }
+
         private static HttpResponseMessage GetMockResponse(int httpCode, int statusCode, string? json)
         {
             var response = new { StatusCode = statusCode, Message = json };
@@ -257,6 +339,23 @@ namespace next.processor.api.tests.services
                 Content = new StringContent(response.ToJsonString())
             };
         }
+
+        private static readonly Faker<QueuePersonItem> personfaker =
+            new Faker<QueuePersonItem>()
+            .RuleFor(x => x.Name, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Zip, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Address1, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Address2, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Address3, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.CaseNumber, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.DateFiled, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Court, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.CaseType, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.CaseStyle, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.FirstName, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.LastName, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Plantiff, y => y.Random.AlphaNumeric(250))
+            .RuleFor(x => x.Status, y => y.Random.Int(1, 20000).ToString());
 
         private static readonly Faker<QueuePersistenceRequest> persistencefaker =
             new Faker<QueuePersistenceRequest>()

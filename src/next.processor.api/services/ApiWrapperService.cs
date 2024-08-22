@@ -60,6 +60,7 @@ namespace next.processor.api.services
                 Id = dto.Id ?? string.Empty,
                 Content = content
             };
+            payload.AppendSource();
             _ = await GetApiResponseAsync(payload, uri);
         }
         public async Task PostStepFinalizedAsync(QueuedRecord dto, List<QueuePersonItem> people)
@@ -73,6 +74,7 @@ namespace next.processor.api.services
 
         public async Task ReportIssueAsync(QueuedRecord dto, Exception exception)
         {
+            var uri = PostUris.Find(x => x.Name == "log-issue")?.Address ?? string.Empty;
             var id = dto.Id ?? string.Empty;
             var message = exception.Message;
             var details = Encoding.UTF8.GetBytes(exception.ToString());
@@ -82,7 +84,8 @@ namespace next.processor.api.services
                 Message = message,
                 Data = details
             };
-            _ = await GetApiResponseAsync(issue, "uri");
+            issue.AppendSource();
+            _ = await GetApiResponseAsync(issue, uri);
         }
 
 
