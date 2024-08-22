@@ -13,6 +13,7 @@ namespace next.processor.api.interfaces
         Task PostStatusAsync(QueuedRecord dto, int messageId, int statusId);
         Task PostStepCompletionAsync(QueuedRecord dto, int messageId, int statusId);
         Task PostStepFinalizedAsync(QueuedRecord dto, List<QueuePersonItem> people);
+        Task ReportIssueAsync(QueuedRecord dto, Exception exception);
         Task StartAsync(QueuedRecord dto);
     }
 }

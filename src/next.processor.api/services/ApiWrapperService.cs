@@ -4,6 +4,7 @@ using next.processor.api.models;
 using next.processor.api.utility;
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace next.processor.api.services
 {
@@ -70,6 +71,21 @@ namespace next.processor.api.services
             _ = await GetApiResponseAsync(payload, uri);
         }
 
+        public async Task ReportIssueAsync(QueuedRecord dto, Exception exception)
+        {
+            var id = dto.Id ?? string.Empty;
+            var message = exception.Message;
+            var details = Encoding.UTF8.GetBytes(exception.ToString());
+            var issue = new QueueReportIssueRequest
+            {
+                Id = id,
+                Message = message,
+                Data = details
+            };
+            _ = await GetApiResponseAsync(issue, "uri");
+        }
+
+
         private static QueueCompletionRequest GetFinalizedPayload(string uniqueId, QueuedRecord dto, List<QueuePersonItem> people)
         {
             var request = (dto.Payload ?? string.Empty).ToInstance<QueueSearchItem>() ?? new();
@@ -123,6 +139,11 @@ namespace next.processor.api.services
 
         private async Task<ApiResponse?> GetApiResponseAsync(object? payload, string uri)
         {
+            if (!Uri.IsWellFormedUriString(uri, UriKind.RelativeOrAbsolute))
+            {
+                return null;
+            }
+
             using var client = new HttpClient();
             using var wrp = GetClientWrapper(client);
             wrp.AppendHeader(application_key, AppPayload);
