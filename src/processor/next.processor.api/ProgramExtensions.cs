@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Rewrite;
+using next.processor.api.backing;
+using next.processor.api.interfaces;
 using next.processor.api.services;
 
 namespace next.processor.api
@@ -11,6 +13,22 @@ namespace next.processor.api
             services.AddControllersWithViews();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            services.AddTransient<IApiWrapper, ApiWrapperService>();
+            services.AddTransient<IExcelGenerator, ExcelGenerator>();
+            services.AddTransient<IWebInteractiveWrapper, WebInteractiveWrapper>();
+            services.AddKeyedTransient<IQueueProcess, QueueProcessBegin>("begin");
+            services.AddKeyedTransient<IQueueProcess, QueueProcessParameter>("parameter");
+            // search
+            services.AddKeyedTransient<IQueueProcess, QueueProcessSearch>("search", (a, b) =>
+            {
+                var api = a.GetRequiredService<IApiWrapper>();
+                var generator = a.GetRequiredService<IExcelGenerator>();
+                var wrapper = a.GetRequiredService<IWebInteractiveWrapper>();
+                return new QueueProcessSearch(api, generator, wrapper);
+            });
+            services.AddSingleton(s => s);
+            services.AddTransient<IQueueExecutor, QueueExecutor>();
 
             services.Configure<RouteOptions>(
                 options => options.LowercaseUrls = true);
