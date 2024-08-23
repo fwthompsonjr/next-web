@@ -136,5 +136,29 @@ namespace next.processor.api.tests.Properties {
                 return ResourceManager.GetString("user_payload_sample_harris", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;state&quot;: &quot;tx&quot;,
+        ///	&quot;county&quot;: {
+        ///		&quot;name&quot;: &quot;tarrant&quot;,
+        ///		&quot;value&quot;: 28330
+        ///	},
+        ///	&quot;details&quot;: [
+        ///		{
+        ///			&quot;name&quot;: &quot;Search Type&quot;,
+        ///			&quot;text&quot;: &quot;All CCL Courts&quot;,
+        ///			&quot;value&quot;: &quot;2&quot;
+        ///		}
+        ///	],
+        ///	&quot;start&quot;: 1707696000000,
+        ///	&quot;end&quot;: 1707782400000
+        ///}.
+        /// </summary>
+        internal static string user_payload_sample_tarrant {
+            get {
+                return ResourceManager.GetString("user_payload_sample_tarrant", resourceCulture);
+            }
+        }
     }
 }

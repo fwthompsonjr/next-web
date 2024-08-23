@@ -11,7 +11,7 @@ namespace next.processor.api.tests
         public static string GetUserSearchPayload()
         {
             var fkr = new Faker();
-            List<string> collection = [CollinSettings, DentonSettings, HarrisSettings];
+            List<string> collection = [CollinSettings, DentonSettings, HarrisSettings, TarrantSettings];
             return fkr.PickRandom(collection);
         }
 
@@ -96,6 +96,17 @@ namespace next.processor.api.tests
         private static string GetHarrisSettings()
         {
             return Properties.Resources.user_payload_sample_harris;
+        }
+
+
+
+        private static string? tarrantSettings;
+
+        private static string TarrantSettings => tarrantSettings ??= GetTarrantSettings();
+
+        private static string GetTarrantSettings()
+        {
+            return Properties.Resources.user_payload_sample_tarrant;
         }
     }
 }

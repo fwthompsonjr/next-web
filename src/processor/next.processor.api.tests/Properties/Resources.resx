@@ -127,4 +127,7 @@
   <data name="user_payload_sample_harris" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\user_payload_sample_harris.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="user_payload_sample_tarrant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\user_payload_sample_tarrant.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

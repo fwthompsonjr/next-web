@@ -10,9 +10,10 @@ namespace next.processor.api.tests.utility
         [Fact]
         public void MapperCanTranslateUserSearchRequest()
         {
+            const int iterations = 15;
             var error = Record.Exception(() =>
             {
-                for (var i = 0; i < 10; i++)
+                for (var i = 0; i < iterations; i++)
                 {
                     var payload = MockObjProvider.GetUserSearchPayload();
                     var search = payload.ToInstance<UserSearchRequest>();
