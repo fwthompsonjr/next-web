@@ -10,7 +10,7 @@
 	{
 		"name": "record.processor",
 		"setting": {
-			"enabled": true,
+			"enabled": false,
 			"delay": 30,
 			"interval": 1
 		}

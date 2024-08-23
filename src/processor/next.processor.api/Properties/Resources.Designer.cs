@@ -74,11 +74,11 @@ namespace next.processor.api.Properties {
         ///    &quot;start&quot;: &quot;api/queue/start&quot;,
         ///    &quot;status&quot;: &quot;api/queue/status&quot;,
         ///    &quot;complete&quot;: &quot;api/queue/complete&quot;,
-        ///    &quot;finalize&quot;: &quot;api/queue/finalize&quot;
+        ///    &quot;finalize&quot;: &quot;api/queue/finalize&quot;,
+        ///    &quot;save&quot;: &quot;api/queue/save&quot;
         ///  },
         ///  &quot;api.source&quot;: &quot;oxford.leads.data.services&quot;,
-        ///  &quot;queue_process&quot;:{
-        ///    &quot;fetch&quot;: &quot;g [rest of string was truncated]&quot;;.
+        ///  &quot;qu [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string appsettings {
             get {
@@ -99,7 +99,7 @@ namespace next.processor.api.Properties {
         ///	{
         ///		&quot;name&quot;: &quot;record.processor&quot;,
         ///		&quot;setting&quot;: {
-        ///			&quot;enabled&quot;: true,
+        ///			&quot;enabled&quot;: false,
         ///			&quot;delay&quot;: 30,
         ///			&quot;interval&quot;: 1
         ///		}
