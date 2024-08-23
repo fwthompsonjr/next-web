@@ -99,7 +99,7 @@ namespace next.processor.api.tests
             {
                 var provider = new ServiceCollection();
                 provider.Configure();
-                return provider.BuildServiceProvider(); 
+                return provider.BuildServiceProvider();
             }
         }
         private static readonly object locker = new();

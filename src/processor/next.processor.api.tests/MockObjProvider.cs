@@ -40,7 +40,8 @@ namespace next.processor.api.tests
             .RuleFor(x => x.Name, y => y.Person.FullName)
             .RuleFor(x => x.Zip, y => y.Person.Address.ZipCode)
             .RuleFor(x => x.Address1, y => y.Person.Address.Street)
-            .RuleFor(x => x.Address2, y => {
+            .RuleFor(x => x.Address2, y =>
+            {
                 if (y.Random.Int(0, 100) < 75) return string.Empty;
                 return y.Person.Address.Suite;
             })

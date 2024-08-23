@@ -1,15 +1,9 @@
 ﻿using Bogus;
-using Bogus.DataSets;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.backing;
 using next.processor.api.interfaces;
 using next.processor.api.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace next.processor.api.tests.backing
 {
@@ -41,7 +35,8 @@ namespace next.processor.api.tests.backing
                 var mock = provider.GetService<Mock<IQueueProcess>>();
                 mock?.Setup(m => m.ExecuteAsync(It.IsAny<QueueProcessResponses>())).ThrowsAsync(exception);
             }
-            var error = await Record.ExceptionAsync(async () => {
+            var error = await Record.ExceptionAsync(async () =>
+            {
                 var service = provider.GetRequiredService<IQueueExecutor>();
                 await service.ExecuteAsync();
             });

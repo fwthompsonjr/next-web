@@ -48,7 +48,7 @@ namespace next.processor.api.backing
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 await ReportIssueAsync(ex);
             }
             finally

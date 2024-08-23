@@ -44,7 +44,7 @@ namespace next.processor.api.tests.backing
                         It.IsAny<QueuedRecord>(),
                         It.IsAny<int>(),
                         It.IsAny<int>())).Verifiable();
-                } 
+                }
                 else
                 {
                     mock.SetupSequence(m => m.PostStatusAsync(
