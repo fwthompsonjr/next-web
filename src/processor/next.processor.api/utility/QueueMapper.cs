@@ -6,6 +6,7 @@
     using legallead.records.search.Classes;
     using legallead.records.search.Models;
     using Newtonsoft.Json;
+    using System.Diagnostics.CodeAnalysis;
     using System.Xml;
     using PropXml = legallead.records.search.Properties.Resources;
     public static class QueueMapper
@@ -238,7 +239,7 @@
             }
         }
 
-
+        [ExcludeFromCodeCoverage(Justification = "Private member tested from public accessor")]
         private static void AddOrUpdateKey(List<SearchNavigationKey> list, SearchNavigationKey model)
         {
             var found = list.Find(x => x.Name.Equals(model.Name));

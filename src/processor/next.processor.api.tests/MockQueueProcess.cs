@@ -1,11 +1,7 @@
-﻿using next.processor.api.backing;
-using next.processor.api.interfaces;
+﻿using legallead.models.Search;
+using legallead.permissions.api.Model;
+using next.processor.api.backing;
 using next.processor.api.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace next.processor.api.tests
 {
@@ -13,7 +9,7 @@ namespace next.processor.api.tests
     {
         public MockQueueProcess() : base(GetWrapper())
         {
-            
+
         }
 
         public void WriteSuccess(bool isSuccess)
@@ -25,6 +21,15 @@ namespace next.processor.api.tests
             AllowIterateNext = isAllowed;
         }
 
+        public UserSearchRequest? TranslateToUserSearchRequest(QueuedRecord? record)
+        {
+            return GetUserSearchRequest(record);
+        }
+
+        public SearchRequest? TranslateToSearchRequest(QueuedRecord? record)
+        {
+            return GetSearchRequest(record);
+        }
         public override int Index => 1000;
 
         public override string Name => "Test implementation of queue process";

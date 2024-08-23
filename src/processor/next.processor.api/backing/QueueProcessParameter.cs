@@ -40,8 +40,9 @@ namespace next.processor.api.backing
                 // iterate next step name
                 processIndex = MessageIndexes.ParameterEvaluation;
                 await apiWrapper.PostStatusAsync(item, processIndex, StatusIndexes.Begin);
-                var user = GetUserSearchRequest(item);
+
                 var search = GetSearchRequest(item);
+                var user = GetUserSearchRequest(item);
                 await apiWrapper.PostStatusAsync(item, processIndex, StatusIndexes.Complete);
                 // iterate next step name
                 processIndex = MessageIndexes.ParameterConversion;
@@ -59,13 +60,13 @@ namespace next.processor.api.backing
             catch (Exception ex)
             {
                 // report error details to server
-                await apiWrapper.ReportIssueAsync(item, ex);
+                await ReportIssueAsync(item, ex);
                 return record;
             }
             finally
             {
                 var statusIndex = IsSuccess ? StatusIndexes.Complete : StatusIndexes.Failed;
-                await apiWrapper.PostStatusAsync(item, processIndex, statusIndex);
+                await PostStatusAsync(item, processIndex, statusIndex);
             }
         }
     }

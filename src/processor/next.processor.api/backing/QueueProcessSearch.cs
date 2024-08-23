@@ -70,13 +70,13 @@ namespace next.processor.api.backing
             catch (Exception ex)
             {
                 // report error details to server
-                await apiWrapper.ReportIssueAsync(item, ex);
+                await ReportIssueAsync(item, ex);
                 return record;
             }
             finally
             {
                 var statusIndex = IsSuccess ? StatusIndexes.Complete : StatusIndexes.Failed;
-                await apiWrapper.PostStatusAsync(item, processIndex, statusIndex);
+                await PostStatusAsync(item, processIndex, statusIndex);
             }
         }
 

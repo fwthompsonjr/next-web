@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using Bogus.DataSets;
 using next.processor.api.models;
 
 namespace next.processor.api.tests.models

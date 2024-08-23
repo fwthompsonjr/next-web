@@ -3,6 +3,7 @@ using legallead.permissions.api.Model;
 using next.processor.api.extensions;
 using next.processor.api.interfaces;
 using next.processor.api.models;
+using next.processor.api.utility;
 
 namespace next.processor.api.backing
 {
@@ -26,8 +27,39 @@ namespace next.processor.api.backing
         protected SearchRequest? GetSearchRequest(QueuedRecord? record)
         {
             if (record == null || string.IsNullOrEmpty(record.Payload)) return null;
-            return record.Payload.ToInstance<SearchRequest>();
+            var obj = record.Payload.ToInstance<SearchRequest>();
+            if (obj != null) return obj;
+            var usr = record.Payload.ToInstance<UserSearchRequest>();
+            if (usr == null) return null;
+            return QueueMapper.MapFrom<UserSearchRequest, SearchRequest>(usr);
         }
+
+        protected async Task PostStatusAsync(QueuedRecord? record, int messageId, int statusId)
+        {
+            try
+            {
+                if (record == null) return;
+                await apiWrapper.PostStatusAsync(record, messageId, statusId);
+            }
+            catch (Exception)
+            {
+                // do not report expections
+            }
+        }
+
+        protected async Task ReportIssueAsync(QueuedRecord? record, Exception exception)
+        {
+            try
+            {
+                if (record == null) return;
+                await apiWrapper.ReportIssueAsync(record, exception);
+            }
+            catch (Exception)
+            {
+                // do not report expections
+            }
+        }
+
 
         protected static class MessageIndexes
         {
