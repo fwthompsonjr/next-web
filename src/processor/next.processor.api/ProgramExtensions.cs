@@ -28,8 +28,13 @@ namespace next.processor.api
                 return new QueueProcessSearch(api, generator, wrapper);
             });
             services.AddSingleton(s => s);
-            services.AddTransient<IQueueExecutor, QueueExecutor>();
-
+            services.AddSingleton<IQueueExecutor, QueueExecutor>();
+            services.AddSingleton(s =>
+            {
+                var queue = s.GetRequiredService<IQueueExecutor>();
+                return new SearchGenerationService(queue);
+            });
+            services.AddHostedService<SearchGenerationService>();
             services.Configure<RouteOptions>(
                 options => options.LowercaseUrls = true);
         }

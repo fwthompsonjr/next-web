@@ -11,14 +11,14 @@ namespace next.processor.api.tests
         BaseTimedSvc<MockTimedService>(GetSetting(isEnabled, delay, interval, isNull))
     {
 
-        public async Task Execute()
+        public async Task ExecuteAsync()
         {
             using CancellationTokenSource cts = new();
             CancellationToken token = cts.Token;
             await StartAsync(token);
         }
 
-        public async Task Stop()
+        public async Task StopAsync()
         {
             using CancellationTokenSource cts = new();
             CancellationToken token = cts.Token;

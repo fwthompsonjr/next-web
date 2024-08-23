@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using next.processor.api.backing;
 using next.processor.api.interfaces;
 
 namespace next.processor.api.tests
@@ -12,6 +13,7 @@ namespace next.processor.api.tests
         [InlineData(typeof(IWebInteractiveWrapper))]
         [InlineData(typeof(IServiceProvider))]
         [InlineData(typeof(IQueueExecutor))]
+        [InlineData(typeof(SearchGenerationService))]
         public void CollectionCanGetInstance(Type type)
         {
             var error = Record.Exception(() =>
