@@ -23,5 +23,6 @@ RUN dotnet publish "./next.processor.api.csproj" -c $BUILD_CONFIGURATION -o /app
 
 FROM base AS final
 WORKDIR /app
+## Copy the published output to the final image
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "next.processor.api.dll"]
