@@ -17,6 +17,12 @@ namespace next.processor.api
             services.AddTransient<IApiWrapper, ApiWrapperService>();
             services.AddTransient<IExcelGenerator, ExcelGenerator>();
             services.AddTransient<IWebInteractiveWrapper, WebInteractiveWrapper>();
+            services.AddSingleton<IWebInstallOperation, WebInstallOperation>();
+            // firefox installation
+            services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxInstall>("firefox");
+            services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("geckodriver");
+
+            // queue processes
             services.AddKeyedTransient<IQueueProcess, QueueProcessBegin>("begin");
             services.AddKeyedTransient<IQueueProcess, QueueProcessParameter>("parameter");
             // search

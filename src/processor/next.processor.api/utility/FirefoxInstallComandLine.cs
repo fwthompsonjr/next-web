@@ -9,9 +9,12 @@ namespace next.processor.api.utility
         public void ExecuteCommands()
         {
             var commands = GetCommands();
-            commands.ForEach(command => { 
-                var process = new Process {
-                    StartInfo = new ProcessStartInfo {
+            commands.ForEach(command =>
+            {
+                var process = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
                         FileName = "/usr/bin/bash",
                         RedirectStandardInput = true,
                         RedirectStandardOutput = true,
@@ -40,7 +43,8 @@ namespace next.processor.api.utility
                 { "$FIREFOX_VERSION", _firefoxVersion }
             };
             var list = new List<string>();
-            lines.ForEach(line => { 
+            lines.ForEach(line =>
+            {
                 var sb = new StringBuilder(line);
                 finder.Keys.ToList().ForEach(key
                     => sb.Replace(key, finder[key]));
