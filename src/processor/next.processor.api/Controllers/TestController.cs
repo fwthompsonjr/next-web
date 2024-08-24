@@ -1,5 +1,6 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
 using Microsoft.AspNetCore.Mvc;
+using next.processor.api.utility;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System.Diagnostics;
@@ -13,14 +14,16 @@ namespace next.processor.api.Controllers
     [ApiController]
     public class TestController() : ControllerBase
     {
+
         [HttpGet("install-browser")]
         public async Task<ActionResult> BrowserInstallAsync()
         {
             var environmentDir = Environment.GetEnvironmentVariable("HOME");
             if (string.IsNullOrEmpty(environmentDir)) { return BadRequest("Environment variable HOME not found"); }
-            var destinationDir = Path.Combine(environmentDir, "util");
-            var mozillaDir = Path.Combine(destinationDir, "mozilla");
-            var paths = new[] { destinationDir, mozillaDir }.ToList();
+            var destinationDir = Path.Combine(environmentDir, "mozilla");
+            var mozillaDir = Path.Combine(destinationDir, "install");
+            var firefoxDir = Path.Combine(environmentDir, "firefox");
+            var paths = new[] { destinationDir, mozillaDir, firefoxDir }.ToList();
             paths.ForEach(path => { if (!Directory.Exists(path)) Directory.CreateDirectory(path); });
 
             var entryAssembly = Assembly.GetEntryAssembly();
@@ -29,11 +32,11 @@ namespace next.processor.api.Controllers
             if (string.IsNullOrEmpty(assemblyPath) || !Directory.Exists(assemblyPath)) return BadRequest("Application dir is not found.");
             var files = Directory.GetFiles(assemblyPath, "*.bz2", SearchOption.AllDirectories);
             var zipfile = files.Length > 0 ? files[0] : string.Empty;
-            if (string.IsNullOrEmpty(zipfile)) return BadRequest("Application zip file is not found.");
+            var zipfilename = Path.GetFileName(zipfile);
+            if (string.IsNullOrEmpty(zipfile) || string.IsNullOrWhiteSpace(zipfilename)) return BadRequest("Application zip file is not found.");
 
-            await ExtractBzFileAsync(mozillaDir, zipfile);
+            await ExtractBzFileAsync(mozillaDir, firefoxDir, zipfilename);
             var currentPaths = Environment.GetEnvironmentVariable("PATH")?.Split(':').ToList() ?? [];
-            var firefoxDir = Path.Combine(destinationDir, "firefox");
             var firefoxFile = Path.Combine(firefoxDir, "firefox");
             if (System.IO.File.Exists(firefoxFile) && !currentPaths.Contains(firefoxDir))
             {
@@ -111,7 +114,7 @@ namespace next.processor.api.Controllers
         }
         private static async Task ExtractTarFileAsync(string downloadPath, string outputDirectory, CancellationToken cancellationToken = default)
         {
-            if (Directory.Exists(outputDirectory) && Directory.GetFiles(outputDirectory, "*.*").Length > 0) return;
+            if (Directory.Exists(outputDirectory) && Directory.GetFiles(outputDirectory, "*.*", SearchOption.AllDirectories).Length > 0) return;
             await using var tarStream = new FileStream(downloadPath, new FileStreamOptions { Mode = FileMode.Open, Access = FileAccess.Read, Options = FileOptions.Asynchronous });
             await using MemoryStream memoryStream = new();
             await using (GZipStream gzipStream =
@@ -127,29 +130,28 @@ namespace next.processor.api.Controllers
                 cancellationToken: cancellationToken
             );
         }
-        private static async Task ExtractBzFileAsync(string downloadPath, string outputDirectory, CancellationToken cancellationToken = default)
+        private static async Task ExtractBzFileAsync(
+            string downloadDirectory,
+            string installDirectory,
+            string zipFileName, 
+            CancellationToken cancellationToken = default)
         {
-            if (Directory.Exists(outputDirectory) && Directory.GetFiles(outputDirectory, "*.*").Length > 0) return;
-            Debug.WriteLine("Extracting bz2 file: {0}", Path.GetFileName(downloadPath));
-            var browserPath = GetFireFoxDownloadUri(_firefoxVersion);
-            using var httpClient = new HttpClient();
-            using var responseStream = await httpClient.GetStreamAsync(browserPath, cancellationToken);
-            await using MemoryStream memoryStream = new();
-            await using (BZip2InputStream gzipStream = new(responseStream))
+            if (Directory.Exists(installDirectory) && Directory.GetFiles(installDirectory, "*.*", SearchOption.AllDirectories).Length > 0) return;
+            var fullName = Path.Combine(downloadDirectory, zipFileName);
+            Debug.WriteLine("Extracting bz2 file: {0}", Path.GetFileName(fullName));
+            if (!System.IO.File.Exists(fullName))
             {
-                await gzipStream.CopyToAsync(memoryStream, cancellationToken);
+                var browserPath = GetFireFoxDownloadUri(_firefoxVersion);
+                using var httpClient = new HttpClient();
+                using MemoryStream ms = new();
+                using var responseStream = await httpClient.GetStreamAsync(browserPath, cancellationToken);
+                await responseStream.CopyToAsync(ms, cancellationToken);
+                var contents = ms.ToArray();
+                await System.IO.File.WriteAllBytesAsync(fullName, contents, cancellationToken);
             }
-            await using (BZip2OutputStream bzipStream = new(new FileStream(downloadPath, FileMode.Create)))
-            {
-                await memoryStream.CopyToAsync(bzipStream, cancellationToken);
-            }
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            await TarFile.ExtractToDirectoryAsync(
-                memoryStream,
-                outputDirectory,
-                overwriteFiles: true,
-                cancellationToken: cancellationToken
-            );
+            if (Directory.Exists(installDirectory)) Directory.CreateDirectory(installDirectory);
+            using var stream = new BZip2InputStream(System.IO.File.OpenRead(fullName));
+            await TarFile.ExtractToDirectoryAsync(stream, installDirectory, true, cancellationToken);
         }
 
 
