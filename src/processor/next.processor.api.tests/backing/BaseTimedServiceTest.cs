@@ -23,7 +23,7 @@
             var error = await Record.ExceptionAsync(async () =>
             {
                 using var service = new MockTimedService(b, i, j);
-                await service.Execute();
+                await service.ExecuteAsync();
             });
             Assert.Null(error);
         }
@@ -37,8 +37,8 @@
             var error = await Record.ExceptionAsync(async () =>
             {
                 using var service = new MockTimedService(b, i, j);
-                await service.Execute();
-                await service.Stop();
+                await service.ExecuteAsync();
+                await service.StopAsync();
             });
             Assert.Null(error);
         }
@@ -64,7 +64,7 @@
             var error = await Record.ExceptionAsync(async () =>
             {
                 using var service = new MockTimedService(b, i, j);
-                await service.Stop();
+                await service.StopAsync();
             });
             Assert.Null(error);
         }

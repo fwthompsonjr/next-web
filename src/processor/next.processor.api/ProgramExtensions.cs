@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Rewrite;
+﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using next.processor.api.backing;
+using next.processor.api.Health;
+using next.processor.api.interfaces;
 using next.processor.api.services;
 
 namespace next.processor.api
@@ -11,9 +16,48 @@ namespace next.processor.api
             services.AddControllersWithViews();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
+            services.AddTransient<IApiWrapper, ApiWrapperService>();
+            services.AddTransient<IExcelGenerator, ExcelGenerator>();
+            services.AddTransient<IWebInteractiveWrapper, WebInteractiveWrapper>();
+            services.AddSingleton<IWebInstallOperation, WebInstallOperation>();
+            services.AddSingleton<CheckContainerServices>();
+            services.AddSingleton<CheckPostApiRequest>();
+            // firefox installation
+            services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxInstall>("firefox");
+            services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("geckodriver");
+            services.AddKeyedSingleton<IWebContainerInstall, WebVerifyInstall>("verification");
 
+            // queue processes
+            services.AddKeyedTransient<IQueueProcess, QueueProcessBegin>("begin");
+            services.AddKeyedTransient<IQueueProcess, QueueProcessParameter>("parameter");
+            // search
+            services.AddKeyedTransient<IQueueProcess, QueueProcessSearch>("search", (a, b) =>
+            {
+                var api = a.GetRequiredService<IApiWrapper>();
+                var generator = a.GetRequiredService<IExcelGenerator>();
+                var wrapper = a.GetRequiredService<IWebInteractiveWrapper>();
+                return new QueueProcessSearch(api, generator, wrapper);
+            });
+            services.AddSingleton(s => s);
+            services.AddSingleton<IQueueExecutor, QueueExecutor>();
+            services.AddSingleton(s =>
+            {
+                var queue = s.GetRequiredService<IQueueExecutor>();
+                return new SearchGenerationService(queue);
+            });
+            services.AddHostedService<SearchGenerationService>();
             services.Configure<RouteOptions>(
                 options => options.LowercaseUrls = true);
+
+            RegisterHealthChecks(services);
+        }
+
+        public static void RegisterHealthChecks(this IServiceCollection services)
+        {
+            services.AddHealthChecks()
+                .AddCheck<CheckContainerServices>("INFRASTRUCTURE")
+                .AddCheck<CheckPostApiRequest>("API");
         }
 
         public static void ConfigureApp(this WebApplication app)
@@ -25,6 +69,21 @@ namespace next.processor.api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+            var statuscodes = new Dictionary<HealthStatus, int>()
+            {
+                [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+            };
+            var health = new HealthCheckOptions { ResultStatusCodes = statuscodes };
+            var details = new HealthCheckOptions
+            {
+                ResultStatusCodes = statuscodes,
+                ResponseWriter = WriteHealthResponse.WriteResponseAsync
+            };
+            app.MapHealthChecks("/health", health);
+            app.MapHealthChecks("/health-details", details);
 
             app.MapControllers();
 
@@ -38,7 +97,7 @@ namespace next.processor.api
                 pattern: "{controller=Home}/{action=Index}/{id?}");
         }
 
-
+        
         public static void SetSwaggerOptions(this WebApplication app, bool isDevelopment)
         {
             if (!isDevelopment) { return; }

@@ -19,7 +19,8 @@ namespace next.processor.api.services
         {
             var uri = PostUris.Find(x => x.Name == "fetch")?.Address;
             if (uri == null) return null;
-            var obj = await GetApiResponseAsync(null, uri);
+            var payload = AppPayload.ToInstance<QueueFetchRequest>();
+            var obj = await GetApiResponseAsync(payload, uri);
             if (obj == null || string.IsNullOrWhiteSpace(obj.Message)) return null;
             var data = obj.Message.ToInstance<List<QueuedRecord>>();
             return data;

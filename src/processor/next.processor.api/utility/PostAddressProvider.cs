@@ -22,7 +22,7 @@ namespace next.processor.api.utility
                 });
                 var destination = values[0];
                 if (string.IsNullOrEmpty(destination)) return null;
-                var id = destination.Equals("local") ? 1 : 2;
+                var id = destination.Equals("local") ? 2 : 1;
                 _baseapi = values[id];
                 return _baseapi;
             }

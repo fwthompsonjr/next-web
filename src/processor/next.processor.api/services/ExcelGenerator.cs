@@ -1,8 +1,8 @@
-﻿using legallead.records.search.Classes;
+﻿using legallead.records.search;
+using legallead.records.search.Classes;
 using legallead.records.search.Models;
-using legallead.records.search;
-using OfficeOpenXml;
 using next.processor.api.interfaces;
+using OfficeOpenXml;
 
 namespace next.processor.api.services
 {
