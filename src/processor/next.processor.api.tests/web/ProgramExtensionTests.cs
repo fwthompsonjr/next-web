@@ -43,6 +43,22 @@ namespace next.processor.api.tests
             Assert.Null(error);
         }
 
+
+        [Theory]
+        [InlineData("firefox")]
+        [InlineData("geckodriver")]
+        [InlineData("verification")]
+        public void CollectionCanGetKeyedInstaller(string name)
+        {
+            var error = Record.Exception(() =>
+            {
+                var provider = GetServiceProvider();
+                var actual = provider.GetKeyedService<IWebContainerInstall>(name);
+                Assert.NotNull(actual);
+            });
+            Assert.Null(error);
+        }
+
         [Fact]
         public void CollectionCanBeCreated()
         {

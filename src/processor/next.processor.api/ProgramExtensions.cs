@@ -21,6 +21,7 @@ namespace next.processor.api
             // firefox installation
             services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxInstall>("firefox");
             services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("geckodriver");
+            services.AddKeyedSingleton<IWebContainerInstall, WebVerifyInstall>("verification");
 
             // queue processes
             services.AddKeyedTransient<IQueueProcess, QueueProcessBegin>("begin");

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.Controllers;
+using next.processor.api.interfaces;
 
 namespace next.processor.api.tests.controllers
 {
@@ -14,6 +15,7 @@ namespace next.processor.api.tests.controllers
             {
                 //Arrange
                 var request = new Mock<HttpRequest>();
+                var mockinstaller = new Mock<IWebContainerInstall>();
                 request.Setup(x => x.Scheme).Returns("http");
                 request.Setup(x => x.Host).Returns(HostString.FromUriComponent("http://localhost:8080"));
                 request.Setup(x => x.PathBase).Returns(PathString.FromUriComponent("/api"));
@@ -21,6 +23,7 @@ namespace next.processor.api.tests.controllers
                 var httpContext = Mock.Of<HttpContext>(_ =>
                     _.Request == request.Object
                 );
+
                 //Controller needs a controller context
                 var controllerContext = new ControllerContext()
                 {
@@ -29,9 +32,21 @@ namespace next.processor.api.tests.controllers
 
                 var collection = new ServiceCollection();
 
+                mockinstaller.Setup(x => x.InstallAsync()).ReturnsAsync(true);
+                collection.AddKeyedSingleton("firefox", mockinstaller.Object);
+                collection.AddKeyedSingleton("geckodriver", mockinstaller.Object);
+                collection.AddKeyedSingleton("verification", mockinstaller.Object);
                 collection.AddScoped(a =>
                 {
                     var controller = new HomeController()
+                    {
+                        ControllerContext = controllerContext
+                    };
+                    return controller;
+                });
+                collection.AddScoped(a =>
+                {
+                    var controller = new TestController(a)
                     {
                         ControllerContext = controllerContext
                     };

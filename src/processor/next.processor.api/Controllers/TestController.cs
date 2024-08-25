@@ -36,32 +36,13 @@ namespace next.processor.api.Controllers
         }
 
         [HttpGet("verify-driver")]
-        public ActionResult Verify()
+        public async Task<ActionResult> VerifyAsync()
         {
-            FirefoxDriver? driver = null;
-            try
-            {
-                var environmentDir = Environment.GetEnvironmentVariable("HOME");
-                if (string.IsNullOrEmpty(environmentDir)) { return BadRequest("Environment variable HOME not found"); }
-                var downloadDir = Path.Combine(environmentDir, "download");
-                var profile = new FirefoxOptions();
-                profile.AddAdditionalCapability("platform", "LINUX", true);
-                profile.AddAdditionalCapability("video", "True", true);
-                profile.SetPreference("download.default_directory", downloadDir);
-                profile.SetPreference("browser.safebrowsing.enabled", true);
-                profile.SetPreference("browser.safebrowsing.malware.enabled", true);
-                profile.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
-                driver = new FirefoxDriver(profile);
-                return Ok("Driver is working");
-            }
-            catch (Exception ex)
-            {
-                return new JsonResult(ex.Message) { StatusCode = 400 };
-            }
-            finally
-            {
-                driver?.Dispose();
-            }
+            var service = _provider.GetKeyedService<IWebContainerInstall>("verification");
+            if (service == null) { return BadRequest("Unable to create verification instance"); }
+            var extracted = await service.InstallAsync();
+            if (!extracted) { return BadRequest("Failed to execute verification component"); }
+            return Ok("verification is successful.");
         }
 
     }

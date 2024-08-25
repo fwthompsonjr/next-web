@@ -20,6 +20,16 @@ namespace next.processor.api.backing
             if (name == null) return null;
             return _provider.GetKeyedService<IQueueProcess>(name);
         }
+
+        public IWebContainerInstall? GetInstaller(string queueName)
+        {
+            var oic = StringComparison.OrdinalIgnoreCase;
+            var name = _installNames.Find(x => x.Equals(queueName, oic));
+            if (name == null) return null;
+            return _provider.GetKeyedService<IWebContainerInstall>(name);
+        }
+
+
         private QueuedRecord? Current;
         public async Task ExecuteAsync()
         {
@@ -30,6 +40,8 @@ namespace next.processor.api.backing
             }
             try
             {
+                var isready = await CanExecute();
+                if (!isready) return;
                 var parent = GetInstance(_queueNames[0]);
                 var children = _queueNames.Where(x => !x.Equals(_queueNames[0])).ToList();
                 if (parent == null) return;
@@ -57,6 +69,26 @@ namespace next.processor.api.backing
                 IsRunning = false;
             }
         }
+
+        private async Task<bool> CanExecute()
+        {
+            var installers = _installNames.Select(x => GetInstaller(x)).ToList();
+            if (installers.Exists(x => x == null)) return false;
+            var responses = new List<bool>();
+            foreach (var installer in installers)
+            {
+                if (installer == null)
+                {
+                    responses.Add(false);
+                    continue;
+                }
+                var rsp = await installer.InstallAsync();
+                responses.Add(rsp);
+            }
+            return !responses.Exists(a => !a);
+        }
+
+
         [ExcludeFromCodeCoverage(Justification = "Private member called and test from public accessor")]
         private async Task ReportIssueAsync(Exception exception)
         {
@@ -72,6 +104,7 @@ namespace next.processor.api.backing
         }
 
         private static readonly List<string> _queueNames = ["begin", "parameter", "search"];
+        private static readonly List<string> _installNames = ["firefox", "geckodriver", "verification"];
         private static readonly object locker = new();
     }
 }

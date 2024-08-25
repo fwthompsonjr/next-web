@@ -49,14 +49,17 @@ namespace next.processor.api.tests.backing
                 var wrapper = new MockApiWrapperService();
                 var mockmapper = new Mock<IQueueProcess>();
                 var mockfetch = new Mock<IQueueProcess>();
+                var mockinstaller = new Mock<IWebContainerInstall>();
                 var begin = new ProcessBeginProvider(count).Sut;
                 var provider = new ServiceCollection();
                 mockmapper.SetupGet(x => x.IsSuccess).Returns(true);
                 mockfetch.SetupGet(x => x.IsSuccess).Returns(true);
-
+                mockinstaller.Setup(x => x.InstallAsync()).ReturnsAsync(true);
                 mockmapper.Setup(x => x.ExecuteAsync(It.IsAny<QueueProcessResponses>()));
                 mockfetch.Setup(x => x.ExecuteAsync(It.IsAny<QueueProcessResponses>()));
 
+                provider.AddSingleton(mockinstaller);
+                provider.AddSingleton(mockinstaller.Object);
                 provider.AddSingleton(mockmapper);
                 provider.AddSingleton<IApiWrapper>(wrapper);
                 provider.AddKeyedSingleton<IQueueProcess>("begin", begin);
@@ -64,6 +67,9 @@ namespace next.processor.api.tests.backing
                 provider.AddKeyedSingleton("search", mockfetch.Object);
                 provider.AddSingleton(s => s);
                 provider.AddSingleton<IQueueExecutor, QueueExecutor>();
+                provider.AddKeyedSingleton("firefox", mockinstaller.Object);
+                provider.AddKeyedSingleton("geckodriver", mockinstaller.Object);
+                provider.AddKeyedSingleton("verification", mockinstaller.Object);
 
                 return provider.BuildServiceProvider();
             }
