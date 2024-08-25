@@ -17,5 +17,7 @@ namespace next.processor.api.services
         }
         protected const string _firefoxVersion = "129.0.2";
         protected const string _driverPath = "https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz";
+
+        public virtual bool IsInstalled { get; protected set; }
     }
 }

@@ -9,8 +9,10 @@ namespace next.processor.api.services
 {
     public class WebVerifyInstall : IWebContainerInstall
     {
+        public bool IsInstalled { get; private set; }
         public async Task<bool> InstallAsync()
         {
+            if (IsInstalled) return true;
             var isverified = await Task.Run(() =>
             {
                 FirefoxDriver? driver = null;
@@ -19,15 +21,20 @@ namespace next.processor.api.services
                     var environmentDir = Environment.GetEnvironmentVariable("HOME");
                     if (string.IsNullOrEmpty(environmentDir) ||
                         string.IsNullOrEmpty(DriverDirectory) ||
-                        string.IsNullOrEmpty(BinaryFile)) { return false; }
+                        string.IsNullOrEmpty(BinaryFile)) {
+                        IsInstalled = false;
+                        return false; 
+                    }
 
                     var downloadDir = Path.Combine(environmentDir, "download");
                     driver = GetDriver(1, downloadDir);
+                    IsInstalled = true;
                     return true;
                 }
                 catch(Exception ex) 
                 {
                     Debug.WriteLine(ex);
+                    IsInstalled = false;
                     return false;
                 }
                 finally

@@ -7,5 +7,6 @@ namespace next.processor.api.interfaces
 
         Task ExecuteAsync();
         IQueueProcess? GetInstance(string queueName);
+        bool? IsReady();
     }
 }

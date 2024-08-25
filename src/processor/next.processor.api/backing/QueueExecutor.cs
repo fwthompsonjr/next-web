@@ -13,6 +13,17 @@ namespace next.processor.api.backing
 
         public bool IsRunning { get; private set; }
 
+        public bool? IsReady()
+        {
+            var installers = _installNames.Select(GetInstaller).ToList();
+            foreach (var installer in installers)
+            {
+                if (installer == null) return null;
+                if (!installer.IsInstalled) return false;
+            }
+            return true;
+        }
+
         public IQueueProcess? GetInstance(string queueName)
         {
             var oic = StringComparison.OrdinalIgnoreCase;

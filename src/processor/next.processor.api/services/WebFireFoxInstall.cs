@@ -6,28 +6,38 @@ namespace next.processor.api.services
 {
     public class WebFireFoxInstall(IWebInstallOperation webInstallOperation) : BaseWebInstall(webInstallOperation)
     {
+        
         public async override Task<bool> InstallAsync()
         {
-            var environmentDir = Environment.GetEnvironmentVariable("HOME");
-            var zipfilename = FirefoxShortName;
-            if (string.IsNullOrEmpty(environmentDir) || string.IsNullOrWhiteSpace(zipfilename)) { return false; }
-            var destinationDir = Path.Combine(environmentDir, "mozilla");
-            var mozillaDir = Path.Combine(destinationDir, "install");
-            var firefoxDir = Path.Combine(environmentDir, "firefox");
-            var paths = new[] { destinationDir, mozillaDir, firefoxDir }.ToList();
-            paths.ForEach(path => { _fileSvc.CreateDirectory(path); });
-            var installation = await ExtractBzFileAsync(mozillaDir, firefoxDir, zipfilename);
-            if (!installation) return false;
-            var subfolders = 0;
-            var firefoxFile = Path.Combine(firefoxDir, "firefox");
-            while (!_fileSvc.FileExists(firefoxFile))
+            if (IsInstalled) return true;
+            try
             {
-                if (subfolders > 5) return false;
-                firefoxFile = Path.Combine(firefoxFile, "firefox");
-                subfolders++;
+                var environmentDir = Environment.GetEnvironmentVariable("HOME");
+                var zipfilename = FirefoxShortName;
+                if (string.IsNullOrEmpty(environmentDir) || string.IsNullOrWhiteSpace(zipfilename)) { return false; }
+                var destinationDir = Path.Combine(environmentDir, "mozilla");
+                var mozillaDir = Path.Combine(destinationDir, "install");
+                var firefoxDir = Path.Combine(environmentDir, "firefox");
+                var paths = new[] { destinationDir, mozillaDir, firefoxDir }.ToList();
+                paths.ForEach(path => { _fileSvc.CreateDirectory(path); });
+                var installation = await ExtractBzFileAsync(mozillaDir, firefoxDir, zipfilename);
+                if (!installation) return false;
+                var subfolders = 0;
+                var firefoxFile = Path.Combine(firefoxDir, "firefox");
+                while (!_fileSvc.FileExists(firefoxFile))
+                {
+                    if (subfolders > 5) return false;
+                    firefoxFile = Path.Combine(firefoxFile, "firefox");
+                    subfolders++;
+                }
+                IsInstalled = _fileSvc.AppendToPath(firefoxFile);
+                return IsInstalled;
             }
-            var added = _fileSvc.AppendToPath(firefoxFile);
-            return added;
+            catch (Exception)
+            {
+                IsInstalled = false;
+                return false;
+            }
         }
 
 
