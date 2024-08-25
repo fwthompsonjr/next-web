@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using next.processor.api.backing;
 using next.processor.api.interfaces;
+using next.processor.api.services;
 
 namespace next.processor.api.tests
 {
@@ -14,6 +15,7 @@ namespace next.processor.api.tests
         [InlineData(typeof(IServiceProvider))]
         [InlineData(typeof(IQueueExecutor))]
         [InlineData(typeof(SearchGenerationService))]
+        [InlineData(typeof(CheckContainerServices))]
         public void CollectionCanGetInstance(Type type)
         {
             var error = Record.Exception(() =>

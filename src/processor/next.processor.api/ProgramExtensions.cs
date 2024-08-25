@@ -18,6 +18,7 @@ namespace next.processor.api
             services.AddTransient<IExcelGenerator, ExcelGenerator>();
             services.AddTransient<IWebInteractiveWrapper, WebInteractiveWrapper>();
             services.AddSingleton<IWebInstallOperation, WebInstallOperation>();
+            services.AddSingleton<CheckContainerServices>();
             // firefox installation
             services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxInstall>("firefox");
             services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("geckodriver");

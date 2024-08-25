@@ -1,9 +1,7 @@
 ﻿using next.processor.api.interfaces;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using System.Diagnostics;
-using Microsoft.Extensions.Options;
-using AutoMapper;
 
 namespace next.processor.api.services
 {
@@ -21,9 +19,10 @@ namespace next.processor.api.services
                     var environmentDir = Environment.GetEnvironmentVariable("HOME");
                     if (string.IsNullOrEmpty(environmentDir) ||
                         string.IsNullOrEmpty(DriverDirectory) ||
-                        string.IsNullOrEmpty(BinaryFile)) {
+                        string.IsNullOrEmpty(BinaryFile))
+                    {
                         IsInstalled = false;
-                        return false; 
+                        return false;
                     }
 
                     var downloadDir = Path.Combine(environmentDir, "download");
@@ -31,7 +30,7 @@ namespace next.processor.api.services
                     IsInstalled = true;
                     return true;
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
                     IsInstalled = false;

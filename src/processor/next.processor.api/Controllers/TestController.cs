@@ -1,11 +1,5 @@
-﻿using ICSharpCode.SharpZipLib.BZip2;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using next.processor.api.interfaces;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using System.Diagnostics;
-using System.Formats.Tar;
-using System.IO.Compression;
 namespace next.processor.api.Controllers
 {
     [Route("api/[controller]")]

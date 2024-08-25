@@ -6,7 +6,7 @@ namespace next.processor.api.services
 {
     public class WebFireFoxInstall(IWebInstallOperation webInstallOperation) : BaseWebInstall(webInstallOperation)
     {
-        
+
         public async override Task<bool> InstallAsync()
         {
             if (IsInstalled) return true;
