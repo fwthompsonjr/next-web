@@ -16,6 +16,7 @@ namespace next.processor.api.tests
         [InlineData(typeof(IQueueExecutor))]
         [InlineData(typeof(SearchGenerationService))]
         [InlineData(typeof(CheckContainerServices))]
+        [InlineData(typeof(CheckPostApiRequest))]
         public void CollectionCanGetInstance(Type type)
         {
             var error = Record.Exception(() =>
