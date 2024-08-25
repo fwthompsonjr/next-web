@@ -3,6 +3,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
 using System.Diagnostics;
 using Microsoft.Extensions.Options;
+using AutoMapper;
 
 namespace next.processor.api.services
 {
@@ -21,17 +22,7 @@ namespace next.processor.api.services
                         string.IsNullOrEmpty(BinaryFile)) { return false; }
 
                     var downloadDir = Path.Combine(environmentDir, "download");
-                    var profile = new FirefoxOptions
-                    {
-                        BrowserExecutableLocation = BinaryFile
-                    };
-                    profile.AddAdditionalCapability("platform", "LINUX", true);
-                    profile.AddAdditionalCapability("video", "True", true);
-                    profile.SetPreference("download.default_directory", downloadDir);
-                    profile.SetPreference("browser.safebrowsing.enabled", true);
-                    profile.SetPreference("browser.safebrowsing.malware.enabled", true);
-                    profile.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
-                    driver = new FirefoxDriver(DriverDirectory, profile);
+                    driver = GetDriver(1, downloadDir);
                     return true;
                 }
                 catch(Exception ex) 
@@ -45,6 +36,37 @@ namespace next.processor.api.services
                 }
             });
             return isverified;
+        }
+
+        private static FirefoxOptions GetOptions(int mode, string downloadDir)
+        {
+
+            var profile = new FirefoxOptions();
+            if (mode == 0)
+            {
+                profile.BrowserExecutableLocation = BinaryFile;
+            }
+
+            profile.AddArguments("-headless");
+            profile.AddArguments("--headless");
+            profile.AddAdditionalCapability("platform", "LINUX", true);
+            profile.AddAdditionalCapability("video", "True", true);
+            profile.SetPreference("download.default_directory", downloadDir);
+            profile.SetPreference("browser.safebrowsing.enabled", true);
+            profile.SetPreference("browser.safebrowsing.malware.enabled", true);
+            profile.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
+            return profile;
+        }
+        private static FirefoxDriver GetDriver(int mode, string downloadDir)
+        {
+            var options = GetOptions(mode, downloadDir);
+            var driver = mode switch
+            {
+                0 => new FirefoxDriver(DriverDirectory, options),
+                1 => new FirefoxDriver(options),
+                _ => new FirefoxDriver()
+            };
+            return driver;
         }
 
         private static string DriverDirectory => driverDirectory ??= GetDriverDirectoryName();

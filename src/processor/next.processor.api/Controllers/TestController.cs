@@ -16,8 +16,6 @@ namespace next.processor.api.Controllers
         [HttpGet("install-browser")]
         public async Task<ActionResult> BrowserInstallAsync()
         {
-            var environmentDir = Environment.GetEnvironmentVariable("HOME");
-            if (string.IsNullOrEmpty(environmentDir)) { return BadRequest("Environment variable HOME not found"); }
             var service = _provider.GetKeyedService<IWebContainerInstall>("firefox");
             if (service == null) { return BadRequest("Unable to create installation instance"); }
             var extracted = await service.InstallAsync();
