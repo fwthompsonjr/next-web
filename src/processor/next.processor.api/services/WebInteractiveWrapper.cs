@@ -1,5 +1,6 @@
 ﻿using legallead.records.search.Classes;
 using legallead.records.search.Models;
+using next.processor.api.backing;
 using next.processor.api.interfaces;
 using System.Diagnostics.CodeAnalysis;
 
@@ -10,7 +11,10 @@ namespace next.processor.api.services
     {
         public WebFetchResult? Fetch(WebInteractive web)
         {
-            return web.Fetch();
+            var containerized = new ContainerizedWebInteractive(web);
+            return containerized.Fetch();
         }
+
+
     }
 }
