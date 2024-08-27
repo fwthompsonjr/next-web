@@ -1,4 +1,4 @@
-name: "Deploy: Oxford.Reader API"
+name: "Deploy: Oxford.Reader.Service"
 env:
   AWS_REGION: "us-east-2"
   ECR_REPOSITORY: nextprocessorapi                      # set this to your Amazon ECR repository name
@@ -19,7 +19,7 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: contains( github.event.pull_request.labels.*.name, 'processor')
     environment: production
 
