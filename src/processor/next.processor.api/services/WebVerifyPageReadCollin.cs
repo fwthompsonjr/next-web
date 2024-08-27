@@ -11,7 +11,8 @@ namespace next.processor.api.services
         protected virtual int WebId => 0;
         public async override Task<bool> InstallAsync()
         {
-            var id = WebId; // collin
+            if (IsInstalled) return true;
+            var id = WebId;
             var interactive = GetWeb(id);
             if (interactive == null) return false;
             var sut = new ContainerizedWebInteractive(interactive);
@@ -31,8 +32,10 @@ namespace next.processor.api.services
             return IsInstalled;
         }
 
-        protected static WebInteractive? GetWeb(int index)
+        protected virtual WebInteractive? GetWeb(int index)
         {
+            var max = collection.Count - 1;
+            if (index < 0 || index > max) return null;
             var payload = GetUserSearchPayload(index);
             var search = payload.ToInstance<UserSearchRequest>();
             if (search == null) return null;
@@ -41,9 +44,9 @@ namespace next.processor.api.services
 
         private static string GetUserSearchPayload(int index)
         {
-            List<string> collection = [CollinSettings, DentonSettings, HarrisSettings, TarrantSettings];
             return collection[index];
         }
+        private static readonly List<string> collection = [CollinSettings, DentonSettings, HarrisSettings, TarrantSettings];
 
         private static string? collinSettings;
         private static string? dentonSettings;

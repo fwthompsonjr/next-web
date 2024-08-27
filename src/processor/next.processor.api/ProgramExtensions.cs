@@ -28,6 +28,9 @@ namespace next.processor.api
             services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("geckodriver");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyInstall>("verification");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadCollin>("read-collin");
+            services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadDenton>("read-denton");
+            services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadHarris>("read-harris");
+            services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadTarrant>("read-tarrant");
 
             // queue processes
             services.AddKeyedTransient<IQueueProcess, QueueProcessBegin>("begin");

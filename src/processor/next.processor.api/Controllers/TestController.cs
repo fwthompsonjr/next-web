@@ -47,5 +47,35 @@ namespace next.processor.api.Controllers
             return Ok("test is successful.");
         }
 
+        [HttpGet("read-check-denton")]
+        public async Task<ActionResult> ReadDentonDataAsync()
+        {
+            var service = _provider.GetKeyedService<IWebContainerInstall>("read-denton");
+            if (service == null) { return BadRequest("Unable to create test instance"); }
+            var extracted = await service.InstallAsync();
+            if (!extracted) { return BadRequest("Failed to execute test component"); }
+            return Ok("test is successful.");
+        }
+
+        [HttpGet("read-check-harris")]
+        public async Task<ActionResult> ReadHarrisDataAsync()
+        {
+            var service = _provider.GetKeyedService<IWebContainerInstall>("read-harris");
+            if (service == null) { return BadRequest("Unable to create test instance"); }
+            var extracted = await service.InstallAsync();
+            if (!extracted) { return BadRequest("Failed to execute test component"); }
+            return Ok("test is successful.");
+        }
+
+        [HttpGet("read-check-tarrant")]
+        public async Task<ActionResult> ReadTarrantDataAsync()
+        {
+            var service = _provider.GetKeyedService<IWebContainerInstall>("read-tarrant");
+            if (service == null) { return BadRequest("Unable to create test instance"); }
+            var extracted = await service.InstallAsync();
+            if (!extracted) { return BadRequest("Failed to execute test component"); }
+            return Ok("test is successful.");
+        }
+
     }
 }

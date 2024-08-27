@@ -11,15 +11,5 @@ namespace next.processor.api.backing
         {
             return interactive.Fetch();
         }
-
-        public WebFetchResult Temporary()
-        {
-
-            var fallbak = new WebFetchResult();
-            if (interactive is not WebInteractive mysearch) return fallbak;
-            XmlContentHolder results = new SettingsManager().GetOutput(mysearch);
-            List<HLinkDataRow> cases = WebUtilities.GetCases(mysearch);
-            return fallbak;
-        }
     }
 }
