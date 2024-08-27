@@ -82,9 +82,11 @@ namespace next.processor.api.services
             {
                 Id = id,
                 Message = message,
-                Data = details
+                Data = details,
+                CreateDate = DateTime.UtcNow,
             };
             issue.AppendSource();
+            issue.Log();
             _ = await GetApiResponseAsync(issue, uri);
         }
 

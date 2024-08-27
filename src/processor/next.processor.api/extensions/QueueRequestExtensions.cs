@@ -64,6 +64,15 @@ namespace next.processor.api.extensions
             if (AppNames.Count == 0) return;
             request.Source = AppNames[0];
         }
+
+        public static void Log(this QueueReportIssueRequest request)
+        {
+            const string name = "internal.error.log";
+            var expiration = TimeSpan.FromDays(7);
+            var item = new TrackErrorModel { Data = request };
+            TrackEventService.AppendItem(name, item, expiration);
+        }
+
         internal static T? ToInstance<T>(this string? json)
         {
             try
