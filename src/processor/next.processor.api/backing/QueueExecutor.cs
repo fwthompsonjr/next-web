@@ -120,7 +120,8 @@ namespace next.processor.api.backing
             "geckodriver",
             "verification",
             "read-collin",
-            "read-denton"
+            "read-denton",
+            "read-tarrant"
         ];
         private static readonly object locker = new();
     }
