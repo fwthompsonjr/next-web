@@ -36,6 +36,10 @@ namespace next.processor.api.tests.controllers
                 collection.AddKeyedSingleton("firefox", mockinstaller.Object);
                 collection.AddKeyedSingleton("geckodriver", mockinstaller.Object);
                 collection.AddKeyedSingleton("verification", mockinstaller.Object);
+                collection.AddKeyedSingleton("read-collin", mockinstaller.Object);
+                collection.AddKeyedSingleton("read-denton", mockinstaller.Object);
+                collection.AddKeyedSingleton("read-harris", mockinstaller.Object);
+                collection.AddKeyedSingleton("read-tarrant", mockinstaller.Object);
                 collection.AddScoped(a =>
                 {
                     var controller = new HomeController()

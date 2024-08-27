@@ -1,0 +1,16 @@
+{
+	"state": "tx",
+	"county": {
+		"name": "tarrant",
+		"value": 28330
+	},
+	"details": [
+		{
+			"name": "Search Type",
+			"text": "All CCL Courts",
+			"value": "2"
+		}
+	],
+	"start": 1707696000000,
+	"end": 1707782400000
+}

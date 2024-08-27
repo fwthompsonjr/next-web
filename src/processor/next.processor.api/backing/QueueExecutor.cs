@@ -51,7 +51,7 @@ namespace next.processor.api.backing
             }
             try
             {
-                var isready = await CanExecute();
+                var isready = await CanExecuteAsync();
                 if (!isready) return;
                 var parent = GetInstance(_queueNames[0]);
                 var children = _queueNames.Where(x => !x.Equals(_queueNames[0])).ToList();
@@ -81,9 +81,9 @@ namespace next.processor.api.backing
             }
         }
 
-        private async Task<bool> CanExecute()
+        private async Task<bool> CanExecuteAsync()
         {
-            var installers = _installNames.Select(x => GetInstaller(x)).ToList();
+            var installers = _installNames.Select(GetInstaller).ToList();
             if (installers.Exists(x => x == null)) return false;
             var responses = new List<bool>();
             foreach (var installer in installers)
@@ -115,7 +115,14 @@ namespace next.processor.api.backing
         }
 
         private static readonly List<string> _queueNames = ["begin", "parameter", "search"];
-        private static readonly List<string> _installNames = ["firefox", "geckodriver", "verification"];
+        private static readonly List<string> _installNames = [
+            "firefox",
+            "geckodriver",
+            "verification",
+            "read-collin",
+            "read-denton",
+            "read-tarrant"
+        ];
         private static readonly object locker = new();
     }
 }

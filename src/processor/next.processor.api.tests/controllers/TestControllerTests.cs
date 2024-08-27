@@ -21,6 +21,10 @@ namespace next.processor.api.tests.controllers
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        [InlineData(6)]
         public async Task ControllerCanExecuteLandingAsync(int contextId)
         {
             var error = await Record.ExceptionAsync(async () =>
@@ -32,6 +36,10 @@ namespace next.processor.api.tests.controllers
                     0 => await controller.BrowserInstallAsync(),
                     1 => await controller.InstallAsync(),
                     2 => await controller.VerifyAsync(),
+                    3 => await controller.ReadCollinDataAsync(),
+                    4 => await controller.ReadDentonDataAsync(),
+                    5 => await controller.ReadHarrisDataAsync(),
+                    6 => await controller.ReadTarrantDataAsync(),
                     _ => null
                 };
                 Assert.NotNull(action);
@@ -40,18 +48,3 @@ namespace next.processor.api.tests.controllers
         }
     }
 }
-/*
-using Microsoft.Extensions.DependencyInjection;
-using next.processor.api.Controllers;
-
-namespace next.processor.api.tests.controllers
-{
-    public class HomeControllerTests : ControllerTestBase
-    {
-
-        
-    }
-}
-
-
-*/

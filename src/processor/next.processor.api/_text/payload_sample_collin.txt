@@ -1,0 +1,16 @@
+{
+	"state": "tx",
+	"county": {
+		"name": "collin",
+		"value": 26550
+	},
+	"details": [
+		{
+			"name": "Search Type",
+			"text": "criminal case records",
+			"value": "0"
+		}
+	],
+	"start": 1722802866628,
+	"end": 1722889266628
+}

@@ -51,6 +51,10 @@ namespace next.processor.api.tests
         [InlineData("firefox")]
         [InlineData("geckodriver")]
         [InlineData("verification")]
+        [InlineData("read-collin")]
+        [InlineData("read-denton")]
+        [InlineData("read-harris")]
+        [InlineData("read-tarrant")]
         public void CollectionCanGetKeyedInstaller(string name)
         {
             var error = Record.Exception(() =>

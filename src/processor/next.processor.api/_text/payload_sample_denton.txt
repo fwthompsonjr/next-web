@@ -1,0 +1,21 @@
+{
+	"state": "tx",
+	"county": {
+		"name": "denton",
+		"value": 26730
+	},
+	"details": [
+		{
+			"name": "Court Selection",
+			"text": "All County Courts",
+			"value": "9"
+		},
+		{
+			"name": "Case Type",
+			"text": "JP And County Court: Civil, Family And Probate",
+			"value": "0"
+		}
+	],
+	"start": 1723420800000,
+	"end": 1723507200000
+}

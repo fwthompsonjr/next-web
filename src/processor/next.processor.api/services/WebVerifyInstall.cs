@@ -7,8 +7,8 @@ namespace next.processor.api.services
 {
     public class WebVerifyInstall : IWebContainerInstall
     {
-        public bool IsInstalled { get; private set; }
-        public async Task<bool> InstallAsync()
+        public bool IsInstalled { get; protected set; }
+        public virtual async Task<bool> InstallAsync()
         {
             if (IsInstalled) return true;
             var isverified = await Task.Run(() =>
@@ -63,7 +63,7 @@ namespace next.processor.api.services
             profile.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
             return profile;
         }
-        private static FirefoxDriver GetDriver(int mode, string downloadDir)
+        protected static FirefoxDriver GetDriver(int mode, string downloadDir)
         {
             var options = GetOptions(mode, downloadDir);
             var driver = mode switch

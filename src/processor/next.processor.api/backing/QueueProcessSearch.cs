@@ -82,7 +82,8 @@ namespace next.processor.api.backing
 
         public WebFetchResult? Fetch(WebInteractive web)
         {
-            return _web.Fetch(web);
+            var thewrapper = new ContainerizedWebInteractive(web);
+            return thewrapper.Fetch();
         }
     }
 }
