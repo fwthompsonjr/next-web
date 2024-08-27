@@ -27,6 +27,7 @@ namespace next.processor.api
             services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxInstall>("firefox");
             services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("geckodriver");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyInstall>("verification");
+            services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadCollin>("read-collin");
 
             // queue processes
             services.AddKeyedTransient<IQueueProcess, QueueProcessBegin>("begin");
@@ -97,7 +98,7 @@ namespace next.processor.api
                 pattern: "{controller=Home}/{action=Index}/{id?}");
         }
 
-        
+
         public static void SetSwaggerOptions(this WebApplication app, bool isDevelopment)
         {
             if (!isDevelopment) { return; }

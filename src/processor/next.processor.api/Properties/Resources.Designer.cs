@@ -99,7 +99,7 @@ namespace next.processor.api.Properties {
         ///	{
         ///		&quot;name&quot;: &quot;record.processor&quot;,
         ///		&quot;setting&quot;: {
-        ///			&quot;enabled&quot;: false,
+        ///			&quot;enabled&quot;: true,
         ///			&quot;delay&quot;: 30,
         ///			&quot;interval&quot;: 1
         ///		}
@@ -167,6 +167,107 @@ namespace next.processor.api.Properties {
         internal static string home_layout {
             get {
                 return ResourceManager.GetString("home_layout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;state&quot;: &quot;tx&quot;,
+        ///	&quot;county&quot;: {
+        ///		&quot;name&quot;: &quot;collin&quot;,
+        ///		&quot;value&quot;: 26550
+        ///	},
+        ///	&quot;details&quot;: [
+        ///		{
+        ///			&quot;name&quot;: &quot;Search Type&quot;,
+        ///			&quot;text&quot;: &quot;criminal case records&quot;,
+        ///			&quot;value&quot;: &quot;0&quot;
+        ///		}
+        ///	],
+        ///	&quot;start&quot;: 1722802866628,
+        ///	&quot;end&quot;: 1722889266628
+        ///}.
+        /// </summary>
+        internal static string payload_sample_collin {
+            get {
+                return ResourceManager.GetString("payload_sample_collin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;state&quot;: &quot;tx&quot;,
+        ///	&quot;county&quot;: {
+        ///		&quot;name&quot;: &quot;denton&quot;,
+        ///		&quot;value&quot;: 26730
+        ///	},
+        ///	&quot;details&quot;: [
+        ///		{
+        ///			&quot;name&quot;: &quot;Court Selection&quot;,
+        ///			&quot;text&quot;: &quot;All County Courts&quot;,
+        ///			&quot;value&quot;: &quot;9&quot;
+        ///		},
+        ///		{
+        ///			&quot;name&quot;: &quot;Case Type&quot;,
+        ///			&quot;text&quot;: &quot;JP And County Court: Civil, Family And Probate&quot;,
+        ///			&quot;value&quot;: &quot;0&quot;
+        ///		}
+        ///	],
+        ///	&quot;start&quot;: 1723420800000,
+        ///	&quot;end&quot;: 1723507200000
+        ///}.
+        /// </summary>
+        internal static string payload_sample_denton {
+            get {
+                return ResourceManager.GetString("payload_sample_denton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;state&quot;: &quot;tx&quot;,
+        ///	&quot;county&quot;: {
+        ///		&quot;name&quot;: &quot;harris&quot;,
+        ///		&quot;value&quot;: 27130
+        ///	},
+        ///	&quot;details&quot;: [
+        ///		{
+        ///			&quot;name&quot;: &quot;Search Type&quot;,
+        ///			&quot;text&quot;: &quot;All Civil Courts&quot;,
+        ///			&quot;value&quot;: &quot;0&quot;
+        ///		}
+        ///	],
+        ///	&quot;start&quot;: 1696118400000,
+        ///	&quot;end&quot;: 1696636800000
+        ///}.
+        /// </summary>
+        internal static string payload_sample_harris {
+            get {
+                return ResourceManager.GetString("payload_sample_harris", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;state&quot;: &quot;tx&quot;,
+        ///	&quot;county&quot;: {
+        ///		&quot;name&quot;: &quot;tarrant&quot;,
+        ///		&quot;value&quot;: 28330
+        ///	},
+        ///	&quot;details&quot;: [
+        ///		{
+        ///			&quot;name&quot;: &quot;Search Type&quot;,
+        ///			&quot;text&quot;: &quot;All CCL Courts&quot;,
+        ///			&quot;value&quot;: &quot;2&quot;
+        ///		}
+        ///	],
+        ///	&quot;start&quot;: 1707696000000,
+        ///	&quot;end&quot;: 1707782400000
+        ///}.
+        /// </summary>
+        internal static string payload_sample_tarrant {
+            get {
+                return ResourceManager.GetString("payload_sample_tarrant", resourceCulture);
             }
         }
     }

@@ -130,4 +130,16 @@
   <data name="home_layout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\home_layout.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="payload_sample_collin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\payload_sample_collin.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="payload_sample_denton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\payload_sample_denton.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="payload_sample_harris" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\payload_sample_harris.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="payload_sample_tarrant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_text\payload_sample_tarrant.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

@@ -37,5 +37,15 @@ namespace next.processor.api.Controllers
             return Ok("verification is successful.");
         }
 
+        [HttpGet("read-check-collin")]
+        public async Task<ActionResult> ReadCollinDataAsync()
+        {
+            var service = _provider.GetKeyedService<IWebContainerInstall>("read-collin");
+            if (service == null) { return BadRequest("Unable to create test instance"); }
+            var extracted = await service.InstallAsync();
+            if (!extracted) { return BadRequest("Failed to execute test component"); }
+            return Ok("test is successful.");
+        }
+
     }
 }
