@@ -4,7 +4,7 @@ using next.processor.api.interfaces;
 
 namespace next.processor.api.tests
 {
-    internal class MockSearchGenerationService(IQueueExecutor? executor = null) : SearchGenerationService(GetExecutor())
+    internal class MockSearchGenerationService() : SearchGenerationService(GetExecutor())
     {
 
         public void Work()
