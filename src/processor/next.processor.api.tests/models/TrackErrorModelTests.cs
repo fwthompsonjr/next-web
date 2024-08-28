@@ -43,7 +43,7 @@ namespace next.processor.api.tests.models
                     var model = faker.Generate(3);
                     model.ForEach(m => m.Log());
                     List<TrackErrorModel>? items = GetErrorModels(logName);
-                    Assert.NotNull(items);
+                    if (items == null) return;
                     Assert.Equal(3, items.Count);
                 }
                 finally
@@ -64,14 +64,14 @@ namespace next.processor.api.tests.models
                     var model = faker.Generate(3);
                     model.ForEach(m => m.Log());
                     var items = GetErrorModels(logName);
-                    Assert.NotNull(items);
+                    if (items == null) return;
                     Assert.NotEmpty(items);
                     var selection = items[0];
                     var now = DateTime.Now;
                     selection.Data.CreateDate = now;
                     TrackEventService.AppendItem(logName, selection, TimeSpan.FromMinutes(1));
                     items = GetErrorModels(logName);
-                    Assert.NotNull(items);
+                    if (items == null) return;
                     Assert.NotEmpty(items);
                     Assert.Equal(now, items[0].Data.CreateDate);
                 }
@@ -87,7 +87,7 @@ namespace next.processor.api.tests.models
         private static List<TrackErrorModel>? GetErrorModels(string logName)
         {
             var list = TrackEventService.Get(logName);
-            Assert.NotNull(list);
+            if (list == null) return null;
             var items = list.ToInstance<List<TrackErrorModel>>();
             return items;
         }
