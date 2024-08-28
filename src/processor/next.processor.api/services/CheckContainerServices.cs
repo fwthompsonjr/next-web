@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using next.processor.api.interfaces;
+using System.Collections.ObjectModel;
 
 namespace next.processor.api.services
 {
@@ -9,12 +10,18 @@ namespace next.processor.api.services
 
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
-            var status = executor.IsReady();
-            var health = status switch
+            var available = executor.IsReadyCount();
+            var actual = executor.InstallerCount();
+            var status = 0;
+            if (available > 0) status = 1;
+            if (available == actual) status = 2;
+            var details = executor.GetDetails();
+            var data = new ReadOnlyDictionary<string, object>(details);
+            HealthCheckResult health = status switch
             {
-                true => HealthCheckResult.Healthy("Container services are available."),
-                false => HealthCheckResult.Unhealthy("1 or more Container services are inactive."),
-                _ => HealthCheckResult.Degraded("Container services are not ready.")
+                2 => HealthCheckResult.Healthy("Container services are available.", data),
+                0 => HealthCheckResult.Unhealthy("Container services are not ready.", null, data),
+                _ => HealthCheckResult.Degraded("1 or more Container services are inactive.", null, data)
             };
             return Task.FromResult(health);
         }

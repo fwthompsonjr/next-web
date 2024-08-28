@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using next.processor.api.models;
 using next.processor.api.extensions;
+using next.processor.api.models;
 using System.Text;
 
 namespace next.processor.api.tests.models
@@ -48,7 +48,7 @@ namespace next.processor.api.tests.models
                 finally
                 {
                     TrackEventService.Clear();
-                } 
+                }
             }
         }
 

@@ -1,11 +1,6 @@
 ﻿using Bogus;
 using next.processor.api.interfaces;
 using next.processor.api.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace next.processor.api.tests.models
 {

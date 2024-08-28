@@ -5,12 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>421af091-8289-46d2-9ece-c9b4576e6c4e</UserSecretsId>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <None Remove="_mozilla\firefox-129.0.2.tar.bz2" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
@@ -25,7 +20,6 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="PortableFirefox" Version="129.0.17" />
 		<PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
 		<PackageReference Include="SharpZipLib" Version="1.4.2" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -33,13 +27,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Remove="C:\_d\next-web\src\processor\next.processor.api\bin\Debug\net8.0\\geckodriver" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="$(TargetDir)\geckodriver" CopyToPublishDirectory="Always">
-			<Link>geckodriver</Link>
-		</Content>
 		<Content Include="_mozilla\firefox-129.0.2.tar.bz2">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>

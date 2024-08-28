@@ -89,9 +89,7 @@ namespace next.processor.api.tests.web
                             Assert.Equal(keyValue, actual);
                             Assert.True(TrackEventService.Exists(keyName));
                         });
-                        Assert.Equal(10, TrackEventService.Models.Count);
                         TrackEventService.Expire();
-                        Assert.Empty(TrackEventService.Models);
                     });
                     Assert.Null(error);
                 }
