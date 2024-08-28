@@ -6,8 +6,9 @@ using next.processor.api.utility;
 namespace next.processor.api.Controllers
 {
 
-    public class HomeController(IQueueExecutor queue) : Controller
+    public class HomeController(IQueueExecutor queue, IConfiguration configuration) : Controller
     {
+        private readonly IConfiguration config = configuration;
         private readonly IQueueExecutor queueExecutor = queue;
         public IActionResult Index()
         {
@@ -48,7 +49,12 @@ namespace next.processor.api.Controllers
         public IActionResult Clear([FromQuery] string? name)
         {
             if (!ModelState.IsValid) RedirectToAction("Index", "Home");
-
+            if (name != null && name.Equals("stop"))
+            {
+                config["service_installation"] = "false";
+                config["queue_process_enabled"] = "false";
+                return RedirectToAction("Status");
+            }
             if (name != null && name.Equals("errors"))
             {
                 var selection = TrackEventService.Models.Find(x => x.Name == Constants.ErrorLogName);

@@ -45,6 +45,7 @@
 										<a class="link-primary menu-option" href="/">Home</a>
 										<a class="link-primary menu-option" href="/status">Status</a> | 
 										<a class="link-primary menu-option" href="/clear?name=errors">Clear Errors</a>
+										<a class="link-primary menu-option" href="/clear?name=stop">Stop Services</a>
 									</div>
 								</div>
 								<div id="detail-01" class="row align-items-start">

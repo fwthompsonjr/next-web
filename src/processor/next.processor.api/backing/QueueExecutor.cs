@@ -131,6 +131,8 @@ namespace next.processor.api.backing
                 var rsp = await installer.InstallAsync();
                 responses.Add(rsp);
             }
+            var isQueueEnabled = _configuration.GetValue<bool>("queue_process_enabled");
+            if (!isQueueEnabled) return false;
             return !responses.Exists(a => !a);
         }
 
@@ -153,10 +155,7 @@ namespace next.processor.api.backing
         private static readonly List<string> _installNames = [
             "firefox",
             "geckodriver",
-            "read-collin",
-            "read-denton",
-            "read-harris",
-            "read-tarrant"
+            "verification"
         ];
         private static readonly object locker = new();
     }

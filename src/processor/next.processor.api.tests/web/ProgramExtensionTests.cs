@@ -42,6 +42,20 @@ namespace next.processor.api.tests
             Assert.True(isInstallationEnabled);
         }
 
+        [Fact]
+        public void QueueProcessingShouldBeSet()
+        {
+            // expected value for queue processing = false
+            // the queue process should only be established 
+            // once the installation behaviors are confirmed
+            const bool expected = false;
+            var provider = GetServiceProvider();
+            var service = provider.GetService<IConfiguration>();
+            Assert.NotNull(service);
+            var isQueueEnabled = service.GetValue<bool>("queue_process_enabled");
+            Assert.Equal(expected, isQueueEnabled);
+        }
+
         [Theory]
         [InlineData("begin")]
         [InlineData("parameter")]
