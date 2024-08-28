@@ -46,3 +46,7 @@ span.data-label {
     margin-right: 10px;
     width: 100px;
 }
+
+a.menu-option {
+    margin-right: 5px;
+}

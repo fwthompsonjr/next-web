@@ -42,8 +42,8 @@
 								</h4>
 								<div class="row align-items-start">
 									<div class="col text-start">
-										<a class="text-primary" href="/">Home</a>
-										<a class="text-primary" href="/status">Status</a>
+										<a class="link-primary menu-option" href="/">Home</a>
+										<a class="link-primary menu-option" href="/status">Status</a>
 									</div>
 								</div>
 								<div id="detail-01" class="row">
