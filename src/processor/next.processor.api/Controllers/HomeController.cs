@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using next.processor.api.interfaces;
 using next.processor.api.services;
+using next.processor.api.utility;
 
 namespace next.processor.api.Controllers
 {
@@ -40,6 +41,20 @@ namespace next.processor.api.Controllers
                 Content = content,
                 ContentType = "text.html"
             };
+        }
+
+
+        [HttpGet("clear")]
+        public IActionResult Clear([FromQuery] string? name)
+        {
+            if (!ModelState.IsValid) RedirectToAction("Index", "Home");
+
+            if (name != null && name.Equals("errors"))
+            {
+                var selection = TrackEventService.Models.Find(x => x.Name == Constants.ErrorLogName);
+                if (selection != null) TrackEventService.Models.Remove(selection);
+            }
+            return RedirectToAction("Status");
         }
     }
 }
