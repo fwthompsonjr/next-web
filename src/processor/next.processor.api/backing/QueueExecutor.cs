@@ -148,9 +148,9 @@ namespace next.processor.api.backing
         private static readonly List<string> _installNames = [
             "firefox",
             "geckodriver",
-            "verification",
             "read-collin",
             "read-denton",
+            "read-harris",
             "read-tarrant"
         ];
         private static readonly object locker = new();
