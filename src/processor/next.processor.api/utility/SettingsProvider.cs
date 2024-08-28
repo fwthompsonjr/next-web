@@ -32,7 +32,7 @@ namespace next.processor.api.utility
 
         private static IConfiguration? _configuration;
 
-        private static IConfiguration GetConfiguration()
+        public static IConfiguration GetConfiguration()
         {
             var builder = new ConfigurationBuilder();
             // GetConfigJson method should get the JSON string from the source.

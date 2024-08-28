@@ -55,9 +55,10 @@ namespace next.processor.api.services
         private static FirefoxOptions GetOptions(int mode, string downloadDir)
         {
 
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             var profile = new FirefoxOptions();
             var binaryFile = GetBinaryFileName();
-            if (mode == 0 || File.Exists(binaryFile))
+            if (mode == 0 || File.Exists(binaryFile) && !isWindows)
             {   
                 profile.BrowserExecutableLocation = binaryFile;
             }

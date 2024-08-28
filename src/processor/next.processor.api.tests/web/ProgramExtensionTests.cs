@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using next.processor.api.backing;
 using next.processor.api.interfaces;
 using next.processor.api.services;
+using next.processor.api.utility;
 
 namespace next.processor.api.tests
 {
@@ -38,8 +39,57 @@ namespace next.processor.api.tests
             var provider = GetServiceProvider();
             var service = provider.GetService<IConfiguration>();
             Assert.NotNull(service);
-            var isInstallationEnabled = service.GetValue<bool>("service_installation");
+            var isInstallationEnabled = service.GetValue<bool>(Constants.KeyServiceInstallation);
             Assert.True(isInstallationEnabled);
+        }
+
+        [Fact]
+        public void QueueProcessingShouldBeSet()
+        {
+            // expected value for queue processing = false
+            // the queue process should only be established 
+            // once the installation behaviors are confirmed
+            const bool expected = false;
+            var provider = GetServiceProvider();
+            var service = provider.GetService<IConfiguration>();
+            Assert.NotNull(service);
+            var isQueueEnabled = service.GetValue<bool>(Constants.KeyQueueProcessEnabled);
+            Assert.Equal(expected, isQueueEnabled);
+        }
+        [Fact]
+        public void QueueProcessingShouldInitializeAsNotReady()
+        {
+            // expected value for queue readiness = false
+            const bool expected = false;
+            var provider = GetServiceProvider();
+            var service = provider.GetService<IQueueExecutor>();
+            Assert.NotNull(service);
+            var isQueueEnabled = service.IsReady();
+            Assert.Equal(expected, isQueueEnabled);
+        }
+
+        [Fact]
+        public void QueueProcessingShouldInitializeWithNoneReady()
+        {
+            // expected value for queue readiness = 0
+            const int expected = 0;
+            var provider = GetServiceProvider();
+            var service = provider.GetService<IQueueExecutor>();
+            Assert.NotNull(service);
+            var actual = service.IsReadyCount();
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void QueueProcessingShouldInitializeExpectedInstallers()
+        {
+            // expected value for queue initializers = 3
+            const int expected = 3;
+            var provider = GetServiceProvider();
+            var service = provider.GetService<IQueueExecutor>();
+            Assert.NotNull(service);
+            var actual = service.InstallerCount();
+            Assert.Equal(expected, actual);
         }
 
         [Theory]

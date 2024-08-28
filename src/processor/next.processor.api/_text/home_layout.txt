@@ -59,7 +59,7 @@
 										<span name="detail-02-label" class="text-primary">Date: </span>
 									</div>
 									<div class="col-6 text-start">
-										<span name="detail-02-caption" class="text-secondary">-</span>
+										<span name="detail-02-caption">-</span>
 									</div>
 								</div>
 								<div id="detail-03" class="row">

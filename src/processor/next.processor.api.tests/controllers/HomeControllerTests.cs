@@ -50,5 +50,21 @@ namespace next.processor.api.tests.controllers
             });
             Assert.Null(error);
         }
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("stop")]
+        [InlineData("nothing")]
+        [InlineData("errors")]
+        public void ControllerCanClearStatus(string message)
+        {
+            var provider = GetProvider();
+            var error = Record.Exception(() =>
+            {
+                var controller = provider.GetRequiredService<HomeController>();
+                _ = controller.Clear(message);
+            });
+            Assert.Null(error);
+        }
     }
 }

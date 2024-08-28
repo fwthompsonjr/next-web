@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.Controllers;
 using next.processor.api.interfaces;
+using next.processor.api.utility;
 
 namespace next.processor.api.tests.controllers
 {
@@ -44,16 +45,16 @@ namespace next.processor.api.tests.controllers
                 collection.AddKeyedSingleton("read-denton", mockinstaller.Object);
                 collection.AddKeyedSingleton("read-harris", mockinstaller.Object);
                 collection.AddKeyedSingleton("read-tarrant", mockinstaller.Object);
-                collection.AddScoped(a =>
+                collection.AddSingleton(a =>
                 {
 
-                    var controller = new HomeController(svc.Object)
+                    var controller = new HomeController(svc.Object, SettingsProvider.GetConfiguration())
                     {
                         ControllerContext = controllerContext
                     };
                     return controller;
                 });
-                collection.AddScoped(a =>
+                collection.AddSingleton(a =>
                 {
                     var controller = new TestController(a)
                     {
