@@ -1,5 +1,6 @@
 ﻿using next.processor.api.interfaces;
 using next.processor.api.models;
+using next.processor.api.utility;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.processor.api.backing
@@ -85,22 +86,7 @@ namespace next.processor.api.backing
             {
                 var isready = await CanExecuteAsync();
                 if (!isready) return;
-                var parent = GetInstance(_queueNames[0]);
-                var children = _queueNames.Where(x => !x.Equals(_queueNames[0])).ToList();
-                if (parent == null) return;
-                var response = await parent.ExecuteAsync(null);
-                if (response == null || response.CurrentBatch.Count == 0) return;
-                var workers = children.Select(GetInstance).ToList();
-                while (response.IterateNext())
-                {
-                    Current = response.QueuedRecord;
-                    foreach (var worker in workers)
-                    {
-                        if (worker == null) continue;
-                        _ = await worker.ExecuteAsync(response);
-                        if (!worker.IsSuccess) break;
-                    }
-                }
+                await ExecuteBatchAsync();
             }
             catch (Exception ex)
             {
@@ -113,10 +99,37 @@ namespace next.processor.api.backing
             }
         }
 
+        private bool IsQueueServiceAvailable()
+        {
+            return _configuration.GetValue<bool>(Constants.KeyQueueProcessEnabled);
+        }
+
+        [ExcludeFromCodeCoverage(Justification = "Deferred unit testing this method until other behaviors are complete.")]
+        private async Task ExecuteBatchAsync()
+        {
+            var parent = GetInstance(_queueNames[0]);
+            var children = _queueNames.Where(x => !x.Equals(_queueNames[0])).ToList();
+            if (parent == null) return;
+            var response = await parent.ExecuteAsync(null);
+            if (response == null || response.CurrentBatch.Count == 0) return;
+            var workers = children.Select(GetInstance).ToList();
+            while (response.IterateNext())
+            {
+                Current = response.QueuedRecord;
+                foreach (var worker in workers)
+                {
+                    if (worker == null) continue;
+                    _ = await worker.ExecuteAsync(response);
+                    if (!worker.IsSuccess) break;
+                }
+                if (!IsQueueServiceAvailable()) break;
+            }
+        }
+
         [ExcludeFromCodeCoverage(Justification = "Private member called and test from public accessor")]
         private async Task<bool> CanExecuteAsync()
         {
-            var isInstallationEnabled = _configuration.GetValue<bool>("service_installation");
+            var isInstallationEnabled = _configuration.GetValue<bool>(Constants.KeyServiceInstallation);
             if (!isInstallationEnabled) return false;
             var installers = _installNames.Select(GetInstaller).ToList();
             if (installers.Exists(x => x == null)) return false;
@@ -131,11 +144,10 @@ namespace next.processor.api.backing
                 var rsp = await installer.InstallAsync();
                 responses.Add(rsp);
             }
-            var isQueueEnabled = _configuration.GetValue<bool>("queue_process_enabled");
+            var isQueueEnabled = IsQueueServiceAvailable();
             if (!isQueueEnabled) return false;
             return !responses.Exists(a => !a);
         }
-
 
         [ExcludeFromCodeCoverage(Justification = "Private member called and test from public accessor")]
         private async Task ReportIssueAsync(Exception exception)

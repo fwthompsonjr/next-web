@@ -51,8 +51,8 @@ namespace next.processor.api.Controllers
             if (!ModelState.IsValid) RedirectToAction("Index", "Home");
             if (name != null && name.Equals("stop"))
             {
-                config["service_installation"] = "false";
-                config["queue_process_enabled"] = "false";
+                config[Constants.KeyServiceInstallation] = "false";
+                config[Constants.KeyQueueProcessEnabled] = "false";
                 return RedirectToAction("Status");
             }
             if (name != null && name.Equals("errors"))
