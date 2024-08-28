@@ -2,7 +2,6 @@
 using Moq;
 using next.processor.api.Controllers;
 using next.processor.api.interfaces;
-using static Microsoft.VisualStudio.Threading.AsyncReaderWriterLock;
 
 namespace next.processor.api.tests.controllers
 {
@@ -10,7 +9,7 @@ namespace next.processor.api.tests.controllers
     {
         [Fact]
         public void ControllerCanBeContructed()
-        {   
+        {
             var error = Record.Exception(() =>
             {
                 var provider = GetProvider();

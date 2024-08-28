@@ -1,5 +1,4 @@
-﻿using Bogus;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -46,7 +45,7 @@ namespace next.processor.api.tests.controllers
                 collection.AddKeyedSingleton("read-tarrant", mockinstaller.Object);
                 collection.AddScoped(a =>
                 {
-                    
+
                     var controller = new HomeController(svc.Object)
                     {
                         ControllerContext = controllerContext
