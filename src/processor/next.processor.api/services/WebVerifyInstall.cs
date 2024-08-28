@@ -11,6 +11,8 @@ namespace next.processor.api.services
         public virtual async Task<bool> InstallAsync()
         {
             if (IsInstalled) return true;
+            var binaryFile = GetBinaryFileName();
+            if (string.IsNullOrEmpty(binaryFile)) return false;
             var isverified = await Task.Run(() =>
             {
                 FirefoxDriver? driver = null;
@@ -18,8 +20,7 @@ namespace next.processor.api.services
                 {
                     var environmentDir = Environment.GetEnvironmentVariable("HOME");
                     if (string.IsNullOrEmpty(environmentDir) ||
-                        string.IsNullOrEmpty(DriverDirectory) ||
-                        string.IsNullOrEmpty(BinaryFile))
+                        string.IsNullOrEmpty(DriverDirectory))
                     {
                         IsInstalled = false;
                         return false;
@@ -50,7 +51,9 @@ namespace next.processor.api.services
             var profile = new FirefoxOptions();
             if (mode == 0)
             {
-                profile.BrowserExecutableLocation = BinaryFile;
+
+                var binaryFile = GetBinaryFileName();
+                profile.BrowserExecutableLocation = binaryFile;
             }
 
             profile.AddArguments("-headless");
@@ -86,14 +89,10 @@ namespace next.processor.api.services
             return geckoDir;
         }
 
-
-
-        private static string BinaryFile => binaryFile ??= GetBinaryFileName();
-        private static string? binaryFile;
         private static string GetBinaryFileName()
         {
             var environmentDir = Environment.GetEnvironmentVariable("HOME");
-            if (string.IsNullOrEmpty(environmentDir)) { return string.Empty; }
+            if (string.IsNullOrEmpty(environmentDir)) { return null; }
             var firefoxDir = Path.Combine(environmentDir, "firefox");
             var subfolders = 0;
             var firefoxFile = Path.Combine(firefoxDir, "firefox");

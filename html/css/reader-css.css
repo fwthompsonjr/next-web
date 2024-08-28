@@ -1,0 +1,35 @@
+﻿#invoice-card,
+#payment-card-content,
+#download-card {
+    position: absolute;
+    left: 100px;
+    top: 60px;
+    width: 75%;
+    min-width: 500px;
+}
+
+#detail-01,
+#detail-02 {
+	margin-top: 15px;
+	margin-left: 10px;
+}
+
+h5[name="detail-01-label"],
+h5[name="detail-02-label"] {
+	width: 95%;
+	border-bottom: 1px solid #444;
+}
+.hidden {
+    display: none;
+}
+
+#download-target,
+#frame-download-target {
+    display: none;
+}
+
+span.data-label {
+    display: inline-block;
+    margin-right: 10px;
+    width: 100px;
+}
