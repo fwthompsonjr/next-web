@@ -15,6 +15,7 @@ namespace next.processor.api.services
             var id = WebId;
             var interactive = GetWeb(id);
             if (interactive == null) return false;
+            LastErrorMessage = string.Empty;
             var sut = new ContainerizedWebInteractive(interactive);
             var response = await Task.Run(() =>
             {
@@ -25,6 +26,7 @@ namespace next.processor.api.services
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
+                    LastErrorMessage = ex.ToString();
                     return null;
                 }
             });

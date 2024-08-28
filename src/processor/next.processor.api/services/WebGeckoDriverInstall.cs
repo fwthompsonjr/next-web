@@ -9,6 +9,7 @@ namespace next.processor.api.services
             if (IsInstalled) return true;
             try
             {
+                LastErrorMessage = string.Empty;
                 var environmentDir = Environment.GetEnvironmentVariable("HOME");
                 if (string.IsNullOrEmpty(environmentDir)) { return false; }
                 var downloadDir = Path.Combine(environmentDir, "download");
@@ -27,8 +28,9 @@ namespace next.processor.api.services
                 IsInstalled = _fileSvc.AppendToPath(geckoFile);
                 return IsInstalled;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LastErrorMessage = ex.ToString();
                 IsInstalled = false;
                 return false;
             }
