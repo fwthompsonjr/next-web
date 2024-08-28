@@ -89,7 +89,7 @@ namespace next.processor.api.services
             return geckoDir;
         }
 
-        private static string GetBinaryFileName()
+        private static string? GetBinaryFileName()
         {
             var environmentDir = Environment.GetEnvironmentVariable("HOME");
             if (string.IsNullOrEmpty(environmentDir)) { return null; }

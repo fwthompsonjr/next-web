@@ -23,6 +23,36 @@ namespace next.processor.api.backing
             }
             return true;
         }
+        public int IsReadyCount()
+        {
+            var installers = _installNames.Select(GetInstaller).ToList();
+            var count = installers.Count(x => x != null && x.IsInstalled);
+            return count;
+        }
+        public int InstallerCount() => _installNames.Count;
+
+        public Dictionary<string, object> GetDetails()
+        {
+            var details = new Dictionary<string, object>();
+            var installers = _installNames.Select(x =>
+            {
+                var obj = GetInstaller(x);
+                var name = x.Split('-')[^1];
+                var status = obj?.IsInstalled switch
+                {
+                    true => " is installed.",
+                    false => "is not installed",
+                    _ => "is not initialized."
+                };
+                return new { name, status };
+            }
+            ).ToList();
+            installers.ForEach(i =>
+            {
+                details.Add(i.name, $"{i.name} : {i.status}");
+            });
+            return details;
+        }
 
         public IQueueProcess? GetInstance(string queueName)
         {

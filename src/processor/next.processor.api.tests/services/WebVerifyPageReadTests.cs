@@ -3,11 +3,6 @@ using legallead.records.search.Classes;
 using legallead.records.search.Models;
 using Moq;
 using next.processor.api.services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace next.processor.api.tests.services
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Bogus;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -32,7 +33,10 @@ namespace next.processor.api.tests.controllers
 
                 var collection = new ServiceCollection();
 
+                var svc = new Mock<IQueueExecutor>();
+                svc.Setup(x => x.InstallerCount()).Returns(6);
                 mockinstaller.Setup(x => x.InstallAsync()).ReturnsAsync(true);
+                collection.AddSingleton(svc);
                 collection.AddKeyedSingleton("firefox", mockinstaller.Object);
                 collection.AddKeyedSingleton("geckodriver", mockinstaller.Object);
                 collection.AddKeyedSingleton("verification", mockinstaller.Object);
@@ -42,7 +46,8 @@ namespace next.processor.api.tests.controllers
                 collection.AddKeyedSingleton("read-tarrant", mockinstaller.Object);
                 collection.AddScoped(a =>
                 {
-                    var controller = new HomeController()
+                    
+                    var controller = new HomeController(svc.Object)
                     {
                         ControllerContext = controllerContext
                     };
