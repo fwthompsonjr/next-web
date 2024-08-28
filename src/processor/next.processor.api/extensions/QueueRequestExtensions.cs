@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using next.processor.api.models;
 using next.processor.api.utility;
+using System.Text;
 
 namespace next.processor.api.extensions
 {
@@ -67,10 +68,22 @@ namespace next.processor.api.extensions
 
         public static void Log(this QueueReportIssueRequest request)
         {
-            const string name = "internal.error.log";
+            const string name = Constants.ErrorLogName;
             var expiration = TimeSpan.FromDays(7);
             var item = new TrackErrorModel { Data = request };
             TrackEventService.AppendItem(name, item, expiration);
+        }
+        public static void Log(this Exception exception)
+        {
+            var data = Encoding.UTF8.GetBytes(exception.ToString());
+            var issue = new QueueReportIssueRequest
+            {
+                Id = Guid.NewGuid().ToString(),
+                Message = exception.Message,
+                CreateDate = DateTime.UtcNow,
+                Data = data
+            };
+            issue.Log();
         }
 
         internal static T? ToInstance<T>(this string? json)

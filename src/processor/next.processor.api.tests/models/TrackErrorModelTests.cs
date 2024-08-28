@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using next.processor.api.extensions;
 using next.processor.api.models;
+using next.processor.api.utility;
 using System.Text;
 
 namespace next.processor.api.tests.models
@@ -38,7 +39,7 @@ namespace next.processor.api.tests.models
             {
                 try
                 {
-                    const string logName = "internal.error.log";
+                    const string logName = Constants.ErrorLogName;
                     var model = faker.Generate(3);
                     model.ForEach(m => m.Log());
                     List<TrackErrorModel>? items = GetErrorModels(logName);
@@ -59,7 +60,7 @@ namespace next.processor.api.tests.models
             {
                 try
                 {
-                    const string logName = "internal.error.log";
+                    const string logName = Constants.ErrorLogName;
                     var model = faker.Generate(3);
                     model.ForEach(m => m.Log());
                     var items = GetErrorModels(logName);

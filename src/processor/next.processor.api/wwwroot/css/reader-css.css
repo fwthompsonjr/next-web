@@ -16,7 +16,8 @@
     margin-left: 10px;
 }
 
-table[name="tb-detail"] {
+table[name="tb-detail"],
+table[name="tb-errors"] {
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: 10px;

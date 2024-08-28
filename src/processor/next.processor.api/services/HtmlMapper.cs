@@ -1,4 +1,7 @@
 ﻿using HtmlAgilityPack;
+using next.processor.api.extensions;
+using next.processor.api.models;
+using next.processor.api.utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
@@ -28,12 +31,13 @@ namespace next.processor.api.services
                     if (indx == 2) AlterNodeClass(find, health);
                 }
             });
+            SetCssIndex(document);
             return node.OuterHtml;
         }
 
         public static string Home(string content, Dictionary<string, object> substitutions)
         {
-            const string find = "//table[@name='tb-detail']/tbody"; 
+            const string find = "//table[@name='tb-detail']/tbody";
             var document = content.ToDocument();
             var node = document.DocumentNode;
             var tbody = node.SelectSingleNode(find);
@@ -49,6 +53,15 @@ namespace next.processor.api.services
                 builder.AppendLine(content);
             });
             tbody.InnerHtml = builder.ToString();
+            return node.OuterHtml;
+        }
+        public static string Status(string content)
+        {
+            var document = content.ToDocument();
+            var node = document.DocumentNode;
+            SetCssIndex(document);
+            var errors = TrackEventService.Get(Constants.ErrorLogName);
+            AppendErrorDetail(document, errors);
             return node.OuterHtml;
         }
 
@@ -74,6 +87,30 @@ namespace next.processor.api.services
             return document;
         }
 
+
+        private static void AppendErrorDetail(HtmlDocument document, string? errors)
+        {
+            const string find = "//table[@name='tb-errors']/tbody";
+            if (string.IsNullOrWhiteSpace(errors)) return;
+            var models = errors.ToInstance<List<TrackErrorModel>>();
+            if (models == null) return;
+            var items = models.Select(x => x.Data).ToList();
+            var details = items.Select(x => new { code = x.CreateDate.ToString("s"), message = x.Message }).ToList();
+            var node = document.DocumentNode;
+            var tbody = node.SelectSingleNode(find);
+            if (tbody == null) return;
+            var tr = tbody.SelectSingleNode("tr");
+            if (tr == null) return;
+            var template = tr.OuterHtml.Replace("template-row", "detail-row");
+            var builder = new StringBuilder();
+            details.ForEach(detail =>
+            {
+                var content = template.Replace("~0", detail.code).Replace("~1", detail.message);
+                builder.AppendLine(content);
+            });
+            tbody.InnerHtml = builder.ToString();
+        }
+
         [ExcludeFromCodeCoverage]
         private static void AddOrUpdateAttribute(HtmlNode node, string cls, string secondary, string clsname)
         {
@@ -87,6 +124,42 @@ namespace next.processor.api.services
             items.Remove(secondary);
             items.Add(clsname);
             clss.Value = string.Join(" ", items);
+        }
+
+        private static void SetCssIndex(HtmlDocument document)
+        {
+            List<string> finds = [
+                "//link[@name='base-css']",
+                "//link[@name='reader-css']"
+            ];
+            var node = document.DocumentNode;
+            finds.ForEach(query =>
+            {
+                var link = node.SelectSingleNode(query);
+                if (link != null)
+                {
+                    var attr = link.Attributes.FirstOrDefault(a => a.Name == "href");
+                    if (attr != null)
+                    {
+                        var current = attr.Value.Split('?')[0];
+                        var transformed = $"{current}?id={EnvironmentTicks}";
+                        attr.Value = transformed;
+                    }
+                }
+            });
+        }
+
+        private static string? enviromentTicks;
+        private static string EnvironmentTicks
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(enviromentTicks))
+                {
+                    enviromentTicks = Environment.TickCount.ToString();
+                }
+                return enviromentTicks;
+            }
         }
     }
 }

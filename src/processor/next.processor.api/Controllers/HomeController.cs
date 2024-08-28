@@ -4,7 +4,7 @@ using next.processor.api.services;
 
 namespace next.processor.api.Controllers
 {
-    [Route("/")]
+
     public class HomeController(IQueueExecutor queue) : Controller
     {
         private readonly IQueueExecutor queueExecutor = queue;
@@ -24,6 +24,17 @@ namespace next.processor.api.Controllers
             };
             var content = HtmlMapper.Home(HtmlProvider.HomePage, health);
             content = HtmlMapper.Home(content, details);
+            return new ContentResult
+            {
+                Content = content,
+                ContentType = "text.html"
+            };
+        }
+
+        [HttpGet("status")]
+        public IActionResult Status()
+        {
+            var content = HtmlMapper.Status(HtmlProvider.StatusPage);
             return new ContentResult
             {
                 Content = content,

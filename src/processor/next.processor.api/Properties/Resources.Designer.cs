@@ -270,5 +270,26 @@ namespace next.processor.api.Properties {
                 return ResourceManager.GetString("payload_sample_tarrant", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;
+        ///	&lt;head&gt;
+        ///		&lt;meta charset=&quot;utf-8&quot;&gt;
+        ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+        ///		&lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///		&lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
+        ///		&lt;title&gt;oxford.reader.service&lt;/title&gt;
+        ///		
+        ///		&lt;!-- googleapis : fonts --&gt;
+        ///		&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+        ///		
+        ///		&lt;!-- bootstrap --&gt;
+        ///		&lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.j [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string status_layout {
+            get {
+                return ResourceManager.GetString("status_layout", resourceCulture);
+            }
+        }
     }
 }

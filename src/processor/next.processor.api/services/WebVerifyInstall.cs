@@ -1,7 +1,9 @@
-﻿using next.processor.api.interfaces;
+﻿using next.processor.api.extensions;
+using next.processor.api.interfaces;
+using next.processor.api.utility;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace next.processor.api.services
 {
@@ -18,9 +20,12 @@ namespace next.processor.api.services
                 FirefoxDriver? driver = null;
                 try
                 {
-                    var environmentDir = Environment.GetEnvironmentVariable("HOME");
+                    var driverDir = GetDriverDirectoryName();
+                    var environmentDir = EnvironmentHelper.GetHomeFolder();
+                    if (string.IsNullOrEmpty(environmentDir))
+                        throw new Exception("Environment directory not found");
                     if (string.IsNullOrEmpty(environmentDir) ||
-                        string.IsNullOrEmpty(DriverDirectory))
+                        string.IsNullOrEmpty(driverDir))
                     {
                         IsInstalled = false;
                         return false;
@@ -28,12 +33,13 @@ namespace next.processor.api.services
 
                     var downloadDir = Path.Combine(environmentDir, "download");
                     driver = GetDriver(1, downloadDir);
+                    driver.Navigate().GoToUrl("https://www.google.com");
                     IsInstalled = true;
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    ex.Log();
                     LastErrorMessage = ex.ToString();
                     IsInstalled = false;
                     return false;
@@ -67,23 +73,23 @@ namespace next.processor.api.services
             profile.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
             return profile;
         }
-        protected static FirefoxDriver GetDriver(int mode, string downloadDir)
+        protected virtual FirefoxDriver GetDriver(int mode, string downloadDir)
         {
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             var options = GetOptions(mode, downloadDir);
+            var driverDir = GetDriverDirectoryName();
             var driver = mode switch
             {
-                0 => new FirefoxDriver(DriverDirectory, options),
-                1 => new FirefoxDriver(options),
+                0 => new FirefoxDriver(driverDir, options),
+                1 => isWindows ? new FirefoxDriver(options) : new FirefoxDriver(driverDir, options),
                 _ => new FirefoxDriver()
             };
             return driver;
         }
 
-        private static string DriverDirectory => driverDirectory ??= GetDriverDirectoryName();
-        private static string? driverDirectory;
         private static string GetDriverDirectoryName()
         {
-            var environmentDir = Environment.GetEnvironmentVariable("HOME");
+            var environmentDir = EnvironmentHelper.GetHomeFolder();
             if (string.IsNullOrEmpty(environmentDir)) { return string.Empty; }
             var destinationDir = Path.Combine(environmentDir, "util");
             var geckoDir = Path.Combine(destinationDir, "gecko");
@@ -92,7 +98,7 @@ namespace next.processor.api.services
 
         private static string? GetBinaryFileName()
         {
-            var environmentDir = Environment.GetEnvironmentVariable("HOME");
+            var environmentDir = EnvironmentHelper.GetHomeFolder();
             if (string.IsNullOrEmpty(environmentDir)) { return null; }
             var firefoxDir = Path.Combine(environmentDir, "firefox");
             var subfolders = 0;

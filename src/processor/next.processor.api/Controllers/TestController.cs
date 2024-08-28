@@ -13,13 +13,14 @@ namespace next.processor.api.Controllers
             var service = _provider.GetKeyedService<IWebContainerInstall>("firefox");
             if (service == null) { return BadRequest("Unable to create installation instance"); }
             var extracted = await service.InstallAsync();
-            if (!extracted) {
+            if (!extracted)
+            {
                 var message = new
                 {
                     description = "Failed to install firefox component",
                     detail = service.LastErrorMessage
                 };
-                return BadRequest(message); 
+                return BadRequest(message);
             }
             return Ok("firefox has been installed.");
         }
@@ -29,7 +30,7 @@ namespace next.processor.api.Controllers
         {
             var service = _provider.GetKeyedService<IWebContainerInstall>("geckodriver");
             if (service == null) { return BadRequest("Unable to create installation instance"); }
-            var extracted = await service.InstallAsync(); 
+            var extracted = await service.InstallAsync();
             if (!extracted)
             {
                 var message = new

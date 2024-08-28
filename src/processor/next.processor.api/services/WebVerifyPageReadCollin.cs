@@ -25,7 +25,7 @@ namespace next.processor.api.services
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    ex.Log();
                     LastErrorMessage = ex.ToString();
                     return null;
                 }
