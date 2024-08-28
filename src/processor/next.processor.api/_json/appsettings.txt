@@ -43,5 +43,6 @@
     "0": "begin",
     "1": "complete",
     "2": "failed",
-  }
+  },
+  "service_installation": true
 }

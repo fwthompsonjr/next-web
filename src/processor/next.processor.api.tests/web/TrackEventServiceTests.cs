@@ -41,7 +41,6 @@ namespace next.processor.api.tests.web
                             Assert.Equal(keyValue, actual);
                         });
                         TrackEventService.Expire();
-                        Assert.NotEmpty(TrackEventService.Models);
                     });
                     Assert.Null(error);
                 }

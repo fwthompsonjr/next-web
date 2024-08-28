@@ -5,6 +5,7 @@ using next.processor.api.backing;
 using next.processor.api.Health;
 using next.processor.api.interfaces;
 using next.processor.api.services;
+using next.processor.api.utility;
 
 namespace next.processor.api
 {
@@ -50,6 +51,7 @@ namespace next.processor.api
                 var queue = s.GetRequiredService<IQueueExecutor>();
                 return new SearchGenerationService(queue);
             });
+            services.AddSingleton(SettingsProvider.Configuration);
             services.AddHostedService<SearchGenerationService>();
             services.Configure<RouteOptions>(
                 options => options.LowercaseUrls = true);

@@ -18,8 +18,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		
 		<!-- common styles -->
-		<link name="base-css" href="/css/base-css.css?id=235108773" rel="stylesheet">
-		<link rel="stylesheet" name="reader-css" href="/css/reader-css.css?id=235108773">
+		<link name="base-css" href="/css/base-css.css?id=638595311567520888" rel="stylesheet">
+		<link rel="stylesheet" name="reader-css" href="/css/reader-css.css?id=638595311567520888">
 		<link rel="stylesheet" name="cover-css" href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css">
 	</head>
 	<body class="text-center">
@@ -38,7 +38,7 @@
 						<div id="dv-subcontent-invoice" name="subcontent-invoice" class="card">
 							<div class="card-body">
 								<h4 class="card-title text-start">
-									<span name="invoice-label">Reader Service:</span>
+									<span name="invoice-label">Reporting:</span>
 								</h4>
 								<div class="row align-items-start">
 									<div class="col text-start">
@@ -46,49 +46,39 @@
 										<a class="text-primary" href="/status">Status</a>
 									</div>
 								</div>
-								<div id="detail-01" class="row">
-									<div class="col-2 text-start">
-										<span name="detail-01-label" class="text-primary">Server: </span>
+								<div id="detail-01" class="row align-items-start">
+									<div class="col text-start">
+										<h5 name="detail-01-label" class="text-primary">Status: </h5>
 									</div>
-									<div class="col-6 text-start">
-										<span name="detail-01-caption" class="text-secondary">-</span>
+									<div class="col text-start">
+										<h5 name="detail-01-label" class="text-primary">Queues: </h5>
+									</div>
+									<div class="col text-start">
+										<h5 name="detail-01-label" class="text-primary">Processing: </h5>
 									</div>
 								</div>
 								<div id="detail-02" class="row">
-									<div class="col-2 text-start">
-										<span name="detail-02-label" class="text-primary">Date: </span>
+									<div class="col text-start">
+										<h5 name="detail-02-label" class="text-primary">Errors: </h5>
+										<table name="tb-errors" style="width: 95%">
+											<colgroup>
+												<col style="width: 20%">
+												<col />
+											</colgroup>
+											<thead>
+												<tr>
+													<th class="text-start">Code</th>
+													<th class="text-start">Message</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr name="template-row">
+													<td class="text-start text-info">~0</td>
+													<td class="text-start small">~1</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
-									<div class="col-6 text-start">
-										<span name="detail-02-caption" class="text-secondary">-</span>
-									</div>
-								</div>
-								<div id="detail-03" class="row">
-									<div class="col-2 text-start">
-										<span name="detail-03-label" class="text-primary">Status: </span>
-									</div>
-									<div class="col-6 text-start">
-										<span name="detail-03-caption" class="text-secondary">-</span>
-									</div>
-								</div>
-								<div id="detail-04" class="row">
-									<table name="tb-detail">
-										<colgroup>
-											<col style="width: 160px" />
-											<col />
-										</colgroup>
-										<thead>
-											<tr>
-												<th class="text-primary text-start">Component</th>
-												<th class="text-primary text-start">Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr name="template-row">
-												<td class="text-secondary text-start">~0</td>
-												<td class="text-secondary text-start">~1</td>
-											</tr>
-										</tbody>
-									</table>
 								</div>
 							</div>
 						</div>
@@ -97,7 +87,7 @@
 			</main>
 			<footer class="mastfoot mt-auto">
 				<div class="inner">
-					<p>© 2024 - Oxford Reader Service</p>
+					<p>&copy; 2024 - Oxford Reader Service</p>
 				</div>
 			</footer>
 		</div>

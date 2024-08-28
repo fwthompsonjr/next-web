@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using next.processor.api.backing;
 using next.processor.api.interfaces;
@@ -14,6 +15,7 @@ namespace next.processor.api.tests
         [InlineData(typeof(IWebInteractiveWrapper))]
         [InlineData(typeof(IServiceProvider))]
         [InlineData(typeof(IQueueExecutor))]
+        [InlineData(typeof(IConfiguration))]
         [InlineData(typeof(SearchGenerationService))]
         [InlineData(typeof(CheckContainerServices))]
         [InlineData(typeof(CheckPostApiRequest))]
@@ -30,6 +32,15 @@ namespace next.processor.api.tests
             Assert.Null(error);
         }
 
+        [Fact]
+        public void ServiceInstallationShouldBeTrue()
+        {
+            var provider = GetServiceProvider();
+            var service = provider.GetService<IConfiguration>();
+            Assert.NotNull(service);
+            var isInstallationEnabled = service.GetValue<bool>("service_installation");
+            Assert.True(isInstallationEnabled);
+        }
 
         [Theory]
         [InlineData("begin")]

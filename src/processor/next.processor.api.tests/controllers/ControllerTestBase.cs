@@ -34,6 +34,7 @@ namespace next.processor.api.tests.controllers
 
                 var svc = new Mock<IQueueExecutor>();
                 svc.Setup(x => x.InstallerCount()).Returns(6);
+                svc.Setup(x => x.GetDetails()).Returns(CommonKeys);
                 mockinstaller.Setup(x => x.InstallAsync()).ReturnsAsync(true);
                 collection.AddSingleton(svc);
                 collection.AddKeyedSingleton("firefox", mockinstaller.Object);
@@ -63,6 +64,14 @@ namespace next.processor.api.tests.controllers
                 return collection.BuildServiceProvider();
             }
         }
+
+
+        private static readonly Dictionary<string, object> CommonKeys = new()
+        {
+            { "1", "Number one" },
+            { "2", "Number two" },
+            { "3", "Number three" }
+        };
 
         private static readonly object locker = new();
     }

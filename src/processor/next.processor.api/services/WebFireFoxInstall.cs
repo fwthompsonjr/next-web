@@ -1,4 +1,6 @@
-﻿using next.processor.api.interfaces;
+﻿using next.processor.api.extensions;
+using next.processor.api.interfaces;
+using next.processor.api.utility;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -13,35 +15,46 @@ namespace next.processor.api.services
             try
             {
                 LastErrorMessage = string.Empty;
-                var environmentDir = Environment.GetEnvironmentVariable("HOME");
+                var environmentDir = EnvironmentHelper.GetHomeFolder();
                 var zipfilename = FirefoxShortName;
                 if (string.IsNullOrEmpty(environmentDir) || string.IsNullOrWhiteSpace(zipfilename)) { return false; }
                 var destinationDir = Path.Combine(environmentDir, "mozilla");
                 var mozillaDir = Path.Combine(destinationDir, "install");
                 var firefoxDir = Path.Combine(environmentDir, "firefox");
+                if (DoesFileExist(firefoxDir))
+                {
+                    IsInstalled = true;
+                    return true; 
+                }
                 var paths = new[] { destinationDir, mozillaDir, firefoxDir }.ToList();
                 paths.ForEach(path => { _fileSvc.CreateDirectory(path); });
                 var installation = await ExtractBzFileAsync(mozillaDir, firefoxDir, zipfilename);
                 if (!installation) return false;
-                var subfolders = 0;
-                var firefoxFile = Path.Combine(firefoxDir, "firefox");
-                while (!_fileSvc.FileExists(firefoxFile))
-                {
-                    if (subfolders > 5) return false;
-                    firefoxFile = Path.Combine(firefoxFile, "firefox");
-                    subfolders++;
-                }
-                IsInstalled = _fileSvc.AppendToPath(firefoxFile);
+                IsInstalled = DoesFileExist(firefoxDir);
                 return IsInstalled;
             }
             catch (Exception ex)
             {
                 LastErrorMessage = ex.ToString();
+                ex.Log();
                 IsInstalled = false;
                 return false;
             }
         }
 
+        private bool DoesFileExist(string firefoxDir)
+        {
+            const string ffox = "firefox";
+            var subfolders = 0;
+            var firefoxFile = Path.Combine(firefoxDir, ffox);
+            while (!_fileSvc.FileExists(firefoxFile))
+            {
+                if (subfolders > 5) return false;
+                firefoxFile = Path.Combine(firefoxFile, ffox);
+                subfolders++;
+            }
+            return _fileSvc.FileExists(firefoxFile);
+        }
 
         private async Task<bool> ExtractBzFileAsync(
             string downloadDirectory,

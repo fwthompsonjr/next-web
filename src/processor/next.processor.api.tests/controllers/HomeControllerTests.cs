@@ -39,5 +39,16 @@ namespace next.processor.api.tests.controllers
             });
             Assert.Null(error);
         }
+        [Fact]
+        public void ControllerCanBeGetStatus()
+        {
+            var provider = GetProvider();
+            var error = Record.Exception(() =>
+            {
+                var controller = provider.GetRequiredService<HomeController>();
+                _ = controller.Status();
+            });
+            Assert.Null(error);
+        }
     }
 }
