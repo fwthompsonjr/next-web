@@ -8,11 +8,11 @@ namespace next.processor.api.services
     public class WebVerifyInstall : IWebContainerInstall
     {
         public bool IsInstalled { get; protected set; }
+        public string LastErrorMessage { get; protected set; } = string.Empty;
         public virtual async Task<bool> InstallAsync()
         {
             if (IsInstalled) return true;
-            var binaryFile = GetBinaryFileName();
-            if (string.IsNullOrEmpty(binaryFile)) return false;
+            LastErrorMessage = string.Empty;
             var isverified = await Task.Run(() =>
             {
                 FirefoxDriver? driver = null;
@@ -34,6 +34,7 @@ namespace next.processor.api.services
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
+                    LastErrorMessage = ex.ToString();
                     IsInstalled = false;
                     return false;
                 }

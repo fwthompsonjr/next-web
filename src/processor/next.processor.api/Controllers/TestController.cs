@@ -13,7 +13,14 @@ namespace next.processor.api.Controllers
             var service = _provider.GetKeyedService<IWebContainerInstall>("firefox");
             if (service == null) { return BadRequest("Unable to create installation instance"); }
             var extracted = await service.InstallAsync();
-            if (!extracted) { return BadRequest("Failed to install firefox component"); }
+            if (!extracted) {
+                var message = new
+                {
+                    description = "Failed to install firefox component",
+                    detail = service.LastErrorMessage
+                };
+                return BadRequest(message); 
+            }
             return Ok("firefox has been installed.");
         }
 
@@ -22,8 +29,16 @@ namespace next.processor.api.Controllers
         {
             var service = _provider.GetKeyedService<IWebContainerInstall>("geckodriver");
             if (service == null) { return BadRequest("Unable to create installation instance"); }
-            var extracted = await service.InstallAsync();
-            if (!extracted) { return BadRequest("Failed to install geckodriver component"); }
+            var extracted = await service.InstallAsync(); 
+            if (!extracted)
+            {
+                var message = new
+                {
+                    description = "Failed to install geckodriver component",
+                    detail = service.LastErrorMessage
+                };
+                return BadRequest(message);
+            }
             return Ok("geckodriver has been installed.");
         }
 
@@ -33,7 +48,15 @@ namespace next.processor.api.Controllers
             var service = _provider.GetKeyedService<IWebContainerInstall>("verification");
             if (service == null) { return BadRequest("Unable to create verification instance"); }
             var extracted = await service.InstallAsync();
-            if (!extracted) { return BadRequest("Failed to execute verification component"); }
+            if (!extracted)
+            {
+                var message = new
+                {
+                    description = "Failed to execute verification component",
+                    detail = service.LastErrorMessage
+                };
+                return BadRequest(message);
+            }
             return Ok("verification is successful.");
         }
 
@@ -43,7 +66,15 @@ namespace next.processor.api.Controllers
             var service = _provider.GetKeyedService<IWebContainerInstall>("read-collin");
             if (service == null) { return BadRequest("Unable to create test instance"); }
             var extracted = await service.InstallAsync();
-            if (!extracted) { return BadRequest("Failed to execute test component"); }
+            if (!extracted)
+            {
+                var message = new
+                {
+                    description = "Failed to execute search",
+                    detail = service.LastErrorMessage
+                };
+                return BadRequest(message);
+            }
             return Ok("test is successful.");
         }
 
@@ -53,7 +84,15 @@ namespace next.processor.api.Controllers
             var service = _provider.GetKeyedService<IWebContainerInstall>("read-denton");
             if (service == null) { return BadRequest("Unable to create test instance"); }
             var extracted = await service.InstallAsync();
-            if (!extracted) { return BadRequest("Failed to execute test component"); }
+            if (!extracted)
+            {
+                var message = new
+                {
+                    description = "Failed to execute search",
+                    detail = service.LastErrorMessage
+                };
+                return BadRequest(message);
+            }
             return Ok("test is successful.");
         }
 
@@ -63,7 +102,15 @@ namespace next.processor.api.Controllers
             var service = _provider.GetKeyedService<IWebContainerInstall>("read-harris");
             if (service == null) { return BadRequest("Unable to create test instance"); }
             var extracted = await service.InstallAsync();
-            if (!extracted) { return BadRequest("Failed to execute test component"); }
+            if (!extracted)
+            {
+                var message = new
+                {
+                    description = "Failed to execute search",
+                    detail = service.LastErrorMessage
+                };
+                return BadRequest(message);
+            }
             return Ok("test is successful.");
         }
 
@@ -73,7 +120,15 @@ namespace next.processor.api.Controllers
             var service = _provider.GetKeyedService<IWebContainerInstall>("read-tarrant");
             if (service == null) { return BadRequest("Unable to create test instance"); }
             var extracted = await service.InstallAsync();
-            if (!extracted) { return BadRequest("Failed to execute test component"); }
+            if (!extracted)
+            {
+                var message = new
+                {
+                    description = "Failed to execute search",
+                    detail = service.LastErrorMessage
+                };
+                return BadRequest(message);
+            }
             return Ok("test is successful.");
         }
 

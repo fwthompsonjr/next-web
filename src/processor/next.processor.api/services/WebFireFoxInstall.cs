@@ -12,6 +12,7 @@ namespace next.processor.api.services
             if (IsInstalled) return true;
             try
             {
+                LastErrorMessage = string.Empty;
                 var environmentDir = Environment.GetEnvironmentVariable("HOME");
                 var zipfilename = FirefoxShortName;
                 if (string.IsNullOrEmpty(environmentDir) || string.IsNullOrWhiteSpace(zipfilename)) { return false; }
@@ -33,8 +34,9 @@ namespace next.processor.api.services
                 IsInstalled = _fileSvc.AppendToPath(firefoxFile);
                 return IsInstalled;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LastErrorMessage = ex.ToString();
                 IsInstalled = false;
                 return false;
             }
