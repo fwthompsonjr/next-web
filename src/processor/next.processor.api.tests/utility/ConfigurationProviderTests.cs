@@ -35,6 +35,7 @@ namespace next.processor.api.tests.utility
         [InlineData("item_process:execute_search")]
         [InlineData("item_process:translate_excel")]
         [InlineData("item_process:serialize")]
+        [InlineData("service_installation")]
         public void ConfigContainsKey(string keyname)
         {
             var error = Record.Exception(() =>

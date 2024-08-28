@@ -4,6 +4,7 @@ using next.processor.api.services;
 
 namespace next.processor.api.Controllers
 {
+    [Route("/")]
     public class HomeController(IQueueExecutor queue) : Controller
     {
         private readonly IQueueExecutor queueExecutor = queue;
@@ -11,6 +12,7 @@ namespace next.processor.api.Controllers
         {
             var available = queueExecutor.IsReadyCount();
             var actual = queueExecutor.InstallerCount();
+            var details = queueExecutor.GetDetails();
             var status = 0;
             if (available > 0 && available < actual) status = 1;
             if (available == actual) status = 2;
@@ -21,6 +23,7 @@ namespace next.processor.api.Controllers
                 _ => "Healthy"
             };
             var content = HtmlMapper.Home(HtmlProvider.HomePage, health);
+            content = HtmlMapper.Home(content, details);
             return new ContentResult
             {
                 Content = content,

@@ -4,6 +4,7 @@ using Moq;
 using next.processor.api.backing;
 using next.processor.api.interfaces;
 using next.processor.api.models;
+using next.processor.api.utility;
 
 namespace next.processor.api.tests.backing
 {
@@ -46,6 +47,7 @@ namespace next.processor.api.tests.backing
         {
             lock (locker)
             {
+                var configuration = SettingsProvider.Configuration;
                 var wrapper = new MockApiWrapperService();
                 var mockmapper = new Mock<IQueueProcess>();
                 var mockfetch = new Mock<IQueueProcess>();
@@ -58,6 +60,7 @@ namespace next.processor.api.tests.backing
                 mockmapper.Setup(x => x.ExecuteAsync(It.IsAny<QueueProcessResponses>()));
                 mockfetch.Setup(x => x.ExecuteAsync(It.IsAny<QueueProcessResponses>()));
 
+                provider.AddSingleton(configuration);
                 provider.AddSingleton(mockinstaller);
                 provider.AddSingleton(mockinstaller.Object);
                 provider.AddSingleton(mockmapper);

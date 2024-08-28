@@ -6,10 +6,12 @@ namespace next.processor.api.backing
 {
     public class QueueExecutor(
         IServiceProvider services,
-        IApiWrapper api) : IQueueExecutor
+        IApiWrapper api,
+        IConfiguration configuration) : IQueueExecutor
     {
         private readonly IServiceProvider _provider = services;
         private readonly IApiWrapper _api = api;
+        private readonly IConfiguration _configuration = configuration;
 
         public bool IsRunning { get; private set; }
 
@@ -111,8 +113,11 @@ namespace next.processor.api.backing
             }
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Private member called and test from public accessor")]
         private async Task<bool> CanExecuteAsync()
         {
+            var isInstallationEnabled = _configuration.GetValue<bool>("service_installation");
+            if (!isInstallationEnabled) return false;
             var installers = _installNames.Select(GetInstaller).ToList();
             if (installers.Exists(x => x == null)) return false;
             var responses = new List<bool>();

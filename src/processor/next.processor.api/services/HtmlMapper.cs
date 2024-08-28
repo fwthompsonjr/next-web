@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace next.processor.api.services
 {
@@ -27,6 +28,27 @@ namespace next.processor.api.services
                     if (indx == 2) AlterNodeClass(find, health);
                 }
             });
+            return node.OuterHtml;
+        }
+
+        public static string Home(string content, Dictionary<string, object> substitutions)
+        {
+            const string find = "//table[@name='tb-detail']/tbody"; 
+            var document = content.ToDocument();
+            var node = document.DocumentNode;
+            var tbody = node.SelectSingleNode(find);
+            if (tbody == null) return node.OuterHtml;
+            var tr = tbody.SelectSingleNode("tr");
+            if (tr == null) return node.OuterHtml;
+            var template = tr.OuterHtml.Replace("template-row", "detail-row");
+            var builder = new StringBuilder();
+            substitutions.Keys.ToList().ForEach(k =>
+            {
+                var data = Convert.ToString(substitutions[k]);
+                var content = template.Replace("~0", k).Replace("~1", data);
+                builder.AppendLine(content);
+            });
+            tbody.InnerHtml = builder.ToString();
             return node.OuterHtml;
         }
 
