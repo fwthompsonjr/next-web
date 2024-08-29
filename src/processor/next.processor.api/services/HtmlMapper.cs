@@ -125,11 +125,50 @@ namespace next.processor.api.services
             var builder = new StringBuilder();
             statuses.ForEach(detail =>
             {
-                var content = template.Replace("~0", detail.Key).Replace("~1", detail.Value.ToUpper());
+                var innerHtml = GetStatusLinkHtml(detail.Key, detail.Value);
+                var content = template.Replace("~0", detail.Key).Replace("~1", innerHtml);
                 builder.AppendLine(content);
             });
             tbody.InnerHtml = builder.ToString();
+            AppendStatusHealthCss(document);
         }
+
+        private static void AppendStatusHealthCss(HtmlDocument document)
+        {
+            const string find = "//table[@name='tb-status']/tbody/tr[@name='detail-row']";
+            var node = document.DocumentNode;
+            var tr = node.SelectSingleNode(find);
+            if (tr == null) return;
+            var tds = tr.SelectNodes("td");
+            if (tds == null || tds.Count < 2) return;
+            var td = tds[1];
+            var text = td.InnerText;
+            var clsname = text switch
+            {
+                "UNHEALTHY" => "text-danger",
+                "DEGRADED" => "text-warning",
+                "HEALTHY" => "text-success",
+                _ => "text-info"
+            };
+            AddOrUpdateAttribute(td, "class", "text-info", clsname);
+        }
+
+        private static string GetStatusLinkHtml(string key, string name)
+        {
+            const char space = ' ';
+            const char dqoute = '"';
+            const char sqoute = (char)39;
+            const string layout = "<a class='link-light' href='/clear?name=toggle-{0}'>{1}</a>";
+            var oic = StringComparison.OrdinalIgnoreCase;
+            List<string> transforms = ["installation", "queue"];
+            var keyname = key.Split(space)[0];
+            var transformKey = transforms.Find(x => x.Equals(keyname, oic));
+            var transformName = name.ToUpper();
+            if (transformKey == null) return transformName;
+            var html = string.Format(layout.Replace(sqoute, dqoute), transformKey, transformName);
+            return html;
+        }
+
         [ExcludeFromCodeCoverage]
         private static void AddOrUpdateAttribute(HtmlNode node, string cls, string secondary, string clsname)
         {
