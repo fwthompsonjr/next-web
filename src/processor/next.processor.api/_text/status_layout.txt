@@ -46,11 +46,30 @@
 										<a class="link-primary menu-option" href="/status">Status</a> | 
 										<a class="link-primary menu-option" href="/clear?name=errors">Clear Errors</a>
 										<a class="link-primary menu-option" href="/clear?name=stop">Stop Services</a>
+										<a class="link-primary menu-option" href="/clear?name=start">Start Services</a>
 									</div>
 								</div>
 								<div id="detail-01" class="row align-items-start">
 									<div class="col text-start">
 										<h5 name="detail-01-label" class="text-primary">Status: </h5>
+										<table name="tb-status" style="width: 95%">
+											<colgroup>
+												<col style="width: 40%">
+												<col />
+											</colgroup>
+											<thead>
+												<tr>
+													<th class="text-start">Name</th>
+													<th class="text-start">Status</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr name="template-row">
+													<td class="text-start status-name">~0</td>
+													<td class="text-start text-info status-value">~1</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 									<div class="col text-start">
 										<h5 name="detail-01-label" class="text-primary">Queues: </h5>

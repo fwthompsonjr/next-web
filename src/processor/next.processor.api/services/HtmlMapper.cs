@@ -17,7 +17,7 @@ namespace next.processor.api.services
             var substitutions = new Dictionary<string, string>
             {
                 { "//span[@name='detail-01-caption']", Environment.MachineName.ToUpper() },
-                { "//span[@name='detail-02-caption']", DateTime.UtcNow.ToString("s") },
+                { "//span[@name='detail-02-caption']", DateTime.UtcNow.ToString("s").Replace("T", " - ") },
                 { "//span[@name='detail-03-caption']", health }
             };
             var keys = substitutions.Keys.ToList();
@@ -44,7 +44,7 @@ namespace next.processor.api.services
             if (tbody == null) return node.OuterHtml;
             var tr = tbody.SelectSingleNode("tr");
             if (tr == null) return node.OuterHtml;
-            var template = tr.OuterHtml.Replace("template-row", "detail-row");
+            var template = tr.OuterHtml.Replace("template-row", "detail-item");
             var builder = new StringBuilder();
             substitutions.Keys.ToList().ForEach(k =>
             {
@@ -55,13 +55,14 @@ namespace next.processor.api.services
             tbody.InnerHtml = builder.ToString();
             return node.OuterHtml;
         }
-        public static string Status(string content)
+        public static string Status(string content, List<KeyValuePair<string, string>>? statuses = null)
         {
             var document = content.ToDocument();
             var node = document.DocumentNode;
             SetCssIndex(document);
             var errors = TrackEventService.Get(Constants.ErrorLogName);
             AppendErrorDetail(document, errors);
+            AppendStatusDetail(document, statuses);
             return node.OuterHtml;
         }
 
@@ -111,6 +112,24 @@ namespace next.processor.api.services
             tbody.InnerHtml = builder.ToString();
         }
 
+        private static void AppendStatusDetail(HtmlDocument document, List<KeyValuePair<string, string>>? statuses = null)
+        {
+            const string find = "//table[@name='tb-status']/tbody";
+            if (statuses == null || statuses.Count == 0) return;
+            var node = document.DocumentNode;
+            var tbody = node.SelectSingleNode(find);
+            if (tbody == null) return;
+            var tr = tbody.SelectSingleNode("tr");
+            if (tr == null) return;
+            var template = tr.OuterHtml.Replace("template-row", "detail-row");
+            var builder = new StringBuilder();
+            statuses.ForEach(detail =>
+            {
+                var content = template.Replace("~0", detail.Key).Replace("~1", detail.Value.ToUpper());
+                builder.AppendLine(content);
+            });
+            tbody.InnerHtml = builder.ToString();
+        }
         [ExcludeFromCodeCoverage]
         private static void AddOrUpdateAttribute(HtmlNode node, string cls, string secondary, string clsname)
         {

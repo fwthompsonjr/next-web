@@ -54,6 +54,7 @@ namespace next.processor.api.tests.controllers
         [InlineData(null)]
         [InlineData("")]
         [InlineData("stop")]
+        [InlineData("start")]
         [InlineData("nothing")]
         [InlineData("errors")]
         public void ControllerCanClearStatus(string message)
