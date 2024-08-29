@@ -83,8 +83,8 @@ namespace next.processor.api.tests
         [Fact]
         public void QueueProcessingShouldInitializeExpectedInstallers()
         {
-            // expected value for queue initializers = 3
-            const int expected = 3;
+            // expected value for queue initializers = 7
+            const int expected = 7;
             var provider = GetServiceProvider();
             var service = provider.GetService<IQueueExecutor>();
             Assert.NotNull(service);
