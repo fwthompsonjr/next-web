@@ -19,15 +19,29 @@ namespace next.processor.api.services
                     return;
                 case "start":
                     config[Constants.KeyServiceInstallation] = "true";
-                    config[Constants.KeyQueueProcessEnabled] = "true";
                     return;
                 case "stop":
                     config[Constants.KeyServiceInstallation] = "false";
-                    config[Constants.KeyQueueProcessEnabled] = "false";
                     return;
                 case "toggle-installation":
                     var installation = Constants.KeyServiceInstallation;
                     ToggleBooleanConfiguration(installation);
+                    return;
+                case "toggle-queue":
+                    return;
+            }
+        }
+
+        public void ChangeStatus(string status, string health)
+        {
+            ChangeStatus(status);
+            var clearName = healthRelatedTypes.Find(s => s.Equals(status, StringComparison.OrdinalIgnoreCase));
+            if (string.IsNullOrEmpty(clearName)) return;
+            if (!health.Equals("HEALTHY", StringComparison.OrdinalIgnoreCase)) return;
+            switch (clearName)
+            {
+                case "start":
+                    config[Constants.KeyQueueProcessEnabled] = "true";
                     return;
                 case "toggle-queue":
                     var queue = Constants.KeyQueueProcessEnabled;
@@ -58,6 +72,10 @@ namespace next.processor.api.services
             "start",
             "stop",
             "toggle-installation",
+            "toggle-queue"
+        ];
+        private static readonly List<string> healthRelatedTypes = [
+            "start",
             "toggle-queue"
         ];
     }

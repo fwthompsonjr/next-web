@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.Controllers;
 using next.processor.api.interfaces;
@@ -57,12 +58,17 @@ namespace next.processor.api.tests.controllers
         [InlineData("start")]
         [InlineData("nothing")]
         [InlineData("errors")]
+        [InlineData("bad-model")]
         public void ControllerCanClearStatus(string message)
         {
             var provider = GetProvider();
             var error = Record.Exception(() =>
             {
                 var controller = provider.GetRequiredService<HomeController>();
+                if (message == "bad-model")
+                {
+                    controller.ModelState.AddModelError("test", "failure injected for testing");
+                }
                 _ = controller.Clear(message);
             });
             Assert.Null(error);
