@@ -17,7 +17,8 @@
 }
 
 table[name="tb-detail"],
-table[name="tb-errors"] {
+table[name="tb-errors"],
+table[name="tb-status"] {
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: 10px;
@@ -27,6 +28,14 @@ tr[name="template-row"] {
     display: none;
 }
 
+td.status-name,
+td.status-value {
+    padding-left: 5px;
+}
+
+tr[name='detail-item'] > td {
+    padding-left: 5px;
+}
 h5[name="detail-01-label"],
 h5[name="detail-02-label"] {
     width: 95%;

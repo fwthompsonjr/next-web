@@ -33,11 +33,14 @@ namespace next.processor.api.tests.controllers
 
                 var collection = new ServiceCollection();
 
+                var mockchange = new Mock<IStatusChanger>();
                 var svc = new Mock<IQueueExecutor>();
                 svc.Setup(x => x.InstallerCount()).Returns(6);
                 svc.Setup(x => x.GetDetails()).Returns(CommonKeys);
                 mockinstaller.Setup(x => x.InstallAsync()).ReturnsAsync(true);
                 collection.AddSingleton(svc);
+                collection.AddSingleton(mockchange);
+                collection.AddSingleton(mockchange.Object);
                 collection.AddKeyedSingleton("firefox", mockinstaller.Object);
                 collection.AddKeyedSingleton("geckodriver", mockinstaller.Object);
                 collection.AddKeyedSingleton("verification", mockinstaller.Object);
@@ -48,7 +51,10 @@ namespace next.processor.api.tests.controllers
                 collection.AddSingleton(a =>
                 {
 
-                    var controller = new HomeController(svc.Object, SettingsProvider.GetConfiguration())
+                    var controller = new HomeController(
+                        svc.Object,
+                        SettingsProvider.GetConfiguration(),
+                        mockchange.Object)
                     {
                         ControllerContext = controllerContext
                     };
