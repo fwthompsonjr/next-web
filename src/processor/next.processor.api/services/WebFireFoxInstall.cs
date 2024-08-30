@@ -24,7 +24,7 @@ namespace next.processor.api.services
                 if (DoesFileExist(firefoxDir))
                 {
                     IsInstalled = true;
-                    return true; 
+                    return true;
                 }
                 var paths = new[] { destinationDir, mozillaDir, firefoxDir }.ToList();
                 paths.ForEach(path => { _fileSvc.CreateDirectory(path); });

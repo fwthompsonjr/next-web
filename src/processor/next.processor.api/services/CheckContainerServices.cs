@@ -20,7 +20,7 @@ namespace next.processor.api.services
             HealthCheckResult health = status switch
             {
                 2 => HealthCheckResult.Healthy("Container services are available.", data),
-                0 => HealthCheckResult.Unhealthy("Container services are not ready.", null, data),
+                0 => HealthCheckResult.Degraded("Container services are not ready.", null, data),
                 _ => HealthCheckResult.Degraded("1 or more Container services are inactive.", null, data)
             };
             return Task.FromResult(health);

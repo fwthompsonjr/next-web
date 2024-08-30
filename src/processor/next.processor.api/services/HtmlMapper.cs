@@ -55,6 +55,23 @@ namespace next.processor.api.services
             tbody.InnerHtml = builder.ToString();
             return node.OuterHtml;
         }
+        public static string Life(string content)
+        {
+            // remove div elements named detail- 0 - 4
+            int indx = 0;
+            var document = content.ToDocument();
+            var node = document.DocumentNode;
+            while (indx < 5)
+            {
+                var find = $"//*[@id='detail-{indx:D2}']";
+                var div = node.SelectSingleNode(find);
+                var parent = div?.ParentNode;
+                if (div != null && parent != null) parent.RemoveChild(div);
+                indx++;
+            }
+            SetCssIndex(document);
+            return node.OuterHtml;
+        }
         public static string Status(string content, List<KeyValuePair<string, string>>? statuses = null)
         {
             var document = content.ToDocument();

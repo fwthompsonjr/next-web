@@ -16,7 +16,8 @@ namespace next.processor.api.tests
 
         [Theory]
         [InlineData("default")]
-        [InlineData("record.processor", true, 30, 1)]
+        [InlineData("record.processor", true, 120, 1)]
+        [InlineData("initialization.service", true, 60, 5)]
         public void SettingsProviderSettingHasExpectedValue(
             string name,
             bool enabled = true,

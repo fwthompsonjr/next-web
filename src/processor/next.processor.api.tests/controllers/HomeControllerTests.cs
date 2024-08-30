@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.Controllers;
 using next.processor.api.interfaces;
@@ -40,6 +39,19 @@ namespace next.processor.api.tests.controllers
             });
             Assert.Null(error);
         }
+
+        [Fact]
+        public void ControllerCanBeGetAlive()
+        {
+            var provider = GetProvider();
+            var error = Record.Exception(() =>
+            {
+                var controller = provider.GetRequiredService<HomeController>();
+                _ = controller.Alive();
+            });
+            Assert.Null(error);
+        }
+
         [Fact]
         public void ControllerCanBeGetStatus()
         {

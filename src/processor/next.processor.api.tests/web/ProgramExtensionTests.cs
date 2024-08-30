@@ -18,6 +18,7 @@ namespace next.processor.api.tests
         [InlineData(typeof(IQueueExecutor))]
         [InlineData(typeof(IConfiguration))]
         [InlineData(typeof(SearchGenerationService))]
+        [InlineData(typeof(InitializationService))]
         [InlineData(typeof(CheckContainerServices))]
         [InlineData(typeof(CheckPostApiRequest))]
         public void CollectionCanGetInstance(Type type)
@@ -36,11 +37,14 @@ namespace next.processor.api.tests
         [Fact]
         public void ServiceInstallationShouldBeTrue()
         {
+            // expected value for service installation = false
+            // installation should start after service hosting has been confirmed
+            const bool expected = false;
             var provider = GetServiceProvider();
             var service = provider.GetService<IConfiguration>();
             Assert.NotNull(service);
             var isInstallationEnabled = service.GetValue<bool>(Constants.KeyServiceInstallation);
-            Assert.True(isInstallationEnabled);
+            Assert.Equal(expected, isInstallationEnabled);
         }
 
         [Fact]

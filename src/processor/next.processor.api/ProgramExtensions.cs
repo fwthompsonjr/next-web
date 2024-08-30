@@ -52,8 +52,10 @@ namespace next.processor.api
                 return new SearchGenerationService(queue);
             });
             services.AddSingleton(SettingsProvider.Configuration);
+            services.AddSingleton<InitializationService>();
             services.AddSingleton<IStatusChanger, StatusChangeService>();
             services.AddHostedService<SearchGenerationService>();
+            services.AddHostedService<InitializationService>();
             services.Configure<RouteOptions>(
                 options => options.LowercaseUrls = true);
 

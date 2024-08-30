@@ -59,7 +59,7 @@ namespace next.processor.api.services
             var profile = new FirefoxOptions();
             var binaryFile = GetBinaryFileName();
             if (mode == 0 || File.Exists(binaryFile) && !isWindows)
-            {   
+            {
                 profile.BrowserExecutableLocation = binaryFile;
             }
 
