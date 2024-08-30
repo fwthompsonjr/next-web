@@ -19,7 +19,7 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: contains( github.event.pull_request.labels.*.name, 'processor')
     environment: production
 
@@ -47,6 +47,7 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
+        shell: bash
         working-directory: "${{ github.workspace }}/src/processor/next.processor.api"
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
