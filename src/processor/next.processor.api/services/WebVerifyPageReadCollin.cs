@@ -41,7 +41,19 @@ namespace next.processor.api.services
             var payload = GetUserSearchPayload(index);
             var search = payload.ToInstance<UserSearchRequest>();
             if (search == null) return null;
+            SetStartAndEndDates(search);
             return QueueMapper.MapFrom<UserSearchRequest, WebInteractive>(search);
+        }
+
+        private static void SetStartAndEndDates(UserSearchRequest search)
+        {
+            List<DayOfWeek> weekends = [DayOfWeek.Sunday, DayOfWeek.Saturday];
+            var date = DateTime.UtcNow.AddDays(-1);
+            while (weekends.Contains(date.DayOfWeek)) { date = date.AddDays(-1); }
+            var dtoStart = new DateTimeOffset(date.Date);
+            var dtoEnding = new DateTimeOffset(date.Date.AddDays(1).AddMinutes(-1));
+            search.StartDate = dtoStart.ToUnixTimeMilliseconds();
+            search.EndDate = dtoEnding.ToUnixTimeMilliseconds();
         }
 
         private static string GetUserSearchPayload(int index)

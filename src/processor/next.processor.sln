@@ -9,8 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.processor.api.tests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{237DF47A-05CA-442E-BB17-D885B35A5286}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\.github\workflows\deploy-aws-application.yml = ..\..\.github\workflows\deploy-aws-application.yml
-		aws\nextservice-task-definition.json = aws\nextservice-task-definition.json
+		..\..\.github\workflows\deploy-oxford-reader-ecs.yml = ..\..\.github\workflows\deploy-oxford-reader-ecs.yml
 		..\..\pipeline-aws-deploy-reader.ps1 = ..\..\pipeline-aws-deploy-reader.ps1
 	EndProjectSection
 EndProject

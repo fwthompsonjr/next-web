@@ -12,7 +12,7 @@ on:
 
 jobs:
   deploy:
-    if: contains( github.event.pull_request.labels.*.name, 'processor')
+    if: contains( github.event.pull_request.labels.*.name, 'disabled')
     runs-on: windows-latest
     steps:
 
@@ -34,7 +34,7 @@ jobs:
 
     - name: Deploy to AWS
       timeout-minutes: 20
-      if: contains( github.event.pull_request.labels.*.name, 'processor')
+      if: contains( github.event.pull_request.labels.*.name, 'disabled')
       shell: pwsh
       run: |
         & ./pipeline-aws-deploy-reader.ps1 -getTools $true -buildNumber ${{ github.run_number }}

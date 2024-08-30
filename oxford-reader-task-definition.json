@@ -1,0 +1,98 @@
+{
+  "taskDefinitionArn": "arn:aws:ecs:us-east-2:223814946444:task-definition/oxfordprocessorRecipeAppTaskDefinition232078DB:1",
+  "containerDefinitions": [
+    {
+      "name": "AppContainerDefinition",
+      "image": "223814946444.dkr.ecr.us-east-2.amazonaws.com/oxfordreader:638605591348587474",
+      "cpu": 0,
+      "memory": 2048,
+      "links": [],
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "entryPoint": [],
+      "command": [],
+      "environment": [],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "secrets": [],
+      "dnsServers": [],
+      "dnsSearchDomains": [],
+      "extraHosts": [],
+      "dockerSecurityOptions": [],
+      "dockerLabels": {},
+      "ulimits": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "oxfordprocessor-RecipeAppTaskDefinitionAppContainerDefinitionLogGroupB92358ED-PyQ4kuYYOwZw",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "oxfordprocessor"
+        },
+        "secretOptions": []
+      },
+      "systemControls": [],
+      "credentialSpecs": []
+    }
+  ],
+  "family": "oxfordprocessorRecipeAppTaskDefinition232078DB",
+  "taskRoleArn": "arn:aws:iam::223814946444:role/oxfordprocessor-RecipeAppIAMTaskRole35276CAE-qiuWkRMNEMWD",
+  "executionRoleArn": "arn:aws:iam::223814946444:role/oxfordprocessor-RecipeAppTaskDefinitionExecutionRol-qDy1fesH7gBX",
+  "networkMode": "awsvpc",
+  "revision": 1,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
+    }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+    "EC2",
+    "FARGATE"
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "1024",
+  "memory": "4096",
+  "registeredAt": "2024-08-29T20:15:52.477Z",
+  "registeredBy": "arn:aws:sts::223814946444:assumed-role/cdk-hnb659fds-cfn-exec-role-223814946444-us-east-2/AWSCloudFormation",
+  "tags": [
+    {
+      "key": "aws-dotnet-deploy",
+      "value": "AspNetAppEcsFargate"
+    }
+  ]
+}

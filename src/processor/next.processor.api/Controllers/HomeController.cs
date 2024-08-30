@@ -17,7 +17,7 @@ namespace next.processor.api.Controllers
         public IActionResult Index()
         {
             var details = queueExecutor.GetDetails();
-            var health = (GetHealth() ?? "Unknown").ToUpper();
+            var health = GetHealth().ToUpper();
             var content = HtmlMapper.Home(HtmlProvider.HomePage, health);
             content = HtmlMapper.Home(content, details);
             return new ContentResult
@@ -49,9 +49,10 @@ namespace next.processor.api.Controllers
         [HttpGet("clear")]
         public IActionResult Clear([FromQuery] string? name)
         {
+            var health = GetHealth().ToUpper();
             if (!ModelState.IsValid) return RedirectToAction("Index", "Home");
             if (string.IsNullOrEmpty(name)) return RedirectToAction("Index", "Home");
-            changingSvc.ChangeStatus(name);
+            changingSvc.ChangeStatus(name, health);
             return RedirectToAction("Status");
         }
 

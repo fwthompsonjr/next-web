@@ -37,6 +37,28 @@ namespace next.processor.api.tests.services
             Assert.Null(error);
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData("missing")]
+        [InlineData("errors")]
+        [InlineData("start")]
+        [InlineData("stop")]
+        [InlineData("toggle-installation")]
+        [InlineData("toggle-queue")]
+        [InlineData("toggle-queue", "not-healthy")]
+        [InlineData("toggle-queue", "degraded")]
+        [InlineData("toggle-queue", "unhealthy")]
+        public void ServiceCanChangeWithHealth(string key, string health = "healthy")
+        {
+            var error = Record.Exception(() =>
+            {
+                var config = GetConfiguration();
+                var service = new StatusChangeService(config) { AllowModelChanges = false };
+                service.ChangeStatus(key, health);
+            });
+            Assert.Null(error);
+        }
+
         private static IConfiguration GetConfiguration()
         {
             return SettingsProvider.GetConfiguration();
