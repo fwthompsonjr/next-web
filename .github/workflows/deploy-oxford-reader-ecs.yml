@@ -19,7 +19,7 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     if: contains( github.event.pull_request.labels.*.name, 'processor')
     environment: production
 
