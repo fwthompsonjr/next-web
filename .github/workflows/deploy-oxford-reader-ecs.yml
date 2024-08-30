@@ -29,9 +29,11 @@ jobs:
 
       - name: Get Short SHA
         id: get_short_sha
+        shell: bash
         run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
       
       - name: Use Short SHA
+        shell: bash
         run: echo "Short SHA is $SHORT_SHA"
 
       - name: Configure AWS credentials
