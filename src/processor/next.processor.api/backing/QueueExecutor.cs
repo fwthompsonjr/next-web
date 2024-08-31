@@ -166,7 +166,7 @@ namespace next.processor.api.backing
         private static readonly List<string> _queueNames = ["begin", "parameter", "search"];
         private static readonly List<string> _installNames = [
             "linux-firefox",
-            "geckodriver",
+            "linux-geckodriver",
             "verification",
             "read-collin",
             "read-denton",

@@ -29,7 +29,6 @@ namespace next.processor.api.tests
                 var actual = provider.GetService(type);
                 if (actual is IQueueExecutor executor) { ExecutorCanExecute(executor); }
                 Assert.NotNull(actual);
-
             });
             Assert.Null(error);
         }
@@ -114,7 +113,7 @@ namespace next.processor.api.tests
 
         [Theory]
         [InlineData("linux-firefox")]
-        [InlineData("geckodriver")]
+        [InlineData("linux-geckodriver")]
         [InlineData("verification")]
         [InlineData("read-collin")]
         [InlineData("read-denton")]

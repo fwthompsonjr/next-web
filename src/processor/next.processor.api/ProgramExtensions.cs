@@ -26,7 +26,7 @@ namespace next.processor.api
             services.AddSingleton<CheckPostApiRequest>();
             // firefox installation
             services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxLinuxInstall>("linux-firefox");
-            services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("geckodriver");
+            services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("linux-geckodriver");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyInstall>("verification");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadCollin>("read-collin");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadDenton>("read-denton");
@@ -52,8 +52,10 @@ namespace next.processor.api
                 return new SearchGenerationService(queue);
             });
             services.AddSingleton(SettingsProvider.Configuration);
+            services.AddSingleton<InitializationService>();
             services.AddSingleton<IStatusChanger, StatusChangeService>();
             services.AddHostedService<SearchGenerationService>();
+            services.AddHostedService<InitializationService>();
             services.Configure<RouteOptions>(
                 options => options.LowercaseUrls = true);
 
