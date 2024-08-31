@@ -132,7 +132,7 @@ namespace next.processor.api.backing
         {
             var isInstallationEnabled = _configuration.GetValue<bool>(Constants.KeyServiceInstallation);
             if (!isInstallationEnabled) return false;
-            var installers = _installNames.Select(GetInstaller).ToList();
+            var installers = GetNames().Select(GetInstaller).ToList();
             if (installers.Exists(x => x == null)) return false;
             var responses = new List<bool>();
             foreach (var installer in installers)
@@ -145,9 +145,20 @@ namespace next.processor.api.backing
                 var rsp = await installer.InstallAsync();
                 responses.Add(rsp);
             }
+            var installationCompleted = !responses.Exists(a => !a);
+            if (installationCompleted && enableQueueOnInstallation) 
+            {
+                EnableQueueService();
+                enableQueueOnInstallation = false;
+            }
             var isQueueEnabled = IsQueueServiceAvailable();
             if (!isQueueEnabled) return false;
-            return !responses.Exists(a => !a);
+            return installationCompleted;
+        }
+
+        private void EnableQueueService()
+        {
+            _configuration[Constants.KeyQueueProcessEnabled] = "true";
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member called and test from public accessor")]
@@ -186,5 +197,6 @@ namespace next.processor.api.backing
             else { names.RemoveAll(n => n.StartsWith(windows)); }
             return names;
         }
+        private static bool enableQueueOnInstallation = true;
     }
 }
