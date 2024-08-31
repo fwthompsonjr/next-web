@@ -26,6 +26,16 @@ namespace next.processor.api.Controllers
                 ContentType = "text.html"
             };
         }
+        [HttpGet("alive")]
+        public IActionResult Alive()
+        {
+            var content = HtmlMapper.Life(HtmlProvider.HomePage);
+            return new ContentResult
+            {
+                Content = content,
+                ContentType = "text.html"
+            };
+        }
 
         [HttpGet("status")]
         public IActionResult Status()

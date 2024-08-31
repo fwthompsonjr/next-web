@@ -11,8 +11,16 @@
 		"name": "record.processor",
 		"setting": {
 			"enabled": true,
-			"delay": 30,
+			"delay": 120,
 			"interval": 1
+		}
+	},
+	{
+		"name": "initialization.service",
+		"setting": {
+			"enabled": true,
+			"delay": 60,
+			"interval": 5
 		}
 	}
 ]

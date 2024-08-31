@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.Extensions.Configuration;
-using Moq;
 using next.processor.api.services;
 using next.processor.api.utility;
 

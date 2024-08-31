@@ -44,6 +44,6 @@
     "1": "complete",
     "2": "failed",
   },
-  "service_installation": true,
+  "service_installation": false,
   "queue_process_enabled": false
 }
