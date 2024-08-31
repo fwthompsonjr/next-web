@@ -6,16 +6,17 @@ using System.Reflection;
 
 namespace next.processor.api.services
 {
-    public class WebFireFoxLinuxInstall(IWebInstallOperation webInstallOperation) : BaseWebInstall(webInstallOperation)
+    public class WebFireFoxLinuxInstall(
+        IWebInstallOperation webInstallOperation,
+        IConfiguration configuration) : BaseWebInstall(webInstallOperation)
     {
-
+        private readonly IConfiguration config = configuration;
         public async override Task<bool> InstallAsync()
         {
             if (IsInstalled) return true;
             try
             {
-                LastErrorMessage = string.Empty;
-                var environmentDir = EnvironmentHelper.GetHomeFolder();
+                var environmentDir = EnvironmentHelper.GetHomeFolder(config);
                 var zipfilename = FirefoxShortName;
                 if (string.IsNullOrEmpty(environmentDir) || string.IsNullOrWhiteSpace(zipfilename)) { return false; }
                 var destinationDir = Path.Combine(environmentDir, "mozilla");
@@ -35,7 +36,6 @@ namespace next.processor.api.services
             }
             catch (Exception ex)
             {
-                LastErrorMessage = ex.ToString();
                 ex.Log();
                 IsInstalled = false;
                 return false;

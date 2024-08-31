@@ -6,7 +6,7 @@ using next.processor.api.utility;
 
 namespace next.processor.api.services
 {
-    public class WebVerifyPageReadCollin : WebVerifyInstall
+    public class WebVerifyPageReadCollin(IConfiguration configuration) : WebVerifyInstall(configuration)
     {
         protected virtual int WebId => 0;
         public async override Task<bool> InstallAsync()

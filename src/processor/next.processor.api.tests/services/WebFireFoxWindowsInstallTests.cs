@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.interfaces;
 using next.processor.api.services;
@@ -12,7 +13,8 @@ namespace next.processor.api.tests.services
         public void ServiceCanBeCreated()
         {
             var mock = new Mock<IWebInstallOperation>();
-            var service = new WebFireFoxWindowsInstall(mock.Object);
+            var cfgmock = new Mock<IConfiguration>();
+            var service = new WebFireFoxWindowsInstall(mock.Object, cfgmock.Object);
             Assert.NotNull(service);
         }
 

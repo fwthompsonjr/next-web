@@ -72,9 +72,10 @@ namespace next.processor.api
 
         public static void ConfigureApp(this WebApplication app)
         {
-            var hostingEnvironment = app.Environment;
-            var isDevelopment = hostingEnvironment.IsDevelopment();
-            app.AddDataDirectory(hostingEnvironment);
+            var env = app.Environment;
+            var isDevelopment = env.IsDevelopment();
+            var config = app.Services.GetRequiredService<IConfiguration>();
+            env.AddDataDirectory(config);
             app.SetSwaggerOptions(isDevelopment);
 
             app.UseStaticFiles();
@@ -112,12 +113,12 @@ namespace next.processor.api
             app.MapHealthChecks("/health", health);
             app.MapHealthChecks("/health-details", details);
         }
-        private static void AddDataDirectory(this WebApplication app, IWebHostEnvironment env)
+        private static void AddDataDirectory(this IWebHostEnvironment env, IConfiguration config)
         {
             // Use this if you want App_Data off your project root folder
             string baseDir = env.ContentRootPath;
             string dataDir = Path.Combine(baseDir, "app_data");
-            AppDomain.CurrentDomain.SetData("DataDirectory", dataDir);
+            config[Constants.DataDirectory] = dataDir;
         }
 
         public static void SetSwaggerOptions(this WebApplication app, bool isDevelopment)

@@ -4,11 +4,13 @@ namespace next.processor.api.utility
 {
     public static class EnvironmentHelper
     {
-        public static string? GetHomeFolder()
+        public static string? GetHomeFolder(IConfiguration? configuration = null)
         {
             var home = GetHomeOrDefault();
             var local = GetAppOrDefault();
             var data = GetDataOrDefault();
+            var dataDir = GetDataDirectoryOrDefault(configuration);
+            if (!string.IsNullOrEmpty(dataDir)) return dataDir;
             if (!string.IsNullOrEmpty(home)) return home;
             if (!string.IsNullOrEmpty(local)) return local;
             if (!string.IsNullOrEmpty(data)) return data;
@@ -48,6 +50,24 @@ namespace next.processor.api.utility
             try
             {
                 var local = Environment.GetEnvironmentVariable("LocalAppData");
+                return local;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+
+        [ExcludeFromCodeCoverage]
+        private static string? GetDataDirectoryOrDefault(IConfiguration? configuration = null)
+        {
+            try
+            {
+                if (configuration == null) return null;
+                var local = configuration[Constants.DataDirectory];
+                if (string.IsNullOrEmpty(local)) return string.Empty;
+                if (!Directory.Exists(local)) return string.Empty;
                 return local;
             }
             catch

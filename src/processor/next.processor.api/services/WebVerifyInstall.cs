@@ -7,21 +7,21 @@ using System.Runtime.InteropServices;
 
 namespace next.processor.api.services
 {
-    public class WebVerifyInstall : IWebContainerInstall
+    public class WebVerifyInstall(IConfiguration configuration) : IWebContainerInstall
     {
+        private readonly IConfiguration config = configuration;
         public bool IsInstalled { get; protected set; }
         public string LastErrorMessage { get; protected set; } = string.Empty;
         public virtual async Task<bool> InstallAsync()
         {
             if (IsInstalled) return true;
-            LastErrorMessage = string.Empty;
             var isverified = await Task.Run(() =>
             {
                 FirefoxDriver? driver = null;
                 try
                 {
-                    var driverDir = GetDriverDirectoryName();
-                    var environmentDir = EnvironmentHelper.GetHomeFolder();
+                    var driverDir = GetDriverDirectoryName(config);
+                    var environmentDir = EnvironmentHelper.GetHomeFolder(config);
                     if (string.IsNullOrEmpty(environmentDir))
                         throw new Exception("Environment directory not found");
                     if (string.IsNullOrEmpty(environmentDir) ||
@@ -40,7 +40,6 @@ namespace next.processor.api.services
                 catch (Exception ex)
                 {
                     ex.Log();
-                    LastErrorMessage = ex.ToString();
                     IsInstalled = false;
                     return false;
                 }
@@ -52,12 +51,12 @@ namespace next.processor.api.services
             return isverified;
         }
 
-        private static FirefoxOptions GetOptions(int mode, string downloadDir)
+        private static FirefoxOptions GetOptions(int mode, string downloadDir, IConfiguration cfg)
         {
 
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             var profile = new FirefoxOptions();
-            var binaryFile = GetBinaryFileName();
+            var binaryFile = GetBinaryFileName(cfg);
             if (mode == 0 || File.Exists(binaryFile) && !isWindows)
             {
                 profile.BrowserExecutableLocation = binaryFile;
@@ -77,8 +76,8 @@ namespace next.processor.api.services
         protected virtual FirefoxDriver GetDriver(int mode, string downloadDir)
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-            var options = GetOptions(mode, downloadDir);
-            var driverDir = GetDriverDirectoryName();
+            var options = GetOptions(mode, downloadDir, config);
+            var driverDir = GetDriverDirectoryName(config);
             var driver = mode switch
             {
                 0 => new FirefoxDriver(driverDir, options),
@@ -88,19 +87,19 @@ namespace next.processor.api.services
             return driver;
         }
 
-        private static string GetDriverDirectoryName()
+        private static string GetDriverDirectoryName(IConfiguration configuration1)
         {
-            var environmentDir = EnvironmentHelper.GetHomeFolder();
+            var environmentDir = EnvironmentHelper.GetHomeFolder(configuration1);
             if (string.IsNullOrEmpty(environmentDir)) { return string.Empty; }
             var destinationDir = Path.Combine(environmentDir, "util");
             var geckoDir = Path.Combine(destinationDir, "gecko");
             return geckoDir;
         }
 
-        private static string? GetBinaryFileName()
+        private static string? GetBinaryFileName(IConfiguration? cfg = null)
         {
             const string ffox = "firefox";
-            var environmentDir = EnvironmentHelper.GetHomeFolder();
+            var environmentDir = EnvironmentHelper.GetHomeFolder(cfg);
             if (string.IsNullOrEmpty(environmentDir)) { return null; }
             var firefoxDir = Path.Combine(environmentDir, ffox);
             var subfolders = 0;
