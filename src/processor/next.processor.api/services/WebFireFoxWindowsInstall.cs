@@ -45,12 +45,13 @@ namespace next.processor.api.services
             string installDirectory,
             CancellationToken cancellationToken = default)
         {
-            const string uri = "https://download.mozilla.org/?product=firefox-stub";
+            const string uri = "https://download-installer.cdn.mozilla.net/pub/firefox/releases/{0}/win64/en-US/Firefox%20Setup%20{0}.exe";
+            string address = string.Format(uri, _firefoxVersion);
             var fullName = Path.Combine(installDirectory, "Firefox_Installer.exe");
             var confirmName = Path.Combine(installDirectory, "firefox-installation.txt");
             if (!_fileSvc.FileExists(fullName))
             {
-                var isdownloaded = await _fileSvc.DownloadFromUriAsync(uri, fullName, cancellationToken);
+                var isdownloaded = await _fileSvc.DownloadFromUriAsync(address, fullName, cancellationToken);
                 if(!isdownloaded) return isdownloaded;
             }
             var isinstalled = InstallExe(fullName, confirmName);
