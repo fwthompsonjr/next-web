@@ -2,6 +2,7 @@
 using next.processor.api.models;
 using next.processor.api.utility;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace next.processor.api.backing
 {
@@ -18,7 +19,7 @@ namespace next.processor.api.backing
 
         public bool? IsReady()
         {
-            var installers = _installNames.Select(GetInstaller).ToList();
+            var installers = GetNames().Select(GetInstaller).ToList();
             foreach (var installer in installers)
             {
                 if (installer == null) return null;
@@ -28,16 +29,16 @@ namespace next.processor.api.backing
         }
         public int IsReadyCount()
         {
-            var installers = _installNames.Select(GetInstaller).ToList();
+            var installers = GetNames().Select(GetInstaller).ToList();
             var count = installers.Count(x => x != null && x.IsInstalled);
             return count;
         }
-        public int InstallerCount() => _installNames.Count;
+        public int InstallerCount() => GetNames().Count;
 
         public Dictionary<string, object> GetDetails()
         {
             var details = new Dictionary<string, object>();
-            var installers = _installNames.Select(x =>
+            var installers = GetNames().Select(x =>
             {
                 var obj = GetInstaller(x);
                 var name = x.Split('-')[^1];
@@ -68,7 +69,7 @@ namespace next.processor.api.backing
         public IWebContainerInstall? GetInstaller(string queueName)
         {
             var oic = StringComparison.OrdinalIgnoreCase;
-            var name = _installNames.Find(x => x.Equals(queueName, oic));
+            var name = GetNames().Find(x => x.Equals(queueName, oic));
             if (name == null) return null;
             return _provider.GetKeyedService<IWebContainerInstall>(name);
         }
@@ -166,6 +167,7 @@ namespace next.processor.api.backing
         private static readonly List<string> _queueNames = ["begin", "parameter", "search"];
         private static readonly List<string> _installNames = [
             "linux-firefox",
+            "windows-firefox",
             "linux-geckodriver",
             "verification",
             "read-collin",
@@ -174,5 +176,15 @@ namespace next.processor.api.backing
             "read-tarrant"
         ];
         private static readonly object locker = new();
+        private static List<string> GetNames()
+        {
+            const string linux = "linux";
+            const string windows = "windows";
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            var names = new List<string>(_installNames);
+            if (isWindows) { names.RemoveAll(n => n.StartsWith(linux)); }
+            else { names.RemoveAll(n => n.StartsWith(windows)); }
+            return names;
+        }
     }
 }

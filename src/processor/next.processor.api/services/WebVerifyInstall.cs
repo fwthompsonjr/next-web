@@ -62,10 +62,11 @@ namespace next.processor.api.services
             {
                 profile.BrowserExecutableLocation = binaryFile;
             }
-
-            profile.AddArguments("-headless");
+            if (!isWindows)
+            {
+                profile.AddAdditionalCapability("platform", "LINUX", true);
+            }
             profile.AddArguments("--headless");
-            profile.AddAdditionalCapability("platform", "LINUX", true);
             profile.AddAdditionalCapability("video", "True", true);
             profile.SetPreference("download.default_directory", downloadDir);
             profile.SetPreference("browser.safebrowsing.enabled", true);

@@ -71,6 +71,7 @@ namespace next.processor.api.tests.backing
                 provider.AddSingleton(s => s);
                 provider.AddSingleton<IQueueExecutor, QueueExecutor>();
                 provider.AddKeyedSingleton("linux-firefox", mockinstaller.Object);
+                provider.AddKeyedSingleton("windows-firefox", mockinstaller.Object);
                 provider.AddKeyedSingleton("linux-geckodriver", mockinstaller.Object);
                 provider.AddKeyedSingleton("verification", mockinstaller.Object);
 
