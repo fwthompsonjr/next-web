@@ -8,9 +8,12 @@ namespace next.processor.api.Controllers
     {
         private readonly IServiceProvider _provider = provider;
         [HttpGet("install-browser")]
-        public async Task<ActionResult> BrowserInstallAsync()
+        public async Task<ActionResult> BrowserInstallAsync([FromQuery] string? os = "linux")
         {
-            var service = _provider.GetKeyedService<IWebContainerInstall>("linux-firefox");
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            if (string.IsNullOrEmpty(os)) os = "linux";
+            var key = $"{os}-firefox";
+            var service = _provider.GetKeyedService<IWebContainerInstall>(key);
             if (service == null) { return BadRequest("Unable to create installation instance"); }
             var extracted = await service.InstallAsync();
             if (!extracted)

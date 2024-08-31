@@ -19,13 +19,17 @@ namespace next.processor.api.tests.controllers
         }
         [Theory]
         [InlineData(0)]
+        [InlineData(0, "")]
+        [InlineData(0, "windows")]
+        [InlineData(0, "linux")]
+        [InlineData(0, "other")]
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
         [InlineData(4)]
         [InlineData(5)]
         [InlineData(6)]
-        public async Task ControllerCanExecuteLandingAsync(int contextId)
+        public async Task ControllerCanExecuteLandingAsync(int contextId, string? context = null)
         {
             var error = await Record.ExceptionAsync(async () =>
             {
@@ -33,7 +37,7 @@ namespace next.processor.api.tests.controllers
                 var controller = provider.GetRequiredService<TestController>();
                 var action = contextId switch
                 {
-                    0 => await controller.BrowserInstallAsync(),
+                    0 => await controller.BrowserInstallAsync(context),
                     1 => await controller.InstallAsync(),
                     2 => await controller.VerifyAsync(),
                     3 => await controller.ReadCollinDataAsync(),

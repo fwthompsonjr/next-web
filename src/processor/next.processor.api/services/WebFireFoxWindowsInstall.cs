@@ -19,7 +19,7 @@ namespace next.processor.api.services
                 if (string.IsNullOrEmpty(environmentDir)) { return false; }
                 var destinationDir = Path.Combine(environmentDir, "mozilla-win");
                 var mozillaDir = Path.Combine(destinationDir, "install");
-                var firefoxFile = Path.Combine(destinationDir, "firefox-installation.txt");
+                var firefoxFile = Path.Combine(mozillaDir, "firefox-installation.txt");
                 if (_fileSvc.FileExists(firefoxFile))
                 {
                     IsInstalled = true;
@@ -28,8 +28,7 @@ namespace next.processor.api.services
                 var paths = new[] { destinationDir, mozillaDir }.ToList();
                 paths.ForEach(path => { _fileSvc.CreateDirectory(path); });
                 var installation = await ExtractFileAsync(mozillaDir);
-                if (!installation) return false;
-                IsInstalled = _fileSvc.FileExists(firefoxFile);
+                IsInstalled = installation;
                 return IsInstalled;
             }
             catch (Exception ex)
@@ -63,6 +62,7 @@ namespace next.processor.api.services
         {
             try
             {
+                if (File.Exists(confirmationFile)) return true;
                 var psi = new ProcessStartInfo(fullName)
                 {
                     RedirectStandardOutput = true,
