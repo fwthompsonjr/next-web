@@ -8,8 +8,10 @@ namespace next.processor.api.utility
         {
             var home = GetHomeOrDefault();
             var local = GetAppOrDefault();
+            var data = GetDataOrDefault();
             if (!string.IsNullOrEmpty(home)) return home;
             if (!string.IsNullOrEmpty(local)) return local;
+            if (!string.IsNullOrEmpty(data)) return data;
             return null;
         }
         [ExcludeFromCodeCoverage]
@@ -32,6 +34,20 @@ namespace next.processor.api.utility
             try
             {
                 var local = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create);
+                return local;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        [ExcludeFromCodeCoverage]
+        private static string? GetDataOrDefault()
+        {
+            try
+            {
+                var local = Environment.GetEnvironmentVariable("LocalAppData");
                 return local;
             }
             catch
