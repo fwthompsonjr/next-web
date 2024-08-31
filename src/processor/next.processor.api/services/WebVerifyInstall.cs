@@ -62,10 +62,11 @@ namespace next.processor.api.services
             {
                 profile.BrowserExecutableLocation = binaryFile;
             }
-
-            profile.AddArguments("-headless");
+            if (!isWindows)
+            {
+                profile.AddAdditionalCapability("platform", "LINUX", true);
+            }
             profile.AddArguments("--headless");
-            profile.AddAdditionalCapability("platform", "LINUX", true);
             profile.AddAdditionalCapability("video", "True", true);
             profile.SetPreference("download.default_directory", downloadDir);
             profile.SetPreference("browser.safebrowsing.enabled", true);
@@ -98,15 +99,16 @@ namespace next.processor.api.services
 
         private static string? GetBinaryFileName()
         {
+            const string ffox = "firefox";
             var environmentDir = EnvironmentHelper.GetHomeFolder();
             if (string.IsNullOrEmpty(environmentDir)) { return null; }
-            var firefoxDir = Path.Combine(environmentDir, "firefox");
+            var firefoxDir = Path.Combine(environmentDir, ffox);
             var subfolders = 0;
-            var firefoxFile = Path.Combine(firefoxDir, "firefox");
+            var firefoxFile = Path.Combine(firefoxDir, ffox);
             while (!File.Exists(firefoxFile))
             {
                 if (subfolders > 5) return string.Empty;
-                firefoxFile = Path.Combine(firefoxFile, "firefox");
+                firefoxFile = Path.Combine(firefoxFile, ffox);
                 subfolders++;
             }
             return firefoxFile;

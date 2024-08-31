@@ -2,7 +2,8 @@ param (
     [string]$searchPattern,
     [string]$versionLabel,
     [string]$buildNumber = '',
-    [bool]$getTools = $false
+    [bool]$getTools = $false,
+    [bool]$windowsConfig = $true
 )
 if( [string]::IsNullOrWhiteSpace( $searchPattern ) -eq $true ) {
     $searchPattern = '*next.processor.api.csproj';
@@ -52,6 +53,9 @@ function executeDeployment( $source ){
         $projectName = [System.IO.Path]::GetFileName( $source );
         $projectDirectory = [System.IO.Path]::GetDirectoryName( $source );
         $configurationFile = [System.IO.Path]::Combine( $projectDirectory, "aws-beanstalk-tools-defaults.json" );
+        if ($windowsConfig -eq $true) {
+            $configurationFile = [System.IO.Path]::Combine( $projectDirectory, "aws-beanstalk-windows-tools-defaults.json" );
+        }
         if ([System.IO.File]::Exists( $configurationFile ) -eq $false ) {
             Write-Output "No configuration file is found."
             return;

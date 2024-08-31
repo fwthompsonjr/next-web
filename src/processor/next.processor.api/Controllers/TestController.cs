@@ -10,7 +10,7 @@ namespace next.processor.api.Controllers
         [HttpGet("install-browser")]
         public async Task<ActionResult> BrowserInstallAsync()
         {
-            var service = _provider.GetKeyedService<IWebContainerInstall>("firefox");
+            var service = _provider.GetKeyedService<IWebContainerInstall>("linux-firefox");
             if (service == null) { return BadRequest("Unable to create installation instance"); }
             var extracted = await service.InstallAsync();
             if (!extracted)
@@ -28,7 +28,7 @@ namespace next.processor.api.Controllers
         [HttpGet("install-driver")]
         public async Task<ActionResult> InstallAsync()
         {
-            var service = _provider.GetKeyedService<IWebContainerInstall>("geckodriver");
+            var service = _provider.GetKeyedService<IWebContainerInstall>("linux-geckodriver");
             if (service == null) { return BadRequest("Unable to create installation instance"); }
             var extracted = await service.InstallAsync();
             if (!extracted)

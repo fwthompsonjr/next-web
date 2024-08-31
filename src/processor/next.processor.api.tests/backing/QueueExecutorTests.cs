@@ -70,8 +70,9 @@ namespace next.processor.api.tests.backing
                 provider.AddKeyedSingleton("search", mockfetch.Object);
                 provider.AddSingleton(s => s);
                 provider.AddSingleton<IQueueExecutor, QueueExecutor>();
-                provider.AddKeyedSingleton("firefox", mockinstaller.Object);
-                provider.AddKeyedSingleton("geckodriver", mockinstaller.Object);
+                provider.AddKeyedSingleton("linux-firefox", mockinstaller.Object);
+                provider.AddKeyedSingleton("windows-firefox", mockinstaller.Object);
+                provider.AddKeyedSingleton("linux-geckodriver", mockinstaller.Object);
                 provider.AddKeyedSingleton("verification", mockinstaller.Object);
 
                 return provider.BuildServiceProvider();

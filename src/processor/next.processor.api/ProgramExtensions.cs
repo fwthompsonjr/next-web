@@ -25,8 +25,9 @@ namespace next.processor.api
             services.AddSingleton<CheckContainerServices>();
             services.AddSingleton<CheckPostApiRequest>();
             // firefox installation
-            services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxInstall>("firefox");
-            services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("geckodriver");
+            services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxLinuxInstall>("linux-firefox");
+            services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxWindowsInstall>("windows-firefox");
+            services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("linux-geckodriver");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyInstall>("verification");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadCollin>("read-collin");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadDenton>("read-denton");

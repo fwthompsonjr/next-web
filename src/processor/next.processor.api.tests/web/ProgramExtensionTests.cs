@@ -5,6 +5,7 @@ using next.processor.api.backing;
 using next.processor.api.interfaces;
 using next.processor.api.services;
 using next.processor.api.utility;
+using System.Runtime.InteropServices;
 
 namespace next.processor.api.tests
 {
@@ -29,7 +30,6 @@ namespace next.processor.api.tests
                 var actual = provider.GetService(type);
                 if (actual is IQueueExecutor executor) { ExecutorCanExecute(executor); }
                 Assert.NotNull(actual);
-
             });
             Assert.Null(error);
         }
@@ -87,8 +87,9 @@ namespace next.processor.api.tests
         [Fact]
         public void QueueProcessingShouldInitializeExpectedInstallers()
         {
-            // expected value for queue initializers = 7
-            const int expected = 7;
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            // expected value for queue initializers
+            int expected = isWindows ? 6: 7;
             var provider = GetServiceProvider();
             var service = provider.GetService<IQueueExecutor>();
             Assert.NotNull(service);
@@ -113,8 +114,9 @@ namespace next.processor.api.tests
 
 
         [Theory]
-        [InlineData("firefox")]
-        [InlineData("geckodriver")]
+        [InlineData("linux-firefox")]
+        [InlineData("windows-firefox")]
+        [InlineData("linux-geckodriver")]
         [InlineData("verification")]
         [InlineData("read-collin")]
         [InlineData("read-denton")]
