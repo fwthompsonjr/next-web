@@ -10,7 +10,7 @@ namespace next.processor.api.Controllers
         [HttpGet("install-browser")]
         public async Task<ActionResult> BrowserInstallAsync()
         {
-            var service = _provider.GetKeyedService<IWebContainerInstall>("firefox");
+            var service = _provider.GetKeyedService<IWebContainerInstall>("linux-firefox");
             if (service == null) { return BadRequest("Unable to create installation instance"); }
             var extracted = await service.InstallAsync();
             if (!extracted)

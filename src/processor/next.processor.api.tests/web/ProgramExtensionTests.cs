@@ -113,7 +113,7 @@ namespace next.processor.api.tests
 
 
         [Theory]
-        [InlineData("firefox")]
+        [InlineData("linux-firefox")]
         [InlineData("geckodriver")]
         [InlineData("verification")]
         [InlineData("read-collin")]

@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace next.processor.api.services
 {
-    public class WebFireFoxInstall(IWebInstallOperation webInstallOperation) : BaseWebInstall(webInstallOperation)
+    public class WebFireFoxLinuxInstall(IWebInstallOperation webInstallOperation) : BaseWebInstall(webInstallOperation)
     {
 
         public async override Task<bool> InstallAsync()
