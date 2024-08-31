@@ -1,6 +1,6 @@
 ﻿namespace next.processor.api.services
 {
-    public class WebVerifyPageReadHarris : WebVerifyPageReadCollin
+    public class WebVerifyPageReadHarris(IConfiguration configuration) : WebVerifyPageReadCollin(configuration)
     {
         protected override int WebId => 2;
     }

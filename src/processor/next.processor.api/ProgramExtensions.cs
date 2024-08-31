@@ -72,14 +72,32 @@ namespace next.processor.api
 
         public static void ConfigureApp(this WebApplication app)
         {
-            var isDevelopment = app.Environment.IsDevelopment();
+            var env = app.Environment;
+            var isDevelopment = env.IsDevelopment();
+            var config = app.Services.GetRequiredService<IConfiguration>();
+            env.AddDataDirectory(config);
             app.SetSwaggerOptions(isDevelopment);
 
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.AddHealth();
 
+            app.MapControllers();
+
+            app.UseRouting();
+            // enforce lowercase URLs
+            // by redirecting uppercase urls to lowercase urls
+            var options = new RewriteOptions().Add(new RedirectLowerCaseRule());
+            app.UseRewriter(options);
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+        }
+
+        private static void AddHealth(this WebApplication app)
+        {
             var statuscodes = new Dictionary<HealthStatus, int>()
             {
                 [HealthStatus.Healthy] = StatusCodes.Status200OK,
@@ -94,19 +112,14 @@ namespace next.processor.api
             };
             app.MapHealthChecks("/health", health);
             app.MapHealthChecks("/health-details", details);
-
-            app.MapControllers();
-
-            app.UseRouting();
-            // enforce lowercase URLs
-            // by redirecting uppercase urls to lowercase urls
-            var options = new RewriteOptions().Add(new RedirectLowerCaseRule());
-            app.UseRewriter(options);
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
         }
-
+        private static void AddDataDirectory(this IWebHostEnvironment env, IConfiguration config)
+        {
+            // Use this if you want App_Data off your project root folder
+            string baseDir = env.ContentRootPath;
+            string dataDir = Path.Combine(baseDir, "app_data");
+            config[Constants.DataDirectory] = dataDir;
+        }
 
         public static void SetSwaggerOptions(this WebApplication app, bool isDevelopment)
         {

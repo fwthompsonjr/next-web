@@ -10,6 +10,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="app_data\app_data.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
 		<PackageReference Include="legallead.jdbc" Version="3.2.*" />
 		<PackageReference Include="legallead.json.db" Version="3.2.*" />
@@ -29,6 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Content Include="app_data\app_data.txt" />
 		<Content Include="_mozilla\firefox-129.0.2.tar.bz2">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>

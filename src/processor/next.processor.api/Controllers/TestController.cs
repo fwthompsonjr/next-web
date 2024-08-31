@@ -20,8 +20,7 @@ namespace next.processor.api.Controllers
             {
                 var message = new
                 {
-                    description = "Failed to install firefox component",
-                    detail = service.LastErrorMessage
+                    description = "Failed to install firefox component"
                 };
                 return BadRequest(message);
             }
@@ -38,8 +37,7 @@ namespace next.processor.api.Controllers
             {
                 var message = new
                 {
-                    description = "Failed to install geckodriver component",
-                    detail = service.LastErrorMessage
+                    description = "Failed to install geckodriver component"
                 };
                 return BadRequest(message);
             }
@@ -56,8 +54,7 @@ namespace next.processor.api.Controllers
             {
                 var message = new
                 {
-                    description = "Failed to execute verification component",
-                    detail = service.LastErrorMessage
+                    description = "Failed to execute verification component"
                 };
                 return BadRequest(message);
             }
@@ -74,8 +71,7 @@ namespace next.processor.api.Controllers
             {
                 var message = new
                 {
-                    description = "Failed to execute search",
-                    detail = service.LastErrorMessage
+                    description = "Failed to execute search"
                 };
                 return BadRequest(message);
             }
@@ -92,8 +88,7 @@ namespace next.processor.api.Controllers
             {
                 var message = new
                 {
-                    description = "Failed to execute search",
-                    detail = service.LastErrorMessage
+                    description = "Failed to execute search"
                 };
                 return BadRequest(message);
             }
@@ -110,8 +105,7 @@ namespace next.processor.api.Controllers
             {
                 var message = new
                 {
-                    description = "Failed to execute search",
-                    detail = service.LastErrorMessage
+                    description = "Failed to execute search"
                 };
                 return BadRequest(message);
             }
@@ -128,8 +122,7 @@ namespace next.processor.api.Controllers
             {
                 var message = new
                 {
-                    description = "Failed to execute search",
-                    detail = service.LastErrorMessage
+                    description = "Failed to execute search"
                 };
                 return BadRequest(message);
             }

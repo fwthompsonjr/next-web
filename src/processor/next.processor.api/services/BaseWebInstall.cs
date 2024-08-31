@@ -7,7 +7,6 @@ namespace next.processor.api.services
         protected readonly IWebInstallOperation _fileSvc = webInstallOperation;
 
 
-        public string LastErrorMessage { get; protected set; } = string.Empty;
         public abstract Task<bool> InstallAsync();
 
         protected static string GetFireFoxDownloadUri(string version)

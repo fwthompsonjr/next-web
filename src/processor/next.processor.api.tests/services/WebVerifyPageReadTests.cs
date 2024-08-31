@@ -1,8 +1,10 @@
 ﻿using Bogus;
 using legallead.records.search.Classes;
 using legallead.records.search.Models;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using next.processor.api.services;
+using next.processor.api.utility;
 
 namespace next.processor.api.tests.services
 {
@@ -83,25 +85,25 @@ namespace next.processor.api.tests.services
         [Fact]
         public void DentonServiceHasExpectedIndex()
         {
-            var service = new MockDentonReader();
+            var service = new MockDentonReader(GetConfiguration());
             Assert.Equal(1, service.ExternalId);
         }
 
         [Fact]
         public void HarrisServiceHasExpectedIndex()
         {
-            var service = new MockHarrisReader();
+            var service = new MockHarrisReader(GetConfiguration());
             Assert.Equal(2, service.ExternalId);
         }
 
         [Fact]
         public void TarrantServiceHasExpectedIndex()
         {
-            var service = new MockTarrantReader();
+            var service = new MockTarrantReader(GetConfiguration());
             Assert.Equal(3, service.ExternalId);
         }
 
-        private sealed class MockPageReader(bool usingMock = false) : WebVerifyPageReadCollin
+        private sealed class MockPageReader(bool usingMock = false) : WebVerifyPageReadCollin(GetConfiguration())
         {
             private readonly bool isMockEnabled = usingMock;
             public Mock<WebInteractive> Mock { get; private set; } = new();
@@ -120,17 +122,23 @@ namespace next.processor.api.tests.services
             }
         }
 
-        private sealed class MockDentonReader : WebVerifyPageReadDenton
+        private sealed class MockDentonReader(IConfiguration configuration) : WebVerifyPageReadDenton(configuration)
         {
             public int ExternalId => WebId;
         }
-        private sealed class MockHarrisReader : WebVerifyPageReadHarris
+        private sealed class MockHarrisReader(IConfiguration configuration) : WebVerifyPageReadHarris(configuration)
         {
             public int ExternalId => WebId;
         }
-        private sealed class MockTarrantReader : WebVerifyPageReadTarrant
+        private sealed class MockTarrantReader(IConfiguration configuration) : WebVerifyPageReadTarrant(configuration)
         {
             public int ExternalId => WebId;
+        }
+
+
+        private static IConfiguration GetConfiguration()
+        {
+            return SettingsProvider.GetConfiguration();
         }
     }
 }
