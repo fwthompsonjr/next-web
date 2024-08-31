@@ -16,21 +16,20 @@ namespace next.processor.api.services
             {
                 LastErrorMessage = string.Empty;
                 var environmentDir = EnvironmentHelper.GetHomeFolder();
-                var zipfilename = FirefoxShortName;
-                if (string.IsNullOrEmpty(environmentDir) || string.IsNullOrWhiteSpace(zipfilename)) { return false; }
+                if (string.IsNullOrEmpty(environmentDir)) { return false; }
                 var destinationDir = Path.Combine(environmentDir, "mozilla-win");
                 var mozillaDir = Path.Combine(destinationDir, "install");
-                var firefoxDir = Path.Combine(environmentDir, "firefox");
-                if (DoesFileExist(firefoxDir))
+                var firefoxFile = Path.Combine(destinationDir, "firefox-installation.txt");
+                if (_fileSvc.FileExists(firefoxFile))
                 {
                     IsInstalled = true;
                     return true;
                 }
-                var paths = new[] { destinationDir, mozillaDir, firefoxDir }.ToList();
+                var paths = new[] { destinationDir, mozillaDir }.ToList();
                 paths.ForEach(path => { _fileSvc.CreateDirectory(path); });
-                var installation = await ExtractBzFileAsync(mozillaDir, firefoxDir, zipfilename);
+                var installation = await ExtractFileAsync(mozillaDir);
                 if (!installation) return false;
-                IsInstalled = DoesFileExist(firefoxDir);
+                IsInstalled = _fileSvc.FileExists(firefoxFile);
                 return IsInstalled;
             }
             catch (Exception ex)
@@ -42,56 +41,63 @@ namespace next.processor.api.services
             }
         }
 
-        private bool DoesFileExist(string firefoxDir)
-        {
-            const string ffox = "firefox";
-            var subfolders = 0;
-            var firefoxFile = Path.Combine(firefoxDir, ffox);
-            while (!_fileSvc.FileExists(firefoxFile))
-            {
-                if (subfolders > 5) return false;
-                firefoxFile = Path.Combine(firefoxFile, ffox);
-                subfolders++;
-            }
-            return _fileSvc.FileExists(firefoxFile);
-        }
-
-        private async Task<bool> ExtractBzFileAsync(
-            string downloadDirectory,
+        private async Task<bool> ExtractFileAsync(
             string installDirectory,
-            string zipFileName,
             CancellationToken cancellationToken = default)
         {
-            if (_fileSvc.DirectoryFileCount(installDirectory) > 0) return true;
-            var fullName = Path.Combine(downloadDirectory, zipFileName);
-            Debug.WriteLine("Extracting bz2 file: {0}", Path.GetFileName(fullName));
+            const string uri = "https://download.mozilla.org/?product=firefox-stub";
+            var fullName = Path.Combine(installDirectory, "Firefox_Installer.exe");
+            var confirmName = Path.Combine(installDirectory, "firefox-installation.txt");
             if (!_fileSvc.FileExists(fullName))
             {
-                var browserPath = GetFireFoxDownloadUri(_firefoxVersion);
-                var isdownloaded = await _fileSvc.DownloadFromUriAsync(browserPath, fullName, cancellationToken);
-                if (!isdownloaded) return false;
+                var isdownloaded = await _fileSvc.DownloadFromUriAsync(uri, fullName, cancellationToken);
+                if(!isdownloaded) return isdownloaded;
             }
-            if (!_fileSvc.CreateDirectory(installDirectory)) return false;
-            var extracted = await _fileSvc.ExtractGzipToDirectoryAsync(fullName, installDirectory, cancellationToken);
-            return extracted;
+            var isinstalled = InstallExe(fullName, confirmName);
+            if (!isinstalled) return false;
+            return _fileSvc.FileExists(confirmName);
         }
 
-        private static string FirefoxShortName => firefoxShortName ??= GetTargetFileName();
-
-        private static string? firefoxShortName;
-        private static string GetTargetFileName()
+        private static bool InstallExe(string fullName, string confirmationFile)
         {
-            var entryAssembly = Assembly.GetEntryAssembly();
-            var assemblyPath = entryAssembly == null ? string.Empty : Path.GetDirectoryName(entryAssembly.Location);
+            try
+            {
+                var psi = new ProcessStartInfo(fullName)
+                {
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    Arguments = "/S",
+                    WindowStyle = ProcessWindowStyle.Hidden
+                };
 
-            if (string.IsNullOrEmpty(assemblyPath) || !Directory.Exists(assemblyPath)) return string.Empty;
-            var files = Directory.GetFiles(assemblyPath, "*.bz2", SearchOption.AllDirectories);
-            var zipfile = files.Length > 0 ? files[0] : string.Empty;
-            var zipfilename = Path.GetFileName(zipfile);
-            if (string.IsNullOrEmpty(zipfile) || string.IsNullOrWhiteSpace(zipfilename)) return string.Empty;
-            return zipfilename;
+                // wrap IDisposable into using (in order to release hProcess) 
+                using Process process = new();
+                process.StartInfo = psi;
+                process.Start();
+
+                // Add this: wait until process does its work
+                process.WaitForExit();
+
+                // and only then read the result
+                string errors = process.StandardError.ReadToEnd();
+                string result = process.StandardOutput.ReadToEnd();
+                Console.WriteLine(result);
+                if (process.ExitCode != 0 || errors.Length > 0) return false;
+                var obj = new
+                {
+                    status = "ok",
+                    installationDate = DateTime.UtcNow,
+                }.ToJsonString();
+                File.WriteAllText(confirmationFile, obj);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
-
-
     }
 }
