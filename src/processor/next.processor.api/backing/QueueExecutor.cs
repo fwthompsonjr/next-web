@@ -179,7 +179,6 @@ namespace next.processor.api.backing
         private static readonly List<string> _installNames = [
             "linux-firefox",
             "linux-geckodriver",
-            "verification",
             "read-collin",
             "read-denton",
             "read-harris",
