@@ -146,7 +146,7 @@ namespace next.processor.api.backing
                 responses.Add(rsp);
             }
             var installationCompleted = !responses.Exists(a => !a);
-            if (installationCompleted && enableQueueOnInstallation) 
+            if (installationCompleted && enableQueueOnInstallation)
             {
                 EnableQueueService();
                 enableQueueOnInstallation = false;

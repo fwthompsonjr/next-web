@@ -2,7 +2,6 @@
 using next.processor.api.interfaces;
 using next.processor.api.utility;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace next.processor.api.services
 {
@@ -52,7 +51,7 @@ namespace next.processor.api.services
             if (!_fileSvc.FileExists(fullName))
             {
                 var isdownloaded = await _fileSvc.DownloadFromUriAsync(address, fullName, cancellationToken);
-                if(!isdownloaded) return isdownloaded;
+                if (!isdownloaded) return isdownloaded;
             }
             var isinstalled = InstallExe(fullName, confirmName);
             if (!isinstalled) return false;

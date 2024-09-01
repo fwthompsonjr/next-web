@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using next.processor.api.backing;
-using next.processor.api.services;
 using next.processor.api.utility;
 
 namespace next.processor.api.tests.services
