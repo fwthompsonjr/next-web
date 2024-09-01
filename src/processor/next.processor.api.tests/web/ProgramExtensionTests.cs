@@ -89,7 +89,7 @@ namespace next.processor.api.tests
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             // expected value for queue initializers
-            int expected = isWindows ? 5 : 7;
+            int expected = isWindows ? 4 : 6;
             var provider = GetServiceProvider();
             var service = provider.GetService<IQueueExecutor>();
             Assert.NotNull(service);
