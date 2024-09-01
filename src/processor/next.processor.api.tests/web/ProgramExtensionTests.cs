@@ -89,7 +89,7 @@ namespace next.processor.api.tests
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             // expected value for queue initializers
-            int expected = isWindows ? 6: 7;
+            int expected = isWindows ? 5: 7;
             var provider = GetServiceProvider();
             var service = provider.GetService<IQueueExecutor>();
             Assert.NotNull(service);
@@ -115,7 +115,6 @@ namespace next.processor.api.tests
 
         [Theory]
         [InlineData("linux-firefox")]
-        [InlineData("windows-firefox")]
         [InlineData("linux-geckodriver")]
         [InlineData("verification")]
         [InlineData("read-collin")]
