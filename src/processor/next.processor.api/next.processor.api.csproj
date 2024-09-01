@@ -60,4 +60,8 @@
 		</AssemblyAttribute>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Include=".ebextensions\firefox.config" />
+	</ItemGroup>
+
 </Project>

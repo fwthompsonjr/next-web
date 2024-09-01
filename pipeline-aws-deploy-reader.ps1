@@ -33,12 +33,13 @@ function getVersionNumber( $source ){
     $currentLocation = Get-Location
     try {
         $dstamp = (Get-Date).Date.ToString("s").Split("T")[0].Replace("-","");
-        $tstamp  = (Get-Date -Format hhmm)
+        $tstamp  = (Get-Date -Format HHmm)
         $configFile = [System.IO.Path]::Combine( $source, "web.reader.version.json" );
         if ( [System.IO.File]::Exists( $configFile ) -eq $false ) {
             $v = [string]::Concat("v.3.2.40x.", $dstamp, ".", $tstamp );
             return $v;
         }
+        $dstamp = [string]::Concat( $dstamp, ".", $tstamp);
         $content = [System.IO.File]::ReadAllText( $configFile ) | ConvertFrom-Json
         $v = [string]::Concat("v.", [string]($content.Item(0).name).Replace("--", $dstamp).Replace("vv", $buildNumber));
         return $v;

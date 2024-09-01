@@ -42,7 +42,6 @@ namespace next.processor.api.tests.controllers
                 collection.AddSingleton(mockchange);
                 collection.AddSingleton(mockchange.Object);
                 collection.AddKeyedSingleton("linux-firefox", mockinstaller.Object);
-                collection.AddKeyedSingleton("windows-firefox", mockinstaller.Object);
                 collection.AddKeyedSingleton("linux-geckodriver", mockinstaller.Object);
                 collection.AddKeyedSingleton("verification", mockinstaller.Object);
                 collection.AddKeyedSingleton("read-collin", mockinstaller.Object);

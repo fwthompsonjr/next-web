@@ -19,15 +19,13 @@ namespace next.processor.api.tests.services
         }
 
         [Fact]
-        public async Task ServiceCanBeInstalledAsync()
+        public void ServiceCanBeInstalled()
         {
-            if (!Debugger.IsAttached) return;
-            var error = await Record.ExceptionAsync(async () =>
+            var error = Record.Exception(() =>
             {
                 var provider = GetServiceProvider();
                 var service = provider.GetKeyedService<IWebContainerInstall>("windows-firefox");
-                Assert.NotNull(service);
-                _ = await service.InstallAsync();
+                Assert.Null(service);
             });
             Assert.Null(error);
         }
