@@ -71,16 +71,36 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="col text-start">
-										<h5 name="detail-01-label" class="text-primary">Queues: </h5>
-									</div>
-									<div class="col text-start">
+									<div class="col-3 text-start">
 										<h5 name="detail-01-label" class="text-primary">Processing: </h5>
 									</div>
 								</div>
-								<div id="detail-02" class="row">
+								<div id="detail-02" class="row content-boxed-vertical">
 									<div class="col text-start">
-										<h5 name="detail-02-label" class="text-primary">Errors: </h5>
+										<h5 name="detail-02-label" class="text-primary">Directories: </h5>
+										<table name="tb-directory" style="width: 95%">
+											<colgroup>
+												<col style="width: 20%">
+												<col />
+											</colgroup>
+											<thead>
+												<tr>
+													<th class="text-start">Folder</th>
+													<th class="text-start">Location</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr name="template-row">
+													<td class="text-start text-info">~0</td>
+													<td class="text-start small">~1</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div id="detail-03" class="row content-boxed-vertical">
+									<div class="col text-start">
+										<h5 name="detail-03-label" class="text-primary">Errors: </h5>
 										<table name="tb-errors" style="width: 95%">
 											<colgroup>
 												<col style="width: 20%">

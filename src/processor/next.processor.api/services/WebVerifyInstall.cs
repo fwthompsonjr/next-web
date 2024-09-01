@@ -57,8 +57,10 @@ namespace next.processor.api.services
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             var profile = new FirefoxOptions();
             var binaryFile = GetBinaryFileName(cfg);
+            var binaryDir = Path.GetDirectoryName(binaryFile);
             if (mode == 0 || File.Exists(binaryFile) && !isWindows)
             {
+                EnvironmentHelper.AppendToPath(binaryDir);
                 profile.BrowserExecutableLocation = binaryFile;
             }
             if (!isWindows)

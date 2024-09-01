@@ -29,7 +29,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="app_data\app_data.txt" />
 		<Content Include="_mozilla\firefox-129.0.2.tar.bz2">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
@@ -58,6 +57,12 @@
 
 	<ItemGroup>
 	  <None Include=".ebextensions\mozilla.config">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="app_data\app_data.txt">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

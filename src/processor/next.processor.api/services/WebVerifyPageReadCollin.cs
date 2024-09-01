@@ -25,7 +25,7 @@ namespace next.processor.api.services
                 }
                 catch (Exception ex)
                 {
-                    ex.Log();
+                    ex.Log(GetSourceName());
                     LastErrorMessage = ex.ToString();
                     return null;
                 }
@@ -33,7 +33,18 @@ namespace next.processor.api.services
             IsInstalled = response != null && response.PeopleList.Count != 0;
             return IsInstalled;
         }
-
+        protected string GetSourceName()
+        {
+            var name = WebId switch
+            {
+                0 => "web-test-collin",
+                1 => "web-test-denton",
+                2 => "web-test-harris",
+                3 => "web-test-tarrant",
+                _ => "web-test"
+            };
+            return name;
+        }
         protected virtual WebInteractive? GetWeb(int index)
         {
             var max = collection.Count - 1;

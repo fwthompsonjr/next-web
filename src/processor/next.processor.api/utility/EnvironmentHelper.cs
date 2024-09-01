@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace next.processor.api.utility
 {
@@ -16,8 +17,26 @@ namespace next.processor.api.utility
             if (!string.IsNullOrEmpty(data)) return data;
             return null;
         }
+
+        internal static void AppendToPath(string? keyValue)
+        {
+            const char colon = ':';
+            const char semicolon = ';';
+            const string name = "PATH";
+            if (string.IsNullOrEmpty(keyValue)) return;
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            var separator = isWindows ? semicolon : colon;
+            var scope = EnvironmentVariableTarget.User;
+            var oldValue = Environment.GetEnvironmentVariable(name, scope) ?? string.Empty;
+            var items = oldValue.Split(separator).ToList();
+            if (items.Contains(keyValue)) return;
+            items.Add(keyValue);
+            var newValue = string.Join(separator, items);
+            Environment.SetEnvironmentVariable(name, newValue, scope);
+        }
+
         [ExcludeFromCodeCoverage]
-        private static string? GetHomeOrDefault()
+        internal static string? GetHomeOrDefault()
         {
             try
             {
@@ -31,7 +50,7 @@ namespace next.processor.api.utility
         }
 
         [ExcludeFromCodeCoverage]
-        private static string? GetAppOrDefault()
+        internal static string? GetAppOrDefault()
         {
             try
             {
@@ -45,7 +64,7 @@ namespace next.processor.api.utility
         }
 
         [ExcludeFromCodeCoverage]
-        private static string? GetDataOrDefault()
+        internal static string? GetDataOrDefault()
         {
             try
             {
@@ -60,7 +79,7 @@ namespace next.processor.api.utility
 
 
         [ExcludeFromCodeCoverage]
-        private static string? GetDataDirectoryOrDefault(IConfiguration? configuration = null)
+        internal static string? GetDataDirectoryOrDefault(IConfiguration? configuration = null)
         {
             try
             {

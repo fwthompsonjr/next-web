@@ -4,7 +4,7 @@
     position: absolute;
     left: 100px;
     top: 60px;
-    width: 75%;
+    width: 85%;
     min-width: 500px;
 }
 
@@ -16,14 +16,15 @@
     margin-left: 10px;
 }
 
-#detail-04 {
+div.content-boxed-vertical {
     max-height: 50vh;
     overflow-y: auto;
 }
 
 table[name="tb-detail"],
 table[name="tb-errors"],
-table[name="tb-status"] {
+table[name="tb-status"],
+table[name="tb-directory"] {
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: 10px;
@@ -42,7 +43,8 @@ tr[name='detail-item'] > td {
     padding-left: 5px;
 }
 h5[name="detail-01-label"],
-h5[name="detail-02-label"] {
+h5[name="detail-02-label"],
+h5[name="detail-03-label"] {
     width: 95%;
     border-bottom: 1px solid #444;
 }

@@ -55,6 +55,7 @@ namespace next.processor.api.services
             tbody.InnerHtml = builder.ToString();
             return node.OuterHtml;
         }
+
         public static string Life(string content)
         {
             // remove div elements named detail- 0 - 4
@@ -80,6 +81,27 @@ namespace next.processor.api.services
             var errors = TrackEventService.Get(Constants.ErrorLogName);
             AppendErrorDetail(document, errors);
             AppendStatusDetail(document, statuses);
+            return node.OuterHtml;
+        }
+
+        public static string Status(string content, Dictionary<string, string> substitutions)
+        {
+            const string find = "//table[@name='tb-directory']/tbody";
+            var document = content.ToDocument();
+            var node = document.DocumentNode;
+            var tbody = node.SelectSingleNode(find);
+            if (tbody == null) return node.OuterHtml;
+            var tr = tbody.SelectSingleNode("tr");
+            if (tr == null) return node.OuterHtml;
+            var template = tr.OuterHtml.Replace("template-row", "detail-item");
+            var builder = new StringBuilder();
+            substitutions.Keys.ToList().ForEach(k =>
+            {
+                var data = string.IsNullOrEmpty(substitutions[k]) ? " - " : substitutions[k];
+                var content = template.Replace("~0", k).Replace("~1", data);
+                builder.AppendLine(content);
+            });
+            tbody.InnerHtml = builder.ToString();
             return node.OuterHtml;
         }
 

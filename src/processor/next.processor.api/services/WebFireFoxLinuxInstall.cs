@@ -24,6 +24,7 @@ namespace next.processor.api.services
                 var firefoxDir = Path.Combine(environmentDir, "firefox");
                 if (DoesFileExist(firefoxDir))
                 {
+                    if (IsInstalled) EnvironmentHelper.AppendToPath(firefoxDir);
                     IsInstalled = true;
                     return true;
                 }
@@ -32,11 +33,14 @@ namespace next.processor.api.services
                 var installation = await ExtractBzFileAsync(mozillaDir, firefoxDir, zipfilename);
                 if (!installation) return false;
                 IsInstalled = DoesFileExist(firefoxDir);
+                Console.WriteLine("Firefox installation {1}. Path: {0}", firefoxDir, IsInstalled ? "completed" : "failed");
+                if (IsInstalled) EnvironmentHelper.AppendToPath(firefoxDir);
                 return IsInstalled;
             }
             catch (Exception ex)
             {
-                ex.Log();
+                Console.WriteLine("Firefox installation error. Message: {0}", ex.Message);
+                ex.Log(_source);
                 IsInstalled = false;
                 return false;
             }
@@ -92,6 +96,6 @@ namespace next.processor.api.services
             return zipfilename;
         }
 
-
+        private const string _source = "linux-firefox-installer";
     }
 }

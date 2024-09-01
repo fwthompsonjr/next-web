@@ -40,14 +40,23 @@ namespace next.processor.api.Controllers
         [HttpGet("status")]
         public IActionResult Status()
         {
+            const string dash = " - ";
             var statuses = new List<KeyValuePair<string, string>>
             {
                 new("Health", GetHealth()),
                 new("Installation", config[Constants.KeyServiceInstallation] ?? "FALSE"),
                 new("Queue Processing", config[Constants.KeyQueueProcessEnabled] ?? "FALSE")
             };
+            var directories = new Dictionary<string, string>
+            {
+                { "current", EnvironmentHelper.GetHomeFolder(config) ?? dash },
+                { "data-dir", EnvironmentHelper.GetDataDirectoryOrDefault(config) ?? dash },
+                { "env-data", EnvironmentHelper.GetAppOrDefault() ?? dash },
+                { "home", EnvironmentHelper.GetHomeOrDefault() ?? dash },
+                { "local-data", EnvironmentHelper.GetDataOrDefault() ?? dash }
+            };
             var content = HtmlMapper.Status(HtmlProvider.StatusPage, statuses);
-
+            content = HtmlMapper.Status(content, directories);
             return new ContentResult
             {
                 Content = content,
