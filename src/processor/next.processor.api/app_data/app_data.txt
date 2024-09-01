@@ -2,3 +2,4 @@ application data files are created in app_data folder.
 update data to trigger app deplyment
 update reader component
 update reader component
+342 - update reader component
