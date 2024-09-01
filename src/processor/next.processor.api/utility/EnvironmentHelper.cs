@@ -18,11 +18,12 @@ namespace next.processor.api.utility
             return null;
         }
 
-        internal static void AppendToPath(string keyValue)
+        internal static void AppendToPath(string? keyValue)
         {
             const char colon = ':';
             const char semicolon = ';';
             const string name = "PATH";
+            if (string.IsNullOrEmpty(keyValue)) return;
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             var separator = isWindows ? semicolon : colon;
             var scope = EnvironmentVariableTarget.User;
