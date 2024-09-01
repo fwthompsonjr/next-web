@@ -10,7 +10,7 @@ namespace next.processor.api.Controllers
         [HttpGet("install-browser")]
         public async Task<ActionResult> BrowserInstallAsync([FromQuery] string? os = "linux")
         {
-            if(!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             if (string.IsNullOrEmpty(os)) os = "linux";
             var key = $"{os}-firefox";
             var service = _provider.GetKeyedService<IWebContainerInstall>(key);

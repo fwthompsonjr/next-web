@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.interfaces;
 using next.processor.api.services;
-using System.Diagnostics;
 
 namespace next.processor.api.tests.services
 {
