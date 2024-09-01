@@ -17,7 +17,7 @@ namespace next.processor.api.utility
             return null;
         }
         [ExcludeFromCodeCoverage]
-        private static string? GetHomeOrDefault()
+        internal static string? GetHomeOrDefault()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace next.processor.api.utility
         }
 
         [ExcludeFromCodeCoverage]
-        private static string? GetAppOrDefault()
+        internal static string? GetAppOrDefault()
         {
             try
             {
@@ -45,7 +45,7 @@ namespace next.processor.api.utility
         }
 
         [ExcludeFromCodeCoverage]
-        private static string? GetDataOrDefault()
+        internal static string? GetDataOrDefault()
         {
             try
             {
@@ -60,7 +60,7 @@ namespace next.processor.api.utility
 
 
         [ExcludeFromCodeCoverage]
-        private static string? GetDataDirectoryOrDefault(IConfiguration? configuration = null)
+        internal static string? GetDataDirectoryOrDefault(IConfiguration? configuration = null)
         {
             try
             {

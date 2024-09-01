@@ -38,7 +38,7 @@ namespace next.processor.api.services
             catch (Exception ex)
             {
                 Console.WriteLine("Firefox installation error. Message: {0}", ex.Message);
-                ex.Log();
+                ex.Log(_source);
                 IsInstalled = false;
                 return false;
             }
@@ -94,6 +94,6 @@ namespace next.processor.api.services
             return zipfilename;
         }
 
-
+        private const string _source = "linux-firefox-installer";
     }
 }

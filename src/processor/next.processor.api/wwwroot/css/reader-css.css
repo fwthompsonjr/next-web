@@ -16,14 +16,15 @@
     margin-left: 10px;
 }
 
-#detail-04 {
+div.content-boxed-vertical {
     max-height: 50vh;
     overflow-y: auto;
 }
 
 table[name="tb-detail"],
 table[name="tb-errors"],
-table[name="tb-status"] {
+table[name="tb-status"],
+table[name="tb-directory"] {
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: 10px;

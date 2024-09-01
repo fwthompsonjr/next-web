@@ -37,10 +37,11 @@ namespace next.processor.api.services
             }
             catch (Exception ex)
             {
-                ex.Log();
+                ex.Log(_source);
                 IsInstalled = false;
                 return false;
             }
         }
+        private const string _source = "linux-gecko-installer";
     }
 }

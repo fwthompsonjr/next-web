@@ -73,15 +73,15 @@ namespace next.processor.api.extensions
             var item = new TrackErrorModel { Data = request };
             TrackEventService.AppendItem(name, item, expiration);
         }
-        public static void Log(this Exception exception)
+        public static void Log(this Exception exception, string source = "")
         {
-
-            Console.WriteLine("Error. Message: {0}", exception.Message);
+            var message = string.IsNullOrEmpty(source) ? exception.Message : $"{source} : {exception.Message}";
+            Console.WriteLine("Error. Message: {0}", message);
             var data = Encoding.UTF8.GetBytes(exception.ToString());
             var issue = new QueueReportIssueRequest
             {
                 Id = Guid.NewGuid().ToString(),
-                Message = exception.Message,
+                Message = message,
                 CreateDate = DateTime.UtcNow,
                 Data = data
             };
