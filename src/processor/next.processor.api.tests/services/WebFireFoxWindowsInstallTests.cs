@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.interfaces;
 using next.processor.api.services;
+using System.Diagnostics;
 
 namespace next.processor.api.tests.services
 {
@@ -29,6 +30,19 @@ namespace next.processor.api.tests.services
             Assert.Null(error);
         }
 
+
+        [Fact]
+        public async Task ServiceCanBeInstalledAsync()
+        {
+            if (!Debugger.IsAttached) return;
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var provider = GetServiceProvider();
+                var service = provider.GetRequiredKeyedService<IWebContainerInstall>("linux-firefox");
+                await service.InstallAsync();
+            });
+            Assert.Null(error);
+        }
         private static ServiceProvider GetServiceProvider()
         {
             lock (locker)

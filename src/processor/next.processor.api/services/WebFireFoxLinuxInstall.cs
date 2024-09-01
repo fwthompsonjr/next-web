@@ -32,10 +32,12 @@ namespace next.processor.api.services
                 var installation = await ExtractBzFileAsync(mozillaDir, firefoxDir, zipfilename);
                 if (!installation) return false;
                 IsInstalled = DoesFileExist(firefoxDir);
+                Console.WriteLine("Firefox installation {1}. Path: {0}", firefoxDir, IsInstalled ? "completed" : "failed");
                 return IsInstalled;
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Firefox installation error. Message: {0}", ex.Message);
                 ex.Log();
                 IsInstalled = false;
                 return false;

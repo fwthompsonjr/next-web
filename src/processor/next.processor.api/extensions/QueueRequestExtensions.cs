@@ -75,6 +75,8 @@ namespace next.processor.api.extensions
         }
         public static void Log(this Exception exception)
         {
+
+            Console.WriteLine("Error. Message: {0}", exception.Message);
             var data = Encoding.UTF8.GetBytes(exception.ToString());
             var issue = new QueueReportIssueRequest
             {
