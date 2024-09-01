@@ -23,7 +23,11 @@ namespace next.processor.api.services
                 var geckoDir = Path.Combine(destinationDir, "gecko");
                 var geckoFile = Path.Combine(geckoDir, "geckodriver");
                 IsInstalled = _fileSvc.FileExists(geckoFile);
-                if (IsInstalled) return true;
+                if (IsInstalled)
+                {
+                    EnvironmentHelper.AppendToPath(geckoDir);
+                    return true;
+                }
                 var paths = new[] { downloadDir, destinationDir, geckoDir }.ToList();
                 paths.ForEach(path => _fileSvc.CreateDirectory(path));
                 var uri = _driverPath;
@@ -33,6 +37,8 @@ namespace next.processor.api.services
                 var extracted = await _fileSvc.ExtractTarToDirectoryAsync(downloadPath, geckoDir, default);
                 if (!extracted) return false;
                 IsInstalled = _fileSvc.FileExists(geckoFile);
+                if (!IsInstalled) return false;
+                EnvironmentHelper.AppendToPath(geckoDir);
                 return IsInstalled;
             }
             catch (Exception ex)

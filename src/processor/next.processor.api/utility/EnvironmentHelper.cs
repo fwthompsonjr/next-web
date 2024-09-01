@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace next.processor.api.utility
 {
@@ -16,6 +17,23 @@ namespace next.processor.api.utility
             if (!string.IsNullOrEmpty(data)) return data;
             return null;
         }
+
+        internal static void AppendToPath(string keyValue)
+        {
+            const char colon = ':';
+            const char semicolon = ';';
+            const string name = "PATH";
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            var separator = isWindows ? semicolon : colon;
+            var scope = EnvironmentVariableTarget.User;
+            var oldValue = Environment.GetEnvironmentVariable(name, scope) ?? string.Empty;
+            var items = oldValue.Split(separator).ToList();
+            if (items.Contains(keyValue)) return;
+            items.Add(keyValue);
+            var newValue = string.Join(separator, items);
+            Environment.SetEnvironmentVariable(name, newValue, scope);
+        }
+
         [ExcludeFromCodeCoverage]
         internal static string? GetHomeOrDefault()
         {
