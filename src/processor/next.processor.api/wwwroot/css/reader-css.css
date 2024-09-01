@@ -16,6 +16,11 @@
     margin-left: 10px;
 }
 
+#detail-04 {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
 table[name="tb-detail"],
 table[name="tb-errors"],
 table[name="tb-status"] {
