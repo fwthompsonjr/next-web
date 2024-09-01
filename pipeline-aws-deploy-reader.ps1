@@ -3,7 +3,7 @@ param (
     [string]$versionLabel,
     [string]$buildNumber = '',
     [bool]$getTools = $false,
-    [bool]$windowsConfig = $true
+    [bool]$windowsConfig = $false
 )
 if( [string]::IsNullOrWhiteSpace( $searchPattern ) -eq $true ) {
     $searchPattern = '*next.processor.api.csproj';
