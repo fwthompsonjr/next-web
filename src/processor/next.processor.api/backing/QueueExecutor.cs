@@ -182,6 +182,7 @@ namespace next.processor.api.backing
             "read-collin",
             "read-denton",
             "read-harris",
+            "read-harris-jp",
             "read-tarrant"
         ];
         private static readonly object locker = new();

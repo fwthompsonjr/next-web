@@ -41,6 +41,7 @@ namespace next.processor.api.services
                 1 => "web-test-denton",
                 2 => "web-test-harris",
                 3 => "web-test-tarrant",
+                4 => "web-test-harris-jp",
                 _ => "web-test"
             };
             return name;
@@ -71,16 +72,18 @@ namespace next.processor.api.services
         {
             return collection[index];
         }
-        private static readonly List<string> collection = [CollinSettings, DentonSettings, HarrisSettings, TarrantSettings];
+        private static readonly List<string> collection = [CollinSettings, DentonSettings, HarrisSettings, TarrantSettings, HarrisJpSettings];
 
         private static string? collinSettings;
         private static string? dentonSettings;
         private static string? harrisSettings;
+        private static string? harrisJpSettings;
         private static string? tarrantSettings;
 
         private static string CollinSettings => collinSettings ??= GetCollinSettings();
         private static string DentonSettings => dentonSettings ??= GetDentonSettings();
         private static string HarrisSettings => harrisSettings ??= GetHarrisSettings();
+        private static string HarrisJpSettings => harrisJpSettings ??= GetHarrisJpSettings();
         private static string TarrantSettings => tarrantSettings ??= GetTarrantSettings();
         private static string GetCollinSettings()
         {
@@ -96,6 +99,12 @@ namespace next.processor.api.services
         {
             return Properties.Resources.payload_sample_harris;
         }
+
+        private static string GetHarrisJpSettings()
+        {
+            return Properties.Resources.payload_sample_harris_jp;
+        }
+
         private static string GetTarrantSettings()
         {
             return Properties.Resources.payload_sample_tarrant;

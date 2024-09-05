@@ -16,7 +16,8 @@ namespace next.processor.api.tests.services
         [InlineData(1, true)]
         [InlineData(2, true)]
         [InlineData(3, true)]
-        [InlineData(4, false)]
+        [InlineData(4, true)]
+        [InlineData(5, false)]
         public void ServiceCanGetInteractive(int index, bool expected)
         {
             var service = new MockPageReader();
@@ -39,7 +40,7 @@ namespace next.processor.api.tests.services
         }
         [Theory]
         [InlineData(-1)]
-        [InlineData(4)]
+        [InlineData(10)]
         public async Task ServiceShouldReturnFalseForUnmappedIndexAsync(int index)
         {
             var service = new MockPageReader();
@@ -97,6 +98,13 @@ namespace next.processor.api.tests.services
         }
 
         [Fact]
+        public void HarrisJpServiceHasExpectedIndex()
+        {
+            var service = new MockHarrisJpReader(GetConfiguration());
+            Assert.Equal(4, service.ExternalId);
+        }
+
+        [Fact]
         public void TarrantServiceHasExpectedIndex()
         {
             var service = new MockTarrantReader(GetConfiguration());
@@ -127,6 +135,10 @@ namespace next.processor.api.tests.services
             public int ExternalId => WebId;
         }
         private sealed class MockHarrisReader(IConfiguration configuration) : WebVerifyPageReadHarris(configuration)
+        {
+            public int ExternalId => WebId;
+        }
+        private sealed class MockHarrisJpReader(IConfiguration configuration) : WebVerifyPageReadHarrisJp(configuration)
         {
             public int ExternalId => WebId;
         }

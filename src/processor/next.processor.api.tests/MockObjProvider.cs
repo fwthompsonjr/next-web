@@ -11,7 +11,7 @@ namespace next.processor.api.tests
         public static string GetUserSearchPayload()
         {
             var fkr = new Faker();
-            List<string> collection = [CollinSettings, DentonSettings, HarrisSettings, TarrantSettings];
+            List<string> collection = [CollinSettings, DentonSettings, HarrisSettings, HarrisJpSettings, TarrantSettings];
             return fkr.PickRandom(collection);
         }
 
@@ -24,7 +24,7 @@ namespace next.processor.api.tests
         public static WebFetchResult GetWebFetchResult(int size)
         {
             var fkr = new Faker();
-            List<int> counties = [0, 10, 20, 30];
+            List<int> counties = [0, 10, 20, 30, 50];
             var collection = PersonFaker.Generate(size);
             return new WebFetchResult
             {
@@ -79,11 +79,13 @@ namespace next.processor.api.tests
         private static string? collinSettings;
         private static string? dentonSettings;
         private static string? harrisSettings;
+        private static string? harrisJpSettings;
 
         private static string CollinSettings => collinSettings ??= GetCollinSettings();
         private static string DentonSettings => dentonSettings ??= GetDentonSettings();
         private static string HarrisSettings => harrisSettings ??= GetHarrisSettings();
 
+        private static string HarrisJpSettings => harrisJpSettings ??= GetHarrisJpSettings();
         private static string GetCollinSettings()
         {
             return Properties.Resources.user_payload_sample_collin;
@@ -99,6 +101,10 @@ namespace next.processor.api.tests
             return Properties.Resources.user_payload_sample_harris;
         }
 
+        private static string GetHarrisJpSettings()
+        {
+            return Properties.Resources.user_payload_sample_harris_jp;
+        }
 
 
         private static string? tarrantSettings;

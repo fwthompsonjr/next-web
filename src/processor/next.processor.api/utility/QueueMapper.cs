@@ -46,6 +46,7 @@
             if (string.IsNullOrWhiteSpace(county) ||
                 string.IsNullOrWhiteSpace(st)) return 0;
             var lookup = $"{st.ToLower()}-{county.Replace(' ', '-').ToLower()}";
+            if (lookup.Equals("tx-harris-jp")) return 50;
             if (lookup.Equals("tx-harris")) return 30;
             if (lookup.Equals("tx-collin")) return 20;
             if (lookup.Equals("tx-tarrant")) return 10;
@@ -70,6 +71,7 @@
                 10 => new TarrantWebInteractive(translated, startDate, endingDate),
                 20 => new CollinWebInteractive(translated, startDate, endingDate),
                 30 => new HarrisCivilInteractive(translated, startDate, endingDate),
+                50 => new HarrisJpInteractive(translated, startDate, endingDate),
                 _ => new WebInteractive(translated, startDate, endingDate)
             };
             /*
@@ -90,7 +92,8 @@
             if (dest.Id == 0) DentonCountyNavigationMap(source, dest);
             if (dest.Id == 10) TarrantCountyNavigationMap(source, dest);
             if (dest.Id == 20) CollinCountyNavigationMap(source, dest);
-            if (dest.Id == 30) HarrisCountyNavigationMap(source, dest);
+            if (dest.Id == 30) HarrisCivilNavigationMap(source, dest);
+            if (dest.Id == 50) HarrisJpNavigationMap(source, dest);
             return dest;
         }
 
@@ -159,7 +162,7 @@
             dest.Keys.Add(keyZero);
         }
 
-        private static void HarrisCountyNavigationMap(UserSearchRequest source, SearchNavigationParameter dest)
+        private static void HarrisCivilNavigationMap(UserSearchRequest source, SearchNavigationParameter dest)
         {
             const string harrisCountyIndex = "30";
             var accepted = "0".Split(',');
@@ -175,6 +178,30 @@
                 new () { Name = "courtIndex", Value = "0" },
                 new () { Name = "caseStatusIndex", Value = "0" },
                 new () { Name = "navigation.control.file", Value= "harrisCivilMapping" },
+                keyZero
+            };
+            custom.ForEach(x => { AddOrUpdateKey(dest.Keys, x); });
+        }
+
+        private static void HarrisJpNavigationMap(UserSearchRequest source, SearchNavigationParameter dest)
+        {
+            const string harrisJpIndex = "50";
+            var accepted = "0".Split(',');
+            var indices = "0,1,2".Split(',');
+            var cbxIndex = source.Details.Find(x => x.Name == "Search Type")?.Value ?? accepted[0];
+            var courtIndex = source.Details.Find(x => x.Name == "Court Selection")?.Value ?? indices[0];
+            if (!accepted.Contains(cbxIndex)) cbxIndex = accepted[0];
+            if (!indices.Contains(courtIndex)) courtIndex = indices[0];
+            var idx = int.Parse(cbxIndex).ToString();
+            AppendKeys(dest, harrisJpIndex);
+            AppendInstructions(dest, harrisJpIndex);
+            AppendCaseInstructions(dest, harrisJpIndex);
+            var keyZero = new SearchNavigationKey { Name = "searchTypeSelectedIndex", Value = idx };
+            var custom = new List<SearchNavigationKey>
+            {
+                new () { Name = "courtIndex", Value = courtIndex },
+                new () { Name = "caseStatusIndex", Value = "0" },
+                new () { Name = "navigation.control.file", Value= "harrisJpMapping" },
                 keyZero
             };
             custom.ForEach(x => { AddOrUpdateKey(dest.Keys, x); });

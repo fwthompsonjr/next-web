@@ -24,7 +24,8 @@ div.content-boxed-vertical {
 table[name="tb-detail"],
 table[name="tb-errors"],
 table[name="tb-status"],
-table[name="tb-directory"] {
+table[name="tb-directory"],
+table[name="tb-queue-summary"] {
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: 10px;

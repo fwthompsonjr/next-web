@@ -100,8 +100,16 @@ namespace next.processor.api.Properties {
         ///		&quot;name&quot;: &quot;record.processor&quot;,
         ///		&quot;setting&quot;: {
         ///			&quot;enabled&quot;: true,
-        ///			&quot;delay&quot;: 30,
+        ///			&quot;delay&quot;: 90,
         ///			&quot;interval&quot;: 1
+        ///		}
+        ///	},
+        ///	{
+        ///		&quot;name&quot;: &quot;initialization.service&quot;,
+        ///		&quot;setting&quot;: {
+        ///			&quot;enabled&quot;: true,
+        ///			&quot;delay&quot;: 30,
+        ///			&quot;interval&quot;: 5
         ///		}
         ///	}
         ///].
@@ -244,6 +252,30 @@ namespace next.processor.api.Properties {
         internal static string payload_sample_harris {
             get {
                 return ResourceManager.GetString("payload_sample_harris", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;state&quot;: &quot;tx&quot;,
+        ///	&quot;county&quot;: {
+        ///		&quot;name&quot;: &quot;harris-jp&quot;,
+        ///		&quot;value&quot;: 32190
+        ///	},
+        ///	&quot;details&quot;: [
+        ///		{
+        ///			&quot;name&quot;: &quot;Court Selection&quot;,
+        ///			&quot;text&quot;: &quot;All JP Courts&quot;,
+        ///			&quot;value&quot;: &quot;0&quot;
+        ///		}
+        ///	],
+        ///	&quot;start&quot;: 1725283795586,
+        ///	&quot;end&quot;: 1725283795586
+        ///}.
+        /// </summary>
+        internal static string payload_sample_harris_jp {
+            get {
+                return ResourceManager.GetString("payload_sample_harris_jp", resourceCulture);
             }
         }
         
