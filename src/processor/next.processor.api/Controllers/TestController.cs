@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using next.processor.api.interfaces;
+using System.Diagnostics.CodeAnalysis;
 namespace next.processor.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ExcludeFromCodeCoverage(Justification = "Intergration testing only. Interacts with local environment")]
     public class TestController(IServiceProvider provider) : ControllerBase
     {
         private readonly IServiceProvider _provider = provider;

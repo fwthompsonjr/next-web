@@ -11,6 +11,31 @@ namespace next.processor.api.tests.backing
     public class QueueExecutorTests
     {
         [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ProviderCanGetReadiness(bool expected)
+        {
+            var provider = GetServiceProvider(5);
+            var service = provider.GetRequiredService<IQueueExecutor>();
+            var mock = provider.GetRequiredService<Mock<IWebContainerInstall>>();
+            mock.SetupGet(m => m.IsInstalled).Returns(expected);
+            var actual = service.IsReady();
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ProviderCanGetDetails(bool isInstalled)
+        {
+            var provider = GetServiceProvider(5);
+            var service = provider.GetRequiredService<IQueueExecutor>();
+            var mock = provider.GetRequiredService<Mock<IWebContainerInstall>>();
+            mock.SetupGet(m => m.IsInstalled).Returns(isInstalled);
+            var details = service.GetDetails();
+            Assert.NotEmpty(details);
+        }
+        [Theory]
         [InlineData("begin")]
         [InlineData("parameter")]
         [InlineData("search")]
@@ -72,7 +97,11 @@ namespace next.processor.api.tests.backing
                 provider.AddSingleton<IQueueExecutor, QueueExecutor>();
                 provider.AddKeyedSingleton("linux-firefox", mockinstaller.Object);
                 provider.AddKeyedSingleton("linux-geckodriver", mockinstaller.Object);
-                provider.AddKeyedSingleton("verification", mockinstaller.Object);
+                provider.AddKeyedSingleton("read-collin", mockinstaller.Object);
+                provider.AddKeyedSingleton("read-denton", mockinstaller.Object);
+                provider.AddKeyedSingleton("read-harris", mockinstaller.Object);
+                provider.AddKeyedSingleton("read-harris-jp", mockinstaller.Object);
+                provider.AddKeyedSingleton("read-tarrant", mockinstaller.Object);
 
                 return provider.BuildServiceProvider();
             }

@@ -89,7 +89,7 @@ namespace next.processor.api.tests
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             // expected value for queue initializers
-            int expected = isWindows ? 4 : 6;
+            int expected = isWindows ? 5 : 7;
             var provider = GetServiceProvider();
             var service = provider.GetService<IQueueExecutor>();
             Assert.NotNull(service);
@@ -120,6 +120,7 @@ namespace next.processor.api.tests
         [InlineData("read-collin")]
         [InlineData("read-denton")]
         [InlineData("read-harris")]
+        [InlineData("read-harris-jp")]
         [InlineData("read-tarrant")]
         public void CollectionCanGetKeyedInstaller(string name)
         {

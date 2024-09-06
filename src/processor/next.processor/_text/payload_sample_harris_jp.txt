@@ -1,0 +1,16 @@
+{
+	"state": "tx",
+	"county": {
+		"name": "harris-jp",
+		"value": 32190
+	},
+	"details": [
+		{
+			"name": "Court Selection",
+			"text": "All JP Courts",
+			"value": "0"
+		}
+	],
+	"start": 1725283795586,
+	"end": 1725283795586
+}

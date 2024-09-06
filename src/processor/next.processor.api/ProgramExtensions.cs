@@ -31,6 +31,7 @@ namespace next.processor.api
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadCollin>("read-collin");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadDenton>("read-denton");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadHarris>("read-harris");
+            services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadHarrisJp>("read-harris-jp");
             services.AddKeyedSingleton<IWebContainerInstall, WebVerifyPageReadTarrant>("read-tarrant");
 
             // queue processes
