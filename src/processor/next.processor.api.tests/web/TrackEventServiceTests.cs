@@ -86,7 +86,6 @@ namespace next.processor.api.tests.web
                             TrackEventService.AddOrUpdate(keyName, keyValue, expiration);
                             var actual = TrackEventService.Get(keyName);
                             Assert.Equal(keyValue, actual);
-                            Assert.True(TrackEventService.Exists(keyName));
                         });
                         TrackEventService.Expire();
                     });

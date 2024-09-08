@@ -2,6 +2,7 @@
 using next.processor.api.interfaces;
 using next.processor.api.services;
 using next.processor.api.utility;
+using next.processor.models;
 
 namespace next.processor.api.Controllers
 {
@@ -9,17 +10,24 @@ namespace next.processor.api.Controllers
     public class HomeController(
         IQueueExecutor queue,
         IConfiguration configuration,
-        IStatusChanger changer) : Controller
+        IStatusChanger changer,
+        IApiWrapper api,
+        DrillDownModel model) : Controller
     {
         private readonly IConfiguration config = configuration;
         private readonly IQueueExecutor queueExecutor = queue;
         private readonly IStatusChanger changingSvc = changer;
-        public IActionResult Index()
+        private readonly IApiWrapper apiSvc = api;
+        private readonly DrillDownModel drillDownSvc = model;
+
+        public async Task<IActionResult> IndexAsync()
         {
+            var summary = await apiSvc.FetchSummaryAsync();
             var details = queueExecutor.GetDetails();
             var health = GetHealth().ToUpper();
             var content = HtmlMapper.Home(HtmlProvider.HomePage, health);
             content = HtmlMapper.Home(content, details);
+            content = HtmlMapper.Summary(content, summary);
             return new ContentResult
             {
                 Content = content,
@@ -38,25 +46,19 @@ namespace next.processor.api.Controllers
         }
 
         [HttpGet("status")]
-        public IActionResult Status()
+        public async Task<IActionResult> StatusAsync()
         {
-            const string dash = " - ";
+            var summary = await apiSvc.FetchSummaryAsync();
+            var details = await apiSvc.FetchStatusAsync(drillDownSvc.Id);
             var statuses = new List<KeyValuePair<string, string>>
             {
                 new("Health", GetHealth()),
                 new("Installation", config[Constants.KeyServiceInstallation] ?? "FALSE"),
                 new("Queue Processing", config[Constants.KeyQueueProcessEnabled] ?? "FALSE")
             };
-            var directories = new Dictionary<string, string>
-            {
-                { "current", EnvironmentHelper.GetHomeFolder(config) ?? dash },
-                { "data-dir", EnvironmentHelper.GetDataDirectoryOrDefault(config) ?? dash },
-                { "env-data", EnvironmentHelper.GetAppOrDefault() ?? dash },
-                { "home", EnvironmentHelper.GetHomeOrDefault() ?? dash },
-                { "local-data", EnvironmentHelper.GetDataOrDefault() ?? dash }
-            };
             var content = HtmlMapper.Status(HtmlProvider.StatusPage, statuses);
-            content = HtmlMapper.Status(content, directories);
+            content = HtmlMapper.Summary(content, summary);
+            content = HtmlMapper.StatusDetail(content, details);
             return new ContentResult
             {
                 Content = content,

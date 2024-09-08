@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Bogus;
+using legallead.jdbc.entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using next.processor.api.Controllers;
 using next.processor.api.interfaces;
 using next.processor.api.utility;
+using next.processor.models;
 
 namespace next.processor.api.tests.controllers
 {
@@ -32,15 +35,26 @@ namespace next.processor.api.tests.controllers
                 };
 
                 var collection = new ServiceCollection();
-
+                var fkr = new Faker();
+                var count = fkr.Random.Int(1, 10);
+                var dcount = fkr.Random.Int(1, 5);
+                var summary = statusbofaker.Generate(count);
                 var mockchange = new Mock<IStatusChanger>();
+                var apisvc = new Mock<IApiWrapper>();
                 var svc = new Mock<IQueueExecutor>();
+                var drill = new DrillDownModel();
+                var detail = countybofaker.Generate(dcount);
                 svc.Setup(x => x.InstallerCount()).Returns(6);
                 svc.Setup(x => x.GetDetails()).Returns(CommonKeys);
+                apisvc.Setup(x => x.FetchSummaryAsync()).ReturnsAsync(summary);
+                apisvc.Setup(x => x.FetchStatusAsync(It.IsAny<int>())).ReturnsAsync(detail);
                 mockinstaller.Setup(x => x.InstallAsync()).ReturnsAsync(true);
                 collection.AddSingleton(svc);
+                collection.AddSingleton(apisvc);
+                collection.AddSingleton(apisvc.Object);
                 collection.AddSingleton(mockchange);
                 collection.AddSingleton(mockchange.Object);
+                collection.AddSingleton(drill);
                 collection.AddKeyedSingleton("linux-firefox", mockinstaller.Object);
                 collection.AddKeyedSingleton("linux-geckodriver", mockinstaller.Object);
                 collection.AddKeyedSingleton("verification", mockinstaller.Object);
@@ -54,7 +68,9 @@ namespace next.processor.api.tests.controllers
                     var controller = new HomeController(
                         svc.Object,
                         SettingsProvider.GetConfiguration(),
-                        mockchange.Object)
+                        mockchange.Object,
+                        apisvc.Object,
+                        drill)
                     {
                         ControllerContext = controllerContext
                     };
@@ -68,10 +84,30 @@ namespace next.processor.api.tests.controllers
                     };
                     return controller;
                 });
+                collection.AddSingleton(a =>
+                {
+                    var controller = new DataController(drill)
+                    {
+                        ControllerContext = controllerContext
+                    };
+                    return controller;
+                });
                 return collection.BuildServiceProvider();
             }
         }
 
+
+        private static readonly Faker<StatusSummaryBo> statusbofaker =
+            new Faker<StatusSummaryBo>()
+            .RuleFor(x => x.SearchProgress, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Total, y => y.Random.Int(0, 50000));
+
+        private static readonly Faker<StatusSummaryByCountyBo> countybofaker =
+            new Faker<StatusSummaryByCountyBo>()
+            .RuleFor(x => x.Region, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Oldest, y => y.Date.Recent())
+            .RuleFor(x => x.Newest, y => y.Date.Recent())
+            .RuleFor(x => x.Count, y => y.Random.Int(0, 50000));
 
         private static readonly Dictionary<string, object> CommonKeys = new()
         {

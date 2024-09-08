@@ -1,4 +1,5 @@
-﻿using next.processor.api.extensions;
+﻿using legallead.jdbc.entities;
+using next.processor.api.extensions;
 using next.processor.api.interfaces;
 using next.processor.api.models;
 using next.processor.api.utility;
@@ -90,6 +91,30 @@ namespace next.processor.api.services
             _ = await GetApiResponseAsync(issue, uri);
         }
 
+
+        public async Task<List<StatusSummaryBo>?> FetchSummaryAsync()
+        {
+            var uri = PostUris.Find(x => x.Name == "queue-summary")?.Address;
+            if (uri == null) return null;
+            var payload = new QueueSummaryRequest { StatusId = 0 };
+            payload.AppendSource();
+            var obj = await GetApiResponseAsync(payload, uri);
+            if (obj == null || string.IsNullOrWhiteSpace(obj.Message)) return null;
+            var data = obj.Message.ToInstance<List<StatusSummaryBo>>();
+            return data;
+        }
+
+        public async Task<List<StatusSummaryByCountyBo>?> FetchStatusAsync(int statusId)
+        {
+            var uri = PostUris.Find(x => x.Name == "queue-status")?.Address;
+            if (uri == null) return null;
+            var payload = new QueueSummaryRequest { StatusId = statusId };
+            payload.AppendSource();
+            var obj = await GetApiResponseAsync(payload, uri);
+            if (obj == null || string.IsNullOrWhiteSpace(obj.Message)) return null;
+            var data = obj.Message.ToInstance<List<StatusSummaryByCountyBo>>();
+            return data;
+        }
 
         private static QueueCompletionRequest GetFinalizedPayload(string uniqueId, QueuedRecord dto, List<QueuePersonItem> people)
         {

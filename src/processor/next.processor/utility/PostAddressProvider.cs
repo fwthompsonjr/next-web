@@ -38,7 +38,7 @@ namespace next.processor.api.utility
                 const string source = "post_address:{0}";
                 var baseapi = BaseApiAddress();
                 if (string.IsNullOrEmpty(baseapi)) return null;
-                var keys = "initialize,update,fetch,start,status,complete,finalize,save".Split(comma).ToList();
+                var keys = "initialize,update,fetch,start,status,complete,finalize,save,queue-status,queue-summary".Split(comma).ToList();
                 var values = new List<ApiAddress>();
                 var config = SettingsProvider.Configuration;
                 keys.ForEach(key =>

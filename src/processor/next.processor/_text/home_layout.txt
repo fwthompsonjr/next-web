@@ -79,8 +79,13 @@
 											</colgroup>
 											<thead>
 												<tr>
-													<th class="text-primary text-start">Component</th>
-													<th class="text-primary text-start">Status</th>
+													<th colspan="2" class="text-primary text-start">Installation Review</th>
+												</tr>
+												<tr>
+													<th class="text-start">
+														<span style="padding-left: 3px">Component</span>
+													</th>
+													<th class="text-start">Status</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -95,12 +100,17 @@
 										<table name="tb-queue-summary">
 											<colgroup>
 												<col style="width: 120px" />
-												<col />
+												<col style="min-width: 120px" />
 											</colgroup>
 											<thead>
 												<tr>
-													<th class="text-primary text-start">Status</th>
-													<th class="text-primary text-start">Count</th>
+													<th colspan="2" class="text-primary text-start">Process Summary</th>
+												</tr>
+												<tr>
+													<th class="text-start">
+														<span style="padding-left: 3px">Item</span>
+													</th>
+													<th class="text-end">Count</th>
 												</tr>
 											</thead>
 											<tbody>
