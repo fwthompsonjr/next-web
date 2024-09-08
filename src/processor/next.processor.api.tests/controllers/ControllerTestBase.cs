@@ -84,6 +84,14 @@ namespace next.processor.api.tests.controllers
                     };
                     return controller;
                 });
+                collection.AddSingleton(a =>
+                {
+                    var controller = new DataController(drill)
+                    {
+                        ControllerContext = controllerContext
+                    };
+                    return controller;
+                });
                 return collection.BuildServiceProvider();
             }
         }
