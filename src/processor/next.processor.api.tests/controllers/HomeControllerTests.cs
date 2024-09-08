@@ -27,15 +27,15 @@ namespace next.processor.api.tests.controllers
         [InlineData(4)]
         [InlineData(5)]
         [InlineData(6)]
-        public void ControllerCanBeGetHome(int available)
+        public async Task ControllerCanBeGetHomeAsync(int available)
         {
             var provider = GetProvider();
             var svc = provider.GetRequiredService<Mock<IQueueExecutor>>();
             svc.Setup(x => x.IsReadyCount()).Returns(available);
-            var error = Record.Exception(() =>
+            var error = await Record.ExceptionAsync(async () =>
             {
                 var controller = provider.GetRequiredService<HomeController>();
-                _ = controller.Index();
+                _ = await controller.IndexAsync();
             });
             Assert.Null(error);
         }
@@ -53,13 +53,13 @@ namespace next.processor.api.tests.controllers
         }
 
         [Fact]
-        public void ControllerCanBeGetStatus()
+        public async Task ControllerCanBeGetStatusAsync()
         {
             var provider = GetProvider();
-            var error = Record.Exception(() =>
+            var error = await Record.ExceptionAsync(async () =>
             {
                 var controller = provider.GetRequiredService<HomeController>();
-                _ = controller.Status();
+                _ = await controller.StatusAsync();
             });
             Assert.Null(error);
         }

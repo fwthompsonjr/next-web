@@ -1,4 +1,5 @@
-﻿using next.processor.api.models;
+﻿using legallead.jdbc.entities;
+using next.processor.api.models;
 
 namespace next.processor.api.interfaces
 {
@@ -9,6 +10,8 @@ namespace next.processor.api.interfaces
         /// </summary>
         /// <returns></returns>
         Task<List<QueuedRecord>?> FetchAsync();
+        Task<List<StatusSummaryByCountyBo>?> FetchStatusAsync(int statusId);
+        Task<List<StatusSummaryBo>?> FetchSummaryAsync();
         Task PostSaveContentAsync(QueuedRecord dto, byte[] content);
         Task PostStatusAsync(QueuedRecord dto, int messageId, int statusId);
         Task PostStepCompletionAsync(QueuedRecord dto, int messageId, int statusId);

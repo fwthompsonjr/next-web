@@ -6,6 +6,8 @@ using next.processor.api.Health;
 using next.processor.api.interfaces;
 using next.processor.api.services;
 using next.processor.api.utility;
+using next.processor.models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace next.processor.api
 {
@@ -24,6 +26,7 @@ namespace next.processor.api
             services.AddSingleton<IWebInstallOperation, WebInstallOperation>();
             services.AddSingleton<CheckContainerServices>();
             services.AddSingleton<CheckPostApiRequest>();
+            services.AddSingleton<DrillDownModel>();
             // firefox installation
             services.AddKeyedSingleton<IWebContainerInstall, WebFireFoxLinuxInstall>("linux-firefox");
             services.AddKeyedSingleton<IWebContainerInstall, WebGeckoDriverInstall>("linux-geckodriver");
@@ -73,6 +76,8 @@ namespace next.processor.api
         public static void ConfigureApp(this WebApplication app)
         {
             var env = app.Environment;
+            var lifetime = app.Lifetime;
+            lifetime.ApplicationStopping.Register(() => TerminateServices(app.Services));
             var isDevelopment = env.IsDevelopment();
             var config = app.Services.GetRequiredService<IConfiguration>();
             env.AddDataDirectory(config);
@@ -95,6 +100,14 @@ namespace next.processor.api
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
         }
+
+        public static void SetSwaggerOptions(this WebApplication app, bool isDevelopment)
+        {
+            if (!isDevelopment) { return; }
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
 
         private static void AddHealth(this WebApplication app)
         {
@@ -121,11 +134,38 @@ namespace next.processor.api
             config[Constants.DataDirectory] = dataDir;
         }
 
-        public static void SetSwaggerOptions(this WebApplication app, bool isDevelopment)
+        [ExcludeFromCodeCoverage]
+        private static void TerminateServices(IServiceProvider services)
         {
-            if (!isDevelopment) { return; }
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            TerminateBatch(services);
+            TerminateReader(services);
+        }
+        [ExcludeFromCodeCoverage]
+        private static void TerminateBatch(IServiceProvider services)
+        {
+            try
+            {
+                var config = services.GetRequiredService<IConfiguration>();
+                config[Constants.KeyServiceInstallation] = "false";
+                config[Constants.KeyQueueProcessEnabled] = "false";
+            }
+            catch (Exception)
+            {
+                // no action on failure
+            }
+        }
+        [ExcludeFromCodeCoverage]
+        private static void TerminateReader(IServiceProvider services)
+        {
+            try
+            {
+                var searchSvc = services.GetRequiredService<SearchGenerationService>();
+                searchSvc.Dispose();
+            }
+            catch (Exception)
+            {
+                // no action on failure
+            }
         }
     }
 }

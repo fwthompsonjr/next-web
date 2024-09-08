@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using legallead.jdbc.entities;
 using next.processor.api.extensions;
 using next.processor.api.models;
 using next.processor.api.utility;
@@ -56,6 +57,28 @@ namespace next.processor.api.services
             return node.OuterHtml;
         }
 
+        public static string Summary(string content, List<StatusSummaryBo>? substitutions)
+        {
+            const string find = "//table[@name='tb-queue-summary']/tbody";
+            if (substitutions == null || substitutions.Count == 0) return content;
+            var document = content.ToDocument();
+            var node = document.DocumentNode;
+            var tbody = node.SelectSingleNode(find);
+            if (tbody == null) return node.OuterHtml;
+            var tr = tbody.SelectSingleNode("tr");
+            if (tr == null) return node.OuterHtml;
+            var template = tr.OuterHtml.Replace("template-row", "detail-item");
+            var builder = new StringBuilder();
+            substitutions.ForEach(k =>
+            {
+                var txt = template
+                    .Replace("~0", k.SearchProgress ?? " - ")
+                    .Replace("~1", k.Total.GetValueOrDefault(0).ToString());
+                builder.AppendLine(txt);
+            });
+            tbody.InnerHtml = builder.ToString();
+            return node.OuterHtml;
+        }
         public static string Life(string content)
         {
             // remove div elements named detail- 0 - 4
@@ -105,6 +128,31 @@ namespace next.processor.api.services
             return node.OuterHtml;
         }
 
+        public static string StatusDetail(string content, List<StatusSummaryByCountyBo>? substitutions)
+        {
+            const string dash = " - ";
+            const string find = "//table[@name='tb-drill-down']/tbody";
+            if (substitutions == null || substitutions.Count == 0) return content;
+            var document = content.ToDocument();
+            var node = document.DocumentNode;
+            var tbody = node.SelectSingleNode(find);
+            if (tbody == null) return node.OuterHtml;
+            var tr = tbody.SelectSingleNode("tr");
+            if (tr == null) return node.OuterHtml;
+            var template = tr.OuterHtml.Replace("template-row", "detail-item");
+            var builder = new StringBuilder();
+            substitutions.ForEach(k =>
+            {
+                var txt = template
+                    .Replace("~0", k.Region ?? dash)
+                    .Replace("~1", k.Count.GetValueOrDefault(0).ToString())
+                    .Replace("~2", k.Newest.HasValue ? k.Newest.Value.ToString("s") : dash)
+                    .Replace("~3", k.Oldest.HasValue ? k.Oldest.Value.ToString("s") : dash);
+                builder.AppendLine(txt);
+            });
+            tbody.InnerHtml = builder.ToString();
+            return node.OuterHtml;
+        }
         private static void AlterNodeClass(HtmlNode node, string health)
         {
             const string cls = "class";

@@ -73,26 +73,52 @@
 									</div>
 									<div class="col-3 text-start">
 										<h5 name="detail-01-label" class="text-primary">Processing: </h5>
+										<table name="tb-queue-summary">
+											<colgroup>
+												<col style="width: 120px" />
+												<col style="min-width: 120px" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th class="text-start">
+														<span style="padding-left: 3px">Item</span>
+													</th>
+													<th class="text-end">Count</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr name="template-row">
+													<td class="text-secondary text-start">~0</td>
+													<td class="text-secondary text-end">~1</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 								<div id="detail-02" class="row content-boxed-vertical">
 									<div class="col text-start">
-										<h5 name="detail-02-label" class="text-primary">Directories: </h5>
-										<table name="tb-directory" style="width: 95%">
+										<h5 name="detail-02-label" class="text-primary">Details: </h5>
+										<table name="tb-drill-down" style="width: 95%">
 											<colgroup>
-												<col style="width: 20%">
-												<col />
+												<col style="width: 20%" />
+												<col style="width: 10%" />
+												<col style="width: 20%" />
+												<col style="min-width: 20%" />
 											</colgroup>
 											<thead>
 												<tr>
-													<th class="text-start">Folder</th>
-													<th class="text-start">Location</th>
+													<th class="text-start">Region</th>
+													<th class="text-start">Count</th>
+													<th class="text-start">Oldest Date</th>
+													<th class="text-start">Newest Date</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr name="template-row">
 													<td class="text-start text-info">~0</td>
-													<td class="text-start small">~1</td>
+													<td class="text-start">~1</td>
+													<td class="text-start">~2</td>
+													<td class="text-start">~2</td>
 												</tr>
 											</tbody>
 										</table>

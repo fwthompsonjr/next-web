@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using legallead.jdbc.entities;
 using Moq;
 using next.processor.api.extensions;
 using next.processor.api.models;
@@ -324,6 +325,62 @@ namespace next.processor.api.tests.services
             Assert.Null(error);
         }
 
+
+        [Theory]
+        [InlineData(200)]
+        [InlineData(400)]
+        [InlineData(200, 400)]
+        [InlineData(200, 401)]
+        [InlineData(200, 200, 0)]
+        public async Task ApiCanFetchSummaryAsync(int statusCode, int httpCode = 200, int messageId = 10)
+        {
+            var data = statusbofaker.Generate(messageId);
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                var json = data.ToJsonString();
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                await service.FetchSummaryAsync();
+            });
+            Assert.Null(error);
+        }
+
+        [Theory]
+        [InlineData(200)]
+        [InlineData(400)]
+        [InlineData(200, 400)]
+        [InlineData(200, 401)]
+        [InlineData(200, 200, 0)]
+        [InlineData(200, 200, 0, 1)]
+        [InlineData(200, 200, 0, 2)]
+        [InlineData(200, 200, 0, 3)]
+        public async Task ApiCanFetchStatusAsync(int statusCode, int httpCode = 200, int messageId = 10, int statusIndex = 0)
+        {
+            var data = countybofaker.Generate(messageId);
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                var json = data.ToJsonString();
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                await service.FetchStatusAsync(statusIndex);
+            });
+            Assert.Null(error);
+        }
+
         private static HttpResponseMessage GetMockResponse(int httpCode, int statusCode, string? json)
         {
             var response = new { StatusCode = statusCode, Message = json };
@@ -383,5 +440,15 @@ namespace next.processor.api.tests.services
             .RuleFor(x => x.ExpectedRows, y => y.Random.Int(0, 50000))
             .RuleFor(x => x.CreateDate, y => y.Date.Recent(60))
             .RuleFor(x => x.Payload, y => y.Lorem.Sentence(2));
+
+        private static readonly Faker<StatusSummaryBo> statusbofaker =
+            new Faker<StatusSummaryBo>()
+            .RuleFor(x => x.SearchProgress, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Total, y => y.Random.Int(0, 50000));
+
+        private static readonly Faker<StatusSummaryByCountyBo> countybofaker =
+            new Faker<StatusSummaryByCountyBo>()
+            .RuleFor(x => x.Region, y => y.Random.Guid().ToString())
+            .RuleFor(x => x.Count, y => y.Random.Int(0, 50000));
     }
 }

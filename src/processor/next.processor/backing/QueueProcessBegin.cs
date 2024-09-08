@@ -18,6 +18,7 @@ namespace next.processor.api.backing
             if (data == null) return null;
             IsSuccess = true;
             AllowIterateNext = data.Count > 0;
+            if (data.Count > 1) data.Sort((a, b) => Guid.NewGuid().ToString().CompareTo(Guid.NewGuid().ToString()));
             return new(data);
         }
     }

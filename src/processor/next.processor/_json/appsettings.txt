@@ -12,7 +12,9 @@
     "status": "api/queue/status",
     "complete": "api/queue/complete",
     "finalize": "api/queue/finalize",
-    "save": "api/queue/save"
+    "save": "api/queue/save",
+    "queue-status": "api/queue/queue-status",
+    "queue-summary": "api/queue/queue-summary"
   },
   "api.source": "oxford.leads.data.services",
   "queue_process":{
