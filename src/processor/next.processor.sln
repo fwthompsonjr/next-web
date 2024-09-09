@@ -7,14 +7,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.processor.api", "next.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.processor.api.tests", "next.processor.api.tests\next.processor.api.tests.csproj", "{17AAC5FF-4E7B-4B84-9180-8F966EB0773F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{237DF47A-05CA-442E-BB17-D885B35A5286}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{237DF47A-05CA-442E-BB17-D885B35A5286}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\.github\workflows\deploy-oxford-reader-ecs.yml = ..\..\.github\workflows\deploy-oxford-reader-ecs.yml
 		..\..\.github\workflows\deploy-oxford-reader.yml = ..\..\.github\workflows\deploy-oxford-reader.yml
 		..\..\pipeline-aws-deploy-reader.ps1 = ..\..\pipeline-aws-deploy-reader.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "next.processor", "next.processor\next.processor.csproj", "{CBA22385-6098-45F0-81B2-66EE37BE3EA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "next.processor", "next.processor\next.processor.csproj", "{CBA22385-6098-45F0-81B2-66EE37BE3EA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "next.processor.console", "next.processor.console\next.processor.console.csproj", "{B2C8C61C-8F0F-4EDF-A973-2D75616C0DAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testing", "testing", "{E6CB27C1-20C1-4AD1-B60D-ECBF1010031B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{45F02438-142B-4B78-B431-27FE17BE80EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{0CA32A00-39DB-44B5-B33D-C1C326317379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,9 +42,19 @@ Global
 		{CBA22385-6098-45F0-81B2-66EE37BE3EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBA22385-6098-45F0-81B2-66EE37BE3EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBA22385-6098-45F0-81B2-66EE37BE3EA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C8C61C-8F0F-4EDF-A973-2D75616C0DAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C8C61C-8F0F-4EDF-A973-2D75616C0DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C8C61C-8F0F-4EDF-A973-2D75616C0DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C8C61C-8F0F-4EDF-A973-2D75616C0DAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E1D1822C-B71F-4365-99E8-676ACB438C32} = {0CA32A00-39DB-44B5-B33D-C1C326317379}
+		{17AAC5FF-4E7B-4B84-9180-8F966EB0773F} = {E6CB27C1-20C1-4AD1-B60D-ECBF1010031B}
+		{CBA22385-6098-45F0-81B2-66EE37BE3EA6} = {45F02438-142B-4B78-B431-27FE17BE80EE}
+		{B2C8C61C-8F0F-4EDF-A973-2D75616C0DAA} = {0CA32A00-39DB-44B5-B33D-C1C326317379}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA9373FB-FCE9-48A6-9B6F-CEA795001A54}
