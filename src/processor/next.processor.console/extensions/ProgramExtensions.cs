@@ -58,9 +58,11 @@ namespace next.processor.console.extensions
             });
             services.AddSingleton(SettingsProvider.Configuration);
             services.AddSingleton<InitializationService>();
+            services.AddSingleton<HomeReportingService>();
             services.AddSingleton<IStatusChanger, StatusChangeService>();
             services.AddHostedService<SearchGenerationService>();
             services.AddHostedService<InitializationService>();
+            services.AddHostedService<HomeReportingService>();
         }
 
 

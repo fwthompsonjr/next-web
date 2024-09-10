@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using next.processor.api.backing;
 using next.processor.api.utility;
 using next.processor.console.extensions;
-using next.processor.console.interfaces;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.processor.console
