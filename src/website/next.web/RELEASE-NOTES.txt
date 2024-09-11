@@ -1,6 +1,7 @@
 
       next.web.application
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      : 3.2.14 - 2024-08-22 - Web project restructure
       : 3.2.12 - 2024-08-17 - Web project https redirect process
       : 3.2.11 - 2024-08-16 - Web project code coverage
       : 3.2.10 - 2024-08-13 - Core project code coverage
