@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Moq;
 using next.processor.api.Controllers;
-using next.processor.api.interfaces;
 
 namespace next.processor.api.tests.controllers
 {

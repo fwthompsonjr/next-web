@@ -1,7 +1,5 @@
 ﻿using Bogus;
 using legallead.jdbc.entities;
-using legallead.records.search.Classes;
-using legallead.records.search.Models;
 using Moq;
 using next.processor.api.backing;
 using next.processor.api.interfaces;

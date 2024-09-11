@@ -22,7 +22,7 @@ namespace next.processor.console
             });
 
             var host = builder.Build();
-            provider = host.Services;            
+            provider = host.Services;
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             await host.RunAsync();
         }
@@ -38,7 +38,7 @@ namespace next.processor.console
             TerminateBatch(services);
             TerminateReader(services);
         }
-        
+
         private static void TerminateBatch(IServiceProvider services)
         {
             try
@@ -52,7 +52,7 @@ namespace next.processor.console
                 // no action on failure
             }
         }
-        
+
         private static void TerminateReader(IServiceProvider services)
         {
             try

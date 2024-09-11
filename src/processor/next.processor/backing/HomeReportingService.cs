@@ -1,5 +1,4 @@
 ﻿using HtmlAgilityPack;
-using Microsoft.Extensions.Configuration;
 using next.processor.api.interfaces;
 using next.processor.api.models;
 using next.processor.api.services;
@@ -18,8 +17,8 @@ namespace next.processor.api.backing
         {
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", 
-            "VSTHRD002:Avoid problematic synchronous waits", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage",
+            "VSTHRD002:Avoid problematic synchronous waits",
             Justification = "<Pending>")]
         protected override string GetHealth()
         {
