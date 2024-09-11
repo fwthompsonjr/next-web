@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace next.processor.api.utility
 {
+    [ExcludeFromCodeCoverage(Justification = "Intergration testing only. Interacts with local environment")]
     public static class EnvironmentHelper
     {
         public static string? GetHomeFolder(IConfiguration? configuration = null)
@@ -19,7 +20,6 @@ namespace next.processor.api.utility
             return null;
         }
 
-        [ExcludeFromCodeCoverage(Justification = "Intergration testing only. Interacts with local environment")]
         public static void AppendToPath(string? keyValue)
         {
             const char colon = ':';
@@ -37,7 +37,6 @@ namespace next.processor.api.utility
             Environment.SetEnvironmentVariable(name, newValue, scope);
         }
 
-        [ExcludeFromCodeCoverage]
         public static string? GetHomeOrDefault()
         {
             try
@@ -51,7 +50,6 @@ namespace next.processor.api.utility
             }
         }
 
-        [ExcludeFromCodeCoverage]
         public static string? GetAppOrDefault()
         {
             try
@@ -65,7 +63,6 @@ namespace next.processor.api.utility
             }
         }
 
-        [ExcludeFromCodeCoverage]
         public static string? GetDataOrDefault()
         {
             try
@@ -80,7 +77,6 @@ namespace next.processor.api.utility
         }
 
 
-        [ExcludeFromCodeCoverage]
         public static string? GetDataDirectoryOrDefault(IConfiguration? configuration = null)
         {
             try

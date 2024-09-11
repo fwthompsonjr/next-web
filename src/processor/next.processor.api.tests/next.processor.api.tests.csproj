@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\next.processor.api\next.processor.api.csproj" />
+		<ProjectReference Include="..\next.processor.console\next.processor.console.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
