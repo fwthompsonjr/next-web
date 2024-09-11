@@ -51,7 +51,7 @@ namespace next.processor.api.backing
             var actual = queueExecutor.InstallerCount();
             var status = 0;
             if (available > 0 && available < actual) status = 1;
-            if (available == actual) status = 2;
+            if (available == actual || available > actual) status = 2;
             return status switch
             {
                 0 => "Unhealthy",
