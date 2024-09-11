@@ -1,7 +1,6 @@
 ﻿using Moq;
 using next.processor.api.interfaces;
 using next.processor.api.services;
-using System;
 
 namespace next.processor.api.tests.services
 {

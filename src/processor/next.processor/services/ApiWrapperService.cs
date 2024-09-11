@@ -189,7 +189,7 @@ namespace next.processor.api.services
         private static readonly List<ItemDescriptor> Statuses = StatusNameProvider.StatusSequence() ?? [];
         private static string GetApplicationPayload()
         {
-            var source = SettingsProvider.Configuration["api.source"] ?? "oxford.leads.data.services";
+            var source = TheSettingsProvider.Configuration["api.source"] ?? "oxford.leads.data.services";
             var obj = new { Id = Guid.NewGuid(), Name = source };
             return obj.ToJsonString();
         }

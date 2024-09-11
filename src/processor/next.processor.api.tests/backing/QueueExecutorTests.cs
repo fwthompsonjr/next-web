@@ -72,7 +72,7 @@ namespace next.processor.api.tests.backing
         {
             lock (locker)
             {
-                var configuration = SettingsProvider.Configuration;
+                var configuration = TheSettingsProvider.Configuration;
                 var wrapper = new MockApiWrapperService();
                 var mockmapper = new Mock<IQueueProcess>();
                 var mockfetch = new Mock<IQueueProcess>();

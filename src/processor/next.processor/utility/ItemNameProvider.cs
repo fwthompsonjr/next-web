@@ -13,7 +13,7 @@ namespace next.processor.api.utility
                 const string source = "item_process:{0}";
                 var keys = "start,get_parameter,convert_parameter,execute_search,translate_excel,serialize".Split(comma).ToList();
                 var values = new List<ItemDescriptor>();
-                var config = SettingsProvider.Configuration;
+                var config = TheSettingsProvider.Configuration;
                 keys.ForEach(key =>
                 {
                     var setting = string.Format(source, key);

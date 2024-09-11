@@ -133,7 +133,7 @@ namespace next.processor.api.extensions
         private static List<string>? appNames;
         private static List<string> GetAppNames()
         {
-            var config = SettingsProvider.Configuration;
+            var config = TheSettingsProvider.Configuration;
             var name = config["api.source"];
             if (string.IsNullOrWhiteSpace(name)) return [];
             return [name];

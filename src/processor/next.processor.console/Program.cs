@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using next.processor.api.backing;
 using next.processor.api.utility;
 using next.processor.console.extensions;
-using next.processor.console.interfaces;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.processor.console
@@ -23,7 +22,7 @@ namespace next.processor.console
             });
 
             var host = builder.Build();
-            provider = host.Services;            
+            provider = host.Services;
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             await host.RunAsync();
         }
@@ -39,7 +38,7 @@ namespace next.processor.console
             TerminateBatch(services);
             TerminateReader(services);
         }
-        
+
         private static void TerminateBatch(IServiceProvider services)
         {
             try
@@ -53,7 +52,7 @@ namespace next.processor.console
                 // no action on failure
             }
         }
-        
+
         private static void TerminateReader(IServiceProvider services)
         {
             try

@@ -31,7 +31,7 @@ namespace next.processor.api.backing
 
         private static ServiceSettings GetSettings()
         {
-            return SettingsProvider.GetSettingOrDefault("record.processor").Setting;
+            return TheSettingsProvider.GetSettingOrDefault("record.processor").Setting;
         }
 
     }

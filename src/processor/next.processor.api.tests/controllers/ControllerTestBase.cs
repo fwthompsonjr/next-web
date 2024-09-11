@@ -67,7 +67,7 @@ namespace next.processor.api.tests.controllers
 
                     var controller = new HomeController(
                         svc.Object,
-                        SettingsProvider.GetConfiguration(),
+                        TheSettingsProvider.GetConfiguration(),
                         mockchange.Object,
                         apisvc.Object,
                         drill)

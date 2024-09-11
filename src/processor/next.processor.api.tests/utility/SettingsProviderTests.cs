@@ -10,7 +10,7 @@ namespace next.processor.api.tests
         [InlineData("record.processor")]
         public void SettingsProviderCanGetSetting(string name)
         {
-            var actual = SettingsProvider.GetSettingOrDefault(name);
+            var actual = TheSettingsProvider.GetSettingOrDefault(name);
             Assert.NotNull(actual);
         }
 
@@ -24,7 +24,7 @@ namespace next.processor.api.tests
             int delay = 30,
             int interval = 5)
         {
-            var actual = SettingsProvider.GetSettingOrDefault(name).Setting;
+            var actual = TheSettingsProvider.GetSettingOrDefault(name).Setting;
             Assert.Equal(enabled, actual.Enabled);
             Assert.Equal(delay, actual.Delay);
             Assert.Equal(interval, actual.Interval);

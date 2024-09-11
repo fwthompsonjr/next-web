@@ -7,7 +7,7 @@ using next.processor.models;
 
 namespace next.processor.console.extensions
 {
-    internal static class ProgramExtensions
+    public static class TheProgramExtensions
     {
         public static ServiceProvider GetServiceProvider()
         {
@@ -56,11 +56,13 @@ namespace next.processor.console.extensions
                 var queue = s.GetRequiredService<IQueueExecutor>();
                 return new SearchGenerationService(queue);
             });
-            services.AddSingleton(SettingsProvider.Configuration);
+            services.AddSingleton(TheSettingsProvider.Configuration);
             services.AddSingleton<InitializationService>();
+            services.AddSingleton<HomeReportingService>();
             services.AddSingleton<IStatusChanger, StatusChangeService>();
             services.AddHostedService<SearchGenerationService>();
             services.AddHostedService<InitializationService>();
+            services.AddHostedService<HomeReportingService>();
         }
 
 

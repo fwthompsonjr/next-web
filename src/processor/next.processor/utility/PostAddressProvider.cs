@@ -13,7 +13,7 @@ namespace next.processor.api.utility
                 const string source = "api.permissions:{0}";
                 var keys = "destination,remote,local".Split(comma).ToList();
                 var values = new List<string?>();
-                var config = SettingsProvider.Configuration;
+                var config = TheSettingsProvider.Configuration;
                 keys.ForEach(key =>
                 {
                     var setting = string.Format(source, key);
@@ -40,7 +40,7 @@ namespace next.processor.api.utility
                 if (string.IsNullOrEmpty(baseapi)) return null;
                 var keys = "initialize,update,fetch,start,status,complete,finalize,save,queue-status,queue-summary".Split(comma).ToList();
                 var values = new List<ApiAddress>();
-                var config = SettingsProvider.Configuration;
+                var config = TheSettingsProvider.Configuration;
                 keys.ForEach(key =>
                 {
                     var setting = string.Format(source, key);

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace next.processor.api.utility
 {
-    public static class SettingsProvider
+    public static class TheSettingsProvider
     {
         public static NamedServiceSetting GetSettingOrDefault(string name)
         {

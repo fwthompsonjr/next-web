@@ -13,7 +13,7 @@ namespace next.processor.api.utility
                 const string source = "status_names:{0}";
                 var keys = "-1,0,1,2".Split(comma).ToList();
                 var values = new List<ItemDescriptor>();
-                var config = SettingsProvider.Configuration;
+                var config = TheSettingsProvider.Configuration;
                 keys.ForEach(key =>
                 {
                     var setting = string.Format(source, key);

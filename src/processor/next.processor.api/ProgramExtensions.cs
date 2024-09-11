@@ -55,7 +55,7 @@ namespace next.processor.api
                 var queue = s.GetRequiredService<IQueueExecutor>();
                 return new SearchGenerationService(queue);
             });
-            services.AddSingleton(SettingsProvider.Configuration);
+            services.AddSingleton(TheSettingsProvider.Configuration);
             services.AddSingleton<InitializationService>();
             services.AddSingleton<IStatusChanger, StatusChangeService>();
             services.AddHostedService<SearchGenerationService>();

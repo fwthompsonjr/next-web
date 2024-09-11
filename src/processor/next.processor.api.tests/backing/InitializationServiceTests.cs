@@ -78,7 +78,7 @@ namespace next.processor.api.tests.services
         }
         private static IConfiguration GetConfiguration()
         {
-            return SettingsProvider.GetConfiguration();
+            return TheSettingsProvider.GetConfiguration();
         }
     }
 }

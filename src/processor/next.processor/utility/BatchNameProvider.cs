@@ -13,7 +13,7 @@ namespace next.processor.api.utility
                 const string source = "queue_process:{0}";
                 var keys = "fetch,process,complete".Split(comma).ToList();
                 var values = new List<BatchDescriptor>();
-                var config = SettingsProvider.Configuration;
+                var config = TheSettingsProvider.Configuration;
                 keys.ForEach(key =>
                 {
                     var setting = string.Format(source, key);
