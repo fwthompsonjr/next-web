@@ -9,7 +9,7 @@ namespace next.processor.api.tests.utility
         {
             var error = Record.Exception(() =>
             {
-                _ = SettingsProvider.Configuration;
+                _ = TheSettingsProvider.Configuration;
             });
             Assert.Null(error);
         }
@@ -41,7 +41,7 @@ namespace next.processor.api.tests.utility
         {
             var error = Record.Exception(() =>
             {
-                var config = SettingsProvider.Configuration;
+                var config = TheSettingsProvider.Configuration;
                 var keyvalue = config[keyname];
                 Assert.False(string.IsNullOrWhiteSpace(keyvalue));
             });

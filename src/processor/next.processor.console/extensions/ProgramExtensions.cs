@@ -56,7 +56,7 @@ namespace next.processor.console.extensions
                 var queue = s.GetRequiredService<IQueueExecutor>();
                 return new SearchGenerationService(queue);
             });
-            services.AddSingleton(SettingsProvider.Configuration);
+            services.AddSingleton(TheSettingsProvider.Configuration);
             services.AddSingleton<InitializationService>();
             services.AddSingleton<HomeReportingService>();
             services.AddSingleton<IStatusChanger, StatusChangeService>();

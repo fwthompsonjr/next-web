@@ -13,7 +13,7 @@ namespace next.processor.api.utility
                 const string source = "message_names:{0}";
                 var keys = "0,1,2,3,4,5,6".Split(comma).ToList();
                 var values = new List<ItemDescriptor>();
-                var config = SettingsProvider.Configuration;
+                var config = TheSettingsProvider.Configuration;
                 keys.ForEach(key =>
                 {
                     var setting = string.Format(source, key);

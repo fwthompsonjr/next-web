@@ -18,7 +18,7 @@ namespace next.processor.api.backing
 
         protected BaseTimedSvc(IBackgroundServiceSettings? settings)
         {
-            settings ??= SettingsProvider.GetSettingOrDefault("").Setting;
+            settings ??= TheSettingsProvider.GetSettingOrDefault("").Setting;
             IsServiceEnabled = settings.Enabled;
             DelayedStartInSeconds = settings.Delay;
             IntervalInMinutes = settings.Interval;

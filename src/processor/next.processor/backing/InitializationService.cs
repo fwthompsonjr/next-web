@@ -30,7 +30,7 @@ namespace next.processor.api.backing
 
         private static ServiceSettings GetSettings()
         {
-            return SettingsProvider.GetSettingOrDefault("initialization.service").Setting;
+            return TheSettingsProvider.GetSettingOrDefault("initialization.service").Setting;
         }
         private static bool isInitialized = false;
         private const string serviceName = "Initialization Service";
