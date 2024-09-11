@@ -1,5 +1,11 @@
 [
   {
+    "id": "3.2.15",
+    "notes": [
+      "web: disable jscript redirects"
+    ]
+  },
+  {
     "id": "3.2.14",
     "notes": [
       "web: change icontent parser implementation",
