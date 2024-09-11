@@ -7,7 +7,7 @@ using next.processor.models;
 
 namespace next.processor.console.extensions
 {
-    internal static class ProgramExtensions
+    public static class TheProgramExtensions
     {
         public static ServiceProvider GetServiceProvider()
         {
