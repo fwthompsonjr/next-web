@@ -97,9 +97,22 @@ namespace next.web.core.services
             if (js == null) return new();
             var typeMap = PayloadMap[formName];
             var mapped = JsonConvert.DeserializeObject(js, typeMap);
+            if (mapped is BeginSearchModel search)
+            {
+                MapCountyPayload(search);
+                return search;
+            }
             return mapped ?? new();
         }
-
+        private static void MapCountyPayload(BeginSearchModel search)
+        {
+            var oic = StringComparison.OrdinalIgnoreCase;
+            if (search.County.Name.Equals("harris-jp", oic))
+            {
+                search.Details.Clear();
+                search.Details.Add(new() { Name = "Court Selection", Text = "All JP Courts", Value = "0" });
+            }
+        }
         private static readonly Dictionary<string, Type> PayloadMap = new()
         {
             { "frm-search", typeof(BeginSearchModel) },

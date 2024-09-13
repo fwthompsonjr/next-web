@@ -188,16 +188,24 @@ let theResponder = {
             current.statusCode == 408 && current.redirectTo.length > 0) {
             window.document.location = navigationPage;
         }
+        if (current.originalFormName == "frm-search" && current.statusCode != 200 && jsSearchForm)
+        {
+            jsSearchForm.seticon(false);
+            $(jsSearchForm.controls.errormessage).text("Error occurred during search submision");
+            $(jsSearchForm.controls.errormessage).removeClass("d-none");
+        }
     },
     "translate": function (json) {
         let rsp = {
             "statusCode": 0,
+            "originalFormName": "",
             "message": "",
             "redirectTo": "/home"
         };
         if (undefined == json || null == json) return rsp;
         if (!isNaN(json.statusCode)) { rsp.statusCode = parseInt(json.statusCode); }
         if (null !== json.message) { rsp.message = String(json.message); }
+        if (null !== json.originalFormName) { rsp.originalFormName = String(json.originalFormName); }
         if (null !== json.redirectTo) { rsp.redirectTo = String(json.redirectTo); }
         return rsp;
     }
