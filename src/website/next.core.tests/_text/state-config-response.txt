@@ -1,0 +1,245 @@
+[
+    {
+        "counties": [
+            {
+                "data": {
+                    "dropDowns": [
+                        {
+                            "id": 0,
+                            "name": "Search Type",
+                            "members": [
+                                {
+                                    "id": 0,
+                                    "name": "criminal case records"
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "probate case records"
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "magistrate case records"
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "civil and family case records"
+                                },
+                                {
+                                    "id": 4,
+                                    "name": "justice of the peace case records"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 1,
+                            "name": "probate courts",
+                            "isDisplayed": false,
+                            "members": [
+                                {
+                                    "id": 0,
+                                    "name": "probate case records"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 2,
+                            "name": "magistrate courts",
+                            "isDisplayed": false,
+                            "members": [
+                                {
+                                    "id": 0,
+                                    "name": "magistrate case records"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 3,
+                            "name": "civil and family courts",
+                            "isDisplayed": false,
+                            "members": [
+                                {
+                                    "id": 0,
+                                    "name": "civil and family case records"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 4,
+                            "name": "justice courts",
+                            "isDisplayed": false,
+                            "members": [
+                                {
+                                    "id": 0,
+                                    "name": "justice of the peace case records"
+                                }
+                            ]
+                        }
+                    ],
+                    "caseSearchTypes": null
+                },
+                "name": "Collin",
+                "index": 26550,
+                "stateCode": "TX",
+                "shortName": null,
+                "isActive": true
+            },
+            {
+                "data": {
+                    "dropDowns": [
+                        {
+                            "id": 0,
+                            "name": "Court Type",
+                            "members": [
+                                {
+                                    "id": 1,
+                                    "name": "All JP And County Courts"
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "All JP Courts"
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "Justice of the Peace Pct #1"
+                                },
+                                {
+                                    "id": 4,
+                                    "name": "Justice of the Peace Pct #2"
+                                },
+                                {
+                                    "id": 5,
+                                    "name": "Justice of the Peace Pct #3"
+                                },
+                                {
+                                    "id": 6,
+                                    "name": "Justice of the Peace Pct #4"
+                                },
+                                {
+                                    "id": 7,
+                                    "name": "Justice of the Peace Pct #5"
+                                },
+                                {
+                                    "id": 8,
+                                    "name": "Justice of the Peace Pct #6"
+                                },
+                                {
+                                    "id": 9,
+                                    "name": "All County Courts"
+                                },
+                                {
+                                    "id": 10,
+                                    "name": "County Court At Law #1"
+                                },
+                                {
+                                    "id": 11,
+                                    "name": "County Court At Law #2"
+                                },
+                                {
+                                    "id": 12,
+                                    "name": "County Criminal Court #1"
+                                },
+                                {
+                                    "id": 13,
+                                    "name": "County Criminal Court #2"
+                                },
+                                {
+                                    "id": 14,
+                                    "name": "County Criminal Court #3"
+                                },
+                                {
+                                    "id": 15,
+                                    "name": "County Criminal Court #4"
+                                },
+                                {
+                                    "id": 16,
+                                    "name": "County Criminal Court #5"
+                                }
+                            ]
+                        }
+                    ],
+                    "caseSearchTypes": [
+                        {
+                            "id": 0,
+                            "name": "JP and County Courts"
+                        },
+                        {
+                            "id": 1,
+                            "name": "District Courts"
+                        }
+                    ]
+                },
+                "name": "Denton",
+                "index": 26730,
+                "stateCode": "TX",
+                "shortName": null,
+                "isActive": true
+            },
+            {
+                "data": {
+                    "dropDowns": [
+                        {
+                            "id": 0,
+                            "name": "Court Type",
+                            "members": [
+                                {
+                                    "id": 0,
+                                    "name": "All Probate Courts"
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "All JP Courts"
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "All CCL Courts"
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "JP No. 1"
+                                },
+                                {
+                                    "id": 4,
+                                    "name": "JP No. 2"
+                                },
+                                {
+                                    "id": 5,
+                                    "name": "JP No. 3"
+                                },
+                                {
+                                    "id": 6,
+                                    "name": "JP No. 4"
+                                },
+                                {
+                                    "id": 7,
+                                    "name": "JP No. 5"
+                                },
+                                {
+                                    "id": 8,
+                                    "name": "JP No. 6"
+                                },
+                                {
+                                    "id": 9,
+                                    "name": "JP No. 7"
+                                },
+                                {
+                                    "id": 10,
+                                    "name": "JP No. 8"
+                                }
+                            ]
+                        }
+                    ],
+                    "caseSearchTypes": null
+                },
+                "name": "Tarrant",
+                "index": 28330,
+                "stateCode": "TX",
+                "shortName": null,
+                "isActive": true
+            }
+        ],
+        "id": null,
+        "name": "Texas",
+        "shortName": "TX",
+        "isActive": true
+    }
+]

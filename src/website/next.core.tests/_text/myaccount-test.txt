@@ -1,0 +1,994 @@
+<html><head>
+		<script type="text/javascript">
+		try {
+			CefSharp.BindObjectAsync("jsHandler", "jsHandler");
+		} catch {}		
+	
+		
+		
+		
+		</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: account</title>
+		
+		<!-- googleapis : fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+		
+		<!-- popper -->
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+		
+		<!-- bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+		
+		<!-- font awesome -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+		
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+		
+		<!-- common styles -->
+		<link rel="stylesheet" name="cover-css" href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css">
+		
+		<!-- common styles -->
+		<style name="base-css">
+
+/*
+* Forms
+*/
+.form-control:focus,
+.form-control:active {
+    background-color: #E5E7E9;
+	border-color: #34495E;
+    color: ghostwhite;
+}
+.form-control {
+    background-color: transparent;
+    border-color: #555;
+    color: ghostwhite;
+}
+
+.form-control.error {
+    border-color: red;
+}
+label.error {
+    color: red;
+    font-size: small;
+}
+div.help-text {
+    font-size: small;
+}
+
+/*
+ * Header
+ */
+div[name="header"] {
+    height: 50px; 
+    border-bottom: #444 solid 1px;
+    margin-top: 5px;
+}
+
+
+/*
+ * Loader
+ */
+div[name="loader"] {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 16px solid #cdcdb1; /* Light grey */
+  border-top: 16px solid #9c9c63; /* Brown-ish */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+/*
+ * Card
+ */
+ .card {
+    background-color: transparent;
+    border-color: #444;
+    color: #fff;
+ }
+ .card .card-body .card-title {
+    border-bottom: #444 solid 1px;
+    padding-bottom: 5px;
+ }
+@media screen and (max-width: 500px) {
+  .card {
+    width: 300px;
+    margin-left: 40px;
+ }
+}
+
+
+		
+		
+		
+		</style>
+		<style name="subcontent-css">
+
+			div.subcontent {
+				width: 50%; 
+				min-width: 400px;
+				max-width: 1200px;
+                margin-bottom: 20px;
+				display: none;
+			}
+			
+			div.subcontent.active {
+				display: block;
+			}
+
+			div[name="subcontent-home-bullet-list"] {
+				width: 50%; 
+				margin-left: 35%;
+				text-align: left;
+				justify-content: left;
+			}
+			
+
+			div[name="main-content"] {
+				width: 70%; 
+				min-width: 800px;
+				max-width: 1200px;
+			}		
+
+			div[name="main-content"] div.card {
+				height: 95%;
+				min-height: 560px;
+			}
+
+			div[name="subcontent-home"],
+			div[name="subcontent-profile"],
+			div[name="subcontent-permissions"],
+			div[name="subcontent-password"] {
+				text-align: left;
+				justify-content: left;
+				margin-bottom: 20px;
+				margin-left: 20px;
+			}
+
+			
+			div[name="subcontent-permissions"] .form-check-input, 
+			div[name="subcontent-permissions"] .list-group,
+			div[name="subcontent-permissions"] .list-group-item {
+				background-color: transparent;
+				border-color: #555;
+				color: ghostwhite;
+
+			}
+
+			#dv-subcontent-permissions-container {
+				width: 85%;
+				margin-left: 25px;
+			}
+
+
+		
+		
+		
+		</style>
+	</head>
+	<body class="text-center">
+		<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+			<header class="masthead mb-auto" style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+				<div class="inner">
+					<h3 class="masthead-brand">
+						<i class="bi bi-bank2"></i>
+						<span>Legal Lead UI</span>
+					</h3>
+					<nav id="masthead-nav-menu" class="nav nav-masthead justify-content-center">
+						<a name="subcontent-home" class="nav-link" href="javascript:setDisplay('home')">Home</a>
+						<a name="subcontent-profile" class="nav-link" href="javascript:setDisplay('profile')">Profile</a>
+						<a name="subcontent-permissions" class="nav-link active" href="javascript:setDisplay('permissions')">Permissions</a>
+						<div id="account-subcontent-icon" name="subcontent-icon" class="nav-link dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="bi bi-person-fill-check "></i>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a id="account-dropdown-item-user-name" class="dropdown-item" href="#">
+										<i class="bi bi-person m-1"></i>
+										<span id="account-text-item-user-name">test.account</span>
+									</a>
+								</li>
+								<li>
+									<a id="account-dropdown-item-user-level" class="dropdown-item" href="#">
+										<i class="bi bi-collection m-1"></i>
+										<span id="account-text-item-user-level">Guest</span>
+									</a>
+								</li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li>
+									<a id="account-dropdown-item-password" class="dropdown-item" href="javascript:setDisplay('password')">
+										<i class="bi bi-key m-1"></i>
+										<span id="account-text-item-password">Change Password</span>
+									</a>
+								</li>
+								<li>
+									<a id="account-dropdown-item-logout" class="dropdown-item" href="#">Logout</a>
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+			</header>
+			<main role="main" class="inner cover">
+				<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+					<div id="dv-subcontent-home" name="subcontent-home" class="subcontent card">
+						<div class="card-body">
+							<h5 class="card-title">Account Details</h5>
+							<div class="row">
+								<div class="col-4 text-info text-start">User Name:</div>
+								<div class="col-1 text-info"></div>
+								<div id="account-user-name" class="col-7 text-secondary text-start">test.account</div>
+							</div>
+							<div class="row">
+								<div class="col-4 text-info text-start">Email:</div>
+								<div class="col-1 text-info"></div>
+								<div id="account-user-email" class="col-7 text-secondary text-start">user@example.com</div>
+							</div>
+							<div class="row">
+								<div class="col-4 text-info text-start">Account Date:</div>
+								<div class="col-1 text-info"></div>
+								<div id="account-create-date" class="col-7 text-secondary text-start">12/31/2023</div>
+							</div>
+							<div class="row">
+								<div class="col-4 text-info text-start">Account Type:</div>
+								<div class="col-1 text-info"></div>
+								<div id="account-role" class="col-7 text-secondary text-start">Guest</div>
+							</div>
+							<div id="account-description" class="row">
+<hr class="m-2 w-75">
+<h5>Guest</h5>
+<div>
+    <p class="lead">
+        You have a Guest Account. 
+        As a Guest you have the following search restrictions.
+    </p>
+    <ol>
+        <li>Searches: A limit of 5 records can returned from any a search.</li>
+        <li>Monthly Limit: A maximum of 15 records can be retrieved in a calendar month.</li>
+        <li>Annual Limit: A maximum of 50 records can be retrieved in a calendar year.</li>
+    </ol>
+    <p>
+        Data restriction: 
+        Any search result will be masked to remove address and/or case information.
+    </p>
+    <h6 class="text-secondary">
+        The guest account is intended to allow users to test the system prior to purchase.
+    </h6>
+</div></div>
+						</div>
+					</div>
+					<div id="dv-subcontent-profile" name="subcontent-profile" class="subcontent card">
+						<div id="dv-subcontent-profile-row-00" class="row d-none w-75">
+							<div id="dv-subcontent-profile-success" class="alert alert-success d-flex align-items-center" role="alert">
+								<div class="row">
+                                    <i class="bi bi-check-circle-fill"></i>
+								    <span>Your account information has been updated successfully</span>
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title text-start">Account Profile</h5>
+							<div class="row">
+								<div id="dv-subcontent-profile-row-01" class="mb-3 text-start">
+									<label for="cbo-profile-group" class="form-label text-secondary">Section</label>
+									<select id="cbo-profile-group" class="form-control" onchange="profileComboBoxChanged()">
+										<option value="">Select view</option>
+										<option selected="" value="personal">Personal Details</option>
+										<option value="address">Addresses</option>
+										<option value="phone">Phone Numbers</option>
+										<option value="email">Email Addresses</option>
+									</select>
+								</div>
+								<div id="dv-subcontent-profile-row-02" name="dv-subcontent-profile-personal" class="mb-3 text-start">
+									<hr>
+									<form id="frm-profile-personal" name="frm-user-profile" novalidate="novalidate">
+										<div class="row">
+											<label for="tbx-profile-first-name" class="form-label text-secondary">First Name</label>
+											<input id="tbx-profile-first-name" name="first-name" class="form-control w-75 m-2" value="John">
+										</div>
+										<div class="row">
+											<label for="tbx-profile-last-name" class="form-label text-secondary">Last Name</label>
+											<input id="tbx-profile-last-name" name="last-name" class="form-control w-75 m-2" value="Quitzon">
+										</div>
+										<div class="row">
+											<label for="tbx-profile-company" class="form-label text-secondary">Company</label>
+											<input id="tbx-profile-company" name="company-name" class="form-control w-75 m-2" value="Goodwin LLC">
+										</div>
+									</form>
+								</div>
+								<div id="dv-subcontent-profile-row-03" name="dv-subcontent-profile-address" class="mb-3 text-start d-none">
+									<hr>
+									<form id="frm-profile-address" name="frm-user-profile" novalidate="novalidate">
+										<div class="row m-1">
+											<label for="tbx-profile-mailing-address" class="form-label text-secondary">Mailing Address</label>
+											<textarea rows="4" id="tbx-profile-mailing-address" name="mailing-address" class="form-control">93415 Margarita Crossing Avondale, Malta 998</textarea>
+										</div>
+										<div class="row m-1">
+											<label for="tbx-profile-billing-address" class="form-label text-secondary">Billing Address</label>
+											<textarea rows="4" id="tbx-profile-billing-address" name="billing-address" class="form-control">3359 Dibbert Ridges Hermanburgh, Central African Republic 600</textarea>
+										</div>
+									</form>
+								</div>
+								<div id="dv-subcontent-profile-row-04" name="dv-subcontent-profile-phone" class="mb-3 text-start d-none">
+									<hr>
+									<form id="frm-profile-phone" name="frm-user-profile" novalidate="novalidate">
+										<div class="row">
+											<label for="tbx-profile-phone-01" class="form-label text-secondary">Contact</label>
+											<input id="tbx-profile-phone-01" name="phone-number" class="form-control w-75 m-2" value="485-283-7105">
+										</div>
+										<div class="row">
+											<label for="tbx-profile-phone-02" class="form-label text-secondary">Office</label>
+											<input id="tbx-profile-phone-02" name="phone-number" class="form-control w-75 m-2" value="268-897-2912">
+										</div>
+										<div class="row">
+											<label for="tbx-profile-phone-03" class="form-label text-secondary">Fax / Other</label>
+											<input id="tbx-profile-phone-03" name="phone-number" class="form-control w-75 m-2" value="210-831-8992">
+										</div>
+									</form>
+								</div>
+								<div id="dv-subcontent-profile-row-05" name="dv-subcontent-profile-email" class="mb-3 text-start d-none">
+									<hr>
+									<form id="frm-profile-email" name="frm-user-profile" novalidate="novalidate">
+										<div class="row">
+											<label for="tbx-profile-email-01" class="form-label text-secondary">Primary</label>
+											<input type="email" id="tbx-profile-email-01" name="email-address" class="form-control w-75 m-2" value="Wilma_Blanda@hotmail.com">
+										</div>
+										<div class="row">
+											<label for="tbx-profile-email-02" class="form-label text-secondary">Business</label>
+											<input type="email" id="tbx-profile-email-02" name="email-address" class="form-control w-75 m-2" value="Jaycee_Tromp57@hotmail.com">
+										</div>
+										<div class="row">
+											<label for="tbx-profile-email-03" class="form-label text-secondary">Alternate</label>
+											<input type="email" id="tbx-profile-email-03" name="email-address" class="form-control w-75 m-2" value="Xzavier.Gusikowski1@gmail.com">
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer">
+							<div id="frm-profile-error-message" class="d-none">
+								
+								<!-- Error messages -->
+							</div>
+							<button id="frm-profile-submit-button" class="btn btn-primary" onclick="profileSubmitButtonClicked()">
+								<i id="form-profile-icon" class="bi bi-pencil-square"></i>
+								<i id="form-profile-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Save
+							</button>
+						</div>
+					</div>
+					<div id="dv-subcontent-permissions" name="subcontent-permissions" class="subcontent card active">
+						<div class="card-body">
+							<h5 class="card-title text-start">Account Permissions</h5>
+						</div>
+						<div id="dv-subcontent-permissions-container" class="row">
+							<div id="dv-subcontent-permissions-row-01" class="mb-3 text-start">
+								<label for="cbo-permissions-group" class="form-label text-secondary">Section</label>
+								<select id="cbo-permissions-group" class="form-control" onchange="permissionsComboBoxChanged()">
+									<option value="">Select view</option>
+									<option selected="" value="02">Subscription</option>
+									<option value="03">Discounts</option>
+								</select>
+							</div>
+							<div id="dv-subcontent-permissions-row-02" class="mb-3 text-start" style="display: none;">
+								<h6>Permission Level</h6>
+								<ul id="permissions-subscription-group" class="list-group">
+									<li class="list-group-item">
+										<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Guest" id="permissions-subscription-guest-radio" checked="checked">
+										<label class="form-check-label" for="permissions-subscription-guest-radio">Guest</label>
+									</li>
+									<li class="list-group-item">
+										<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Silver" id="permissions-subscription-silver-radio">
+										<label class="form-check-label" for="permissions-subscription-silver-radio">Silver</label>
+									</li>
+									<li class="list-group-item">
+										<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Gold" id="permissions-subscription-gold-radio">
+										<label class="form-check-label" for="permissions-subscription-gold-radio">Gold</label>
+									</li>
+									<li class="list-group-item">
+										<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Platinum" id="permissions-subscription-platinum-radio">
+										<label class="form-check-label" for="permissions-subscription-platinum-radio">Platinum</label>
+									</li>
+								</ul>
+								<div id="dv-permissions-subscription-description">
+									<p class="text-secondary m-2" name="subscription-description" id="subscription-description-guest" style="">
+										Guest subscription allows limited access to system function,  											with ability to search records and retrieve sample data.
+									</p>
+									<p class="text-secondary m-2" name="subscription-description" id="subscription-description-silver" style="display: none;">
+										Silver subscription allows user to make inquiries
+										<br>
+										into the records dataset.<br>
+										Records are served at 5 cents per lead.<br>
+										Maximum of 1,000 leads available per year.
+									</p>
+									<p class="text-secondary m-2" name="subscription-description" id="subscription-description-gold" style="display: none;">
+										Gold subscription allows user to make inquiries
+										<br>
+										into the records dataset.<br>
+										Records are served at 4 cents per lead.<br>
+										Maximum of 10,000 leads available per year.
+									</p>
+									<p class="text-secondary m-2" name="subscription-description" id="subscription-description-platinum" style="display: none;">
+										Platinum subscription allows user to make inquiries
+										<br>
+										into the records dataset.<br>
+										Records are served at 3 cents per lead.<br>
+										Maximum of 100,000 leads available per year.
+									</p>
+								</div>
+							</div>
+							<div id="dv-subcontent-permissions-row-03" class="mb-3 text-start" style="">
+								<h6>State Discounts</h6>
+								<ul id="permissions-discounts-states-group" class="list-group">
+									<li class="list-group-item">
+										<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx" checked="checked">
+										<label class="form-check-label" for="permissions-discounts-tx">Texas</label>
+									</li>
+								</ul>
+								<h6>County Discounts</h6>
+								<ul id="permissions-discounts-counties-group" class="list-group">
+									<li class="list-group-item">
+										<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-collin" checked="checked">
+										<label class="form-check-label" for="permissions-discounts-tx-collin">Texas : Collin</label>
+									</li>
+									<li class="list-group-item">
+										<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-denton" checked="checked">
+										<label class="form-check-label" for="permissions-discounts-tx-denton">Texas : Denton</label>
+									</li>
+									<li class="list-group-item">
+										<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-tarrant">
+										<label class="form-check-label" for="permissions-discounts-tx-tarrant">Texas : Tarrant</label>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-footer">
+							<button class="btn btn-primary">Save</button>
+						</div>
+					</div>
+					<div id="dv-subcontent-password" name="subcontent-password" class="subcontent card">
+						<div class="card-body">
+							<h5 class="card-title">Change Password</h5>
+							<form id="form-change-password" name="form-change-password">
+								<div class="mb-3">
+									<label for="account-password-username" class="form-label">User Name:</label>
+									<input type="text" class="form-control" id="account-password-username" name="username" maxlength="255" minlength="8" readonly="readonly">
+								</div>
+								<div class="mb-3">
+									<label for="account-password-new-password" class="form-label">New Password</label>
+									<input type="password" class="form-control" id="account-password-new-password" name="account-password-new-password" maxlength="255" minlength="8" aria-describedby="account-password-new-password-help">
+									<div id="account-password-new-password-help" class="text-secondary help-text">
+										Provide a strong password.
+									</div>
+								</div>
+								<div class="mb-3">
+									<label for="account-password-confirmation" class="form-label">Confirm Password</label>
+									<input type="password" class="form-control" id="account-password-confirmation" name="account-password-confirmation" maxlength="255" minlength="8" aria-describedby="account-password-confirmation-help">
+									<div id="account-password-confirmation-help" class="text-secondary help-text">
+										Confirm password.
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="card-footer">
+							<button class="btn btn-primary">Save</button>
+						</div>
+					</div>
+				</div>
+			</main>
+			<footer class="mastfoot mt-auto">
+				<div id="footer-copy" class="float-end">
+					<span id="footer-copy-span">(c) 2023, 2024 Legal Lead UI</span>
+				</div>
+				<div id="footer-reload" class="float-start">
+					<a id="footer-reload-link" href="javascript:reloadContent()" class="text-secondary text-decoration-none">Reload</a>
+				</div>
+			</footer>
+		</div>
+		<script>
+	const actv = "active";
+	const names = [ "home", "profile", "permissions", "password" ];
+
+	function setDisplay( name ) {
+			if (names.indexOf( name ) < 0 ) { return; }
+			setActiveDiv(name);
+			const themenu = document.getElementById("masthead-nav-menu");
+			let thelinks = themenu.getElementsByTagName("a");
+
+			for(let i = 0; i < thelinks.length; i++) {
+				let a = thelinks[i];
+				const aname = a.getAttribute("name");
+				if(null === aname || undefined === aname) { continue; }
+				if ( aname.indexOf(name) >= 0 ) {
+					a.classList.add(actv);
+				} else {
+					a.classList.remove(actv);
+				}
+			}			
+		}
+
+	function setActiveDiv( name ) {
+		if (names.indexOf( name ) < 0 ) { return; }
+		const divnames = [ "dv-subcontent-home", "dv-subcontent-profile", "dv-subcontent-permissions", "dv-subcontent-password" ];
+		
+		for(let i = 0; i < divnames.length; i++) {
+			const d = document.getElementById(divnames[i]);
+			if(null === d || undefined === d) { continue; }
+			if ( divnames[i].indexOf(name) >= 0 ) {
+				d.classList.add(actv);
+			} else {
+				d.classList.remove(actv);
+			}
+		}
+	}
+		
+	
+		
+	function getPageName() {
+		const defaultName = "home";
+		const colon = ":";
+		var current_title = $(document).attr('title');
+		if ( undefined === current_title || null === current_title || current_title.length === 0) return defaultName;
+		if (current_title.indexOf(colon) < 0 || current_title.split(colon).length < 2) return defaultName;
+		var landing = current_title.split(':')[1].trim();
+		return landing == "account" ? "myaccount-~0" : "home-~0";
+	}
+		
+	function getDisplay( ) {
+			const find = "~0";
+			let pageName = getPageName();
+			const themenu = document.getElementById("masthead-nav-menu");
+			let thelinks = themenu.getElementsByTagName("a");
+
+			for (let i = 0; i < thelinks.length; i++) {
+				let a = thelinks[i];
+				const aname = a.getAttribute("name");
+				if( undefined === aname || null === aname ) { continue; }
+				if( !a.classList.contains(actv) ) { continue; }
+				return pageName.replace(find, aname.split("-")[1]);
+			}
+			return "";			
+		}
+		
+	function reloadContent() {
+			const jsobj = window.jsHandler;
+			if ( undefined === jsobj || null === jsobj ) return;
+			const currentLocation = getDisplay();
+			if ( undefined === currentLocation || null === currentLocation || currentLocation.length === 0) return;
+			
+			const linkName = "#footer-reload-link";
+			const headerlinks = "#masthead-nav-menu a[name]";
+			const links = [ linkName, headerlinks ];
+			const sectionMain = "main";
+			const animationInterval = 400;
+			links.forEach(n => {
+				$(n).bind('click', false);
+				$(n).attr('href', 'javascript:void()');
+			})
+			$(sectionMain).css({opacity: 1.0, visibility: "visible"}).animate({opacity: 0}, animationInterval);
+			const restoreInterval = animationInterval * 3;
+			setTimeout(
+			  function() 
+			  {
+				const jsobj = window.jsHandler;
+				const currentLocation = getDisplay();
+				jsobj.reload( currentLocation );	
+			  }, restoreInterval);	
+		}
+	
+	function profileComboBoxChanged() {
+		const hidden = "d-none";
+		const cboxid = "#cbo-profile-group";
+		const find = "~0";
+		const dvprefix = "div[name='dv-subcontent-profile-~0']";
+		const dvparent = "#dv-subcontent-profile";
+		const divnames = [ 
+			dvprefix.replace(find, "personal"), 
+			dvprefix.replace(find, "address"), 
+			dvprefix.replace(find, "phone"), 
+			dvprefix.replace(find, "email")  ];
+		for(var i = 0; i < divnames.length; i++) {
+			var dv = divnames[i];
+			$( dv ).addClass(hidden);
+		}
+		var current = $(cboxid).val();
+		if (null === current || current.length === 0) {
+			$( dvparent ).find("div.card-footer").hide();
+			return;
+		}
+		var target = dvprefix.replace(find, current);
+		$( target ).removeClass(hidden);
+		$( dvparent ).find("div.card-footer").show();
+		
+	}
+		
+	profileComboBoxChanged()
+	
+		
+		
+		
+		</script>
+		
+		<!-- script: my-account-form-validation -->
+		<script>
+let profileAlertTimer = null;
+let profileNames = [ "frm-profile-address", "frm-profile-personal", "frm-profile-phone", "frm-profile-email" ];
+let profileButtonName = "frm-profile-submit-button";
+let profileStatusDiv = "frm-profile-error-message";
+var profileicons = {
+    spin: "#form-profile-icon-spin",
+    normal: "#form-profile-icon"
+}
+
+function setSuccessAlert( isActive ) {
+	const hddn = "d-none";
+	const parentDv = "#dv-subcontent-profile-row-00";
+	const alertDv = "#dv-subcontent-profile-success";
+
+	if ( null != profileAlertTimer ) { 
+		clearTimeout(profileAlertTimer);
+		profileAlertTimer = null;
+	}
+
+	$( parentDv ).addClass(hddn);
+	if (!isActive) { return; }
+
+	$( alertDv ).hide();
+	$( parentDv ).removeClass(hddn);
+	$( alertDv ).fadeIn( 600 );
+	profileAlertTimer = setTimeout(() => { setSuccessAlert(false); }, 15000);
+}
+
+function setProfileStatusMessage( message, isActive ) {
+	const dsb = "disabled";
+	const hddn = "d-none";
+	const emptymessage = "<!-- Error messages -->"
+	const pound = "#";
+	var dverr = pound + profileStatusDiv
+	if( isActive ) {
+		$( dverr ).removeClass(hddn);
+		$( dverr ).html(message);
+	} else {
+		$( dverr ).addClass(hddn);
+		$( dverr ).html(emptymessage);
+	}
+}
+
+
+function setProfileIconState( isSpinning ) {
+	const dsb = "disabled";
+	const hddn = "d-none";
+	const pound = "#";
+	
+	let icons = [];
+	var bttn = pound + profileButtonName;
+
+	icons.push(profileicons.normal);
+	icons.push(profileicons.spin);
+	let a = isSpinning ? 0 : 1;
+	let b = isSpinning ? 1 : 0;
+	$( icons[a] ).addClass( hddn );
+	$( icons[b] ).removeClass( hddn );
+	if( isSpinning ) {
+		$( bttn ).attr(dsb, dsb);
+	} else {
+		$( bttn ).removeAttr(dsb);
+	}
+}
+
+function profileActionCompleted() {
+	setProfileIconState( false );
+	setProfileStatusMessage( '', false );
+	setSuccessAlert( true );
+}
+
+function isValidProfileEmail( email ) {
+	if( undefined === email || null === email || email.length === 0) { return true; }
+	const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return res.test(email.toLowerCase());
+}
+
+
+function isValidProfilePhone( phonenumber ) {
+	if( undefined === phonenumber || null === phonenumber || phonenumber.length === 0) { return true; }
+	var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+	var phoneexp = /^[\s()+-]*([0-9][\s()+-]*){6,20}$/;
+	var expressions = [ phoneno, phoneexp ];
+	for( var t = 0; t < expressions.length; t++ ) {
+		var rg = expressions[t];
+		var isOk = rg.test(phonenumber);
+		if(isOk) return true;
+	}
+	return false;
+}
+
+function isValidProfileAddress( address ) {
+	if ( undefined === address || null === address || address.length === 0) { return true; }
+	address = address.trim();
+	if ( address.length < 9 ) return false;
+	const space = ' ';
+	const comma = ',';
+	if ( address.indexOf(space) < 0 ) return false;
+	if ( address.indexOf(comma) < 0 ) return false;
+	let parts = address.split(space);
+	let zip = parts[parts.length - 1];
+	if(!isZip(zip)) return false;
+	return true;
+}
+
+
+function isZip( zip ) {
+	if ( undefined === zip || null === zip || zip.length === 0) { return false; }
+	var zp = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+	return zp.test(zip);
+
+}
+
+function initializeProfileValidator() {
+	/* 
+	 * NOTE: There are multiple forms on this page 
+	 * initialization of the jquery validators needs to be consolidated
+	 * to include both profile and permissions forms
+	 */
+	jQuery.validator.setDefaults({
+		debug: true,
+		success: "valid"
+	});
+
+	jQuery.validator.addMethod("isValidProfileEmail", function (value, element, params) {
+		if (!value) { return true; }
+		if (value == null) { return true; }
+		if (value.length == 0) { return true; }
+		return isValidProfileEmail(String(value));
+	}, 'Must be a valid email address.');
+
+	jQuery.validator.addMethod("isValidProfilePhone", function (value, element, params) {
+		if (!value) { return true; }
+		if (value == null) { return true; }
+		if (value.length == 0) { return true; }
+		return isValidProfilePhone(String(value));
+	}, 'Must be a valid phone number.');
+
+	jQuery.validator.addMethod("isValidProfileAddress", function (value, element, params) {
+		if (!value) { return true; }
+		if (value == null) { return true; }
+		if (value.length == 0) { return true; }
+		return isValidProfileAddress(String(value));
+	}, 'Must be a valid address.');
+}
+
+function initializeProfileFormValidation()
+{
+	for(var i = 0; i < profileNames.length; i++) {
+		var frm = document.getElementById(profileNames[i]);
+		var formJq = "#" + profileNames[i];
+		switch (i) {
+			case 0: // address
+				$(formJq).validate({
+					rules: {
+						"billing-address": {
+							maxlength: 750,
+							isValidProfileAddress: true
+						},
+						"mailing-address": {
+							maxlength: 750,
+							isValidProfileAddress: true
+						}
+					}
+				});
+				break;
+			case 1: // personal
+				$(formJq).validate({
+					rules: {
+						"first-name": {
+							required: false,
+							minlength: 1,
+							maxlength: 75
+						},
+						"last-name": {
+							required: false,
+							minlength: 1,
+							maxlength: 125
+						},
+						"company-name": {
+							required: true,
+							minlength: 2,
+							maxlength: 150
+						}
+					}
+				});
+				break;
+			case 2: // phone
+				$(formJq).validate({
+					rules: {
+						"phone-number": {
+							required: false,
+							minlength: 7,
+							maxlength: 30,
+							isValidProfilePhone: true
+						}
+					}
+				});
+				break;
+			case 3: // email
+				$(formJq).validate({
+					rules: {
+						"email-address": {
+							required: false,
+							minlength: 4,
+							maxlength: 255,
+							isValidProfileEmail: true
+						}
+					}
+				});
+				break;
+			
+		}
+	}
+}
+
+	
+	function profileSubmitButtonClicked() {
+		const cboxid = "#cbo-profile-group";
+		const find = "~0";
+		const frmprefix = "frm-profile-~0";
+		const suffixes = [ "personal", "address", "phone", "email" ];
+		
+		setSuccessAlert( false );
+		setProfileIconState( false );
+		setProfileStatusMessage( '', false );
+		var current = $(cboxid).val();
+		if (null === current || current.length === 0 || suffixes.indexOf(current) < 0) {
+			return;
+		}
+		
+		let target = frmprefix.replace(find, current);
+		if (document.getElementById(target) == null) { return; }
+		let jqobj = "#" + target;
+		if( $( jqobj ).valid() == false ) { 
+			setProfileStatusMessage( 'Please review submission, you have one or more invalid values.', true );
+			return; 
+		}
+		let payload = "";
+		
+		switch(current) {
+			case "personal" :
+			
+				const personal = [
+					{ NameType: "First", Name: $("#tbx-profile-first-name").val() },	
+					{ NameType: "Last", Name: $("#tbx-profile-last-name").val() },
+					{ NameType: "Company", Name: $("#tbx-profile-company").val() }
+				];
+				payload = JSON.stringify( personal );
+				break;
+			case "address" :
+			
+				const address = [
+					{ AddressType: "Mailing", Address: $("#tbx-profile-mailing-address").val() },	
+					{ AddressType: "Billing", Address: $("#tbx-profile-billing-address").val() }
+				];
+				payload = JSON.stringify( address );
+				break;
+			case "phone" :
+			
+				const phone = [
+					{ PhoneType: "Personal", Phone: $("#tbx-profile-phone-01").val() },	
+					{ PhoneType: "Business", Phone: $("#tbx-profile-phone-02").val() },	
+					{ PhoneType: "Other", Phone: $("#tbx-profile-phone-03").val() },	
+				];
+				payload = JSON.stringify( phone );
+				break;
+			case "email" :
+			
+				const email = [
+					{ EmailType: "Personal", Email: $("#tbx-profile-email-01").val() },	
+					{ EmailType: "Business", Email: $("#tbx-profile-email-02").val() },	
+					{ EmailType: "Other", Email: $("#tbx-profile-email-03").val() },	
+				];
+				payload = JSON.stringify( email );
+				break;
+		}
+		if ( null === payload || payload.length == 0 ) { 
+			setProfileStatusMessage( 'Error: Unable to capture form submission values', true );
+			return; 
+		}
+	
+		let handler = window.jsHandler;
+		if( undefined === handler || null === handler || !(handler) ) { 
+			setProfileStatusMessage( 'Error: Unable to bind form submission handler', true );
+			return; 
+		}
+		try {
+			setProfileIconState( true );
+			setProfileStatusMessage( "<span class='text-warning'>Submitting form values ...</span>", true );
+			handler.submit(target, payload);
+		}
+		catch (err) {
+			setProfileStatusMessage( err, true );
+		} finally {
+			setProfileIconState( false );
+		}
+	}
+	
+
+	function permissionsComboBoxChanged() {
+		const tilde = "~0";
+		const permissionsCombo = "#cbo-permissions-group";
+		const permissionsAreaName = "#dv-subcontent-permissions-row-~0";
+		const permissionsAreas = [ 
+			permissionsAreaName.replace(tilde, "02"), 
+			permissionsAreaName.replace(tilde, "03")
+		];
+		
+		permissionsAreas.forEach(p => { $( p ).hide(); });
+		let item = $( permissionsCombo ).val();
+		let itemName = permissionsAreaName.replace(tilde, item);
+		$( itemName ).fadeIn( 600 );
+		subscriptionLevelChanged();
+		
+	}
+
+	
+	function subscriptionLevelChanged() {
+		const paragraphName = "#subscription-description-~0"
+		var dvDescription = "#dv-permissions-subscription-description";
+		var selection = $("input[name='subscription-group']:checked").val();
+		if ( undefined === selection || null === selection || selection.length == 0 ) {
+			selection = "Guest";
+		}
+		$( dvDescription ).find("p").hide();
+		$( dvDescription ).find("p").removeClass("d-none");
+		const paragraph = paragraphName.replace( "~0", selection.toLowerCase() );
+		$( paragraph ).fadeIn( 200 );
+	}
+
+initializeProfileValidator();
+initializeProfileFormValidation();
+permissionsComboBoxChanged();
+
+
+		
+		
+		
+		</script>
+		<script>
+	
+	let clientScriptActivated = true;
+
+	function commonClientScript() {
+		try {
+			setDisplay( 'permissions' );
+		} catch(err) {
+			console.debug(err);
+		}
+	}
+	if (clientScriptActivated) {
+		setTimeout( () => { commonClientScript(); }, 250);
+	}
+	
+
+		
+		
+		
+		</script>
+	
+</body></html>
