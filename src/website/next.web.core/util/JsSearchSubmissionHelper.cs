@@ -1,4 +1,4 @@
-﻿using legallead.desktop.entities;
+﻿using next.core.entities;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.web.core.util

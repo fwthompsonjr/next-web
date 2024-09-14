@@ -1,5 +1,5 @@
-﻿using legallead.desktop.entities;
-using legallead.desktop.interfaces;
+﻿using next.core.entities;
+using next.core.interfaces;
 using next.web.core.services;
 
 namespace next.web.tests.dep.svc

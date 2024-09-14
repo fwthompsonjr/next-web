@@ -1,5 +1,5 @@
-﻿using legallead.desktop.entities;
-using legallead.desktop.interfaces;
+﻿using next.core.entities;
+using next.core.interfaces;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using next.web.core.extensions;

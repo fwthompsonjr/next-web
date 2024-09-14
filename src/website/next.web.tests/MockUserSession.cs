@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using legallead.desktop.entities;
+using next.core.entities;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Newtonsoft.Json;

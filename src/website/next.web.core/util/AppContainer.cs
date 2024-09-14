@@ -1,6 +1,6 @@
-﻿using legallead.desktop.implementations;
-using legallead.desktop.interfaces;
-using legallead.desktop.utilities;
+﻿using next.core.implementations;
+using next.core.interfaces;
+using next.core.utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using next.web.core.interfaces;

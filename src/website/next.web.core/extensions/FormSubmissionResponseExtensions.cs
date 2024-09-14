@@ -1,4 +1,4 @@
-﻿using legallead.desktop.entities;
+﻿using next.core.entities;
 using next.web.core.reponses;
 
 namespace next.web.core.extensions

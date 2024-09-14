@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
-using legallead.desktop.entities;
-using legallead.desktop.interfaces;
+using next.core.entities;
+using next.core.interfaces;
 using Microsoft.AspNetCore.Http;
 using next.web.core.util;
 using System.Diagnostics.CodeAnalysis;

@@ -1,5 +1,5 @@
 ﻿using HtmlAgilityPack;
-using legallead.desktop.interfaces;
+using next.core.interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
