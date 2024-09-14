@@ -1,0 +1,112 @@
+<div id="dv-search-container" name="search-container" class="subcontent card">
+	<div class="card-body">
+		<h5 class="card-title">Search</h5>
+		<p class="lead">Complete the fields below to begin search</p>
+		<div id="dv-search-table-wrapper" name="search-wrapper" class="table-responsive">
+			<table id="table-search" name="search-table" class="container p-2 w-75 rounded border-secondary">
+				<colgroup>
+				<col style="width: 150px;">
+				<col>
+				</colgroup>
+				<tbody>
+					<tr id="tr-search-state">
+						<td>
+						<label>State</label>
+						</td>
+						<td>
+						<select id="cbo-search-state" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr id="tr-search-county">
+						<td>
+						<label>County</label>
+						</td>
+						<td>
+						<select id="cbo-search-county" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr name="tr-search-dynamic" id="tr-search-dynamic-0" style="display: none">
+						<td>
+						<label>Dynamic-0</label>
+						</td>
+						<td>
+						<select id="cbo-search-dynamic-0" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr name="tr-search-dynamic" id="tr-search-dynamic-1" style="display: none">
+						<td>
+						<label>Dynamic-1</label>
+						</td>
+						<td>
+						<select id="cbo-search-dynamic-1" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr name="tr-search-dynamic" id="tr-search-dynamic-2" style="display: none">
+						<td>
+						<label>Dynamic-2</label>
+						</td>
+						<td>
+						<select id="cbo-search-dynamic-2" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr name="tr-search-dynamic" id="tr-search-dynamic-3" style="display: none">
+						<td>
+						<label>Dynamic-3</label>
+						</td>
+						<td>
+						<select id="cbo-search-dynamic-3" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr name="tr-search-dynamic" id="tr-search-dynamic-4" style="display: none">
+						<td>
+						<label>Dynamic-4</label>
+						</td>
+						<td>
+						<select id="cbo-search-dynamic-4" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr name="tr-search-dynamic" id="tr-search-dynamic-5" style="display: none">
+						<td>
+						<label>Dynamic-5</label>
+						</td>
+						<td>
+						<select id="cbo-search-dynamic-5" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr name="tr-search-dynamic" id="tr-search-dynamic-6" style="display: none">
+						<td>
+						<label>Dynamic-6</label>
+						</td>
+						<td>
+						<select id="cbo-search-dynamic-6" name="search-field" class="form-control"/>
+						</td>
+					</tr>
+					<tr id="tr-search-start-date">
+						<td>
+						<label>Start Date</label>
+						</td>
+						<td>
+						<input id="tbx-search-startdate" name="search-field" type="date" class="form-control">
+						</td>
+					</tr>
+					<tr id="tr-search-end-date">
+						<td>
+						<label>End Date</label>
+						</td>
+						<td>
+						<input id="tbx-search-enddate" name="search-field" type="date" class="form-control">
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2" class="p-1">
+						<button id="search-submit-button" class="btn btn-primary">Search</button>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+		

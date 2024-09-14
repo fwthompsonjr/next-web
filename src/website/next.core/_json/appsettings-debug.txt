@@ -1,0 +1,12 @@
+{
+  "debug.user": {
+    "name": "test.account",
+    "code": "1234-AbcD4321"
+  },
+  "debug.login": {
+    "passthru": false
+  },
+  "user": {
+    "session_timeout": 60
+  }
+}

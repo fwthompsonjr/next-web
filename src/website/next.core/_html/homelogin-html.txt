@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Login</h5>
+        <form id="form-login" name="form-login">
+            <div class="mb-3">
+                <label for="username" class="form-label">User Name / Email:</label>
+                <input type="text" class="form-control" id="username" name="username" aria-describedby="username-help">
+                <div id="username-help" class="text-secondary help-text">
+                    Provide user-name or email address.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="login-password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="login-password" id="login-password">
+                <div id="login-password-help" class="text-secondary help-text" aria-describedby="login-password-help">
+                    Provide password.
+                </div>
+            </div>
+            <button id="form-login-submit" type="button" class="btn btn-primary">
+                <i id="form-login-icon" class="bi bi-box-arrow-in-right" ></i>
+                <i id="form-login-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>
+                Sign In</button>
+                    
+            <div id="form-login-error-message" class="form-group d-none">
+                <!-- Error messages -->
+            </div>
+        </form>
+    </div>
+</div>

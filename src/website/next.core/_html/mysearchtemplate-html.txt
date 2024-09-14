@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html><head>
+		<script type="text/javascript">
+                         try { 
+                         CefSharp.BindObjectAsync("jsHandler", "jsHandler"); 
+                              } catch {} 
+
+
+		</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: search</title>
+		
+		<!-- googleapis : fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+		
+		<!-- popper -->
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+		
+		<!-- bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+		
+		<!-- font awesome -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+		
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+		
+		<!-- common styles -->
+		<link rel="stylesheet" name="cover-css" href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css">
+		
+		<!-- common styles -->
+		<style name="base-css">
+                    /* 
+                    * Forms 
+                    */ 
+						 .form-control:focus {
+							background-color: #444;
+							color: rgb(240, 240, 240)
+						 }
+                         .form-control { 
+                         background-color: transparent; 
+                         border-color: #555; 
+                         color: ghostwhite; 
+                         } 
+                         .form-control.error { 
+                         border-color: red; 
+                         } 
+                         label.error { 
+                         color: red; 
+                         font-size: small; 
+                         } 
+                         div.help-text { 
+                         font-size: small; 
+                         } 
+                    /* 
+                    * Header 
+                    */ 
+                         div[name="header"] { 
+                         height: 50px; 
+                         border-bottom: #444 solid 1px; 
+                         margin-top: 5px; 
+                         } 
+                    /* 
+                    * Loader 
+                    */ 
+                         div[name="loader"] { 
+                         margin-top: 20px; 
+                         margin-bottom: 20px; 
+                         border: 16px solid #cdcdb1; /* Light grey */ 
+                         border-top: 16px solid #9c9c63; /* Brown-ish */ 
+                         border-radius: 50%; 
+                         width: 120px; 
+                         height: 120px; 
+                         animation: spin 3s linear infinite; 
+                         } 
+                         @keyframes spin { 
+                              0% { transform: rotate(0deg); } 
+                              100% { transform: rotate(360deg); } 
+                         } 
+                    /* 
+                    * Card 
+                    */ 
+                         .card { 
+                         background-color: transparent; 
+                         border-color: #444; 
+                         color: #fff; 
+                         } 
+                         .card .card-body .card-title { 
+                         border-bottom: #444 solid 1px; 
+                         padding-bottom: 5px; 
+                         } 
+                         @media screen and (max-width: 500px) { 
+                              .card { 
+                              width: 300px; 
+                              margin-left: 40px; 
+                              } 
+                         }
+
+					/*
+					 * Modal
+					 */
+					 div.modal-content {
+						background-color: lightgray;
+						color: rgb(240, 240, 240);
+					 }
+
+
+		</style>
+		<style name="subcontent-css">
+                         div.subcontent { 
+                         width: 50%; 
+                         min-width: 400px; 
+                         max-width: 1200px; 
+                         margin-bottom: 20px; 
+                         display: none; 
+                         } 
+                         div.subcontent.active { 
+                         display: block; 
+                         } 
+                         div[name="subcontent-home-bullet-list"] { 
+                         width: 50%; 
+                         margin-left: 35%; 
+                         text-align: left; 
+                         justify-content: left; 
+                         } 
+                         div[name="main-content"] { 
+                         width: 70%; 
+                         min-width: 800px; 
+                         max-width: 1200px; 
+                         } 
+                         div[name="main-content"] div.card { 
+                         height: 75%; 
+                         min-height: 560px; 
+                         } 
+                    div[name="subcontent-home"], 
+                    div[name="subcontent-profile"], 
+                    div[name="subcontent-permissions"], 
+                         div[name="subcontent-password"] { 
+                         text-align: left; 
+                         justify-content: left; 
+                         margin-bottom: 20px; 
+                         margin-left: 20px; 
+                         } 
+                    div[name="subcontent-permissions"] .form-check-input, 
+                    div[name="subcontent-permissions"] .list-group, 
+                         div[name="subcontent-permissions"] .list-group-item { 
+                         background-color: transparent; 
+                         border-color: #555; 
+                         color: ghostwhite; 
+                         } 
+                         #dv-subcontent-permissions-container { 
+                         width: 85%; 
+                         margin-left: 25px; 
+                         } 
+
+
+		</style>
+	</head>
+	<body class="text-center">
+	<!-- component: account-re-authenticate -->
+	<!-- component: my-account-logout -->
+		<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+			<header class="masthead mb-auto" style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+				<div class="inner">
+					<h3 class="masthead-brand">
+						<i class="bi bi-bank2"></i>
+						<span>Legal Lead UI</span>
+					</h3>
+					<nav id="masthead-nav-menu" class="nav nav-masthead justify-content-center">
+						<a name="subcontent-search" class="nav-link active" href="javascript:void()">Search</a>
+						<a name="subcontent-search-history" class="nav-link" href="javascript:void()">History</a>
+						<a name="subcontent-purchases" class="nav-link" href="javascript:void()">Purchases</a>
+					</nav>
+				</div>
+			</header>
+			<main role="main" class="inner cover">
+				<div id="dv-restriction-alert" class="alert alert-primary p-2 m-2 d-none" role="alert">
+					<i class="bi bi-exclamation-diamond"></i>
+					<span id="span-restriction-alert-message">message</span>
+				</div>
+				<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+					<div id="dv-subcontent-search" name="subcontent-search" class="card">
+						<div id="dv-subcontent-search-card-body" name="subcontent-search-body" class="card-body">
+							<h5 class="card-title text-start">Search</h5>
+							
+						<div class="row">
+							<div id="dv-search-table-wrapper" name="search-wrapper" class="table-responsive">
+								<table id="table-search" name="search-table" class="m-2 w-75 rounded border-secondary">
+									<colgroup>
+										<col style="width: 120px;">
+										<col>
+									</colgroup>
+									<thead>
+										<tr>
+											<td colspan="2">
+												<p class="lead">Complete the fields below to begin search</p>
+											</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr id="tr-search-state">
+											<td>
+												<label class="m-1 form-label text-secondary">State</label>
+											</td>
+											<td>
+												<select id="cbo-search-state" name="search-field" class="form-control">
+													<option value="0" dat-state-index="">- select -</option>
+													<option value="1" dat-state-index="tx">Texas</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-county">
+											<td>
+												<label class="form-label text-secondary">County</label>
+											</td>
+											<td>
+												<select id="cbo-search-county" name="search-field" class="form-control">
+													<option value="0" dat-county-index="" dat-state-index="">- select -</option>
+													<option value="26550" dat-state-index="tx" dat-county-index="collin" dat-has-case-search="false" dat-parameter-count="5" style="display: none">Collin</option>
+													<option value="26730" dat-state-index="tx" dat-county-index="denton" dat-has-case-search="true" dat-parameter-count="1" style="display: none">Denton</option>
+													<option value="28330" dat-state-index="tx" dat-county-index="tarrant" dat-has-case-search="false" dat-parameter-count="1" style="display: none">Tarrant</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-dynamic-0" style="display: none" name="tr-search-dynamic">
+											<td>
+												<label class="form-label text-secondary">Dynamic-0</label>
+											</td>
+											<td>
+												<select id="cbo-search-dynamic-0" name="search-field" class="form-control">
+													<option value="" dat-county-index="" dat-state-index="">- select -</option>
+													<option value="3" dat-row-index="0" dat-row-name="Search Type" dat-county-index="26550" style="display: none">Civil And Family Case Records</option>
+													<option value="0" dat-row-index="0" dat-row-name="Search Type" dat-county-index="26550" style="display: none">Criminal Case Records</option>
+													<option value="4" dat-row-index="0" dat-row-name="Search Type" dat-county-index="26550" style="display: none">Justice Of The Peace Case Records</option>
+													<option value="2" dat-row-index="0" dat-row-name="Search Type" dat-county-index="26550" style="display: none">Magistrate Case Records</option>
+													<option value="1" dat-row-index="0" dat-row-name="Search Type" dat-county-index="26550" style="display: none">Probate Case Records</option>
+													<option value="9" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">All County Courts</option>
+													<option value="1" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">All JP And County Courts</option>
+													<option value="2" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">All JP Courts</option>
+													<option value="10" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">County Court At Law #1</option>
+													<option value="11" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">County Court At Law #2</option>
+													<option value="12" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">County Criminal Court #1</option>
+													<option value="13" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">County Criminal Court #2</option>
+													<option value="14" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">County Criminal Court #3</option>
+													<option value="15" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">County Criminal Court #4</option>
+													<option value="16" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">County Criminal Court #5</option>
+													<option value="3" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">Justice Of The Peace Pct #1</option>
+													<option value="4" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">Justice Of The Peace Pct #2</option>
+													<option value="5" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">Justice Of The Peace Pct #3</option>
+													<option value="6" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">Justice Of The Peace Pct #4</option>
+													<option value="7" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">Justice Of The Peace Pct #5</option>
+													<option value="8" dat-row-index="0" dat-row-name="Court Type" dat-county-index="26730" style="display: none">Justice Of The Peace Pct #6</option>
+													<option value="2" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">All CCL Courts</option>
+													<option value="1" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">All JP Courts</option>
+													<option value="0" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">All Probate Courts</option>
+													<option value="3" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">JP No. 1</option>
+													<option value="4" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">JP No. 2</option>
+													<option value="5" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">JP No. 3</option>
+													<option value="6" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">JP No. 4</option>
+													<option value="7" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">JP No. 5</option>
+													<option value="8" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">JP No. 6</option>
+													<option value="9" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">JP No. 7</option>
+													<option value="10" dat-row-index="0" dat-row-name="Court Type" dat-county-index="28330" style="display: none">JP No. 8</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-dynamic-1" style="display: none" name="tr-search-dynamic">
+											<td>
+												<label class="form-label text-secondary">Dynamic-1</label>
+											</td>
+											<td>
+												<select id="cbo-search-dynamic-1" name="search-field" class="form-control">
+													<option value="" dat-county-index="" dat-state-index="">- select -</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-dynamic-2" style="display: none" name="tr-search-dynamic">
+											<td>
+												<label class="form-label text-secondary">Dynamic-2</label>
+											</td>
+											<td>
+												<select id="cbo-search-dynamic-2" name="search-field" class="form-control">
+													<option value="" dat-county-index="" dat-state-index="">- select -</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-dynamic-3" style="display: none" name="tr-search-dynamic">
+											<td>
+												<label class="form-label text-secondary">Dynamic-3</label>
+											</td>
+											<td>
+												<select id="cbo-search-dynamic-3" name="search-field" class="form-control">
+													<option value="" dat-county-index="" dat-state-index="">- select -</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-dynamic-4" style="display: none" name="tr-search-dynamic">
+											<td>
+												<label class="form-label text-secondary">Dynamic-4</label>
+											</td>
+											<td>
+												<select id="cbo-search-dynamic-4" name="search-field" class="form-control">
+													<option value="" dat-county-index="" dat-state-index="">- select -</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-dynamic-5" style="display: none" name="tr-search-dynamic">
+											<td>
+												<label class="form-label text-secondary">Dynamic-5</label>
+											</td>
+											<td>
+												<select id="cbo-search-dynamic-5" name="search-field" class="form-control">
+													<option value="" dat-county-index="" dat-state-index="">- select -</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-dynamic-6" style="display: none" name="tr-search-dynamic">
+											<td>
+												<label class="form-label text-secondary">Dynamic-6</label>
+											</td>
+											<td>
+												<select id="cbo-search-dynamic-6" name="search-field" class="form-control">
+													<option value="" dat-county-index="" dat-state-index="">- select -</option>
+													<option value="0" dat-row-name="Case Type" dat-county-index="26730" style="display: none">JP And County Courts</option>
+													<option value="1" dat-row-name="Case Type" dat-county-index="26730" style="display: none">District Courts</option>
+												</select>
+											</td>
+										</tr>
+										<tr id="tr-search-start-date">
+											<td>
+												<label class="form-label text-secondary">Start Date</label>
+											</td>
+											<td>
+												<input id="tbx-search-startdate" name="search-field" type="date" class="form-control">
+											</td>
+										</tr>
+										<tr id="tr-search-end-date">
+											<td>
+												<label class="form-label text-secondary">End Date</label>
+											</td>
+											<td>
+												<input id="tbx-search-enddate" name="search-field" type="date" class="form-control">
+											</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2" class="p-1">
+												<hr/>
+											</td>
+										</tr>
+										<tr>
+											<td class="p-1">
+												<button id="search-submit-button" class="btn btn-primary">
+													<i id="search-submit-icon" class="bi bi-bi bi-search" ></i>
+													<i id="search-submit-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Search
+												</button>
+											</td>
+											<td class="p-1">
+												<span id="search-submit-error-message" class="m-1 text-danger d-none">Please fill all required fields.</span>
+												<span id="search-submit-success-message" class="m-1 text-success d-none">Your search has been submitted.</span>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					
+						</div>
+						
+					</div>
+				</div>
+			</main>
+			<footer class="mastfoot mt-auto">
+				<div id="footer-copy" class="float-end">
+					<span id="footer-copy-span">(c) 2023, 2024 Legal Lead UI</span>
+				</div>
+				<div id="footer-reload" class="float-start d-none">
+					<a id="footer-reload-link" href="javascript:reloadContent()" class="text-secondary text-decoration-none">Reload</a>
+				</div>
+			</footer>
+		</div>
+		<script>
+                    let clientScriptActivated = false; 
+                         function commonClientScript() { 
+                              try { 
+                              /* user injected block */ 
+                                   } catch(err) { 
+                              console.debug(err); 
+                              } 
+                         } 
+                         if (clientScriptActivated) { 
+                              setTimeout( () => { commonClientScript(); }, 250); 
+                         } 
+
+
+		</script>
+		<script name="search-form-js">
+                         let jsSearchForm = { 
+                              attributes: { 
+                              name: "style", 
+                              hide: "display: none", 
+                              block: "display: block" 
+                              }, 
+							  fields: [],
+                              controls : { 
+                              state: "#cbo-search-state", 
+                              county: "#cbo-search-county", 
+                              button: "#search-submit-button", 
+                              errormessage: "#search-submit-error-message", 
+                              rows: "#table-search tr[name = 'tr-search-dynamic']",
+                              start: "#tbx-search-startdate", 
+                              end: "#tbx-search-enddate",
+                              },
+                              serialized: function() {
+							  let js = {
+									"state": $( jsSearchForm.controls.state).find("option:selected").attr("dat-state-index"),
+									"county": {
+										"name": $( jsSearchForm.controls.county).find("option:selected").attr("dat-county-index"),
+										"value": parseInt($( jsSearchForm.controls.county).val())
+									},
+									"details": [],
+									"start": Date.parse( $(jsSearchForm.controls.start).val() ),
+									"end": Date.parse( $(jsSearchForm.controls.end).val() ),
+								};
+								$( jsSearchForm.controls.rows).each(function() {
+									let $tr = $( this );
+									if( $tr.is(":not(:hidden)")) {
+										const lb = $tr.find("label").text();
+										const cboption = $tr.find("select").find("option:selected");
+										js.details.push( { "name": lb, "text": cboption.text(), "value": cboption.val() } );
+									}
+								});
+								return js;
+                              },
+							  seticon: function( isSpinning ) { 
+								const dsb = "disabled";
+								const hddn = "d-none";								
+								const icons = [ "#search-submit-icon", "#search-submit-icon-spin"];
+								const bttn = jsSearchForm.controls.button;
+								const a = isSpinning ? 0 : 1;
+								const b = isSpinning ? 1 : 0;
+								
+								$( icons[a] ).addClass( hddn );
+								$( icons[b] ).removeClass( hddn );
+								if( isSpinning ) {
+									$( bttn ).attr(dsb, dsb);
+								} else {
+									$( bttn ).removeAttr(dsb);
+								}
+							  },
+							  onsubmitclicked: function( ) {
+								const dsb = "disabled";
+								let isValid = jsSearchForm.validate();
+								if(!isValid) { return; }
+								let submission = JSON.stringify( jsSearchForm.serialized() );
+								let handler = window.jsHandler;
+								if( undefined === handler || null === handler || !(handler) ) { return; }
+								jsSearchForm.seticon( true );
+								var arr = jsSearchForm.fields;
+								try {
+									arr.forEach(a => $(a).attr(dsb, dsb));
+									handler.submit( "dv-search-table-wrapper", submission );
+								} catch {
+									jsSearchForm.seticon( false );
+								}
+								finally {
+									arr.forEach(a => $(a).removeAttr(dsb));
+								}
+								
+							  },
+							  validate: function() {
+								const errclass = "error";
+								let emsg = $( jsSearchForm.controls.errormessage);
+								let js = jsSearchForm.serialized();
+								emsg.addClass("d-none");
+								emsg.text('Please fill all required fields.');
+								if( null == js) return false;
+								if( js.state.length == 0) {
+									$( jsSearchForm.controls.state).addClass(errclass);
+									emsg.text('State is a required field.');
+									emsg.removeClass("d-none");
+									return false;
+								}
+								$( jsSearchForm.controls.state).removeClass(errclass);
+								if( js.county.value == '0') {
+									$( jsSearchForm.controls.county).addClass(errclass);
+									emsg.text('County is a required field.');
+									emsg.removeClass("d-none");
+									return false;
+								}
+								$( jsSearchForm.controls.county).removeClass(errclass);
+								let errors = [];
+								$( jsSearchForm.controls.rows).each(function() {
+									let $tr = $( this );
+									if( $tr.is(":not(:hidden)")) {
+										const lb = $tr.find("label").text();
+										const cbo = $tr.find("select");
+										const cboption = cbo.find("option:selected");
+										if( null == cboption || null == cboption.val() || cboption.val().length == 0 ) {
+											errors.push( "#" + cbo.attr("id") );
+											cbo.addClass(errclass);
+											if (errors.length == 1) { emsg.removeClass("d-none"); }
+										}
+										else {
+											cbo.removeClass(errclass);
+										}
+									}
+								});
+								if (errors.length > 0) { return false; }
+								$( jsSearchForm.controls.start).removeClass(errclass);
+								if (isNaN(js.start)) {
+									$( jsSearchForm.controls.start).addClass(errclass);
+									emsg.text('Please enter a valid start date.');
+									emsg.removeClass("d-none");
+									return false;
+								}
+								$( jsSearchForm.controls.end).removeClass(errclass);
+								if (isNaN(js.end)) {
+									$( jsSearchForm.controls.end).addClass(errclass);
+									emsg.text('Please enter a valid end date.');
+									emsg.removeClass("d-none");
+									return false;
+								}
+								let d1 = new Date(js.start);
+								let d2 = new Date(js.end);
+								if (d2.getTime() < d1.getTime()) {
+									$( jsSearchForm.controls.end).addClass(errclass);
+									emsg.text('End date should be later than start date.');
+									emsg.removeClass("d-none");
+									return false;
+								}
+								var difference = Math.round(d2 - d1) / (1000 * 3600 * 24);
+								if (difference > 7) {
+									$( jsSearchForm.controls.end).addClass(errclass);
+									emsg.text('Date range should be (7) days or less.');
+									emsg.removeClass("d-none");
+									return false;
+								}
+								const currentDate = new Date();
+								if (d1.getTime() > currentDate.getTime() ) {
+									$( jsSearchForm.controls.start).addClass(errclass);
+									emsg.text('Start date can not be in the future.');
+									emsg.removeClass("d-none");
+									return false;
+								}
+								if (d2.getTime() > currentDate.getTime() ) {
+									$( jsSearchForm.controls.end).addClass(errclass);
+									emsg.text('End date can not be in the future.');
+									emsg.removeClass("d-none");
+									return false;
+								}
+								return true;
+							  },
+                              initialize: function() { 
+                              var jscontrols = jsSearchForm.controls; 
+                              $( jscontrols.state ).attr( "onchange", "jsSearchForm.stateChanged()" ); 
+                              $( jscontrols.county ).attr( "onchange", "jsSearchForm.countyChanged()" ); 
+								let attr_bttn_click = $( jscontrols.button ).attr( "onclick" );
+								if (undefined == attr_bttn_click || null == attr_bttn_click ) {
+									$( jscontrols.button ).attr( "onclick", "jsSearchForm.onsubmitclicked()" );
+								}
+							  $( jscontrols.state ).val("0");
+							  $( jscontrols.county ).val("0");
+							  $( jscontrols.start ).val(null);
+							  $( jscontrols.end ).val(null);
+							  var arr = jsSearchForm.fields;
+							  arr.push( jsSearchForm.controls.state );
+							  arr.push( jsSearchForm.controls.county );
+							  arr.push( jsSearchForm.controls.rows + " select" );
+							  arr.push( jsSearchForm.controls.start );
+							  arr.push( jsSearchForm.controls.end );
+							  arr.forEach(a => $(a).attr("onblur", "jsSearchForm.oncontrolleave()"));
+                              }, 
+							  oncontrolleave: function() {
+								var arr = jsSearchForm.fields;
+								arr.forEach(a => $(a).removeClass('error'));								
+								let emsg = $( jsSearchForm.controls.errormessage);
+								if (!emsg.hasClass("d-none")) { jsSearchForm.validate(); }
+							  },
+                              stateChanged: function(){ 
+                              const attrName = "dat-state-index"; 
+                              let cbo = $( jsSearchForm.controls.state ); 
+                              let cboCounty = $( jsSearchForm.controls.county ); 
+                              let rows = $( jsSearchForm.controls.rows ); 
+                              var a = jsSearchForm.attributes; 
+                              rows.attr( a.name, a.hide ); 
+                              cboCounty.val("0"); 
+                              var options = cboCounty.find("option").not("[value='0']"); 
+                              options.attr( a.name, a.hide ); 
+                              var attr = cbo.find("option:selected").attr(attrName); 
+                                   if ( null != attr && attr.length > 0) { 
+                                   let selector = "option[~0 = '~1']".replace('~0', attrName).replace('~1', attr); 
+                                   cboCounty.find(selector).removeAttr( a.name ); 
+                                   } 
+                              }, 
+                              containsCounty: function( rwselector, countyIndex ) { 
+                              let selector = $( rwselector ).find( "select" ); 
+                              if ( null == selector ) return false; 
+                              let search = "option[dat-county-index='~0']".replace('~0', countyIndex); 
+                              let children = selector.find( search ); 
+                              return children != null; 
+                              }, 
+                              countyOptionDisplay: function( rwselector, countyIndex ) { 
+                              let selector = $( rwselector ).find( "select" ); 
+                              if ( null == selector ) return; 
+                              let search = "option[dat-county-index='~0']".replace('~0', countyIndex); 
+                              let children = selector.find( search ); 
+                              var a = jsSearchForm.attributes; 
+                              var options = selector.find("option").not("[value='']"); 
+                              options.attr( a.name, a.hide ); 
+                              selector.val(''); 
+                              if ( children == null || children.length == 0 ) return; 
+                              let option1 = children.first(); 
+                              let groupName = option1.attr("dat-row-name"); 
+                                   if (groupName == null) { groupName = "Select:" } 
+                              $( rwselector ).find( "label").text( groupName ); 
+                              children.removeAttr( a.name ); 
+                              $( rwselector ).removeAttr( a.name ); 
+                              }, 
+                              countyChanged: function(){ 
+                              var a = jsSearchForm.attributes; 
+                              let cbo = $( jsSearchForm.controls.county ); 
+                              let countyId = cbo.val(); 
+                              let rows = $( jsSearchForm.controls.rows ); 
+                              rows.attr( a.name, a.hide ); 
+                                   rows.each( function( rw ) { 
+                                   let rowid = "#" + $(this).attr("id"); 
+                                   let hasCounty = jsSearchForm.containsCounty( rowid, countyId ); 
+                                        if ( hasCounty ) { 
+                                        // set options 
+                                        jsSearchForm.countyOptionDisplay( rowid, countyId ); 
+                                        } 
+                                   }); 
+                              } 
+                         } 
+                    
+					jsSearchForm.initialize(); 
+
+					
+					function showLogout() {
+						let bttn = "#btn-my-account-logout-show";
+						$( bttn ).click();
+						return null;
+					}
+		</script>
+	<!-- script: verify-and-post -->
+	<!-- script: account-re-authenticate -->
+</body></html>

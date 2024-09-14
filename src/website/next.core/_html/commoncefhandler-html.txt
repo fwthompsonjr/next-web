@@ -1,0 +1,5 @@
+	<script type="text/javascript">
+		try {
+			CefSharp.BindObjectAsync("jsHandler", "jsHandler");
+		} catch {}		
+	</script>

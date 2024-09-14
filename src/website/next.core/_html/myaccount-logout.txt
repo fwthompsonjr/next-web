@@ -1,0 +1,24 @@
+<!-- Logout Modal -->
+<!-- Button trigger modal -->
+<button id="btn-my-account-logout-show" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#my-account-logout-modal">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="my-account-logout-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="my-account-logout-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5 text-muted" id="my-account-logout-label">Logout</h1>
+            <button id="my-account-logout-x-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-dark">
+            Are you sure you want to log out?
+        </div>
+        <div class="modal-footer">
+            <button id="my-account-logout-bttn-close" type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="my-account-logout-bttn" type="button" class="btn btn-primary" onclick="verifyAndPost( 'user', 'logout')">Confirm</button>
+        </div>
+    </div>
+  </div>
+</div>

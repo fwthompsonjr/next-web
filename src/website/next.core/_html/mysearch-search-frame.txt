@@ -1,0 +1,35 @@
+<div id="dv-subcontent-search" name="subcontent-search" class="card">
+	<div id="dv-subcontent-search-card-body" name="subcontent-search-body" class="card-body">
+		<h5 class="card-title text-start">Search</h5>
+		<div class="row">
+			<div id="dv-search-table-wrapper" name="search-wrapper" class="table-responsive">
+				<table id="table-search" name="search-table" class="m-2 w-75 rounded border-secondary">
+					<colgroup>
+						<col style="width: 120px;">
+						<col>
+					</colgroup>
+					<tfoot>
+						<tr>
+							<td colspan="2" class="p-1">
+								<hr/>
+							</td>
+						</tr>
+						<tr>
+							<td class="p-1">
+								<button id="search-submit-button" class="btn btn-primary">
+									<i id="search-submit-icon" class="bi bi-bi bi-search" ></i>
+									<i id="search-submit-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Search
+								</button>
+							</td>
+							<td class="p-1">
+								<span id="search-submit-error-message" class="m-1 text-danger d-none">Please fill all required fields.</span>
+								<span id="search-submit-success-message" class="m-1 text-success d-none">Your search has been submitted.</span>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>			
+</div>
+				

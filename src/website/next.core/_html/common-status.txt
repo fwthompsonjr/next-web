@@ -1,0 +1,38 @@
+[
+	{
+		"id": 1,
+		"name": "Loading",
+		"message": "Reading application configuration",
+		"color": "Gray"
+	},
+	{
+		"id": 10,
+		"name": "Ready",
+		"message": "",
+		"color": "ForestGreen"
+	},
+	{
+		"id": 20,
+		"name": "Error",
+		"message": "An error occurred during application processing.",
+		"color": "Red"
+	},
+	{
+		"id": 30,
+		"name": "Submitting",
+		"message": "Sending form data to api server.",
+		"color": "Mango"
+	},
+	{
+		"id": 40,
+		"name": "Failed",
+		"message": "Data transmission failed. Please check form values and try again.",
+		"color": "Crimson"
+	},
+	{
+		"id": 50,
+		"name": "Ready",
+		"message": "Data transmission succeeded.",
+		"color": "ForestGreen"
+	}
+]

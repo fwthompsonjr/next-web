@@ -1,0 +1,98 @@
+
+					<div id="dv-subcontent-history" name="subcontent-history" class="subcontent card d-none w-75">
+						<div class="card-body">
+							
+							<h5 class="row d-flex justify-content-between">
+								<div class="col-9">Search History</div>
+								<div class="col-2">
+									<button id="bttn-active-searches-filter" 
+									title="Filter By Status"
+									onclick="jssearchpager.toggle_filter()"
+									name="search-history-filter" class="btn btn-outline-primary">
+										<i class="bi bi-filter-circle"></i>
+									</button>
+								</div>
+							</h5>
+
+							<div id="dv-search-history-filter" class="row d-flex justify-content-between d-none">
+								<div class="col-3">
+									<h5 class="p-2 text-start">
+										<span style="position: relative; top: 5px;" >Filter:</span>
+										<span id="span-search-history-filter-count" style="position: relative; top: 5px; color: #555"></span>
+									</h5>
+								</div>
+								<div class="col-8 p-2">
+									<select id="cbo-search-history-filter" 
+										onchange="jssearchpager.apply_history_filter()"
+										class="form-control text-secondary">
+										<option value="" selected='selected'>- All -</option>
+										<option value="Completed">Completed</option>
+										<option value="Processing">Processing</option>
+										<option value="Purchased">Purchased</option>
+										<option value="Downloaded">Downloaded</option>
+										<option value="Error">Error</option>
+									</select>
+								</div>
+							</div>
+							<table automationId="search-history-table" name="search-dt-table">
+								<colgroup>
+									<col name="requested-date" />
+									<col name="state-abbr" style="width: 50px" />
+									<col name="county-name" style="width: 100px" />
+									<col name="begin-date" style="width: 75px" />
+									<col name="ending-date" style="width: 75px" />
+									<col name="search-status" style="width: 50px" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th style="padding-left: 3px;">Request Date</th>
+										<th style="padding-left: 3px;">State</th>
+										<th style="padding-left: 3px;">County</th>
+										<th style="padding-left: 3px;">Starting</th>
+										<th style="padding-left: 3px;">Ending</th>
+										<th style="padding-left: 3px;">Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id="tr-subcontent-history-data-template" style="display: none">
+										<td class="text-start">
+											<a title="View" name="link-show-details" href="javascript:jssearchpager.show_preview( '~0' )">~1</a>
+										</td>
+										<td><span name="state-abbr">~2</span></td>
+										<td><span name="county-name">~3</span></td>
+										<td class="text-end"><span name="begin-date">~4</span></td>
+										<td class="text-end"><span name="ending-date">~5</span></td>
+										<td class="text-end"><span name="search-status">~6</span></td>
+									</tr>
+									<tr id="tr-subcontent-history-no-data">
+										<td colspan="6">
+										<span name="no-data">No Records Found</span></td>
+									</tr>
+								</tbody>
+								<tfoot class="m-1 d-none">
+									<tr id="tr-subcontent-history-pager">
+										<td colspan="4" class="p-2">
+											<select id="cbo-subcontent-history-pager" onchange="jssearchpager.set_page(0)" class="form-control text-secondary">
+												<option selected value="0">Page 1: 1 to 10</option>
+												<option value="1">Page 2: 11 to 20</option>
+											</select>
+										</td>
+										<td id="td-subcontent-history-record-count" class="text-end text-secondary" colspan="2">
+											Records: 12
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<div class="card-footer">
+							<div id="frm-search-history-error-message" class="d-none">
+								<!-- Error messages -->
+							</div>
+							<button id="frm-search-history-submit-button" 
+								class="btn btn-primary"
+								data-bs-toggle="modal" data-bs-target="#my-search-preview-modal">
+								<i id="frm-search-history-icon" class="bi bi-search" ></i>
+								<i id="frm-search-history-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Preview / Purchase
+							</button>
+						</div>
+					</div>

@@ -1,0 +1,47 @@
+<html><head>
+		<!-- script: common-cef-handler -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: error</title>
+		<!-- block: common-headings -->
+		<link rel="stylesheet" name="cover-css" href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css" />
+		<!-- common styles -->	
+		<link rel="stylesheet" name="base" href="css/base.css" />	
+		<link rel="stylesheet" name="errorbox" href="css/error.css" />	
+	</head>
+	<body class="text-center">
+		<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+			<header class="masthead mb-auto" style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+				<div class="inner">
+					<!-- block: common-mast-heading -->
+				</div>
+			</header>
+			<main role="main" class="inner cover">
+				<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+					<div id="dv-subcontent-error" name="subcontent-error" class="subcontent active">
+						<div id="errorbox">
+							<div class="errorbox">
+								<div class="errorbox-callout">
+									<i class="bi bi-exclamation-octagon icon-size text-danger"></i>
+								</div>
+								<h1 id="errorbox-error-code" class="text-danger">404</h1>
+								<h2 id="errorbox-error-text" class="text-secondary">Page Not Found</h2>
+								<p id="errorbox-error-text-description">Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<script>
+
+	const pagenames = [ "home" ];
+
+	function returnToPage( name ) {
+		if (pagenames.indexOf( name ) < 0 ) { return; }
+	}		
+	
+		</script>
+</body></html>

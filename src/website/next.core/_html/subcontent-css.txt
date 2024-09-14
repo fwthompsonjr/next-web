@@ -1,0 +1,59 @@
+<style name="subcontent-css">
+
+			div.subcontent {
+				width: 50%; 
+				min-width: 400px;
+				max-width: 1200px;
+                margin-bottom: 20px;
+				display: none;
+			}
+			
+			div.subcontent.active {
+				display: block;
+			}
+
+			div[name="subcontent-home-bullet-list"] {
+				width: 50%; 
+				margin-left: 35%;
+				text-align: left;
+				justify-content: left;
+			}
+			
+
+			div[name="main-content"] {
+				width: 70%; 
+				min-width: 800px;
+				max-width: 1200px;
+			}		
+
+			div[name="main-content"] div.card {
+				height: 95%;
+				min-height: 560px;
+			}
+
+			div[name="subcontent-home"],
+			div[name="subcontent-profile"],
+			div[name="subcontent-permissions"],
+			div[name="subcontent-password"] {
+				text-align: left;
+				justify-content: left;
+				margin-bottom: 20px;
+				margin-left: 20px;
+			}
+
+			
+			div[name="subcontent-permissions"] .form-check-input, 
+			div[name="subcontent-permissions"] .list-group,
+			div[name="subcontent-permissions"] .list-group-item {
+				background-color: transparent;
+				border-color: #555;
+				color: ghostwhite;
+
+			}
+
+			#dv-subcontent-permissions-container {
+				width: 85%;
+				margin-left: 25px;
+			}
+
+</style>

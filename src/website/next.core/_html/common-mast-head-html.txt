@@ -1,0 +1,5 @@
+
+			<h3 class="masthead-brand">
+				<i class="bi bi-bank2"></i>
+				<span>Legal Lead UI</span>
+			</h3>

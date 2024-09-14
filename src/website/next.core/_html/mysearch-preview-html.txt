@@ -1,0 +1,89 @@
+<!-- Search Preview Modal -->
+<!-- Modal -->
+<div class="modal fade" id="my-search-preview-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="my-search-preview-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5 text-muted" id="my-search-preview-label">Preview Or Purchase</h1>
+            <button id="my-search-preview-x-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-dark">
+            <table automationId="search-preview-table" class="text-dark">
+				<colgroup>
+					<col name="case-number" />
+					<col name="case-type" style="width: 75px" />
+					<col name="court" style="width: 75px" />
+					<col name="date-filed" style="width: 75px" />
+					<col name="user-name" style="width: 75px" />
+				</colgroup>
+				<thead>
+					<tr name="requested-date">
+						<th style="padding-left: 3px;">Request Date</th>
+						<td colspan="4">
+						<span name="requested-date">- n/a -</span>
+						<span class="d-none" name="search-uuid">- n/a -</span>
+						</td>
+					</tr>
+					<tr name="state-abbr">
+						<th style="padding-left: 3px;">State</th>
+						<td colspan="4"><span name="state-abbr">- n/a -</span></td>
+					</tr>
+					<tr name="county-name">
+						<th style="padding-left: 3px;">County</th>
+						<td colspan="4"><span name="county-name">- n/a -</span></td>
+					</tr>
+					<tr name="begin-date">
+						<th style="padding-left: 3px;">Starting</th>
+						<td colspan="4"><span name="begin-date">- n/a -</span></td>
+					</tr>
+					<tr name="ending-date">
+						<th style="padding-left: 3px;">Ending</th>
+						<td colspan="4"><span name="ending-date">- n/a -</span></td>
+					</tr>
+					<tr name="search-status">
+						<th style="padding-left: 3px;">Status</th>
+						<td colspan="4"><span name="search-status">- n/a -</span></td>
+					</tr>
+					<tr>
+						<th style="padding-left: 3px;">Case Number</th>
+						<th style="padding-left: 3px;">Case Type</th>
+						<th style="padding-left: 3px;">Court</th>
+						<th style="padding-left: 3px;">Date Filed</th>
+						<th style="padding-left: 3px;">Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="tr-subcontent-preview-data-template" style="display: none">
+						<td style="padding-left: 3px;"><span name="case-number">~1</span></td>
+						<td style="padding-left: 3px;"><span name="case-type">- n/a -</span></td>
+						<td style="padding-left: 3px;"><span name="court">~3</span></td>
+						<td style="padding-left: 3px;"><span name="date-filed">~4</span></td>
+						<td style="padding-left: 3px;"><span name="user-name">~5</span></td>
+					</tr>
+					<tr id="tr-subcontent-preview-no-data">
+						<td colspan="5">
+						<span name="no-data">No Records Found</span></td>
+					</tr>
+				</tbody>
+				<tfoot class="m-1 d-none">
+					<tr id="tr-subcontent-preview-pager">
+						<td colspan="3" class="p-2">
+							<select id="cbo-subcontent-preview-pager" onchange="jssearchpager.set_page(2)" class="form-control text-secondary">
+								<option selected value="0">Page 1: 1 to 10</option>
+								<option value="1">Page 2: 11 to 20</option>
+							</select>
+						</td>
+						<td id="td-subcontent-preview-record-count" class="text-end text-secondary" colspan="2">
+							Records: 12
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+        </div>
+        <div class="modal-footer">
+            <button id="my-search-preview-bttn-close" type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="my-search-preview-bttn" type="button" class="btn btn-primary" onclick="jssearchpager.get_invoice()">Purchase</button>
+        </div>
+    </div>
+  </div>
+</div>

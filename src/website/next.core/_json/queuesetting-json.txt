@@ -1,0 +1,5 @@
+{
+"name": "legallead.reader.service",
+"folder": "_ll-applications",
+"isEnabled": true
+}
