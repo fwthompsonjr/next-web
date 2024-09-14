@@ -264,6 +264,8 @@ namespace next.core.implementations
             new() { Index = 600, Name = "mailbox-base-html", Content = Properties.Resources.mailbox_base_html },
             new() { Index = 700, Name = "viewhistory-base-html", Content = Properties.Resources.viewhistory_base_html },
             new() { Index = 800, Name = "failed-purchase-html", Content = Properties.Resources.invoice_failure_html },
+            new() { Index = 900, Name = "myaccount-html", Content = Properties.Resources.myaccount_home_html },
+            new() { Index = 1000, Name = "mysearch-html", Content = Properties.Resources.mysearch_base_html },
         };
         private const string CssBaseLink = "<link rel=\"stylesheet\" name=\"base\" href=\"css/base.css\" />";
         private const string CssBootStrapLink = "<link rel=\"stylesheet\" href=\"bootstrap.min.css\" />";
@@ -314,10 +316,10 @@ namespace next.core.implementations
             { CssMyAccountInclude, Properties.Resources.myaccount_css },
             { CssMyAccountSubContent, Properties.Resources.subcontent_css },
             { CssMyActiveSearchContent, Properties.Resources.mysearchactive_css },
-            { HtmAccountHomeInclude, Properties.Resources.myaccount_home_html },
+            { HtmAccountHomeInclude, Properties.Resources.myaccounthome_html },
             { HtmAccountPasswordInclude, Properties.Resources.myaccount_password_html },
-            { HtmAccountProfileInclude, Properties.Resources.myaccount_profile_html },
-            { HtmAccountPermissionsInclude, Properties.Resources.myaccount_permissions_html },
+            { HtmAccountProfileInclude, Properties.Resources.myaccountprofile_html },
+            { HtmAccountPermissionsInclude, Properties.Resources.myaccountpermissions_html },
             { HtmAccountLogoutInclude, Properties.Resources.myaccount_logout },
             { HtmAccountReAuthenticate, Properties.Resources.common_authenticate },
             { HtmMySearchInclude, Properties.Resources.mysearch_search_html },

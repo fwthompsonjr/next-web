@@ -1061,6 +1061,64 @@ namespace next.core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///					&lt;div id=&quot;dv-subcontent-home&quot; name=&quot;subcontent-home&quot; class=&quot;subcontent active card&quot;&gt;
+        ///						&lt;div class=&quot;card-body&quot;&gt;
+        ///							&lt;h5 class=&quot;card-title&quot;&gt;Account Details&lt;/h5&gt;	
+        ///							&lt;div class=&quot;row&quot;&gt;
+        ///								&lt;div class=&quot;col-4 text-info text-start&quot;&gt;User Name:&lt;/div&gt;
+        ///								&lt;div class=&quot;col-1 text-info&quot;&gt;&lt;/div&gt;
+        ///								&lt;div id=&quot;account-user-name&quot; class=&quot;col-7 text-secondary text-start&quot;&gt; - &lt;/div&gt;
+        ///							&lt;/div&gt;
+        ///							&lt;div class=&quot;row&quot;&gt;
+        ///								&lt;div class=&quot;col-4 text-info text-start&quot;&gt;Email:&lt;/div&gt;
+        ///								&lt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string myaccounthome_html {
+            get {
+                return ResourceManager.GetString("myaccounthome_html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///					&lt;div id=&quot;dv-subcontent-profile&quot; name=&quot;subcontent-profile&quot; class=&quot;subcontent card&quot;&gt;
+        ///						&lt;div id=&quot;dv-subcontent-profile-row-00&quot; class=&quot;row d-none w-75&quot;&gt;
+        ///							&lt;div id=&quot;dv-subcontent-profile-success&quot; class=&quot;alert alert-success d-flex align-items-center&quot; role=&quot;alert&quot;&gt;
+        ///								&lt;div class=&quot;row&quot;&gt;
+        ///                                    &lt;i class=&quot;bi bi-check-circle-fill&quot;&gt;&lt;/i&gt;
+        ///								    &lt;span&gt;Your account information has been updated successfully&lt;/span&gt;
+        ///								&lt;/div&gt;
+        ///							&lt;/div&gt;
+        ///						&lt;/div&gt;
+        ///				 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string myaccountpermissions_html {
+            get {
+                return ResourceManager.GetString("myaccountpermissions_html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///					&lt;div id=&quot;dv-subcontent-profile&quot; name=&quot;subcontent-profile&quot; class=&quot;subcontent card&quot;&gt;
+        ///						&lt;div id=&quot;dv-subcontent-profile-row-00&quot; class=&quot;row d-none w-75&quot;&gt;
+        ///							&lt;div id=&quot;dv-subcontent-profile-success&quot; class=&quot;alert alert-success d-flex align-items-center&quot; role=&quot;alert&quot;&gt;
+        ///								&lt;div class=&quot;row&quot;&gt;
+        ///                                    &lt;i class=&quot;bi bi-check-circle-fill&quot;&gt;&lt;/i&gt;
+        ///								    &lt;span&gt;Your account information has been updated successfully&lt;/span&gt;
+        ///								&lt;/div&gt;
+        ///							&lt;/div&gt;
+        ///						&lt;/div&gt;
+        ///				 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string myaccountprofile_html {
+            get {
+                return ResourceManager.GetString("myaccountprofile_html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;html&gt;
         ///
         ///	&lt;head&gt;
