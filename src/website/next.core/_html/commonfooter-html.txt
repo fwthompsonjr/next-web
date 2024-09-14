@@ -1,0 +1,10 @@
+
+
+      <footer class="mastfoot mt-auto">
+			<div id="footer-copy" class="float-end">
+				<span id="footer-copy-span">{0}</span>
+			</div>
+			<div id="footer-reload" class="float-start" style="display:none">
+				<a id="footer-reload-link" href="javascript:reloadContent()" class="text-secondary text-decoration-none">Reload</a>
+			</div>
+      </footer>

@@ -1,4 +1,4 @@
-﻿using legallead.desktop.entities;
+﻿using next.core.entities;
 using Microsoft.AspNetCore.Http;
 using next.web.core.extensions;
 using next.web.core.util;

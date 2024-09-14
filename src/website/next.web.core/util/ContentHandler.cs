@@ -1,5 +1,5 @@
-﻿using legallead.desktop.entities;
-using legallead.desktop.interfaces;
+﻿using next.core.entities;
+using next.core.interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using next.web.core.interfaces;
 

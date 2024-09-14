@@ -1,0 +1,143 @@
+<html>
+
+	<head>
+		<!-- script: common-cef-handler -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: home</title>
+		<!-- block: common-headings -->
+		<!-- common styles -->	
+		<link rel="stylesheet" name="base" href="css/base.css" />
+		<style name="subcontent-css">
+
+			div.subcontent {
+				width: 50%; 
+				min-width: 400px;
+				max-width: 1200px;
+                margin-bottom: 20px;
+				display: none;
+			}
+			
+			div.subcontent.active {
+				display: block;
+			}
+
+			div[name="subcontent-home-bullet-list"] {
+				width: 50%; 
+				margin-left: 35%;
+				text-align: left;
+				justify-content: left;
+			}
+			
+
+			div[name="main-content"] {
+				width: 70%; 
+				min-width: 800px;
+				max-width: 1200px;
+			}
+
+			div[name="subcontent-login"],
+			div[name="subcontent-register"] {
+				text-align: left;
+				justify-content: left;
+				margin-bottom: 20px;
+				margin-left: 20px;
+			}
+
+		</style>
+	</head>
+
+	<body class="text-center">
+	<!-- component: account-re-authenticate -->
+	<!-- component: my-account-logout -->
+
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header 
+		class="masthead mb-auto" 
+		style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+		<div class="inner">
+			<!-- block: common-mast-heading -->
+			<nav id="masthead-nav-menu" class="nav nav-masthead justify-content-center">
+				<a name="subcontent-login" class="nav-link active" href="javascript:setDisplay('login')">Login</a>
+				<a name="subcontent-register" class="nav-link" href="javascript:setDisplay('register')">Register</a>
+				<a name="subcontent-home" class="nav-link" href="javascript:setDisplay('home')">About</a>
+			</nav>
+		</div>
+      </header>
+
+      <main role="main" class="inner cover">
+		<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+			<div id="dv-subcontent-home" name="subcontent-home"  class="subcontent">
+				<p>Welcome form</p>
+            </div>
+			
+			<div id="dv-subcontent-login" name="subcontent-login"  class="subcontent active">
+				<p>Login form</p>
+            </div>
+			
+			<div id="dv-subcontent-register" name="subcontent-register"  class="subcontent">
+				<p>Registration form</p>			
+            </div>
+		</div>
+      </main>
+
+      <!-- block: common-footer -->
+
+    </div>
+
+	<script>
+	const actv = "active";
+	const names = [ "home", "login", "register" ];
+	
+	function showLogout() {
+		let bttn = "#btn-my-account-logout-show";
+		$( bttn ).click();
+		return null;
+	}
+
+	function setDisplay( name ) {
+			if (names.indexOf( name ) < 0 ) { return; }
+			setActiveDiv(name);
+			const themenu = document.getElementById("masthead-nav-menu");
+			let thelinks = themenu.getElementsByTagName("a");
+
+			for(let i = 0; i < thelinks.length; i++) {
+				let a = thelinks[i];
+				const aname = a.getAttribute("name");
+				if( undefined === aname || null === aname ) { continue; }
+				if ( aname.indexOf(name) >= 0 ) {
+					a.classList.add(actv);
+				} else {
+					a.classList.remove(actv);
+				}
+			}			
+		}
+
+	function setActiveDiv( name ) {
+		if (names.indexOf( name ) < 0 ) { return; }
+		const divnames = [ "dv-subcontent-home", "dv-subcontent-login", "dv-subcontent-register" ];
+		
+		for(let i = 0; i < divnames.length; i++) {
+			const d = document.getElementById(divnames[i]);
+			if( undefined === d || null === d ) { continue; }
+			if ( divnames[i].indexOf(name) >= 0 ) {
+				d.classList.add(actv);
+			} else {
+				d.classList.remove(actv);
+			}
+		}
+	}
+		
+	/* js-include-common-reload */
+
+	</script>
+	<!-- script: home-form-validation -->
+	<!-- script: common-client-include -->
+	<!-- script: verify-and-post -->
+	<!-- script: account-re-authenticate -->
+  </body>
+
+
+</html>

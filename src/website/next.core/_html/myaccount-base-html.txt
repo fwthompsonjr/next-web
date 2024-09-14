@@ -1,0 +1,95 @@
+<html>
+
+	<head>
+		<!-- script: common-cef-handler -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: account</title>
+		<!-- block: common-headings -->
+		<!-- common styles -->	
+		<link rel="stylesheet" name="base" href="css/base.css" />
+		<!-- style: my-account-subcontent-css -->
+	</head>
+
+	<body class="text-center">
+	<!-- component: account-re-authenticate -->
+	<!-- component: my-account-logout -->
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header 
+		class="masthead mb-auto" 
+		style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+		<div class="inner">
+			<!-- block: common-mast-heading -->
+			<nav id="masthead-nav-menu" class="nav nav-masthead justify-content-center">
+				<a name="subcontent-home" class="nav-link active" href="javascript:setDisplay('home')">Home</a>
+				<a name="subcontent-profile" class="nav-link" href="javascript:setDisplay('profile')">Profile</a>
+				<a name="subcontent-permissions" class="nav-link" href="javascript:setDisplay('permissions')">Permissions</a>				
+				<div 
+							id="account-subcontent-icon" 
+							name="subcontent-icon" 
+							class="nav-link dropdown">
+								<button 
+									class="btn btn-secondary dropdown-toggle" 
+									type="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="bi bi-person-fill-check "></i>
+							  </button>
+							  <ul class="dropdown-menu">
+								<li>
+									<a id="account-dropdown-item-user-name" class="dropdown-item" href="#">
+										<i class="bi bi-person m-1"></i>
+										<span id="account-text-item-user-name"> - </span>
+									</a>
+								</li>
+								<li>
+									<a id="account-dropdown-item-user-level" class="dropdown-item" href="#">
+										<i class="bi bi-collection m-1"></i>
+										<span id="account-text-item-user-level"> - </span>
+									</a>
+								</li>
+								<li><hr class="dropdown-divider"></li>
+								<li>
+									<a	id="account-dropdown-item-password" 
+										class="dropdown-item" href="javascript:setDisplay('password')">
+										<i class="bi bi-key m-1"></i>
+										<span id="account-text-item-password">Change Password</span>
+									</a>
+								</li>
+								<li><a id="account-dropdown-item-logout" class="dropdown-item" href="javascript:showLogout()">Logout</a></li>
+							  </ul>
+						</div>
+			</nav>
+		</div>
+      </header>
+
+      <main role="main" class="inner cover">
+		<div id="dv-restriction-alert" class="alert alert-primary p-2 m-2 d-none" role="alert">
+			<i class="bi bi-exclamation-diamond"></i>
+			<span id="span-restriction-alert-message">message</span>
+		</div>
+		<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+			<p>My Account</p>
+			
+			<p>My Profile</p>
+			
+			<p>My Permissions</p>
+			
+			<p>My Password</p>
+		</div>
+      </main>
+
+      <!-- block: common-footer -->
+
+    </div>
+
+	<!-- script: my-account-navigation -->
+	<!-- script: my-account-form-validation -->
+	<!-- script: my-account-profile-valid -->
+	<!-- script: account-re-authenticate -->
+	<!-- script: common-client-include -->
+	<!-- script: verify-and-post -->
+  </body>
+
+
+</html>

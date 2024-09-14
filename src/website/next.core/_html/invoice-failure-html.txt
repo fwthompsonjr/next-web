@@ -1,0 +1,224 @@
+<html lang="en"><head>
+		<script type="text/javascript">
+                         try { 
+                         CefSharp.BindObjectAsync("jsHandler", "jsHandler"); 
+                              } catch { } 
+		</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: invoice generation failed</title>
+		
+		<!-- googleapis : fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+		
+		<!-- popper -->
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+		
+		<!-- bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+		
+		<!-- font awesome -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+		
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+		<style name="correspondence-css">
+                         html { 
+                         height: 100%; 
+                         margin: 0; 
+                         } 
+                         body { 
+                         margin-top: 10px; 
+                         background: #444; 
+                         color: white; 
+                         margin-bottom: 10px; 
+                         overflow-x: clip 
+                         } 
+                         #footer-copy { 
+                         padding-top: 10px; 
+                         } 
+                         #templates { 
+                         display: none; 
+                         } 
+                         div[name="mailbox-header"] { 
+                         margin: 10px; 
+                         } 
+                         div[name="mailbox-grid"] { 
+                         padding-left: 25px; 
+                         } 
+                         div[name="mailbox-preview"] { 
+                         overflow: auto; 
+                         } 
+                         div.mailbox { 
+                         vertical-align: text-top; 
+                         padding: 12px; 
+                         margin: 10px; 
+                         border-style: dashed; 
+                         border-color: #999; 
+                         border-width: 1px; 
+                         max-height: 800px; 
+                         overflow: auto; 
+                         } 
+                         div[name="link-mail-items-header"] { 
+                         border-style: solid; 
+                         border-color: #999; 
+                         border-width: 1px; 
+                         padding-left: 15px; 
+                         padding-top: 5px; 
+                         } 
+                         div[name="link-mail-items-header"][data-item-count="0"] { 
+                         display: block; 
+                         } 
+                         div[name="link-mail-items-header"][data-item-count="1"] { 
+                         display: none; 
+                         } 
+                         a[name="link-mail-items-template"][data-item-index="0"] { 
+                         display: none; 
+                         } 
+                         a[name="link-mail-items-template"]:not([data-item-index="0"]) { 
+                         display: block; 
+                         } 
+                         div[name="item-address-to"] { 
+                         margin-left: 15px; 
+                         } 
+                         h5[name='item-subject'] { 
+                         font-size: 16px; 
+                         font-weight: bold; 
+                         } 
+                         .box { 
+                         display: flex; 
+                         flex-flow: column; 
+                         height: 100%; 
+                         } 
+                         .box .customrow.header { 
+                         flex: 0 1 auto; 
+                         border-bottom: 1px solid #888; 
+                         margin-bottom: 5px; 
+                         } 
+                         .box .customrow.content { 
+                         flex: 1 1 auto; 
+                         } 
+                         .box .customrow.footer { 
+                         flex: 0 1 40px; 
+                         } 
+		</style>
+	</head>
+	<body class="text-center">
+		<div class="box">
+			<div class="customrow header">
+				<h3 class="masthead-brand">
+					<i class="bi bi-bank2"></i>
+					<span>Legal Lead UI</span>
+				</h3>
+			</div>
+			<div class="customrow content">
+				<div name="mailbox-header" class="text-start">
+					<h5 id="mailbox-sub-header">&nbsp;</h5>
+				</div>
+				<div name="mailbox-grid" class="row">
+					<div name="mailbox-items" class="col-4 mailbox">
+						<div id="dv-mail-item-list" name="div-mail-items" class="list-group">
+							<a name="link-mail-items-template" href="javascript:fetch_item(0)" data-item-index="1" class="list-group-item list-group-item-action">
+								<div name="item-header" class="d-flex w-100 justify-content-between">
+									<h5 name="item-subject" class="mb-1">Account</h5>
+								</div>
+							</a>
+							<a name="link-mail-items-template" href="javascript:fetch_item(1)" data-item-index="1" class="list-group-item list-group-item-action">
+								<div name="item-header" class="d-flex w-100 justify-content-between">
+									<h5 name="item-subject" class="mb-1">Search</h5>
+								</div>
+							</a>
+							<a name="link-mail-items-template" href="javascript:fetch_item(2)" data-item-index="1" class="list-group-item list-group-item-action">
+								<div name="item-header" class="d-flex w-100 justify-content-between">
+									<h5 name="item-subject" class="mb-1" style="padding-left: 5px">Active Searches</h5>
+								</div>
+							</a>
+							<a name="link-mail-items-template" href="javascript:fetch_item(3)" data-item-index="1" class="list-group-item list-group-item-action">
+								<div name="item-header" class="d-flex w-100 justify-content-between">
+									<h5 name="item-subject" class="mb-1" style="padding-left: 5px">Search History</h5>
+								</div>
+							</a>
+							<a name="link-mail-items-template" href="javascript:fetch_item(4)" data-item-index="1" class="list-group-item list-group-item-action">
+								<div name="item-header" class="d-flex w-100 justify-content-between">
+									<h5 name="item-subject" class="mb-1">Mailbox</h5>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div id="dv-mail-item-preview" name="mailbox-preview" class="col-7 mailbox">
+						<div id="email" style="width:80%; margin: 5px; padding: 5px; font-family: Arial; font-size: 12pt">
+							<table name="header" role="presentation" border="0" cellspacing="0" width="100%">
+								<tbody>
+									<tr style="border-bottom-style: dashed">
+										<td colspan="3">
+											<!-- Heading -->
+											<h3 name="span-heading" style="border-bottom: 1px dashed">
+												<span>Invoice Generation Error</span>
+											</h3>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table name="body" role="presentation" border="0" cellspacing="0" width="100%">
+								<tbody>
+									<tr>
+										<td width="8%"></td>
+										<td name="body-line-introduction">
+											<p class="m-2 text-primary">
+												There was an error attempting to generate your requested invoice.
+											</p>
+											<hr noshade size="1" width="80%" />
+											<p class="m-2">
+												Issues of this type indicate that the search process did not complete successfully.
+											</p>
+											<br/>
+											<p class="m-2">
+												In order to address this problem, retry the 'Purchase' option.
+												If retry fails, please open a new search request with the same parameters.
+											</p>
+										</td>
+										<td width="5%"></td>
+									</tr>
+								</tbody>
+							</table>
+							<br>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="customrow footer">
+				<div id="footer-copy" class="float-center">
+					<span id="footer-copy-span">(c) 2023, 2024 Legal Lead UI</span>
+				</div>
+			</div>
+		</div>
+		<div id="templates">
+			
+
+		</div>
+		<script name="mail-box-js">
+			function fetch_item(id) {
+				const landings = [
+                    "myaccount-home",
+                    "mysearch-home",
+                    "mysearch-actives",
+                    "mysearch-history",
+                    "mailbox-home"
+				]
+				if (isNaN(id)) { return; }
+				const selected = parseInt(id);
+				if (selected < 0 || selected > landings.length) { return; }
+				const target = landings[selected];
+				let handler = window.jsHandler;
+				if (undefined === handler || null === handler || !(handler)) { return; }
+                handler.reload(target);
+                return;
+			}
+		</script>
+	
+</body></html>

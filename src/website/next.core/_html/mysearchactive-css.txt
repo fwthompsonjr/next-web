@@ -1,0 +1,55 @@
+<style name="my-active-searches">
+	#dv-main-content {
+		position: relative;
+	}
+	#cbo-my-active-searches {
+		width: 92%;
+		position: relative;
+		left: 15px;
+		background-color: #444 !important;
+	}
+	#my-active-searches-row-02-01 {
+		position: relative;
+		left: 10px;
+	}
+	#my-active-searches-row-01 div.col-5,
+	#my-active-searches-row-01 div.col-6,
+	#my-active-searches-row-02-01 {
+		max-height: 300px;
+		overflow-y: auto;
+		padding-bottom: 10px;
+	}
+	#my-active-searches-row-01 ul,
+	#my-active-searches-row-02 ul,
+	#my-active-searches-row-01 ul li,
+	#my-active-searches-row-02 ul li {
+		background-color: transparent;
+		border: 1px solid transparent;
+		color: #777;
+	}
+	#list-my-active-search-names div {
+		width: 95%;
+	}
+
+	li[name="component-template"],
+ 	tr[name="status-template"] {
+		display: none;
+	}
+	li[name='component-item'] {
+		border-bottom-color: #777 !important;
+	}
+	span[name="stage-label"],
+	span[name="status-label"] {
+		display: block;
+		width: 60%;
+		margin-left: 5px;
+	}
+	
+	span[name="stage-date"],
+	span[name="status-date"] {
+		display: block;
+		width: 35%;
+		border-left: 1px solid #777;
+		margin-right: 5px;
+	}
+</style>

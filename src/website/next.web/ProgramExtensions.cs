@@ -1,4 +1,4 @@
-﻿using legallead.desktop.interfaces;
+﻿using next.core.interfaces;
 using Microsoft.AspNetCore.Rewrite;
 using next.web.core.interfaces;
 using next.web.core.services;

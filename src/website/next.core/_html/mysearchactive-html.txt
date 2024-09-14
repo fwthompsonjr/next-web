@@ -1,0 +1,129 @@
+<html>
+
+	<head>
+		<!-- script: common-cef-handler -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: active searches</title>
+		<!-- block: common-headings -->
+		<!-- common styles -->	
+		<link rel="stylesheet" name="base" href="css/base.css" />
+		<!-- style: my-account-subcontent-css -->
+		<!-- style: my-active-searches-css -->
+	</head>
+
+	<body class="text-center">
+	<!-- component: my-account-logout -->
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header 
+		class="masthead mb-auto" 
+		style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+		<div class="inner">
+			<!-- block: common-mast-heading -->
+			<nav id="masthead-nav-menu" class="nav nav-masthead justify-content-center">
+				<a id="nvlink-subcontent-search" name="subcontent-search" class="nav-link" href="javascript:active_search.change_view('mysearch-home')">Search</a>
+				<a id="nvlink-subcontent-search" name="subcontent-search" class="nav-link active" href="javascript:active_search.change_view('mysearch-actives')">Active</a>
+				<a id="nvlink-subcontent-search-purchases" name="subcontent-purchases" class="nav-link" href="javascript:active_search.change_view('mysearch-purchases')">Purchases</a>
+			</nav>
+		</div>
+      </header>
+
+      <main role="main" class="inner cover">
+		<div id="dv-restriction-alert" class="alert alert-primary p-2 m-2 d-none" role="alert">
+			<i class="bi bi-exclamation-diamond"></i>
+			<span id="span-restriction-alert-message">message</span>
+		</div>
+		<div id="dv-main-content" name="main-content">
+            <h4>Active Searches</h4>
+			<div class="row" id="dv-active-searches-messages"></div>
+            <h5 id="heading-my-active-searches-no-content">No active searches in progress</h5>
+            <hr/>
+			<div class="row" id="my-active-searches-row-00">
+				<select id="cbo-my-active-searches" class="form-control border-secondary" onchange="active_search.combo_changed()" >
+				</select>
+			</div>
+			<div class="row p-2" id="my-active-searches-row-01">
+				<div class="col-5 border border-secondary rounded m-2">
+					<h5>Search</h5>
+					<ul class="list-group" id="list-my-active-search-names">
+						<li class="list-group-item text-start m-0 p-0">
+							<div class="d-flex justify-content-between">
+								<span>Requested Date:</span>
+								<span name="requested-date" class="text-end"> - </span>
+							</div>
+						</li>
+						<li class="list-group-item text-start m-0 p-0">
+							<div class="d-flex justify-content-between">
+								<span>Processing Start:</span>
+								<span name="start-date" class="text-end"> - </span>
+							</div>
+						</li>
+						<li class="list-group-item text-start m-0 p-0">
+							<div class="d-flex justify-content-between">
+								<span>Status:</span>
+								<span name="search-status" class="text-end"> - </span>
+							</div>
+						</li>
+						<li class="list-group-item text-start m-0 p-0">
+							<div class="d-flex justify-content-between">
+								<center style="width: 100%">
+									<button name="bttn-get-my-active-download" class="btn btn-primary w-75 m-2" onclick="active_search.get_download_invoice()">
+										<span>Purchase</span>
+									</button>
+								</center>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="col-6 border border-secondary rounded m-2">
+					<h5>Stages</h5>
+					<ul class="list-group" id="list-my-active-search-stages">
+						<li name="component-template" class="list-group-item text-start m-0 p-0">
+							<div class="d-flex justify-content-between">
+								<span name="stage-label">:</span>
+								<span name="stage-date" class="text-end"> - </span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row" id="my-active-searches-row-02">
+				<div id="my-active-searches-row-02-01" class="col-11 border border-secondary rounded m-2">
+					<h5>Status</h5>
+					<ul class="list-group" id="list-my-active-search-statuses">
+						<li name="component-template" class="list-group-item text-start m-0 p-0">
+							<div class="d-flex justify-content-between">
+								<span name="status-label">:</span>
+								<span name="status-date" class="text-end"> - </span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row d-none" id="my-active-searches-row-03">
+				<textarea id="text-my-active-searches-js">
+				
+				</textarea>
+			</div>
+		</div>
+      
+      </main>
+
+      <!-- block: common-footer -->
+
+    </div>
+	<script>
+	
+		function showLogout() {
+			let bttn = "#btn-my-account-logout-show";
+			$( bttn ).click(); 
+		}
+	</script>
+	<!-- script: common-client-include -->
+    <!-- script: my-active-searches-js -->
+  </body>
+
+
+</html>

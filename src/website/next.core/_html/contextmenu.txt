@@ -1,0 +1,20 @@
+{
+    "IsVisible": false,
+    "Items": [
+      {
+        "Name": "Home",
+        "IsDisplayed": true,
+        "IsSelected": true
+      },
+      {
+        "Name": "Error",
+        "IsDisplayed": true,
+        "IsSelected": false
+      },
+      {
+        "Name": "MyAccount",
+        "IsDisplayed": false,
+        "IsSelected": false
+      }
+    ]
+  }

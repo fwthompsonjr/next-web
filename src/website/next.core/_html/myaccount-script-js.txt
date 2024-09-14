@@ -1,0 +1,73 @@
+<script>
+	const actv = "active";
+	const names = [ "home", "profile", "permissions", "password" ];
+
+	function showLogout() {
+		let bttn = "#btn-my-account-logout-show";
+		$( bttn ).click();
+		return null;
+	}
+
+	function setDisplay( name ) {
+			if (names.indexOf( name ) < 0 ) { return; }
+			setActiveDiv(name);
+			const themenu = document.getElementById("masthead-nav-menu");
+			let thelinks = themenu.getElementsByTagName("a");
+
+			for(let i = 0; i < thelinks.length; i++) {
+				let a = thelinks[i];
+				const aname = a.getAttribute("name");
+				if (null === aname || undefined === aname) { continue; }
+				if ( aname.indexOf(name) >= 0 ) {
+					a.classList.add(actv);
+				} else {
+					a.classList.remove(actv);
+				}
+			}			
+		}
+
+	function setActiveDiv( name ) {
+		if (names.indexOf( name ) < 0 ) { return; }
+		const divnames = [ "dv-subcontent-home", "dv-subcontent-profile", "dv-subcontent-permissions", "dv-subcontent-password" ];
+		
+		for(let i = 0; i < divnames.length; i++) {
+			const d = document.getElementById(divnames[i]);
+			if(null === d || undefined === d) { continue; }
+			if ( divnames[i].indexOf(name) >= 0 ) {
+				d.classList.add(actv);
+			} else {
+				d.classList.remove(actv);
+			}
+		}
+	}
+		
+	/* js-include-common-reload */
+	
+	function profileComboBoxChanged() {
+		const hidden = "d-none";
+		const cboxid = "#cbo-profile-group";
+		const find = "~0";
+		const dvprefix = "div[name='dv-subcontent-profile-~0']";
+		const dvparent = "#dv-subcontent-profile";
+		const divnames = [ 
+			dvprefix.replace(find, "personal"), 
+			dvprefix.replace(find, "address"), 
+			dvprefix.replace(find, "phone"), 
+			dvprefix.replace(find, "email")  ];
+		for(var i = 0; i < divnames.length; i++) {
+			var dv = divnames[i];
+			$( dv ).addClass(hidden);
+		}
+		var current = $(cboxid).val();
+		if (null === current || current.length === 0) {
+			$( dvparent ).find("div.card-footer").hide();
+			return;
+		}
+		var target = dvprefix.replace(find, current);
+		$( target ).removeClass(hidden);
+		$( dvparent ).find("div.card-footer").show();
+		
+	}
+		
+	profileComboBoxChanged()
+	</script>

@@ -1,0 +1,24 @@
+<script name="invoice-form-js">
+
+let jsinvoicing = { 
+		close_invoice: function() {
+			var dv_checkout = document.getElementById('checkout');
+			if (undefined == dv_checkout || null == dv_checkout) {
+				let handler = window.jsHandler;
+				if( undefined === handler || null === handler || !(handler) ) { return; }
+				finder = "span[automationid='search-uuid']";
+				var obj = JSON.stringify( { "id": $( finder ).text() });
+				handler.fetch( "frm-search-make-payment", obj);
+			}	
+		},
+		close_invoice_on_load: function() {
+			var dv_checkout = document.getElementById('payment-form');
+			if (undefined == dv_checkout || null == dv_checkout) {
+				setTimeout( jsinvoicing.close_invoice(), 45000);
+			} else {
+				$("#frm-invoice-submit-button").hide();
+			}
+		}
+    } 
+jsinvoicing.close_invoice_on_load();
+</script>

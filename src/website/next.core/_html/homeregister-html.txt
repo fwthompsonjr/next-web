@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Register</h5>
+        <form id="form-register" name="form-register">
+            <div class="mb-3">
+                <label for="register-username" class="form-label">User Name:</label>
+                <input  type="text" class="form-control" 
+                        id="register-username" name="username" 
+                        maxlength="255" minlength="8"
+                        aria-describedby="register-username-help">
+                <div id="register-username-help" class="text-secondary help-text">
+                    Provide user name.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="register-email" class="form-label">Email:</label>
+                <input  type="email" class="form-control" 
+                        id="register-email" name="register-email" 
+                        maxlength="255" minlength="8"
+                        aria-describedby="register-email-help">
+                <div id="register-email-help" class="text-secondary help-text">
+                    Provide an email address.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="register-password" class="form-label">Password</label>
+                <input  type="password" class="form-control" 
+                        id="register-password" name="register-password" 
+                        maxlength="255" minlength="8"
+                        aria-describedby="register-password-help">
+                <div id="register-password-help" class="text-secondary help-text">
+                    Provide a strong password.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="register-password-confirmation" class="form-label">Confirm Password</label>
+                <input  type="password" class="form-control" 
+                        id="register-password-confirmation" name="register-password-confirmation"
+                        maxlength="255" minlength="8"
+                        aria-describedby="register-password-confirmation-help">
+                <div id="register-password-confirmation-help" class="text-secondary help-text">
+                    Confirm password.
+                </div>
+            </div>
+            <button id="form-register-submit" type="button" class="btn btn-primary">Create Account</button>
+        </form>
+    </div>
+</div>

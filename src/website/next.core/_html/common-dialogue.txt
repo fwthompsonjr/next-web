@@ -1,0 +1,61 @@
+<!-- Reauthorize Modal -->
+<!-- Reauthorize: trigger modal -->
+<button id="btn-account-authorize-show" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#account-authorize-modal">
+  Launch static backdrop modal
+</button>
+
+<!-- Reauthorize: Modal Content -->
+<div class="modal fade" id="account-authorize-modal" data-bs-backdrop="static"
+        data-bs-keyboard="false" tabindex="-1" 
+        aria-labelledby="account-authorize-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5 text-muted" id="account-authorize-label">Session Expired</h1>
+            <button id="account-authorize-x-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-dark">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            <span class="text-dark">Your session has timed out.</span>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <form id="form-re-authorize" name="form-re-authorize">
+                                <span type="text" style="display:none" id="spn-user-session-status">-unset-</span>
+                                <div class="mb-3">
+                                    <label for="form-re-authorize-username" class="form-label text-dark">User Name / Email:</label>
+                                    <input type="text" readonly="readonly" class="form-control" id="form-re-authorize-username" name="username" aria-describedby="form-re-authorize-username-help">
+                                    <div id="form-re-authorize-username-help" class="text-secondary help-text">
+                                        Provide user-name or email address.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="form-re-authorize-password" class="form-label text-dark">Password</label>
+                                    <input type="password" class="form-control" name="login-password" id="form-re-authorize-password">
+                                    <div id="form-re-authorize-password-help" class="text-secondary help-text" aria-describedby="form-re-authorize-password-help">
+                                        Provide password.
+                                    </div>
+                                </div>
+                                <button id="form-re-authorize-submit" type="button" class="btn btn-primary">
+                                    <i id="form-re-authorize-icon" class="bi bi-box-arrow-in-right" ></i>
+                                    <i id="form-re-authorize-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>
+                                    Sign In</button>
+                    
+                                <div id="form-re-authorize-error-message" class="form-group d-none">
+                                    <!-- Error messages -->
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+</div>

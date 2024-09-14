@@ -1,0 +1,23 @@
+{
+  "Initial_View": "introduction",
+  "Permissions_API": "http://api.legallead.co/",
+  "api.permissions": {
+    "destination": "remote",
+    "remote": "http://api.legallead.co/",
+    "local": "https://localhost:44345/"
+  },
+  "landings": {
+    "search": "mysearch"
+  },
+  "user": {
+    "session_timeout": 20
+  }
+  "stripe":{
+    "key": "sk_test_51LCZucDhgP60CL9xtS9RSEC5IhGsKkZwnNxwFwpHbDHLLBLvB87uICAJB5fVZNyqEHNpI9ZbLYwFFKXPNnbgucs200OOT3UvbK"
+  },
+  "queue": {
+    "name": "legallead.reader.service",
+    "folder": "_ll-applications",
+    "isEnabled": true
+  }
+}

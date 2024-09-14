@@ -1,0 +1,82 @@
+<script name="verify-and-post">
+
+function verifyAndPost(pagename, buttonname) { 
+    const domain = "http://internal.legalead.com/" 
+    const target = "".concat(pagename, "/", buttonname); 
+    const keyname = "".concat(pagename, "-", buttonname); 
+    const destination = "".concat(domain, target);
+    const nonauthorization = [ "user", "home" ];
+    if ( pagename == 'user' && buttonname == 'logout' ) {
+        let handler = window.jsHandler;
+	    if( undefined === handler || null === handler || !(handler) ) { 
+            return;
+        }
+        handler.logoutUser();
+        return;
+    }
+    if (buttonname.indexOf('logout') >= 0) {
+        window.location.href = destination;
+        return;
+    }
+    let isvalid = true; 
+        let prms = { 
+        "formname" : null, 
+        "formid" : null, 
+        "frm": null 
+        };
+        if(nonauthorization.find(x => x == pagename) == null) {
+            let sts = document.getElementById('spn-user-session-status');
+            let attrSts = sts == null ? null : sts.getAttribute('value');
+            if (null !== attrSts && attrSts.indexOf('-') >= 0) {
+                document.getElementById('btn-account-authorize-show').click();
+                return;
+            }
+        }
+        switch (keyname) { 
+        case "home-form-login-submit": 
+        prms.formname = formNames[0]; 
+        prms.formid = "#" + prms.formname; 
+        prms.frm = $(prms.formid); 
+        prms.frm.validate(); 
+        isvalid = prms.frm.valid(); 
+            if( !isvalid ) { return; } 
+        break; 
+        case "home-form-register-submit": 
+        prms.formname = formNames[1]; 
+        prms.formid = "#" + prms.formname; 
+        prms.frm = $(prms.formid); 
+        prms.frm.validate(); 
+        isvalid = prms.frm.valid(); 
+            if( !isvalid ) { return; } 
+        break; 
+        case "user-re-authorize": 
+        isvalid = jsreauthorize.isvalid(); 
+            if( !isvalid ) { return; } 
+        break; 
+        case "myaccount-frm-change-password-submit-button": 
+        prms.formname = "form-change-password"; 
+        prms.formid = "#" + prms.formname; 
+        prms.frm = $(prms.formid); 
+        prms.frm.validate(); 
+        isvalid = prms.frm.valid(); 
+            if( !isvalid ) { return; } 
+        break; 
+        case "myaccount-frm-permissions-submit-button": 
+        isvalid = permissions_data.submission(); 
+            if( !isvalid ) { return; } 
+        break; 
+        case "myaccount-frm-profile-submit-button": 
+        isvalid = profileSubmitButtonClicked(); 
+            if( !isvalid ) { return; } 
+        break; 
+        case "mysearch-search-submit-button": 
+        isvalid = jsSearchForm.validate(); 
+            if( !isvalid ) { return; } 
+        break; 
+        } 
+        if (isvalid) { 
+        window.location.href = destination; 
+        } 
+    }
+
+</script>

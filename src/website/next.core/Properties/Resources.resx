@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="appsettings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_json\appsettings.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="appsettings-debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_json\appsettings-debug.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="base-css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\base-css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="blank-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\blank-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="bootstrapmin-css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\bootstrapmin-css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="common-authenticate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\common-authenticate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="common-authenticate-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\common-authenticate-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="common-dialogue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\common-dialogue.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="common-mast-head-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\common-mast-head-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="common-status" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\common-status.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="commoncefhandler-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\commoncefhandler-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="commonclientinjection-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\commonclientinjection-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="commondialogscript-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\commondialogscript-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="commonfooter-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\commonfooter-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="commonheadings-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\commonheadings-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="commonreload-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\commonreload-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="contextmenu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\contextmenu.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="error-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\error-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="errorbox-css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\errorbox-css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="errorstatus-json" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\errorstatus-json.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="home-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\home-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="homelogin-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\homelogin-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="homeregister-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\homeregister-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="homevalidation-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\homevalidation-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="homewelcome-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\homewelcome-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="introduction-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\introduction-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="invoice-content-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\invoice-content-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="invoice-failure-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\invoice-failure-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="invoice-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\invoice-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="invoice-submission-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\invoice-submission-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mailbox-base-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mailbox-base-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mailbox-base-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mailbox-base-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mailbox-style-css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mailbox-style-css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-base-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-base-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-home-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-home-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-logout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-logout.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-password-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-password-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-permissions-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-permissions-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-permissions-validation-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-permissions-validation-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-profile-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-profile-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-profile-validation-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-profile-validation-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccount-script-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\myaccount-script-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccounthome_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_htm\myaccounthome_html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccountpermissions_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_htm\myaccountpermissions_html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="myaccountprofile_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_htm\myaccountprofile_html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearch-base-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearch-base-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearch-history-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearch-history-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearch-preview-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearch-preview-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearch-purchases-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearch-purchases-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearch-script-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearch-script-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearch-search-frame" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearch-search-frame.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearch-search-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearch-search-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearchactive-css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearchactive-css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearchactive-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearchactive-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearchactive-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearchactive-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mysearchtemplate-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\mysearchtemplate-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="queuesetting-json" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_json\queuesetting-json.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="searchhistory-table-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\searchhistory-table-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="subcontent-css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\subcontent-css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="verifyandpost-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\verifyandpost-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="viewhistory-base-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\viewhistory-base-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="viewhistory-base-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\viewhistory-base-js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="viewhistory-item-template-html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\viewhistory-item-template-html.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="viewhistory-style-css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_html\viewhistory-style-css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+</root>

@@ -1,0 +1,137 @@
+
+					<div id="dv-subcontent-purchases" name="subcontent-purchases" class="subcontent card d-none w-75">
+						<div class="card-body">
+							<h5 class="row d-flex justify-content-between">
+								<div class="col-9">Purchase History</div>
+								<div class="col-2">
+									<button id="bttn-purchases-history-filter" 
+									title="Filter By Status"
+									onclick="jsPurchases.toggle_filter()"
+									name="purchases-history-filter" class="btn btn-outline-primary">
+										<i class="bi bi-filter-circle"></i>
+									</button>
+								</div>
+							</h5>
+
+							<div id="dv-purchases-history-filter" class="row d-flex justify-content-between d-none">
+								<div class="col-3">
+									<h5 class="p-2 text-start">
+										<span style="position: relative; top: 5px;" >Filter:</span>
+										<span id="span-purchases-history-filter-count" style="position: relative; top: 5px; color: #555"></span>
+									</h5>
+								</div>
+								<div class="col-8 p-2">
+									<select id="cbo-purchases-history-filter" 
+										onchange="jsPurchases.apply_filter()"
+										class="form-control text-secondary">
+										<option value="" selected='selected'>- All -</option>
+										<option value="Purchased">Purchased</option>
+										<option value="Downloaded">Downloaded</option>
+									</select>
+								</div>
+							</div>
+
+							<div id="purchases-history-00" name="dv-purchases-history" class="row d-none">
+								<form name="purchase-download-form">
+									<input type="hidden" id="static-search-uuid" value=" - ">
+									<div class="mb-3 row d-none">
+										<label for="formFile" class="form-label" id="labelFormFile">Select file save location for download</label>
+										<input class="form-control" type="file" id="formFile" 
+											 accept=".xls,.xlsx" />
+									</div>
+									<div class="mb-3 row">
+										<label for="static-item-name" class="col-sm-4 col-form-label" id="labelItemDescription">Search</label>
+										<div class="col-sm-6">
+											<input type="text" readonly="" class="form-control-plaintext text-info" id="static-item-name" value=" - ">
+										</div>
+									</div>
+
+									<div class="mb-3 row">
+										<label for="static-item-from-to" class="col-sm-4 col-form-label" id="labelItemFromTo">From/To</label>
+										<div class="col-sm-6">
+											<input type="text" readonly="" class="form-control-plaintext text-info" id="static-item-from-to" value=" - ">
+										</div>
+									</div>
+
+									<div class="mb-3 row">
+										<label for="static-item-invoice-id" class="col-sm-4 col-form-label" id="labelItemInvoiceId">Invoice</label>
+										<div class="col-sm-6">
+											<input type="text" readonly="" class="form-control-plaintext text-info" id="static-item-invoice-id" value=" - ">
+										</div>
+									</div>
+
+									<hr name="purchases-history-divider" />
+									<div class="row">
+										<button id="frm-purchase-history-cancel-button" class="btn btn-secondary" onclick="jsPurchases.cancel_request()">
+											<i id="frm-purchase-history-cancel-icon" class="bi bi-backspace"></i>
+											<span class="ml-2">Cancel</span>
+										</button>									
+										<button id="frm-purchase-history-download-button" class="btn btn-primary" disabled="disabled" onclick="jsPurchases.make_download()">
+											<i id="frm-purchase-history-download-icon" class="bi bi-download"></i>
+											<i id="frm-purchase-history-download-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>
+											<span class="ml-2">Download</span>
+										</button>
+									</div>
+								</form>
+							</div>
+							<div id="purchases-history-00-a" name="dv-purchases-history" class="row">
+								<div id="purchases-history-00-error" class="border rounded text-start col-sm-10 m-3 p-2 text-danger">
+								</div>
+							</div>
+							<div id="purchases-history-01" name="dv-purchases-history" class="row">
+								<table automationId="search-purchases-table" name="search-dt-table">
+									<colgroup>
+										<col name="purchase-date" style="width: 100px" />
+										<col name="item-name" />
+										<col name="item-quantity" style="width: 50px" />
+										<col name="total-price" style="width: 100px" />
+										<col name="purchase-status" style="width: 50px" />
+									</colgroup>
+									<thead>
+										<tr>
+											<td>Purchase Date</td>
+											<td>Item Description</td>
+											<td>Quantity</td>
+											<td>Total</td>
+											<td>Status</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr id="tr-subcontent-purchases-data-template" style="display: none" search-uuid="~0">
+											<td class="text-end"><span name="search-uuid" class="d-none">~0</span><span name="purchase-date">~1</span></td>
+											<td><span name="item-name">~2</span></td>
+											<td class="text-end"><span name="item-quantity">~3</span></td>
+											<td class="text-end"><span name="total-price">~4</span></td>
+											<td class="text-end" search-uuid="~0"><span name="purchase-status">~5</span><span name="external-uuid" class="d-none">~6</span></td>
+										</tr>
+										<tr id="tr-subcontent-purchases-no-data">
+											<td colspan="5">
+											<span name="no-data">No Records Found</span></td>
+										</tr>
+									</tbody>
+									<tfoot class="m-1 d-none">
+										<tr id="tr-subcontent-purchases-pager">
+											<td colspan="3" class="p-2">
+												<select id="cbo-subcontent-purchases-pager" onchange="jssearchpager.set_page(1)" class="form-control text-secondary">
+													<option selected value="0">Page 1: 1 to 10</option>
+													<option value="1">Page 2: 11 to 20</option>
+												</select>
+											</td>
+											<td id="td-subcontent-purchases-record-count" class="text-end text-secondary" colspan="2">
+												Records: 12
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+						<div class="card-footer">
+							<div id="frm-purchase-history-error-message" class="d-none">
+								<!-- Error messages -->
+							</div>
+							<button id="frm-purchase-history-submit-button" class="btn btn-primary" onclick="jsPurchases.reload()">
+								<i id="frm-purchase-history-icon" class="bi bi-clock-history" ></i>
+								<i id="frm-purchase-history-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Reload
+							</button>
+						</div>
+					</div>

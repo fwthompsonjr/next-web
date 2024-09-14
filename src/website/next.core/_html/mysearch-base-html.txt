@@ -1,0 +1,82 @@
+<html>
+
+	<head>
+		<!-- script: common-cef-handler -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>legallead.ui: search</title>
+		<!-- block: common-headings -->
+		<!-- common styles -->	
+		<link rel="stylesheet" name="base" href="css/base.css" />
+		<!-- style: my-account-subcontent-css -->
+		<style name="mysearch-purchase-css">						 
+			#formFile { 
+				width: 85%; 
+				margin-left: 25px; 
+			} 
+			#labelItemDescription {
+				position: relative;
+				left: -10px;
+			}
+			#frm-purchase-history-download-button,
+			#frm-purchase-history-cancel-button {
+				width: 140px;
+				position: relative;
+				left: 20px;
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+
+	<body class="text-center">
+	<!-- component: account-re-authenticate -->
+	<!-- component: my-account-logout -->
+	<!-- component: my-search-preview -->
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header 
+		class="masthead mb-auto" 
+		style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+		<div class="inner">
+			<!-- block: common-mast-heading -->
+			<nav id="masthead-nav-menu" class="nav nav-masthead justify-content-center">
+				<a id="nvlink-subcontent-search" name="subcontent-search" class="nav-link active" href="javascript:jssearchviews.setIndex(0)">Search</a>
+				<a id="nvlink-subcontent-search-active" name="subcontent-search-active" class="nav-link" href="javascript:jssearchviews.setIndex(3)">Active</a>
+				<a id="nvlink-subcontent-search-purchases" name="subcontent-purchases" class="nav-link" href="javascript:jssearchviews.setIndex(2)">Purchases</a>
+			</nav>
+		</div>
+      </header>
+
+      <main role="main" class="inner cover">
+		<div id="dv-restriction-alert" class="alert alert-primary p-2 m-2 d-none" role="alert">
+			<i class="bi bi-exclamation-diamond"></i>
+			<span id="span-restriction-alert-message">message</span>
+		</div>
+		<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+			<p>My Search Base</p>
+			
+			<p>My Search History</p>
+			
+			<p>My Purchase History</p>
+		</div>
+      </main>
+
+      <!-- block: common-footer -->
+
+    </div>
+	<script>
+	
+		function showLogout() {
+			let bttn = "#btn-my-account-logout-show";
+			$( bttn ).click(); 
+		}
+	</script>
+	<!-- script: common-client-include -->
+	<!-- script: account-re-authenticate -->
+	<!-- script: my-search-searching-behaviors -->
+	<!-- script: verify-and-post -->
+  </body>
+
+
+</html>

@@ -1,0 +1,232 @@
+let permissions_general = {
+ "change_form": {
+	"alertTimer" : null,
+	"button": "#frm-permissions-submit-button",
+	"icons": {
+		"normal": "#form-permissions-icon",
+		"spin": "#form-permissions-icon-spin"
+	},
+	"error": "#frm-permissions-error-message",
+	"setIcon": function( isSpinning ) {
+		const dsb = "disabled";
+		const hddn = "d-none";
+		let frm = permissions_general.change_form;
+		let icons = [ frm.icons.normal, frm.icons.spin ];
+		var bttn = frm.button;
+		let a = isSpinning ? 0 : 1;
+		let b = isSpinning ? 1 : 0;
+		$( icons[a] ).addClass( hddn );
+		$( icons[b] ).removeClass( hddn );
+		if( isSpinning ) {
+			$( bttn ).attr(dsb, dsb);
+		} else {
+			$( bttn ).removeAttr(dsb);
+		}
+	},
+	"setStatus": function( message, isActive ) {
+		const dsb = "disabled";
+		const hddn = "d-none";
+		const emptymessage = "<!-- Error messages -->"
+		let frm = permissions_general.change_form;
+		var dverr = frm.error
+		if( isActive ) {
+			$( dverr ).removeClass(hddn);
+			$( dverr ).html(message);
+		} else {
+			$( dverr ).addClass(hddn);
+			$( dverr ).html(emptymessage);
+		}
+	},
+	"setAlert": function(isActive) {
+		const hddn = "d-none";
+		const parentDv = "#dv-subcontent-permissions-row-00";
+		const alertDv = "#dv-subcontent-permissions-success";
+		let frm = permissions_general.change_form;
+		if ( null != frm.alertTimer ) { 
+			clearTimeout(frm.alertTimer);
+			frm.alertTimer = null;
+		}
+		$( parentDv ).addClass(hddn);
+		if (!isActive) { return; }
+
+		$( alertDv ).hide();
+		$( parentDv ).removeClass(hddn);
+		$( alertDv ).fadeIn( 600 );
+		frm.alertTimer = setTimeout(() => { 
+			frm.setAlert(false); }, 15000);
+	}
+ }
+}
+
+let permissions_data = {
+ "group_panel": "#dv-subcontent-permissions",
+ "change_panel": "#dv-subcontent-password",
+ "change_form": {
+	"name": "form-change-password",
+	"alertTimer" : null,
+	"button": "#frm-change-password-submit-button",
+	"icons": {
+		"normal": "#form-change-password-icon",
+		"spin": "#form-change-password-icon-spin"
+	},
+	"error": "#frm-change-password-error-message",
+	"setIcon": function( isSpinning ) {
+		const dsb = "disabled";
+		const hddn = "d-none";
+		let frm = permissions_data.change_form;
+		let icons = [ frm.icons.normal, frm.icons.spin ];
+		var bttn = frm.button;
+		let a = isSpinning ? 0 : 1;
+		let b = isSpinning ? 1 : 0;
+		$( icons[a] ).addClass( hddn );
+		$( icons[b] ).removeClass( hddn );
+		if( isSpinning ) {
+			$( bttn ).attr(dsb, dsb);
+		} else {
+			$( bttn ).removeAttr(dsb);
+		}
+	},
+	"setStatus": function( message, isActive ) {
+		const dsb = "disabled";
+		const hddn = "d-none";
+		const emptymessage = "<!-- Error messages -->"
+		var dverr = permissions_data.change_form.error
+		if( isActive ) {
+			$( dverr ).removeClass(hddn);
+			$( dverr ).html(message);
+		} else {
+			$( dverr ).addClass(hddn);
+			$( dverr ).html(emptymessage);
+		}
+	},
+	"setAlert": function(isActive) {
+		const hddn = "d-none";
+		const parentDv = "#dv-subcontent-password-row-00";
+		const alertDv = "#dv-subcontent-password-success";
+		let frm = permissions_data.change_form;
+		if ( null != frm.alertTimer ) { 
+			clearTimeout(frm.alertTimer);
+			frm.alertTimer = null;
+		}
+		$( parentDv ).addClass(hddn);
+		if (!isActive) { return; }
+
+		$( alertDv ).hide();
+		$( parentDv ).removeClass(hddn);
+		$( alertDv ).fadeIn( 600 );
+		frm.alertTimer = setTimeout(() => { 
+			frm.setAlert(false); }, 15000);
+	}
+ },
+ "cbox": "#cbo-permissions-group",
+ "password_shown": function() {
+	let backup = $("#account-user-name").text();
+	let currentName = $("#account-password-username").val();
+	if ( null != currentName && currentName.trim().length > 2 ) { return; }
+	$("#account-password-username").val(backup);
+ },
+ "discounts": function() {
+		let isContentVisible = $( permissions_data.group_panel ).is(":visible");
+		let isComboSelected = $( permissions_data.cbox ).val() == "03";
+		if ( !isContentVisible || !isComboSelected ) { return ""; }
+		let choices = [];
+		let state_selector = "#permissions-discounts-states-group input[type='checkbox']";
+		let counties_selector = "#permissions-discounts-counties-group input[type='checkbox']";
+		let selections = [ state_selector, counties_selector];
+		selections.forEach( s => {
+			$( s ).each( function( ) {
+				const m = $( this );;
+				const arr = m.attr("id").split("-");
+				var obj = {
+					"StateName": arr[2],
+					"IsSelected": m.is(":checked"),
+					"CountyName": ""
+				};
+				if( arr.length > 3 ) { obj["CountyName"] = arr[3]; }
+				choices.push(obj);
+			});
+		});
+		return JSON.stringify(choices);
+	},
+ "subscriptions": function() {
+		let isContentVisible = $( permissions_data.group_panel ).is(":visible");
+		let isComboSelected = $( permissions_data.cbox ).val() == "02";
+		if ( !isContentVisible || !isComboSelected ) { return ""; }
+		const grp = "guest";
+		let group_selector = "#permissions-subscription-group input[type='radio']:checked";
+		let selection = $(group_selector).attr('value').toLowerCase();
+		if( !(selection) ) { selection = grp; }
+		return JSON.stringify( { "Level": selection } );
+	},
+ "changerequest": function() {
+		let isContentVisible = $( permissions_data.change_panel ).is(":visible");
+		let isContentValid = $( "#" + permissions_data.change_form.name ).valid();
+		if ( !isContentVisible || !isContentValid ) { return ""; }
+ 
+		let pword = {
+			"userName": $("#account-password-username").val(),
+			"oldPassword": $("#account-password-old-password").val(),
+			"newPassword": $("#account-password-new-password").val(),
+			"confirmPassword": $("#account-password-confirmation").val()
+		};
+		return JSON.stringify( pword );
+ }, 
+ "submission": function() {
+	const frmname = "permissions-subscription-group";
+	const jsobj = window.jsHandler;
+	let dta = {
+		"subscription": permissions_data.subscriptions(),
+		"discounts": permissions_data.discounts(),
+		"changes": permissions_data.changerequest()
+	}
+	if ( dta.subscription.length == 0 && dta.discounts.length == 0 && dta.changes.length == 0 ) return false;
+	const isChangePassword = dta.changes.length > 0;
+	const targetScreen = isChangePassword ? permissions_data.change_form : permissions_general.change_form;
+	targetScreen.setIcon( false );
+	targetScreen.setAlert( false );
+	targetScreen.setStatus( '', false );
+	if ( undefined === jsobj || null === jsobj ) return true;
+	try {
+		const submitmessage = "<span class='text-warning'>Submitting form values ...</span>";
+		targetScreen.setStatus( submitmessage, true );
+		targetScreen.setIcon( true );
+		targetScreen.setStatus( '', false );
+		targetScreen.setAlert( true );
+		permisionChangeRequested();
+		let js = JSON.stringify( dta );
+		jsobj.submit(frmname, js);
+	} catch (err) {
+		targetScreen.setStatus( err, true );
+	} finally {
+		targetScreen.setIcon( false );
+	}
+	return false;
+ }
+};
+function permisionChangeRequested() {
+	var dv = document.getElementById('dv-subcontent-permissions-success');
+	var spn = dv.getElementsByTagName('span')[0];
+	dv.classList.remove('alert-success');
+	dv.classList.add('alert-warning');
+	spn.innerHTML = 'Please wait... submitting account change details';
+	var elementStyle = dv.style;
+	elementStyle.position = "relative";
+	elementStyle.left = "45px";
+	elementStyle.top = "10px";
+	
+	var bttn = document.getElementById('frm-permissions-submit-button');
+	var iconOne = bttn.getElementsByTagName("i")[0];
+	var iconSpin = bttn.getElementsByTagName("i")[1];
+	var dnone = "d-none";
+	iconOne.classList.add(dnone);
+	iconSpin.classList.remove(dnone);
+
+	bttn.setAttribute("disabled", "disabled");
+}
+function changePasswordSubmitButtonClicked() {
+	permissions_data.submission();
+}
+
+function changePermissionsButtonClicked() {
+	permissions_data.submission();
+}

@@ -1,6 +1,6 @@
-﻿using legallead.desktop.implementations;
-using legallead.desktop.interfaces;
-using legallead.desktop.utilities;
+﻿using next.core.implementations;
+using next.core.interfaces;
+using next.core.utilities;
 
 namespace next.web.core.util
 {

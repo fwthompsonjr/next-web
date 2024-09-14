@@ -1,0 +1,45 @@
+<div class="card-body">
+	<h5 class="card-title text-start">
+		<span name="invoice-label">Invoice: </span>
+		<span automationid='search-uuid' name="invoice" class="text-light">{0}</span>
+	</h5>
+	<div class="row">
+		<h6 class="text-start">
+			<span name="invoice-date-label" class="text-primary">Invoice Date: </span>
+			<span name="invoice-date" class="ml-2">{1}</span>
+		</h6>
+		<h6 class="text-start">
+			<span name="invoice-description-label" class="text-primary">Description: </span>
+			<span name="invoice-description" class="ml-2">{2}</span>
+		</h6>
+		<h6 class="text-start">
+			<span name="invoice-label" class="text-primary">Total: </span>
+			<span name="invoice-total" class="ml-2">{0}</span>
+		</h6>
+		<ul name="invoice-line-items" class="list-group text-start w-75 m-2" style="background: transparent">
+			<!-- block: invoice-line-items -->
+		</ul>
+	</div>
+	<div class="row">
+		<!-- Display a payment form -->
+		<form id="payment-form">
+		  <div id="payment-element">
+			<!--Stripe.js injects the Payment Element-->
+		  </div>
+		  <button id="submit">
+			<div class="spinner hidden" id="spinner"></div>
+			<span id="button-text">Pay now</span>
+		  </button>
+		  <div id="payment-message" class="hidden"></div>
+		</form>
+	</div>
+</div>
+<div class="card-footer">
+	<div id="frm-invoice-error-message" class="d-none">
+		<!-- Error messages -->
+	</div>
+	<button id="frm-invoice-submit-button" class="btn btn-primary" onclick="jsinvoicing.close_invoice()">
+		<i id="form-invoice-icon" class="bi bi-pencil-square" ></i>
+		<i id="form-invoice-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Save
+	</button>
+</div>

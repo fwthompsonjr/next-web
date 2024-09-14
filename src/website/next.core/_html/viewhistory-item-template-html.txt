@@ -1,0 +1,90 @@
+<table automationId="search-preview-table" style="width: 95%">
+				<colgroup>
+					<col name="heading" style="width: 115px" />
+					<col name="detail" />
+				</colgroup>
+				<thead>
+                    <tr>
+                        <th style="padding-left: 3px;" colspan="2">Search Detail</th>
+                    </tr>
+				</thead>
+				<tbody>
+					<tr name="requested-date">
+						<th style="padding-left: 10px; padding-top: 15px">Request Date</th>
+						<td style="padding-top: 15px">
+						    <span name="requested-date">- n/a -</span>
+						    <span class="d-none" name="search-uuid">- n/a -</span>
+						</td>
+					</tr>
+					<tr name="state-abbr">
+						<th style="padding-left: 10px;">Location</th>
+						<td>
+                            <span name="county-name">- n/a -</span>
+                            <span style="margin-left: 3px;margin-right: 5px;" name="county-name-spacer">,</span>
+                            <span name="state-abbr">- n/a -</span>
+                        </td>
+					</tr>
+					<tr name="begin-date">
+						<th style="padding-left: 10px;">Date Range:</th>
+						<td>
+                            <span style="margin-left: 3px;margin-right: 5px;" name="begin-date-spacer">FROM: </span>
+                            <span name="begin-date">- n/a -</span>
+                            <span style="margin-left: 3px;margin-right: 5px;" name="ending-date-spacer">TO: </span>
+                            <span name="ending-date">- n/a -</span></td>
+                        </td>
+					</tr>
+					<tr name="search-status">
+						<th style="padding-left: 10px;">Status</th>
+						<th><span name="search-status">- n/a -</span></th>
+					</tr>
+					<tr id="tr-user-interaction-error" class="d-none" name="user-interaction" data-context="error">
+						<td style="padding: 20px" colspan="2">
+                            <hr size='1' noshade />
+                            <div style='margin: 10px'>
+						        <span name="no-data">An error occurred while processing request.</span><br/>
+                                <p>
+                                    When an error occurs during processing then system will
+                                    attempt to retry the request.
+                                </p>
+                                <p>
+                                    You may choose to retry your search with a new search request.
+                                </p>
+                            </div>
+                        </td>
+					</tr>
+					<tr id="tr-user-interaction-processing" class="d-none" name="user-interaction" data-context="processing">
+						<td style="padding: 20px" colspan="2">
+                            <hr size='1' noshade />
+                            <div style='margin: 10px'>
+						        <span name="no-data">The system is currently fulfilling your request.</span><br/>
+                                <p>
+                                    Most search inquiries are completed within 5 minutes.
+                                </p>
+                                <p>
+                                    You can check the status of your request from the active searches screen.
+                                </p>
+                            </div>
+                        </td>
+					</tr>
+					<tr id="tr-user-interaction-completed" class="d-none" name="user-interaction" data-context="completed">
+						<td style="padding: 20px" colspan="2">
+                            <hr size='1' noshade />
+                            <p>
+                                Your request has completed successfully.
+                            </p><br/>
+                            <p>
+                                Click below to purchase this search.
+                            </p>
+							<div class="d-flex justify-content-between">
+								<center style="width: 100%">
+									<button id="btn-user-interaction-purchase" name="bttn-purchase" class="btn btn-primary w-75 m-2" onclick="historybox.invoice()" disabled='disabled'>
+                                        <i id="bttn-purchase-icon" class="bi bi-box-arrow-in-right" ></i>
+                                        <i id="bttn-purchase-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>
+										<span>Purchase</span>
+									</button>
+								</center>
+							</div>
+                        </td>
+					</tr>
+				</tbody>
+			</table>

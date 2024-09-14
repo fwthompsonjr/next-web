@@ -1,0 +1,170 @@
+<style name="view-history-css">
+html {
+   height: 100%;
+   margin: 0;
+}
+
+body {
+   margin-top: 10px;
+   background: #444;
+   color: white;
+   margin-bottom: 10px;
+   overflow-x: clip
+}
+
+#footer-copy {
+   padding-top: 10px;
+}
+
+#templates {
+   display: none;
+}
+
+div[name="search-history-header"] {
+   margin: 10px;
+}
+
+div[name="search-history-filter"] {
+   margin: 20px;
+}
+
+div[name="search-history-filter-items"] {
+   min-width: 200px;
+}
+
+div[name="search-history-grid"] {
+   padding-left: 25px;
+}
+
+div[name="search-history-preview"] {
+   overflow: auto;
+}
+
+div.search-history {
+   vertical-align: text-top;
+   padding: 12px;
+   margin: 10px;
+   border-style: dashed;
+   border-color: #999;
+   border-width: 1px;
+   max-height: 800px;
+   overflow: auto;
+}
+
+div[name="link-history-items-header"] {
+   border-style: solid;
+   border-color: #999;
+   border-width: 1px;
+   padding-left: 15px;
+   padding-top: 5px;
+}
+
+div[name="link-history-items-header"][data-item-count="0"] {
+   display: block;
+}
+
+div[name="link-history-items-header"][data-item-count="1"],
+div[id="dv-history-item-list"][data-item-count="0"],
+div[id="dv-history-item-preview"][data-item-count="0"] {
+   display: none;
+}
+
+h5[name='item-subject'] {
+   font-size: 16px;
+   font-weight: bold;
+}
+
+.box {
+   display: flex;
+   flex-flow: column;
+   height: 100%;
+}
+
+/*
+ * Data Tables
+ */
+table[name='search-dt-table'],
+table[automationId='search-preview-table'] {
+   font-size: 14px;
+   border: 1px solid #444;
+   width: 100%;
+   margin-left: 5px;
+   margin-right: 10px;
+}
+
+table[name='search-dt-table'] tbody,
+table[name='search-dt-table'] td,
+table[name='search-dt-table'] tfoot,
+table[name='search-dt-table'] th,
+table[name='search-dt-table'] thead,
+table[name='search-dt-table'] tr,
+table[automationId='search-preview-table'] tbody,
+table[automationId='search-preview-table'] td,
+table[automationId='search-preview-table'] tfoot,
+table[automationId='search-preview-table'] th,
+table[automationId='search-preview-table'] thead,
+table[automationId='search-preview-table'] tr {
+   border: 1px solid #444;
+}
+
+table[name='search-dt-table'] td,
+table[automationId='search-preview-table'] td {
+   padding-left: 4px;
+   padding-right: 4px;
+}
+
+table[name='search-dt-table'] thead tr,
+table[automationId='search-preview-table'] thead tr {
+   background-color: rgba(255, 255, 255, .25);
+}
+
+table[name='search-dt-table'] tfoot tr td,
+table[automationId='search-preview-table'] tfoot tr td {
+   border-top-style: double;
+   border-right-style: none;
+   border-bottom-style: none;
+   border-left-style: none;
+}
+
+table[name='search-dt-table'] tfoot,
+table[automationId='search-preview-table'] tfoot {
+   margin-top: 10px;
+}
+
+
+tr[data-position] {
+   cursor: pointer;
+}
+
+tr[data-position]:hover {
+   background-color: rgba(255, 255, 255, .25);
+}
+
+tr[data-position='odd'] {
+   background-color: rgba(125, 125, 125, .25);
+}
+
+tr[data-position] a[name='link-show-details']:hover {
+   color: #0a58ca;
+}
+
+#cbo-subcontent-history-pager {
+   background-color: transparent;
+   border-color: #555;
+   color: ghostwhite;
+}
+
+.box .customrow.header {
+   flex: 0 1 auto;
+   border-bottom: 1px solid #888;
+   margin-bottom: 5px;
+}
+
+.box .customrow.content {
+   flex: 1 1 auto;
+}
+
+.box .customrow.footer {
+   flex: 0 1 40px;
+}
+</style>

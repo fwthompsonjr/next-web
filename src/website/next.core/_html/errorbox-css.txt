@@ -1,0 +1,107 @@
+<style name="css/error.css">
+
+#errorbox {
+    position: relative;
+    height: 40vh
+}
+
+#errorbox .errorbox {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%)
+}
+
+.errorbox {
+    max-width: 560px;
+    width: 100%;
+    padding-left: 160px;
+    line-height: 1.1
+}
+
+.errorbox .errorbox-callout {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+}
+
+.errorbox .errorbox-callout:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: scale(2.4);
+    -ms-transform: scale(2.4);
+    transform: scale(2.4);
+    border-radius: 50%;
+    background-color: #555;
+    z-index: -1
+}
+
+.errorbox h1 {
+    font-family: Roboto,sans-serif;
+    font-size: 65px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #151723;
+    text-transform: uppercase
+}
+
+.errorbox h2 {
+    font-family: Roboto,sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    margin: 0;
+    text-transform: uppercase;
+    color: #151723
+}
+
+.errorbox p {
+    font-family: Roboto,sans-serif;
+    color: #999fa5;
+    font-weight: 400
+}
+
+.errorbox a {
+    font-family: Roboto,sans-serif;
+    display: inline-block;
+    font-weight: 700;
+    border-radius: 40px;
+    text-decoration: none;
+    color: #388dbc
+}
+
+@media only screen and (max-width: 767px) {
+    .errorbox .errorbox-callout {
+        width:110px;
+        height: 110px
+    }
+
+    .errorbox {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 110px
+    }
+}
+
+#errorbox-error-text,
+#errorbox-error-text-description {
+    min-width: 300px;
+    width: 80%;
+}
+
+#errorbox-error-text-description {
+    margin-top: 20px;
+    min-width: 300px;
+    width: 80%;
+}
+
+.icon-size { font-size: 140px; }
+
+</style>

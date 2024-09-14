@@ -1,5 +1,5 @@
 ﻿using HtmlAgilityPack;
-using legallead.desktop.entities;
+using next.core.entities;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using next.web.core.models;

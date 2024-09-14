@@ -1,0 +1,61 @@
+[
+	{
+		"id": "500",
+		"isDefault" : true,
+		"code": "Unexpected Error",
+		"description": [
+			"Application encountered an unexpected error. ",
+			"Please contact system administrator for additional details or information regarding this error."
+		]
+	}, 
+	{
+		"id": "503",
+		"code": "Internet Unavailable",
+		"description": [
+			"Application is unable to connect to internet. ",
+			"Please check your internet settings, router, and/or firewall settings ",
+			"to resolve this issue."
+		]
+	}, 
+	{
+		"id": "424",
+		"code": "Remote Connection Refused",
+		"description": [
+			"Application is unable to connect remote resource. ",
+			"Please contact system administrator for additional details or information regarding this outage."
+		]
+	}, 
+	{
+		"id": "400",
+		"code": "Bad Request",
+		"description": [
+			"Application cannot or will not process the request due to an apparent client error ",
+			"(e.g., malformed request syntax, size too large, invalid request message framing, or deceptive request routing)."
+		]
+	}, 
+	{
+		"id": "401",
+		"code": "Unauthorized",
+		"description": [
+			"Application resource you have requested requires an authorization. ",
+			"Please check your credentials and/or settings from the user profile page."
+		]
+	}, 
+	{
+		"id": "404",
+		"code": "Page Not Found",
+		"description": [
+			"Application resource you have requested is not found or unavailable."
+		]
+	}, 
+	{
+		"id": "409",
+		"code": "Conflict",
+		"description": [
+			"Application is unable to process request. ",
+			"There is a data conflict between your request and the current application state. ",
+			"Potential reason(s) for conflict include: duplicate account, foreign key violation, and/or business rule violations.",
+			"Please contact system administrator for additional details or information regarding this error."
+		]
+	}
+]
