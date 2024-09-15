@@ -31,7 +31,6 @@ namespace next.web
         {
             // Configure the HTTP request pipeline.
             app.SetExceptionAndHsts(app.Environment.IsDevelopment());
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -42,9 +41,11 @@ namespace next.web
             // by redirecting uppercase urls to lowercase urls
             var options = new RewriteOptions().Add(new RedirectLowerCaseRule());
             app.UseRewriter(options);
+
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Test}/{id?}");
+                pattern: "{controller=Home}/{action=Test}/{id?}",
+                defaults: new { controller = "Home", action = "Test" });
         }
 
         public static void SetExceptionAndHsts(this WebApplication app, bool isDevelopment)

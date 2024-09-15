@@ -1,6 +1,7 @@
 
       next.web.application
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      : 3.2.16 - 2024-09-14 - Add harris-jp to search filters
       : 3.2.15 - 2024-09-11 - Disable https redirect script
       : 3.2.14 - 2024-08-22 - Web project restructure
       : 3.2.12 - 2024-08-17 - Web project https redirect process

@@ -1,5 +1,12 @@
 [
   {
+    "id": "3.2.16",
+    "notes": [
+      "web: add harris-jp to search filters",
+      "web: solution restructure"
+    ]
+  },
+  {
     "id": "3.2.15",
     "notes": [
       "web: disable jscript redirects"

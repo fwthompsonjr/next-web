@@ -64,6 +64,7 @@
 						<option name="Collin" value="1">Collin</option>
 						<option name="Denton" value="2">Denton</option>
 						<option name="Harris" value="3">Harris</option>
+						<option name="Harris-JP" value="4">Harris (JP)</option>
 						<option name="Tarrant" value="10">Tarrant</option>
 					</select>
 				</div>
