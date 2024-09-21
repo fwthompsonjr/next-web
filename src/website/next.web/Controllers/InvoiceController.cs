@@ -40,7 +40,7 @@ namespace next.web.Controllers
         }
 
         [HttpGet("purchase")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell",
+        [SuppressMessage("Major Code Smell",
             "S6967:ModelState.IsValid should be called in controller actions",
             Justification = "For http-get query parm is validated")]
         public IActionResult Purchase([FromQuery] string? id)

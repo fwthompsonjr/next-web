@@ -55,11 +55,17 @@ namespace next.processor.api
                 var queue = s.GetRequiredService<IQueueExecutor>();
                 return new SearchGenerationService(queue);
             });
+            services.AddSingleton(s =>
+            {
+                var api = s.GetRequiredService<IApiWrapper>();
+                return new NonPersonQueueService(api);
+            });
             services.AddSingleton(TheSettingsProvider.Configuration);
             services.AddSingleton<InitializationService>();
             services.AddSingleton<IStatusChanger, StatusChangeService>();
             services.AddHostedService<SearchGenerationService>();
             services.AddHostedService<InitializationService>();
+            services.AddHostedService<NonPersonQueueService>();
             services.Configure<RouteOptions>(
                 options => options.LowercaseUrls = true);
 

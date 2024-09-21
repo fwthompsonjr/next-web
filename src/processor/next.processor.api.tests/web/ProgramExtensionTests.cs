@@ -19,6 +19,7 @@ namespace next.processor.api.tests
         [InlineData(typeof(IQueueExecutor))]
         [InlineData(typeof(IConfiguration))]
         [InlineData(typeof(SearchGenerationService))]
+        [InlineData(typeof(NonPersonQueueService))]
         [InlineData(typeof(InitializationService))]
         [InlineData(typeof(CheckContainerServices))]
         [InlineData(typeof(CheckPostApiRequest))]

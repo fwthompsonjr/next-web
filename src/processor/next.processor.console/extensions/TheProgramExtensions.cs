@@ -56,6 +56,11 @@ namespace next.processor.console.extensions
                 var queue = s.GetRequiredService<IQueueExecutor>();
                 return new SearchGenerationService(queue);
             });
+            services.AddSingleton(s =>
+            {
+                var api = s.GetRequiredService<IApiWrapper>();
+                return new NonPersonQueueService(api);
+            });
             services.AddSingleton(TheSettingsProvider.Configuration);
             services.AddSingleton<InitializationService>();
             services.AddSingleton<HomeReportingService>();
@@ -63,6 +68,7 @@ namespace next.processor.console.extensions
             services.AddHostedService<SearchGenerationService>();
             services.AddHostedService<InitializationService>();
             services.AddHostedService<HomeReportingService>();
+            services.AddHostedService<NonPersonQueueService>();
         }
 
 
