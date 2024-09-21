@@ -13,6 +13,7 @@ namespace next.processor.api.services
         public async override Task<bool> InstallAsync()
         {
             if (IsInstalled) return true;
+            TrySetupEnvironment();
             var id = WebId;
             var interactive = GetWeb(id);
             if (interactive == null) return false;
@@ -34,6 +35,26 @@ namespace next.processor.api.services
             IsInstalled = response != null && response.PeopleList.Count != 0;
             return IsInstalled;
         }
+
+        private static void TrySetupEnvironment()
+        {
+            const char semicolon = ';';
+            const string search = "FireFox";
+            const string ffox = "C:\\Program Files (x86)\\Mozilla Firefox";
+            if (!Directory.Exists(ffox)) return;
+            var targets = new[] { EnvironmentVariableTarget.User, EnvironmentVariableTarget.Process };
+            foreach (var target in targets)
+            {
+                var path = Environment.GetEnvironmentVariable("PATH", target) ?? string.Empty;
+                var paths = path.Split(semicolon).ToList();
+                var found = paths.Find(x => x.Contains(search, StringComparison.OrdinalIgnoreCase));
+                if (found != null) continue;
+                paths.Add(ffox);
+                var statement = string.Join(semicolon, paths);
+                Environment.SetEnvironmentVariable("PATH", statement, target);
+            }
+        }
+
         protected string GetSourceName()
         {
             var name = WebId switch
