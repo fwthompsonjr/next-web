@@ -27,6 +27,19 @@ namespace next.processor.api.services
             return data;
         }
 
+
+        public async Task<List<QueueNonPersonBo>?> FetchNonPersonAsync()
+        {
+            var uri = PostUris.Find(x => x.Name == "fetch")?.Address;
+            if (uri == null) return null;
+            uri = uri.Replace("fetch", "fetch-non-person");
+            var payload = AppPayload.ToInstance<QueueFetchRequest>();
+            var obj = await GetApiResponseAsync(payload, uri);
+            if (obj == null || string.IsNullOrWhiteSpace(obj.Message)) return null;
+            var data = obj.Message.ToInstance<List<QueueNonPersonBo>>();
+            return data;
+        }
+
         public async Task StartAsync(QueuedRecord dto)
         {
             var uri = PostUris.Find(x => x.Name == "start")?.Address;
@@ -70,6 +83,21 @@ namespace next.processor.api.services
             if (uri == null) return;
             var uniqueId = dto.Id ?? string.Empty;
             var payload = GetFinalizedPayload(uniqueId, dto, people);
+            _ = await GetApiResponseAsync(payload, uri);
+        }
+
+
+        public async Task PostSaveNonPersonAsync(QueueNonPersonBo dto)
+        {
+            var uri = PostUris.Find(x => x.Name == "save")?.Address;
+            if (uri == null) return;
+            uri = uri.Replace("save", "save-non-person");
+            var payload = new QueuePersistenceRequest
+            {
+                Id = dto.Id ?? string.Empty,
+                Content = dto.ExcelData
+            };
+            payload.AppendSource();
             _ = await GetApiResponseAsync(payload, uri);
         }
 

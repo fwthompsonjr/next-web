@@ -56,6 +56,42 @@ namespace next.processor.api.tests.services
             Assert.Null(error);
         }
 
+
+        [Theory]
+        [InlineData(200, 20)]
+        [InlineData(400, 20)]
+        [InlineData(200, 20, 400)]
+        [InlineData(200, 20, 401)]
+        [InlineData(200, 20, 200, 0)]
+        [InlineData(200, 20, 200, 1)]
+        [InlineData(200, 20, 200, 2)]
+        public async Task ApiCanFetchNonPersonAsync(int statusCode, int recordCount, int httpCode = 200, int messageId = 10)
+        {
+            var data = recordfaker.Generate(recordCount);
+            data.ForEach(d => d.Payload = searchrequestfaker.Generate().ToJsonString());
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                var json = messageId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    2 => "    ",
+                    _ => data.ToJsonString()
+                };
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                _ = await service.FetchNonPersonAsync();
+            });
+            Assert.Null(error);
+        }
+
         [Theory]
         [InlineData(200)]
         [InlineData(400)]
@@ -239,6 +275,55 @@ namespace next.processor.api.tests.services
                     It.IsAny<JsonSerializerOptions>(),
                     It.IsAny<CancellationToken>())).ReturnsAsync(message);
                 await service.PostSaveContentAsync(payload, data.Content);
+            });
+            Assert.Null(error);
+        }
+
+
+        [Theory]
+        [InlineData(200)]
+        [InlineData(400)]
+        [InlineData(200, 400)]
+        [InlineData(200, 401)]
+        [InlineData(200, 200, 0)]
+        [InlineData(200, 200, 1)]
+        [InlineData(200, 200, 2)]
+        public async Task ApiCanPostSaveNonPersonAsync(int statusCode, int httpCode = 200, int messageId = 10)
+        {
+            var data = persistencefaker.Generate();
+            var payload = recordfaker.Generate();
+            payload.Payload = searchrequestfaker.Generate().ToJsonString();
+            var error = await Record.ExceptionAsync(async () =>
+            {
+                Assert.NotNull(data.Content);
+                var service = new MockApiWrapperService();
+                var mock = service.MockClient;
+                payload.Id = messageId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    _ => data.Id
+                };
+                var json = messageId switch
+                {
+                    0 => null,
+                    1 => string.Empty,
+                    2 => "    ",
+                    _ => data.ToJsonString()
+                };
+                var message = GetMockResponse(httpCode, statusCode, json);
+                mock.Setup(m => m.PostAsJsonAsync<object?>(
+                    It.IsAny<HttpClient>(),
+                    It.IsAny<string>(),
+                    It.IsAny<object?>(),
+                    It.IsAny<JsonSerializerOptions>(),
+                    It.IsAny<CancellationToken>())).ReturnsAsync(message);
+                var bo = new QueueNonPersonBo
+                {
+                    Id = payload.Id,
+                    ExcelData = data.Content
+                };
+                await service.PostSaveNonPersonAsync(bo);
             });
             Assert.Null(error);
         }
