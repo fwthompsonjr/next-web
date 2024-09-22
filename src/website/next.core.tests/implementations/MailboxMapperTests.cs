@@ -1,8 +1,8 @@
 ﻿using Bogus;
+using Newtonsoft.Json;
 using next.core.implementations;
 using next.core.interfaces;
 using next.core.models;
-using Newtonsoft.Json;
 
 namespace next.core.tests.implementations
 {

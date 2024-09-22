@@ -1,5 +1,5 @@
-﻿using next.core.interfaces;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using next.core.interfaces;
 
 namespace next.core.entities
 {

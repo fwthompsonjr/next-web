@@ -1,8 +1,8 @@
 ﻿using Bogus;
-using next.core.entities;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Newtonsoft.Json;
+using next.core.entities;
 using next.web.core.extensions;
 using next.web.core.models;
 using next.web.core.util;

@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace next.core.implementations
 {
+    [ExcludeFromCodeCoverage(Justification = "This class is only used in desktop, and scheduled for deprecation.")]
     internal class HistoryPersistence : IHistoryPersistence
     {
         private readonly IFileInteraction _fileService;

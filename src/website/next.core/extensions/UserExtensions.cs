@@ -1,7 +1,7 @@
-﻿using next.core.entities;
+﻿using Microsoft.Extensions.DependencyInjection;
+using next.core.entities;
 using next.core.interfaces;
 using next.core.utilities;
-using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.core.extensions

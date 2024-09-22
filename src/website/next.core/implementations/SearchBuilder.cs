@@ -1,7 +1,7 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 using next.core.entities;
 using next.core.interfaces;
-using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 

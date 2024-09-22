@@ -1,8 +1,8 @@
-﻿using next.core.implementations;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using next.core.implementations;
 using next.core.interfaces;
 using next.core.utilities;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using next.web.core.interfaces;
 using next.web.core.models;
 using next.web.core.services;
@@ -109,7 +109,7 @@ namespace next.web.core.util
                 return new SearchBuilder(api);
             });
             services.AddTransient<IBeautificationService, BeautificationService>();
-            if (provider == null) return; 
+            if (provider == null) return;
             services.AddTransient(s => provider.GetRequiredService<IContentParser>());
             services.AddSingleton(s => provider.GetRequiredService<IInternetStatus>());
             services.AddSingleton(s => provider.GetRequiredService<IErrorContentProvider>());

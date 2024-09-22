@@ -1,8 +1,8 @@
-﻿using next.core.entities;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using next.core.entities;
 using next.core.implementations;
 using next.core.interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 
 namespace next.core.utilities
 {

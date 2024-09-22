@@ -1,6 +1,6 @@
-﻿using next.core.entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using next.core.entities;
 using next.core.interfaces;
-using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.services;
 using next.web.core.util;
@@ -40,7 +40,7 @@ namespace next.web.Controllers
         }
 
         [HttpGet("purchase")]
-        [SuppressMessage("Major Code Smell",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell",
             "S6967:ModelState.IsValid should be called in controller actions",
             Justification = "For http-get query parm is validated")]
         public IActionResult Purchase([FromQuery] string? id)

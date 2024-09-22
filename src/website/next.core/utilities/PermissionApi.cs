@@ -1,6 +1,6 @@
-﻿using next.core.entities;
+﻿using Microsoft.Extensions.DependencyInjection;
+using next.core.entities;
 using next.core.interfaces;
-using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.NetworkInformation;
 

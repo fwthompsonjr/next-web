@@ -1,6 +1,6 @@
-﻿using next.core.interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+using next.core.interfaces;
 using next.core.utilities;
-using Microsoft.Extensions.DependencyInjection;
 using next.web.core.interfaces;
 using next.web.core.util;
 

@@ -1,7 +1,7 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 using next.core.entities;
 using next.core.interfaces;
-using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 
 namespace next.core.implementations
@@ -48,7 +48,7 @@ namespace next.core.implementations
                 if (int.TryParse(ovalue, out var id) && id == filter.Index && attribute == null)
                 {
                     opt.Attributes.Add(sel, sel);
-                } 
+                }
                 else
                 {
                     if (attribute != null) { opt.Attributes.Remove(attribute); }
@@ -109,7 +109,7 @@ namespace next.core.implementations
             rows = items.Count;
             var template = Substitutions["history"];
             var document = ToDocument(html);
-            var transform = TransformRows(document, items.Cast<ISearchIndexable>().ToList(), template);            
+            var transform = TransformRows(document, items.Cast<ISearchIndexable>().ToList(), template);
             var styled = ApplyHistoryStatus(ToDocument(transform), template);
             return styled;
         }

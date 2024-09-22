@@ -1,9 +1,9 @@
 ﻿using Bogus;
+using Moq;
+using Newtonsoft.Json;
 using next.core.entities;
 using next.core.interfaces;
 using next.core.utilities;
-using Moq;
-using Newtonsoft.Json;
 using System.Text.Json;
 
 namespace next.core.tests.utilities
