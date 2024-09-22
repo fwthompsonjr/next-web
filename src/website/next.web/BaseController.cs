@@ -1,6 +1,6 @@
-﻿using next.core.entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using next.core.entities;
 using next.core.interfaces;
-using Microsoft.AspNetCore.Mvc;
 using next.web.core.extensions;
 using next.web.core.models;
 using next.web.core.util;

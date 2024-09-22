@@ -1,9 +1,9 @@
 ﻿using Bogus;
+using Newtonsoft.Json;
 using next.core.entities;
 using next.core.extensions;
 using next.core.interfaces;
 using next.core.utilities;
-using Newtonsoft.Json;
 
 namespace next.core.tests.extensions
 {

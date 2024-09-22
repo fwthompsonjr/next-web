@@ -1,7 +1,7 @@
 ﻿using Bogus;
+using Microsoft.Extensions.DependencyInjection;
 using next.core.entities;
 using next.core.utilities;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace next.core.tests.entities
 {

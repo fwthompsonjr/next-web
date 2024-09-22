@@ -1,11 +1,11 @@
 ﻿using Bogus;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Newtonsoft.Json;
 using next.core.entities;
 using next.core.extensions;
 using next.core.interfaces;
 using next.core.utilities;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using Newtonsoft.Json;
 
 namespace next.core.tests.extensions
 {

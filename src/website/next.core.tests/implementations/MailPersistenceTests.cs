@@ -1,7 +1,7 @@
 ﻿using Bogus;
+using Moq;
 using next.core.implementations;
 using next.core.interfaces;
-using Moq;
 
 namespace next.core.tests.implementations
 {

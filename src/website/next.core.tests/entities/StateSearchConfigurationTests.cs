@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using next.core.entities;
 using Newtonsoft.Json;
+using next.core.entities;
 
 namespace next.core.tests.entities
 {

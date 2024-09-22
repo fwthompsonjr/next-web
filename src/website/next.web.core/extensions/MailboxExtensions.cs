@@ -1,7 +1,7 @@
 ﻿using HtmlAgilityPack;
-using next.core.interfaces;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using next.core.interfaces;
 using next.web.core.models;
 using next.web.core.util;
 using System.Diagnostics.CodeAnalysis;

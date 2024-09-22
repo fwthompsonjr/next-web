@@ -1,7 +1,7 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.AspNetCore.Http;
 using next.core.entities;
 using next.core.interfaces;
-using Microsoft.AspNetCore.Http;
 using next.web.core.util;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;

@@ -1,5 +1,5 @@
-﻿using next.core.interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using next.core.interfaces;
 using next.web.core.extensions;
 using next.web.core.util;
 using System.Diagnostics.CodeAnalysis;

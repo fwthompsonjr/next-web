@@ -1,5 +1,5 @@
-﻿using next.core.interfaces;
-using Microsoft.AspNetCore.Rewrite;
+﻿using Microsoft.AspNetCore.Rewrite;
+using next.core.interfaces;
 using next.web.core.interfaces;
 using next.web.core.services;
 using next.web.core.util;

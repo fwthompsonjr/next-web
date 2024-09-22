@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
-using next.core.interfaces;
 using Microsoft.AspNetCore.Http;
+using next.core.interfaces;
 using next.web.core.extensions;
 using next.web.core.models;
 using next.web.core.util;
