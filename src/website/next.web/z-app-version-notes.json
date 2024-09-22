@@ -1,5 +1,12 @@
 [
   {
+    "id": "3.2.17",
+    "notes": [
+      "web: payment checkout behavior correction",
+      "web: api post payment-fetch-intent serialization fix"
+    ]
+  },
+  {
     "id": "3.2.16",
     "notes": [
       "web: add harris-jp to search filters",

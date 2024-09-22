@@ -8,6 +8,12 @@
     min-width: 500px;
 }
 
+#dv-subcontent-invoice.card {
+    background-color: #333;
+    z-index: 25000;
+    margin-bottom: 10px;
+}
+
 div[name="payment-place-holder"] form {
     width: 30vw;
     min-width: 500px;
