@@ -1,0 +1,86 @@
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+	<header class="masthead mb-auto" style="border-bottom: #444 solid 1px; padding-bottom: 2px">
+		<div class="inner">
+			<h3 class="masthead-brand">
+				<i class="bi bi-bank2"/>
+				<span>Oxford Legal Lead UI</span>
+			</h3>
+			<nav id="masthead-nav-menu" class="nav nav-masthead justify-content-center">
+				<a name="subcontent-home" class="nav-link active" href="javascript:setDisplay('home')">Home</a>
+				<a name="subcontent-profile" class="nav-link" href="javascript:setDisplay('profile')">Profile</a>
+				<a name="subcontent-permissions" class="nav-link" href="javascript:setDisplay('permissions')">Permissions</a>
+				<div id="account-subcontent-icon" name="subcontent-icon" class="nav-link dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="bi bi-person-fill-check "/>
+					</button>
+					<ul class="dropdown-menu">
+						<li>
+							<a id="account-dropdown-item-user-name" class="dropdown-item" href="#">
+								<i class="bi bi-person m-1"/>
+								<span id="account-text-item-user-name"> - </span>
+							</a>
+						</li>
+						<li>
+							<a id="account-dropdown-item-user-level" class="dropdown-item" href="#">
+								<i class="bi bi-collection m-1"/>
+								<span id="account-text-item-user-level"> - </span>
+							</a>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+								</li>
+							<li>
+								<a id="account-dropdown-item-password" class="dropdown-item" href="javascript:setDisplay('password')">
+									<i class="bi bi-key m-1"/>
+									<span id="account-text-item-password">Change Password</span>
+								</a>
+							</li>
+							<li>
+								<a id="account-dropdown-item-logout" class="dropdown-item" href="javascript:showLogout()">Logout</a>
+							</li>
+						</ul>
+					</div>
+			</nav>
+		</div>
+	</header>
+	<main role="main" class="inner cover">
+		<div id="dv-restriction-alert" class="alert alert-primary p-2 m-2 d-none" role="alert">
+			<i class="bi bi-exclamation-diamond"/>
+			<span id="span-restriction-alert-message">message</span>
+		</div>
+		<div id="dv-main-content" name="main-content" style="margin-top: 20px;">
+			<div id="dv-subcontent-home" name="subcontent-home" class="subcontent active card">
+				<div class="card-body">
+					<h5 class="card-title">Account Details</h5>
+				</div>
+			</div>
+			<div id="dv-subcontent-profile" name="subcontent-profile" class="subcontent card">
+				<div class="card-body">
+					<h5 class="card-title">Account Details</h5>
+				</div>
+			</div>
+			<div id="dv-subcontent-permissions" name="subcontent-permissions" class="subcontent card">
+				<div class="card-body">
+					<h5 class="card-title">Account Permissions</h5>
+				</div>
+			</div>
+			<div id="dv-subcontent-password" name="subcontent-password" class="subcontent card">
+				<div class="card-body">
+					<h5 class="card-title">Change Password</h5>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer class="mastfoot mt-auto">
+		<div id="footer-copy" class="float-end">
+			<span id="footer-copy-span">© 2023, 2024 Oxford Legal Lead UI</span>
+		</div>
+		<div id="footer-reload" class="float-start" style="display:none">
+			<a id="footer-reload-link" href="javascript:reloadContent()" class="text-secondary text-decoration-none">Reload</a>
+		</div>
+	</footer>
+</div>
+<script name="handler_js" src="/js/handler.js"/>
+<script name="my-account-common" src="/js/my-account-common.js"/>
+<script name="re-authenticate-js" src="/js/re-authenticate-js.js"/>
+<script name="my-account-validate" src="/js/my-account-validate.js"/>

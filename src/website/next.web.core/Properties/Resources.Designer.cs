@@ -61,6 +61,63 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;meta charset=&quot;utf-8&quot;&gt;
+        ///&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+        ///&lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///&lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
+        ///&lt;title&gt;oxford.leads.web: &lt;/title&gt;		
+        ///&lt;!-- googleapis : fonts --&gt;
+        ///&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+        ///		
+        ///&lt;!-- popper --&gt;
+        ///&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js&quot;&gt;&lt;/script&gt;
+        ///		
+        ///&lt;!-- bootstrap --&gt;
+        ///&lt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string base_account_heading {
+            get {
+                return ResourceManager.GetString("base_account_heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///		
+        ///&lt;!-- Reauthorize Modal --&gt;  		 		 		 		 		 		 		 		 		 		 		 		 		 		 		
+        ///&lt;!-- Reauthorize: trigger modal --&gt;
+        ///&lt;button id=&quot;btn-account-authorize-show&quot; type=&quot;button&quot; class=&quot;btn btn-primary d-none&quot; data-bs-toggle=&quot;modal&quot; data-bs-target=&quot;#account-authorize-modal&quot;&gt;
+        ///	Launch static backdrop modal
+        ///&lt;/button&gt;
+        ///		
+        ///&lt;!-- Reauthorize: Modal Content --&gt;
+        ///&lt;div class=&quot;modal fade&quot; id=&quot;account-authorize-modal&quot; data-bs-backdrop=&quot;static&quot; data-bs-keyboard=&quot;false&quot; tabindex=&quot;-1&quot; aria-labelledby=&quot;account-authorize-label&quot;  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string base_account_modals {
+            get {
+                return ResourceManager.GetString("base_account_modals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div class=&quot;cover-container d-flex h-100 p-3 mx-auto flex-column&quot;&gt;
+        ///	&lt;header class=&quot;masthead mb-auto&quot; style=&quot;border-bottom: #444 solid 1px; padding-bottom: 2px&quot;&gt;
+        ///		&lt;div class=&quot;inner&quot;&gt;
+        ///			&lt;h3 class=&quot;masthead-brand&quot;&gt;
+        ///				&lt;i class=&quot;bi bi-bank2&quot;/&gt;
+        ///				&lt;span&gt;Oxford Legal Lead UI&lt;/span&gt;
+        ///			&lt;/h3&gt;
+        ///			&lt;nav id=&quot;masthead-nav-menu&quot; class=&quot;nav nav-masthead justify-content-center&quot;&gt;
+        ///				&lt;a name=&quot;subcontent-home&quot; class=&quot;nav-link active&quot; href=&quot;javascript:setDisplay(&apos;home&apos;)&quot;&gt;Home&lt;/a&gt;
+        ///				&lt;a name=&quot;subcontent-profile&quot;  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string base_account_shell {
+            get {
+                return ResourceManager.GetString("base_account_shell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;div id=&quot;app-side-menu&quot; name=&quot;left-menu&quot;&gt;
         ///		&lt;div data-position-index=&quot;0&quot; name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
         ///			&lt;a class=&quot;text-primary&quot; href=&quot;/&quot;&gt;
@@ -277,12 +334,11 @@ namespace next.web.core.Properties {
         ///		&lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
         ///		&lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
         ///		&lt;title&gt;oxford.leads.web: cache manager&lt;/title&gt;
-        ///		&lt;!-- user-cache.html --&gt;
         ///		&lt;!-- googleapis : fonts --&gt;
         ///		&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
         ///		
         ///		&lt;!-- popper --&gt;
-        ///		&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@poppe [rest of string was truncated]&quot;;.
+        ///		&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/pop [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string user_cache {
             get {
