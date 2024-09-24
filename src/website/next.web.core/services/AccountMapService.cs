@@ -125,6 +125,34 @@ namespace next.web.core.services
             return html;
         }
 
+        public static async Task<string> TransformSearch(string content, IApiWrapper wrapper, ISession session)
+        {
+
+            var payload = new { Id = Guid.NewGuid().ToString(), Name = "legallead.permissions.api" };
+            var restriction = await wrapper.Post("search-get-restriction", payload, session);
+            if (restriction == null || restriction.StatusCode != 200) return content;
+            var data = restriction.Message.ToInstance<MySearchRestrictions>() ?? new();
+            if (!data.IsLocked.GetValueOrDefault()) return content;
+            content = MapRestrictions(content, restriction);
+            var controlsToLock = new List<string>()
+            {
+                "//*[@id='search-submit-button']",
+                "//*[@id='cbo-search-state']",
+                "//*[@id='cbo-search-county']",
+                "//*[@id='tbx-search-startdate']",
+                "//*[@id='tbx-search-enddate']"
+            };
+            var doc = content.ToHtml();
+            var node = doc.DocumentNode;
+            controlsToLock.ForEach(c =>
+            {
+                var element = node.SelectSingleNode(c);
+                element?.Attributes.Add("disabled", "disabled");
+            });
+            return node.OuterHtml;
+        }
+
+
         [ExcludeFromCodeCoverage(Justification = "Private member to be tested from public method")]
         private static string MapPermissions(string html, ApiAnswer? permissions, ApiAnswer? states = null, ApiAnswer? counties = null)
         {
@@ -214,12 +242,12 @@ namespace next.web.core.services
             var queries = new List<string>()
             {
                 "/html/body/div/header",
-                ""
+                "//div[@name='search-history-header']"
             }; 
             var styles = new List<string>()
             {
                 "position: absolute; top: 75px; margin-left: 10px; width: 650px",
-                ""
+                "margin-left: 40px; width: 85%"
             };
             var styleIndex = -1;
             var doc = html.ToHtml();
