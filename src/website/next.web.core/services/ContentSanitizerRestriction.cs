@@ -33,7 +33,8 @@ namespace next.web.core.services
             if (rows.Count == 0) return content;
             var data = restriction.Message.ToInstance<MySearchRestrictions>() ?? new();
             var isRestriction = data.IsLocked.GetValueOrDefault();
-            var statusText = isRestriction ? "OK" : "LOCKED";
+            var statusText = isRestriction ? "LOCKED" : "OK";
+            var cls = isRestriction ? "text-danger" : "text-success";
             rows.ForEach(row =>
             {
                 var original = row.InnerHtml;
@@ -41,7 +42,9 @@ namespace next.web.core.services
                 switch (index)
                 {
                     case 0:
-                        row.InnerHtml = original.Replace(zero, statusText); 
+                        row.InnerHtml = original.Replace(zero, statusText);
+                        var span = row.SelectNodes("td").LastOrDefault()?.SelectSingleNode("span");
+                        AppendClass(span, cls);
                         break;
                     case 1:
                         row.InnerHtml = original.Replace(zero, data.Reason ?? " - ");
@@ -60,7 +63,28 @@ namespace next.web.core.services
                         break;
                 }
             });
+            if (isRestriction) return node.OuterHtml;
+            var link = node.SelectSingleNode("//tfoot//a");
+            if (link == null) return node.OuterHtml;
+            link.SetAttributeValue("href", "javascript:void()");
+            link.SetAttributeValue("class", "link-secondary");
             return node.OuterHtml;
+        }
+
+        private static void AppendClass(HtmlNode? span, string cls)
+        {
+            const string attribute = "class";
+            if (span == null) return;
+            var current = span.Attributes.FirstOrDefault(a => a.Name == attribute);
+            if (current == null)
+            {
+                span.Attributes.Add(attribute, cls);
+                return;
+            }
+            var items = current.Value.Split(' ').ToList();
+            items.Add(cls);
+            items = items.Distinct().ToList();
+            current.Value = string.Join(" ", items);
         }
 
         public static async Task UpgradeRequest(IApiWrapper wrapper, ISession session)
