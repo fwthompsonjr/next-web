@@ -210,6 +210,7 @@ namespace next.core.utilities
             { "search-get-actives", "{0}/api/search/my-active-searches" },
             { "search-get-purchases", "{0}/api/search/my-purchases" },
             { "search-get-restriction", "{0}/api/search/my-restriction-status" },
+            { "search-extend-restriction", "{0}/api/search/search-extend-restriction" },
             { "make-search-purchase", "{0}/payment-fetch-search" },
             { "reset-download", "{0}/rollback-download" },
             { "mailbox-message-body", "{0}/api/mailbox/message-body" },
