@@ -68,6 +68,7 @@ namespace next.web.core.services
         public string Scripts(string content)
         {
             const string fmt = "<script name='{0}' src='{1}'></script>";
+            const string finder = "//script[@name='{0}']";
             var doc = content.ToHtml();
             var node = doc.DocumentNode;
             var body = node.SelectSingleNode(map["body"]);
@@ -76,8 +77,13 @@ namespace next.web.core.services
             var builder = new StringBuilder(inner);
             foreach (var item in namesMap)
             {
-                var line = string.Format(fmt, item.Key, item.Value);
-                builder.AppendLine(line);
+                var query = string.Format(finder, item.Key);
+                var element = node.SelectSingleNode(query);
+                if (element == null)
+                {
+                    var line = string.Format(fmt, item.Key, item.Value);
+                    builder.AppendLine(line);
+                }
             }
             body.InnerHtml = builder.ToString();
             return node.OuterHtml;

@@ -152,93 +152,131 @@
 					</button>
 				</div>
 			</div>
+			<!-- Begin Permissions View -->
 			<div id="dv-subcontent-permissions" name="subcontent-permissions" class="subcontent card">
-				<div class="card-body">
-					<h5 class="card-title">Account Permissions</h5>
-				</div>
-				<div id="dv-subcontent-permissions-container" class="row">
-					<div id="dv-subcontent-permissions-row-01" class="mb-3 text-start">
-						<label for="cbo-permissions-group" class="form-label text-secondary">Section</label>
-						<select id="cbo-permissions-group" class="form-control" onchange="permissionsComboBoxChanged()">
-							<option value="">Select view</option>
-							<option selected="" value="02">Subscription</option>
-							<option value="03">Discounts</option>
-						</select>
-					</div>
-					<div id="dv-subcontent-permissions-row-02" class="mb-3 text-start">
-						<h6 class="form-label text-secondary">Permission Level</h6>
-						<ul id="permissions-subscription-group" class="list-group">
-							<li class="list-group-item">
-								<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Guest" id="permissions-subscription-guest-radio">
-								<label class="form-check-label" for="permissions-subscription-guest-radio">Guest</label>
-							</li>
-							<li class="list-group-item">
-								<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Silver" id="permissions-subscription-silver-radio">
-								<label class="form-check-label" for="permissions-subscription-silver-radio">Silver</label>
-							</li>
-							<li class="list-group-item">
-								<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Gold" id="permissions-subscription-gold-radio">
-								<label class="form-check-label" for="permissions-subscription-gold-radio">Gold</label>
-							</li>
-							<li class="list-group-item">
-								<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Platinum" id="permissions-subscription-platinum-radio" checked="checked">
-								<label class="form-check-label" for="permissions-subscription-platinum-radio">Platinum</label>
-							</li>
-						</ul>
-						<div id="dv-permissions-subscription-description">
-							<p class="text-secondary m-2 d-none" name="subscription-description" id="subscription-description-guest">
-								Guest subscription allows limited access to system function,
-								with ability to search records and retrieve sample data.
-							</p>
-							<p class="text-secondary m-2 d-none" name="subscription-description" id="subscription-description-silver">
-								Silver subscription allows user to make inquiries
-								<br>
-								into the records dataset.<br>
-								Records are served at 5 cents per lead.<br>
-								Maximum of 1,000 leads available per year.
-							</p>
-							<p class="text-secondary m-2 d-none" name="subscription-description" id="subscription-description-gold">
-								Gold subscription allows user to make inquiries
-								<br>
-								into the records dataset.<br>
-								Records are served at 4 cents per lead.<br>
-								Maximum of 10,000 leads available per year.
-							</p>
-							<p class="text-secondary m-2 d-none" name="subscription-description" id="subscription-description-platinum">
-								Platinum subscription allows user to make inquiries
-								<br>
-								into the records dataset.<br>
-								Records are served at 3 cents per lead.<br>
-								Maximum of 100,000 leads available per year.
-							</p>
+				<div id="dv-subcontent-permissions-row-00" class="row d-none w-75">
+					<div id="dv-subcontent-permissions-success" class="alert alert-success d-flex align-items-center" role="alert">
+						<div class="row">
+							<i class="bi bi-check-circle-fill"></i>
+							<span>Your account information has been updated successfully</span>
 						</div>
 					</div>
-					<div id="dv-subcontent-permissions-row-03" class="mb-3 text-start">
-						<h6>State Discounts</h6>
-						<ul id="permissions-discounts-states-group" class="list-group">
-							<li class="list-group-item">
-								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx" checked="checked">
+				</div>
+				<div class="card-body">
+					<h5 class="card-title text-start">Account Permissions</h5>
+				</div>
+				<div id="dv-subcontent-permissions-container" class="row">
+						<div id="dv-subcontent-permissions-row-01" class="mb-3 text-start">
+							<label for="cbo-permissions-group" class="form-label text-secondary">Section</label>
+							<select id="cbo-permissions-group" class="form-control" onchange="permissionsComboBoxChanged()">
+								<option value="">Select view</option>
+								<option selected="" value="02">Subscription</option>
+								<option value="03">Discounts</option>
+							</select>
+						</div>
+						<div id="dv-subcontent-permissions-row-02" class="mb-3 text-start">
+							<h6 class="form-label text-secondary">Permission Level</h6>
+							<ul id="permissions-subscription-group" class="list-group">
+							  <li class="list-group-item">
+								<input class="form-check-input me-1" name="subscription-group" 
+									onchange="subscriptionLevelChanged()"
+									type="radio" value="Guest" checked="" id="permissions-subscription-guest-radio">
+								<label class="form-check-label" for="permissions-subscription-guest-radio">Guest</label>
+							  </li>
+							  <li class="list-group-item">
+								<input class="form-check-input me-1" name="subscription-group" 
+									onchange="subscriptionLevelChanged()"
+									type="radio" value="Silver" id="permissions-subscription-silver-radio">
+								<label class="form-check-label" for="permissions-subscription-silver-radio">Silver</label>
+							  </li>
+							  <li class="list-group-item">
+								<input class="form-check-input me-1" name="subscription-group" 
+									onchange="subscriptionLevelChanged()"
+									type="radio" value="Gold" id="permissions-subscription-gold-radio">
+								<label class="form-check-label" for="permissions-subscription-gold-radio">Gold</label>
+							  </li>
+							  <li class="list-group-item">
+								<input class="form-check-input me-1" name="subscription-group" 
+									onchange="subscriptionLevelChanged()"
+									type="radio" value="Platinum" id="permissions-subscription-platinum-radio">
+								<label class="form-check-label" for="permissions-subscription-platinum-radio">Platinum</label>
+							  </li>
+							</ul>
+							<div id="dv-permissions-subscription-description">
+								<p	class="text-secondary m-2 d-none" 
+									name="subscription-description" 
+									id="subscription-description-guest">
+									Guest subscription allows limited access to system function, 
+									with ability to search records and retrieve sample data.
+								</p>
+								<p	class="text-secondary m-2 d-none" 
+									name="subscription-description" 
+									id="subscription-description-silver">
+									Silver subscription allows user to make inquiries <br/>
+									into the records dataset.<br/>
+									Records are served at 5 cents per lead.<br/>
+									Maximum of 1,000 leads available per year.
+								</p>
+								<p	class="text-secondary m-2 d-none" 
+									name="subscription-description" 
+									id="subscription-description-gold">
+									Gold subscription allows user to make inquiries <br/>
+									into the records dataset.<br/>
+									Records are served at 4 cents per lead.<br/>
+									Maximum of 10,000 leads available per year.
+								</p>
+								<p	class="text-secondary m-2 d-none" 
+									name="subscription-description" 
+									id="subscription-description-platinum">
+									Platinum subscription allows user to make inquiries <br/>
+									into the records dataset.<br/>
+									Records are served at 3 cents per lead.<br/>
+									Maximum of 100,000 leads available per year.
+								</p>
+							</div>
+						</div>
+						<div id="dv-subcontent-permissions-row-03" class="mb-3 text-start">
+							<h6>State Discounts</h6>
+							<ul id="permissions-discounts-states-group" class="list-group">
+							  <li class="list-group-item">
+								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx">
 								<label class="form-check-label" for="permissions-discounts-tx">Texas</label>
-							</li>
-						</ul>
-						<h6>County Discounts</h6>
-						<ul id="permissions-discounts-counties-group" class="list-group">
-							<li class="list-group-item">
+							  </li>
+							</ul>
+							<h6>County Discounts</h6>
+							<ul id="permissions-discounts-counties-group" class="list-group">
+							  <li class="list-group-item">
 								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-collin">
 								<label class="form-check-label" for="permissions-discounts-tx-collin">Texas : Collin</label>
-							</li>
-							<li class="list-group-item">
-								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-denton" checked="checked">
+							  </li>
+							  <li class="list-group-item">
+								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-denton">
 								<label class="form-check-label" for="permissions-discounts-tx-denton">Texas : Denton</label>
-							</li>
-							<li class="list-group-item">
-								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-tarrant" checked="checked">
+							  </li>
+							  <li class="list-group-item">
+								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-harris">
+								<label class="form-check-label" for="permissions-discounts-tx-harris">Texas : Harris</label>
+							  </li>
+							  <li class="list-group-item">
+								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-tarrant">
 								<label class="form-check-label" for="permissions-discounts-tx-tarrant">Texas : Tarrant</label>
-							</li>
-						</ul>
+							  </li>
+							</ul>
+						</div>
 					</div>
+				<div class="card-footer">
+					<div id="frm-permissions-error-message" class="d-none">
+						<!-- Error messages -->
+					</div>
+					<button id="frm-permissions-submit-button" class="btn btn-primary" onclick="changePermissionsButtonClicked()">
+						<i id="form-permissions-icon" class="bi bi-pencil-square" ></i>
+						<i id="form-permissions-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Save
+					</button>
 				</div>
 			</div>
+			<!-- End Permissions View -->			
+			
+			<!-- Begin Change-Password View -->
 			<div id="dv-subcontent-password" name="subcontent-password" class="subcontent card">
 				<div id="dv-subcontent-password-row-00" class="row d-none w-75">
 					<div id="dv-subcontent-password-success" class="alert alert-success d-flex align-items-center" role="alert">
@@ -249,29 +287,41 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">Change Password</h5>
+					<h5 class="card-title">Change Password</h5>	
 					<form id="form-change-password" name="form-change-password">
 						<div class="mb-3">
 							<label for="account-password-username" class="form-label">User Name:</label>
-							<input type="text" class="form-control" id="account-password-username" name="username" maxlength="255" minlength="8" readonly="readonly" value="test.account">
+							<input  type="text" class="form-control" 
+									id="account-password-username" name="username" 
+									maxlength="255" minlength="8"
+									readonly="readonly">
 						</div>
 						<div class="mb-3">
 							<label for="account-password-old-password" class="form-label">Old Password</label>
-							<input type="password" class="form-control" id="account-password-old-password" name="account-password" maxlength="255" minlength="8" aria-describedby="account-password-old-password-help">
+							<input  type="password" class="form-control" 
+									id="account-password-old-password" name="account-password" 
+									maxlength="255" minlength="8"
+									aria-describedby="account-password-old-password-help">
 							<div id="account-password-old-password-help" class="text-secondary help-text">
 								Provide your current password.
 							</div>
 						</div>
 						<div class="mb-3">
 							<label for="account-password-new-password" class="form-label">New Password</label>
-							<input type="password" class="form-control" id="account-password-new-password" name="account-password" maxlength="255" minlength="8" aria-describedby="account-password-new-password-help">
+							<input  type="password" class="form-control" 
+									id="account-password-new-password" name="account-password" 
+									maxlength="255" minlength="8"
+									aria-describedby="account-password-new-password-help">
 							<div id="account-password-new-password-help" class="text-secondary help-text">
 								Provide a strong password.
 							</div>
 						</div>
 						<div class="mb-3">
 							<label for="account-password-confirmation" class="form-label">Confirm Password</label>
-							<input type="password" class="form-control" id="account-password-confirmation" name="account-password" maxlength="255" minlength="8" aria-describedby="account-password-confirmation-help">
+							<input  type="password" class="form-control" 
+									id="account-password-confirmation" name="account-password"
+									maxlength="255" minlength="8"
+									aria-describedby="account-password-confirmation-help">
 							<div id="account-password-confirmation-help" class="text-secondary help-text">
 								Confirm password.
 							</div>
@@ -280,15 +330,15 @@
 				</div>
 				<div class="card-footer">
 					<div id="frm-change-password-error-message" class="d-none">
-								
 						<!-- Error messages -->
 					</div>
 					<button id="frm-change-password-submit-button" class="btn btn-primary" onclick="changePasswordSubmitButtonClicked()">
-						<i id="form-change-password-icon" class="bi bi-pencil-square"></i>
+						<i id="form-change-password-icon" class="bi bi-pencil-square" ></i>
 						<i id="form-change-password-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Save
 					</button>
 				</div>
 			</div>
+			<!-- End   Change-Password View -->
 		</div>
 	</main>
 	<footer class="mastfoot mt-auto">
