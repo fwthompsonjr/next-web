@@ -61,6 +61,7 @@ namespace next.web.Controllers
                 svc.Api = apiwrapper;
             }
             content = mapSvc.GetHtml(content, viewName);
+            content = await mapSvc.Transform(content, session);
             var viewer = AppContainer.GetDocumentView(viewName);
             if (viewer == null)
             {

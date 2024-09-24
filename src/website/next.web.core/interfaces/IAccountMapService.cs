@@ -1,5 +1,4 @@
-﻿using next.core.entities;
-using next.core.interfaces;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace next.web.core.interfaces
 {
@@ -10,6 +9,6 @@ namespace next.web.core.interfaces
         string Modals(string content);
         string Scripts(string content);
         string Shell(string content);
-        Task<string> Transform(string html);
+        Task<string> Transform(string html, ISession session);
     }
 }

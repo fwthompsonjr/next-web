@@ -156,11 +156,6 @@
 				<div class="card-body">
 					<h5 class="card-title">Account Permissions</h5>
 				</div>
-			</div>
-			<div id="dv-subcontent-password" name="subcontent-password" class="subcontent card">
-				<div class="card-body">
-					<h5 class="card-title">Change Password</h5>
-				</div>
 				<div id="dv-subcontent-permissions-container" class="row">
 					<div id="dv-subcontent-permissions-row-01" class="mb-3 text-start">
 						<label for="cbo-permissions-group" class="form-label text-secondary">Section</label>
@@ -220,11 +215,16 @@
 					</div>
 				</div>
 			</div>
+			<div id="dv-subcontent-password" name="subcontent-password" class="subcontent card">
+				<div class="card-body">
+					<h5 class="card-title">Change Password</h5>
+				</div>
+			</div>
 		</div>
 	</main>
 	<footer class="mastfoot mt-auto">
 		<div id="footer-copy" class="float-end">
-			<span id="footer-copy-span">© 2023, 2024 Oxford Legal Lead UI</span>
+			<span id="footer-copy-span">&copy; 2024 Oxford Legal Lead UI</span>
 		</div>
 		<div id="footer-reload" class="float-start" style="display:none">
 			<a id="footer-reload-link" href="javascript:reloadContent()" class="text-secondary text-decoration-none">Reload</a>

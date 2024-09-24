@@ -1,6 +1,12 @@
-﻿using next.web.core.extensions;
+﻿using Microsoft.AspNetCore.Http;
+using next.core.entities;
+using next.web.core.extensions;
 using next.web.core.interfaces;
+using next.web.core.models;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Xml.XPath;
 
 namespace next.web.core.services
 {
@@ -96,12 +102,107 @@ namespace next.web.core.services
             return node.OuterHtml;
         }
 
-        public async Task<string> Transform(string html)
+        public async Task<string> Transform(string html, ISession session)
         {
             if (Api == null) return html;
+            var identity = await Api.Post("get-contact-identity", new object(), session);
+            var permissions = await Api.Get("user-permissions-list", session);
+            var profile = await Api.Post("profile-get-contact-detail", new { RequestType = "" }, session);
+            html = MapPermissions(html, permissions);
+            html = MapProfile(html, profile, identity);
             return html;
         }
+        private static string MapPermissions(string html, ApiAnswer? permissions)
+        {
+            if (permissions == null || permissions.StatusCode != 200) return html;
+            var doc = html.ToHtml();
+            var node = doc.DocumentNode;
+            return node.OuterHtml;
+        }
+        private static string MapProfile(string html, ApiAnswer? profile, ApiAnswer? identity = null)
+        {
+            if (profile == null || profile.StatusCode != 200) return html;
+            if (identity == null || identity.StatusCode != 200) return html;
+            var idx = identity.Message.ToInstance<ContactIdentity>() ?? new();
+            var data = profile.Message.ToInstance<List<ContactProfileResponse>>();
+            if (data == null || data.Count == 0) return html;
+            var list = new List<ContactProfileItem>();
+            var address = data.Find(a => a.ResponseType.Equals("Address"))?.Data.ToInstance<List<ContactAddress>>();
+            var names = data.Find(a => a.ResponseType.Equals("Name"))?.Data.ToInstance<List<ContactName>>();
+            var emails = data.Find(a => a.ResponseType.Equals("Email"))?.Data.ToInstance<List<ContactEmail>>();
+            var phones = data.ToList().Find(a => a.ResponseType.Equals("Phone"))?.Data.ToInstance<List<ContactPhone>>();
+            address?.ForEach(a => list.Add(a.ToItem()));
+            names?.ForEach(a => list.Add(a.ToItem()));
+            emails?.ForEach(a => list.Add(a.ToItem()));
+            phones?.ForEach(a => list.Add(a.ToItem()));
+            var replacements = new[]
+            {
+                new { node = "", find = "//*[@id=\"tbx-profile-first-name\"]", replace = GetProfileItem(list, "Name", "First")},
+                new { node = "", find = "//*[@id=\"tbx-profile-last-name\"]", replace = GetProfileItem(list, "Name", "Last")},
+                new { node = "", find = "//*[@id=\"tbx-profile-company\"]", replace = GetProfileItem(list, "Name", "Company")},
+                new { node = "textarea", find = "//*[@id=\"tbx-profile-mailing-address\"]", replace = GetProfileItem(list, "Address", "Mailing")},
+                new { node = "textarea", find = "//*[@id=\"tbx-profile-billing-address\"]", replace = GetProfileItem(list, "Address", "Billing")},
+                new { node = "", find = "//*[@id=\"tbx-profile-email-01\"]", replace = GetProfileItem(list, "Email", "Personal")},
+                new { node = "", find = "//*[@id=\"tbx-profile-email-02\"]", replace = GetProfileItem(list, "Email", "Business")},
+                new { node = "", find = "//*[@id=\"tbx-profile-email-03\"]", replace = GetProfileItem(list, "Email", "Other")},
+                new { node = "", find = "//*[@id=\"tbx-profile-phone-01\"]", replace = GetProfileItem(list, "Phone", "Personal")},
+                new { node = "", find = "//*[@id=\"tbx-profile-phone-02\"]", replace = GetProfileItem(list, "Phone", "Business")},
+                new { node = "", find = "//*[@id=\"tbx-profile-phone-03\"]", replace = GetProfileItem(list, "Phone", "Other")},
+                new { node = "div", find = "//*[@id=\"account-user-name\"]", replace = idx.UserName},
+                new { node = "", find = "//*[@id=\"account-password-username\"]", replace = idx.UserName},
+                new { node = "div", find = "//*[@id=\"account-user-email\"]", replace = idx.Email},
+                new { node = "div", find = "//*[@id=\"account-create-date\"]", replace = idx.Created},
+                new { node = "div", find = "//*[@id=\"account-role\"]", replace = idx.Role},
+                new { node = "div", find = "//*[@id=\"account-description\"]", replace = idx.RoleDescription},
+                new { node = "span", find = "//*[@id=\"account-text-item-user-name\"]", replace = idx.UserName},
+                new { node = "span", find = "//*[@id=\"account-text-item-user-level\"]", replace = idx.Role},
+            };
+            var doc = html.ToHtml();
+            var node = doc.DocumentNode;
+            foreach (var item in replacements)
+            {
+                if (!IsValidXPath(item.find)) continue;
+                var element = node.SelectSingleNode(item.find);
+                if (element == null) continue;
+                if (string.IsNullOrEmpty(item.node))
+                {
+                    element.SetAttributeValue("value", item.replace);
+                }
+                else
+                {
+                    element.InnerHtml = item.replace;
+                }
+            }
+            return node.OuterHtml;
+        }
 
+
+
+        [ExcludeFromCodeCoverage(Justification = "Private member to be tested from public method")]
+        private static string GetProfileItem(List<ContactProfileItem> profile, string category, string code)
+        {
+            const StringComparison comparison = StringComparison.OrdinalIgnoreCase;
+            var item = profile.Find(x => x.Category.Equals(category, comparison) &&
+                x.Code.Equals(code, comparison));
+            if (item == null) return string.Empty;
+            return item.Data.Trim();
+        }
+
+
+        [ExcludeFromCodeCoverage(Justification = "Private member to be tested from public method")]
+        private static bool IsValidXPath(string xpath)
+        {
+            if (string.IsNullOrEmpty(xpath)) return false;
+            try
+            {
+                XPathExpression.Compile(xpath);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         private static readonly string heading = Properties.Resources.base_account_heading;
         private static readonly string menus = Properties.Resources.base_account_menus;
         private static readonly string modals = Properties.Resources.base_account_modals;
