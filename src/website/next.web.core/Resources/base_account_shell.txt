@@ -213,6 +213,30 @@
 							</p>
 						</div>
 					</div>
+					<div id="dv-subcontent-permissions-row-03" class="mb-3 text-start">
+						<h6>State Discounts</h6>
+						<ul id="permissions-discounts-states-group" class="list-group">
+							<li class="list-group-item">
+								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx" checked="checked">
+								<label class="form-check-label" for="permissions-discounts-tx">Texas</label>
+							</li>
+						</ul>
+						<h6>County Discounts</h6>
+						<ul id="permissions-discounts-counties-group" class="list-group">
+							<li class="list-group-item">
+								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-collin">
+								<label class="form-check-label" for="permissions-discounts-tx-collin">Texas : Collin</label>
+							</li>
+							<li class="list-group-item">
+								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-denton" checked="checked">
+								<label class="form-check-label" for="permissions-discounts-tx-denton">Texas : Denton</label>
+							</li>
+							<li class="list-group-item">
+								<input class="form-check-input me-1" type="checkbox" value="" id="permissions-discounts-tx-tarrant" checked="checked">
+								<label class="form-check-label" for="permissions-discounts-tx-tarrant">Texas : Tarrant</label>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<div id="dv-subcontent-password" name="subcontent-password" class="subcontent card">

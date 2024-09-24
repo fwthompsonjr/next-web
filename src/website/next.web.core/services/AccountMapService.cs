@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using next.core.entities;
+using next.core.implementations;
 using next.web.core.extensions;
 using next.web.core.interfaces;
 using next.web.core.models;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Xml.XPath;
 
 namespace next.web.core.services
 {
+    using UPM = UserPermissionsMapper;
     public class AccountMapService : IAccountMapService
     {
         internal IApiWrapper? Api { get; set; } = null;
@@ -106,19 +107,38 @@ namespace next.web.core.services
         {
             if (Api == null) return html;
             var identity = await Api.Post("get-contact-identity", new object(), session);
+            var states = await Api.Get("user-us-state-list", session);
+            var counties = await Api.Get("user-us-county-list", session);
             var permissions = await Api.Get("user-permissions-list", session);
             var profile = await Api.Post("profile-get-contact-detail", new { RequestType = "" }, session);
-            html = MapPermissions(html, permissions);
+            html = MapPermissions(html, permissions, states, counties);
             html = MapProfile(html, profile, identity);
             return html;
         }
-        private static string MapPermissions(string html, ApiAnswer? permissions)
+
+        [ExcludeFromCodeCoverage(Justification = "Private member to be tested from public method")]
+        private static string MapPermissions(string html, ApiAnswer? permissions, ApiAnswer? states = null, ApiAnswer? counties = null)
         {
             if (permissions == null || permissions.StatusCode != 200) return html;
+            if (states == null || states.StatusCode != 200) return html;
+            if (counties == null || counties.StatusCode != 200) return html;
+            var data = permissions.Message.ToInstance<List<ContactPermissionResponse>>() ?? [];
+            var stateList = states.Message.ToInstance<List<ContactUsStateResponse>>() ?? [];
+            var countyList = counties.Message.ToInstance<List<ContactUsStateCountyResponse>>() ?? [];
             var doc = html.ToHtml();
             var node = doc.DocumentNode;
+            UPM.DeselectCheckBoxes(doc);
+            UPM.DeselectRadioButtons(doc);
+            var userlevel = UPM.GetUserLevel(data);
+            UPM.SelectRadioButton(doc, userlevel);
+            var isStateActive = UPM.GetPermissionStatus("Setting.State.Subscriptions.Active", data);
+            var isCountyActive = UPM.GetPermissionStatus("Setting.State.County.Subscriptions.Active", data);
+            if (isStateActive) UPM.MapStateSelections(data, stateList, doc);
+            if (isCountyActive) UPM.MapCountySelections(data, countyList, doc);
             return node.OuterHtml;
         }
+
+        [ExcludeFromCodeCoverage(Justification = "Private member to be tested from public method")]
         private static string MapProfile(string html, ApiAnswer? profile, ApiAnswer? identity = null)
         {
             if (profile == null || profile.StatusCode != 200) return html;
@@ -203,6 +223,7 @@ namespace next.web.core.services
                 return false;
             }
         }
+
         private static readonly string heading = Properties.Resources.base_account_heading;
         private static readonly string menus = Properties.Resources.base_account_menus;
         private static readonly string modals = Properties.Resources.base_account_modals;
