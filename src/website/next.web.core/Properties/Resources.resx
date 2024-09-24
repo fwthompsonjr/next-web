@@ -169,4 +169,7 @@
   <data name="restriction_callout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\restriction_callout.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="user_restriction_view" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user_restriction_view.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

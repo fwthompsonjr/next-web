@@ -117,8 +117,11 @@ namespace next.web.core.services
             var counties = await Api.Get("user-us-county-list", session);
             var permissions = await Api.Get("user-permissions-list", session);
             var profile = await Api.Post("profile-get-contact-detail", new { RequestType = "" }, session);
+            var payload = new { Id = Guid.NewGuid().ToString(), Name = "legallead.permissions.api" };
+            var restriction = await Api.Post("search-get-restriction", payload, session);
             html = MapPermissions(html, permissions, states, counties);
             html = MapProfile(html, profile, identity);
+            html = MapRestrictions(html, restriction);
             return html;
         }
 
@@ -202,6 +205,41 @@ namespace next.web.core.services
             return node.OuterHtml;
         }
 
+        [ExcludeFromCodeCoverage(Justification = "Private member to be tested from public method")]
+        private static string MapRestrictions(string html, ApiAnswer? restriction)
+        {
+            if (restriction == null || restriction.StatusCode != 200) return html;
+            var data = restriction.Message.ToInstance<MySearchRestrictions>() ?? new();
+            if (!data.IsLocked.GetValueOrDefault()) return html;
+            var queries = new List<string>()
+            {
+                "/html/body/div/header",
+                ""
+            }; 
+            var styles = new List<string>()
+            {
+                "position: absolute; top: 75px; margin-left: 10px; width: 650px",
+                ""
+            };
+            var styleIndex = -1;
+            var doc = html.ToHtml();
+            var node = doc.DocumentNode;
+            foreach (var query in queries)
+            {
+                if (!IsValidXPath(query)) continue;
+                var target = node.SelectSingleNode(query);
+                if (target == null) continue;
+                var injection = string.Concat(target.InnerHtml, Environment.NewLine, callout);
+                target.InnerHtml = injection;
+                styleIndex = queries.IndexOf(query);
+                break;
+            }
+            if (styleIndex == -1) return html;
+            var dv = node.SelectSingleNode("//*[@id='div-user-restriction']");
+            if (dv == null) return html;
+            dv.Attributes.Add("style", styles[styleIndex]);
+            return node.OuterHtml;
+        }
 
 
         [ExcludeFromCodeCoverage(Justification = "Private member to be tested from public method")]
@@ -230,6 +268,7 @@ namespace next.web.core.services
             }
         }
 
+        private static readonly string callout = Properties.Resources.restriction_callout;
         private static readonly string heading = Properties.Resources.base_account_heading;
         private static readonly string menus = Properties.Resources.base_account_menus;
         private static readonly string modals = Properties.Resources.base_account_modals;

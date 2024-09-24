@@ -52,6 +52,32 @@ namespace next.web.Controllers
             return GetResult(content);
         }
 
+        [HttpGet]
+        [Route("account-restriction")]
+        public async Task<IActionResult> Restrictions()
+        {
+            const string name = "restriction-manager";
+            var session = HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) Redirect("/home");
+            var sanitizer = AppContainer.GetSanitizer(name);
+            var content = sanitizer.Sanitize(string.Empty);
+            content = await AppendStatus(content, true);
+            content = await ContentSanitizerRestriction.AppendDetail(content, wrapper, session);
+            var doc = content.ToHtml();
+            content = doc.DocumentNode.OuterHtml;
+            return GetResult(content);
+        }
+
+        [HttpGet]
+        [Route("account-upgrade-limits")]
+        public async Task<IActionResult> RestrictionsUpgrade()
+        {
+            var session = HttpContext.Session;
+            if (!IsSessionAuthenicated(session)) Redirect("/home");
+            await ContentSanitizerRestriction.UpgradeRequest(wrapper, session);
+            return RedirectToAction("Restrictions");
+        }
+
         private async Task<IActionResult> GetPage(string viewName)
         {
             var session = HttpContext.Session;

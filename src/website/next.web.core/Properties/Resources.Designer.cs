@@ -284,10 +284,10 @@ namespace next.web.core.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 
         ///&lt;div id=&quot;div-user-restriction&quot; name=&quot;user-restriction-callout&quot; class=&quot;row text-start text-warning&quot;&gt;
-        ///	&lt;div id=&quot;div-user-restriction-message&quot; class=&quot;col&quot;&gt;
-        ///		&lt;span&gt;Warning: You have exceeded monthly limit for your subscription type&lt;/span&gt;
+        ///	&lt;div id=&quot;div-user-restriction-message&quot; class=&quot;col-8&quot;&gt;
+        ///		&lt;span&gt;Warning: You have exceeded monthly limit.&lt;/span&gt;
         ///	&lt;/div&gt;
-        ///	&lt;div id=&quot;div-user-restriction-action&quot; class=&quot;col&quot;&gt;
+        ///	&lt;div id=&quot;div-user-restriction-action&quot; class=&quot;col text-start&quot;&gt;
         ///		&lt;a class=&quot;link-warning&quot;&gt;Get Help&lt;/a&gt;
         ///	&lt;/div&gt;
         ///&lt;/div&gt;.
@@ -381,6 +381,27 @@ namespace next.web.core.Properties {
         internal static string user_cache {
             get {
                 return ResourceManager.GetString("user_cache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///&lt;html&gt;
+        ///	&lt;head&gt;
+        ///		&lt;meta charset=&quot;utf-8&quot;&gt;
+        ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+        ///		&lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///		&lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
+        ///		&lt;title&gt;oxford.leads.web: account restristions&lt;/title&gt;
+        ///		&lt;!-- googleapis : fonts --&gt;
+        ///		&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+        ///		
+        ///		&lt;!-- popper --&gt;
+        ///		&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string user_restriction_view {
+            get {
+                return ResourceManager.GetString("user_restriction_view", resourceCulture);
             }
         }
     }
