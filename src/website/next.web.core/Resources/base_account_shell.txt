@@ -55,8 +55,101 @@
 				</div>
 			</div>
 			<div id="dv-subcontent-profile" name="subcontent-profile" class="subcontent card">
+				<div id="dv-subcontent-profile-row-00" class="row d-none w-75">
+					<div id="dv-subcontent-profile-success" class="alert alert-success d-flex align-items-center" role="alert">
+						<div class="row">
+							<i class="bi bi-check-circle-fill"></i>
+							<span>Your account information has been updated successfully</span>
+						</div>
+					</div>
+				</div>
 				<div class="card-body">
-					<h5 class="card-title">Account Details</h5>
+					<h5 class="card-title">Account Profile</h5>
+					<div class="row">
+						<div id="dv-subcontent-profile-row-01" class="mb-3 text-start">
+							<label for="cbo-profile-group" class="form-label text-secondary">Section</label>
+							<select id="cbo-profile-group" class="form-control" onchange="profileComboBoxChanged()">
+								<option value="">Select view</option>
+								<option selected="" value="personal">Personal Details</option>
+								<option value="address">Addresses</option>
+								<option value="phone">Phone Numbers</option>
+								<option value="email">Email Addresses</option>
+							</select>
+						</div>
+						<div id="dv-subcontent-profile-row-02" name="dv-subcontent-profile-personal" class="mb-3 text-start">
+							<hr>
+							<form id="frm-profile-personal" name="frm-user-profile">
+								<div class="row">
+									<label for="tbx-profile-first-name" class="form-label text-secondary">First Name</label>
+									<input id="tbx-profile-first-name" name="first-name" class="form-control w-75 m-2" value="">
+								</div>
+								<div class="row">
+									<label for="tbx-profile-last-name" class="form-label text-secondary">Last Name</label>
+									<input id="tbx-profile-last-name" name="last-name" class="form-control w-75 m-2" value="">
+								</div>
+								<div class="row">
+									<label for="tbx-profile-company" class="form-label text-secondary">Company</label>
+									<input id="tbx-profile-company" name="company-name" class="form-control w-75 m-2" value="">
+								</div>
+							</form>
+						</div>
+						<div id="dv-subcontent-profile-row-03" name="dv-subcontent-profile-address" class="mb-3 text-start">
+							<hr>
+							<form id="frm-profile-address" name="frm-user-profile">
+								<div class="row m-1">
+									<label for="tbx-profile-mailing-address" class="form-label text-secondary">Mailing Address</label>
+									<textarea rows="4" id="tbx-profile-mailing-address" name="mailing-address" class="form-control"></textarea>
+								</div>
+								<div class="row m-1">
+									<label for="tbx-profile-billing-address" class="form-label text-secondary">Billing Address</label>
+									<textarea rows="4" id="tbx-profile-billing-address" name="billing-address" class="form-control"></textarea>
+								</div>
+							</form>
+						</div>
+						<div id="dv-subcontent-profile-row-04" name="dv-subcontent-profile-phone" class="mb-3 text-start">
+							<hr>
+							<form id="frm-profile-phone" name="frm-user-profile">
+								<div class="row">
+									<label for="tbx-profile-phone-01" class="form-label text-secondary">Contact</label>
+									<input id="tbx-profile-phone-01" name="phone-number" class="form-control w-75 m-2" value="">
+								</div>
+								<div class="row">
+									<label for="tbx-profile-phone-02" class="form-label text-secondary">Office</label>
+									<input id="tbx-profile-phone-02" name="phone-number" class="form-control w-75 m-2" value="">
+								</div>
+								<div class="row">
+									<label for="tbx-profile-phone-03" class="form-label text-secondary">Fax / Other</label>
+									<input id="tbx-profile-phone-03" name="phone-number" class="form-control w-75 m-2" value="">
+								</div>
+							</form>
+						</div>
+						<div id="dv-subcontent-profile-row-05" name="dv-subcontent-profile-email" class="mb-3 text-start">
+							<hr>
+							<form id="frm-profile-email" name="frm-user-profile">
+								<div class="row">
+									<label for="tbx-profile-email-01" class="form-label text-secondary">Primary</label>
+									<input type="email" id="tbx-profile-email-01" name="email-address" class="form-control w-75 m-2" value="">
+								</div>
+								<div class="row">
+									<label for="tbx-profile-email-02" class="form-label text-secondary">Business</label>
+									<input type="email" id="tbx-profile-email-02" name="email-address" class="form-control w-75 m-2" value="">
+								</div>
+								<div class="row">
+									<label for="tbx-profile-email-03" class="form-label text-secondary">Alternate</label>
+									<input type="email" id="tbx-profile-email-03" name="email-address" class="form-control w-75 m-2" value="">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<div id="frm-profile-error-message" class="d-none">
+						<!-- Error messages -->
+					</div>
+					<button id="frm-profile-submit-button" class="btn btn-primary" onclick="profileSubmitButtonClicked()">
+						<i id="form-profile-icon" class="bi bi-pencil-square"></i>
+						<i id="form-profile-icon-spin" class="bi bi-arrow-clockwise fa fa-spin d-none"></i>Save
+					</button>
 				</div>
 			</div>
 			<div id="dv-subcontent-permissions" name="subcontent-permissions" class="subcontent card">
@@ -68,12 +161,70 @@
 				<div class="card-body">
 					<h5 class="card-title">Change Password</h5>
 				</div>
+				<div id="dv-subcontent-permissions-container" class="row">
+					<div id="dv-subcontent-permissions-row-01" class="mb-3 text-start">
+						<label for="cbo-permissions-group" class="form-label text-secondary">Section</label>
+						<select id="cbo-permissions-group" class="form-control" onchange="permissionsComboBoxChanged()">
+							<option value="">Select view</option>
+							<option selected="" value="02">Subscription</option>
+							<option value="03">Discounts</option>
+						</select>
+					</div>
+					<div id="dv-subcontent-permissions-row-02" class="mb-3 text-start">
+						<h6 class="form-label text-secondary">Permission Level</h6>
+						<ul id="permissions-subscription-group" class="list-group">
+							<li class="list-group-item">
+								<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Guest" id="permissions-subscription-guest-radio">
+								<label class="form-check-label" for="permissions-subscription-guest-radio">Guest</label>
+							</li>
+							<li class="list-group-item">
+								<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Silver" id="permissions-subscription-silver-radio">
+								<label class="form-check-label" for="permissions-subscription-silver-radio">Silver</label>
+							</li>
+							<li class="list-group-item">
+								<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Gold" id="permissions-subscription-gold-radio">
+								<label class="form-check-label" for="permissions-subscription-gold-radio">Gold</label>
+							</li>
+							<li class="list-group-item">
+								<input class="form-check-input me-1" name="subscription-group" onchange="subscriptionLevelChanged()" type="radio" value="Platinum" id="permissions-subscription-platinum-radio" checked="checked">
+								<label class="form-check-label" for="permissions-subscription-platinum-radio">Platinum</label>
+							</li>
+						</ul>
+						<div id="dv-permissions-subscription-description">
+							<p class="text-secondary m-2 d-none" name="subscription-description" id="subscription-description-guest">
+								Guest subscription allows limited access to system function,
+								with ability to search records and retrieve sample data.
+							</p>
+							<p class="text-secondary m-2 d-none" name="subscription-description" id="subscription-description-silver">
+								Silver subscription allows user to make inquiries
+								<br>
+								into the records dataset.<br>
+								Records are served at 5 cents per lead.<br>
+								Maximum of 1,000 leads available per year.
+							</p>
+							<p class="text-secondary m-2 d-none" name="subscription-description" id="subscription-description-gold">
+								Gold subscription allows user to make inquiries
+								<br>
+								into the records dataset.<br>
+								Records are served at 4 cents per lead.<br>
+								Maximum of 10,000 leads available per year.
+							</p>
+							<p class="text-secondary m-2 d-none" name="subscription-description" id="subscription-description-platinum">
+								Platinum subscription allows user to make inquiries
+								<br>
+								into the records dataset.<br>
+								Records are served at 3 cents per lead.<br>
+								Maximum of 100,000 leads available per year.
+							</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>
 	<footer class="mastfoot mt-auto">
 		<div id="footer-copy" class="float-end">
-			<span id="footer-copy-span">&copy; 2023, 2024 Oxford Legal Lead UI</span>
+			<span id="footer-copy-span">© 2023, 2024 Oxford Legal Lead UI</span>
 		</div>
 		<div id="footer-reload" class="float-start" style="display:none">
 			<a id="footer-reload-link" href="javascript:reloadContent()" class="text-secondary text-decoration-none">Reload</a>

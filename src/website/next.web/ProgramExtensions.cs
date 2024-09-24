@@ -21,6 +21,7 @@ namespace next.web
             services.AddDistributedMemoryCache();
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(15));
             services.AddSingleton(a => api);
+            services.AddSingleton<IAccountMapService, AccountMapService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IBeautificationService, BeautificationService>();
             var provider = AppContainer.ServiceProvider;

@@ -82,6 +82,27 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 	&lt;div id=&quot;app-side-menu-border&quot; name=&quot;left-menu-border&quot;&gt;&lt;/div&gt;
+        ///	&lt;div id=&quot;app-side-menu&quot; name=&quot;left-menu&quot;&gt;
+        ///		&lt;div data-position-index=&quot;0&quot; name=&quot;left-menu-icon&quot; class=&quot;row&quot;&gt;
+        ///			&lt;a class=&quot;text-primary&quot; href=&quot;/&quot;&gt;
+        ///				&lt;i class=&quot;bi bi-three-dots&quot;&gt;&lt;/i&gt;
+        ///			&lt;/a&gt;
+        ///		&lt;/div&gt;
+        ///		&lt;div data-position-index=&quot;1&quot; name=&quot;left-menu-home&quot; class=&quot;row&quot;&gt;
+        ///			&lt;a class=&quot;text-primary&quot; href=&quot;/home&quot;&gt;
+        ///				&lt;i class=&quot;bi bi-house&quot; title=&quot;Home&quot;&gt;&lt;/i&gt;
+        ///			&lt;/a&gt;
+        ///		&lt;/div&gt;
+        ///		&lt;div id=&quot;my-account-parent-option&quot; data-position-index=&quot;10&quot; name=&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string base_account_menus {
+            get {
+                return ResourceManager.GetString("base_account_menus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 
         ///		
         ///&lt;!-- Reauthorize Modal --&gt;  		 		 		 		 		 		 		 		 		 		 		 		 		 		 		

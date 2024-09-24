@@ -1,6 +1,4 @@
-﻿using next.core.entities;
-
-namespace next.web.core.interfaces
+﻿namespace next.web.core.interfaces
 {
     public interface IFetchIntentService
     {
