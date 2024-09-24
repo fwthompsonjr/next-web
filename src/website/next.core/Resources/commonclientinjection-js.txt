@@ -1,0 +1,15 @@
+<script>
+	
+	let clientScriptActivated = false;
+
+	function commonClientScript() {
+		try {
+			/* user injected block */
+		} catch(err) {
+			console.debug(err);
+		}
+	}
+	if (clientScriptActivated) {
+		setTimeout( () => { commonClientScript(); }, 250);
+	}
+</script>

@@ -124,9 +124,6 @@
   <data name="base_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\base_menu.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="core_configuration" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\_text\core_configuration.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
-  </data>
   <data name="download_file_template" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\download_file_template.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
@@ -136,9 +133,6 @@
   <data name="invoice_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\invoice_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="logout_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\_text\logout_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
-  </data>
   <data name="payment_confirmation_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\payment_confirmation_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
@@ -147,9 +141,6 @@
   </data>
   <data name="search_table_layout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\search_table_layout.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
-  </data>
-  <data name="status_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\_text\status_menu.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="user_cache" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_text\user_cache.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
@@ -165,5 +156,20 @@
   </data>
   <data name="base_account_shell" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\base_account_shell.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="core_configuration" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\core_configuration.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="logout_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logout_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="status_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\status_menu.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="restriction_callout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\restriction_callout.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="user_restriction_view" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user_restriction_view.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

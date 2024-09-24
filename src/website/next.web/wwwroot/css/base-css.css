@@ -159,3 +159,18 @@ tr[data-position] a[name='link-show-details']:hover {
     border-color: #555;
     color: ghostwhite;
 }
+#div-user-restriction[name="user-restriction-callout"] {
+    background-color: #333;
+    z-index: 1000;
+}
+#account-subcontent-icon > ul {
+    z-index: 2000;
+}
+
+#cbo-search-state[disabled='disabled'],
+#cbo-search-county[disabled='disabled'],
+#tbx-search-startdate[disabled='disabled'],
+#tbx-search-enddate[disabled='disabled'] {
+    background-color: #777 !important;
+    color: #444;
+}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using next.core.interfaces;
 using next.web.core.extensions;
+using next.web.core.services;
 using next.web.core.util;
 using System.Diagnostics.CodeAnalysis;
 
@@ -56,6 +57,7 @@ namespace next.web.Controllers
             content = viewer.SetChildMenu(content);
             content = await AppendStatus(content);
             content = GetHttpRedirect(content, session);
+            content = await AccountMapService.TransformSearch(content, apiwrapper, session);
             return GetResult(content);
         }
         [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]
@@ -70,6 +72,7 @@ namespace next.web.Controllers
             content = RemoveOption(content, searchFilter);
             content = SetPageTitle(content, searchFilter);
             content = GetHttpRedirect(content, session);
+            content = await AccountMapService.TransformSearch(content, apiwrapper, session);
             return GetResult(content);
         }
         [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]

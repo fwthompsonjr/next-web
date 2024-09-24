@@ -1,0 +1,26 @@
+{
+  "Permissions_API": "http://api.legallead.co/",
+  "api.permissions": {
+    "destination": "remote",
+    "remote": "http://api.legallead.co/",
+    "local": "https://localhost:44345/"
+  },
+  "stripe.payment": {
+    "key": "test",
+    "names": {
+      "test": "sk_test_51LCZucDhgP60CL9xtS9RSEC5IhGsKkZwnNxwFwpHbDHLLBLvB87uICAJB5fVZNyqEHNpI9ZbLYwFFKXPNnbgucs200OOT3UvbK",
+      "prod": "sk_test_51LCZucDhgP60CL9xtS9RSEC5IhGsKkZwnNxwFwpHbDHLLBLvB87uICAJB5fVZNyqEHNpI9ZbLYwFFKXPNnbgucs200OOT3UvbK"
+    }
+  },
+  "queue": {
+    "name": "legallead.reader.service",
+    "folder": "_ll-applications",
+    "isEnabled": true
+  },
+  "Initial_View": "introduction",
+  "Post_Login_Page": "/search",
+  "app.meta": {
+    "name": "Oxford Legal Lead",
+    "prefix": "oxford.leads.web"
+  }
+}
