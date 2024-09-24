@@ -96,7 +96,7 @@ function profileComboBoxChanged() {
         $(dv).addClass(hidden);
     }
     var current = $(cboxid).val();
-    if (null === current || current.length === 0) {
+    if (undefined === current || null === current || current.length === 0) {
         $(dvparent).find("div.card-footer").hide();
         return;
     }

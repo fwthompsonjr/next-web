@@ -28,7 +28,7 @@ namespace next.core.implementations
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member tested from public method.")]
-        private static void MapCountySelections(List<ContactPermissionResponse> permissions, List<ContactUsStateCountyResponse> counties, HtmlDocument document)
+        public static void MapCountySelections(List<ContactPermissionResponse> permissions, List<ContactUsStateCountyResponse> counties, HtmlDocument document)
         {
             var index = GetPermissionValue("Setting.State.County.Subscriptions", permissions);
             if (!string.IsNullOrEmpty(index))
@@ -45,7 +45,7 @@ namespace next.core.implementations
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member tested from public method.")]
-        private static void MapStateSelections(List<ContactPermissionResponse> permissions, List<ContactUsStateResponse> states, HtmlDocument document)
+        public static void MapStateSelections(List<ContactPermissionResponse> permissions, List<ContactUsStateResponse> states, HtmlDocument document)
         {
             var index = GetPermissionValue("Setting.State.Subscriptions", permissions);
             var comparison = StringComparer.OrdinalIgnoreCase;
@@ -63,7 +63,7 @@ namespace next.core.implementations
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member tested from public method.")]
-        private static void DeselectCheckBoxes(HtmlDocument document)
+        public static void DeselectCheckBoxes(HtmlDocument document)
         {
             const string xpath = "//*[@id=\"dv-subcontent-permissions-row-03\"]//input[@type=\"checkbox\"]";
             var elements = document.DocumentNode.SelectNodes(xpath);
@@ -78,7 +78,7 @@ namespace next.core.implementations
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member tested from public method.")]
-        private static void DeselectRadioButtons(HtmlDocument document)
+        public static void DeselectRadioButtons(HtmlDocument document)
         {
             const string xpath = "//*[@id=\"permissions-subscription-group\"]//input[@type=\"radio\"]";
             var elements = document.DocumentNode.SelectNodes(xpath);
@@ -93,7 +93,7 @@ namespace next.core.implementations
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member tested from public method.")]
-        private static void SelectRadioButton(HtmlDocument document, string groupName)
+        public static void SelectRadioButton(HtmlDocument document, string groupName)
         {
             const string fmt = "permissions-subscription-{0}-radio";
             var radioIndex = string.Format(fmt, groupName.ToLower());
@@ -104,7 +104,7 @@ namespace next.core.implementations
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member tested from public method.")]
-        private static bool GetPermissionStatus(string find, List<ContactPermissionResponse> permissions)
+        public static bool GetPermissionStatus(string find, List<ContactPermissionResponse> permissions)
         {
             var value = GetPermissionValue(find, permissions);
             if (string.IsNullOrWhiteSpace(value)) { return false; }
@@ -112,7 +112,7 @@ namespace next.core.implementations
         }
 
         [ExcludeFromCodeCoverage(Justification = "Private member tested from public method.")]
-        private static string GetUserLevel(List<ContactPermissionResponse> permissions)
+        public static string GetUserLevel(List<ContactPermissionResponse> permissions)
         {
             const string accountLevel = "Account.Permission.Level";
             const string fallback = "Guest";

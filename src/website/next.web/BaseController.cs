@@ -175,7 +175,7 @@ namespace next.web
             const string find = "//link[@name]";
             var doc = content.ToHtml();
             var node = doc.DocumentNode;
-            var links = node.SelectNodes(find).ToList();
+            var links = node.SelectNodes(find)?.ToList() ?? [];
             var names = links.Select(x =>
             {
                 var attr = x.Attributes.FirstOrDefault(a => a.Name == "name")?.Value ?? string.Empty;

@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using next.web.core.extensions;
+using next.web.core.interfaces;
+using next.web.core.services;
 using next.web.core.util;
 
 namespace next.web.Controllers
 {
     [Route("/my-account")]
-    public class AccountController(IApiWrapper wrapper) : BaseController(wrapper)
+    public class AccountController(IApiWrapper wrapper, IAccountMapService mapService) : BaseController(wrapper)
     {
+        private readonly IAccountMapService mapSvc = mapService;
+
         [HttpGet]
         [Route("home")]
         [OutputCache(Duration = 10)]
@@ -52,6 +56,12 @@ namespace next.web.Controllers
         {
             var session = HttpContext.Session;
             var content = await GetAuthenicatedPage(session, "myaccount");
+            if (mapSvc is AccountMapService svc && svc.Api == null)
+            {
+                svc.Api = apiwrapper;
+            }
+            content = mapSvc.GetHtml(content, viewName);
+            content = await mapSvc.Transform(content, session);
             var viewer = AppContainer.GetDocumentView(viewName);
             if (viewer == null)
             {
@@ -63,6 +73,7 @@ namespace next.web.Controllers
             content = viewer.SetTab(content);
             content = await AppendStatus(content);
             content = GetHttpRedirect(content, session);
+
             return GetResult(content);
         }
     }

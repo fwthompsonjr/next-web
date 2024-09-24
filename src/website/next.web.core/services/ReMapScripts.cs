@@ -10,7 +10,7 @@ namespace next.web.core.services
             const string find = "//script[@name]";
             var doc = source.ToHtml();
             var node = doc.DocumentNode;
-            var links = node.SelectNodes(find).ToList();
+            var links = node.SelectNodes(find)?.ToList() ?? [];
             links.ForEach(link =>
             {
                 var attr = link.Attributes.ToList().Find(a => a.Name == "src");
