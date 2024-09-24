@@ -6,6 +6,7 @@ namespace next.web.core.services
 {
     public class AccountMapService : IAccountMapService
     {
+        internal IApiWrapper? Api { get; set; } = null;
 
         public string GetHtml(string content, string viewName)
         {
@@ -93,6 +94,12 @@ namespace next.web.core.services
             if (originalNode == null) return node.OuterHtml;
             originalNode.InnerHtml = inner;
             return node.OuterHtml;
+        }
+
+        public async Task<string> Transform(string html)
+        {
+            if (Api == null) return html;
+            return html;
         }
 
         private static readonly string heading = Properties.Resources.base_account_heading;

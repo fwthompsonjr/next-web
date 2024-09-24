@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.OutputCaching;
 using next.web.core.extensions;
 using next.web.core.interfaces;
+using next.web.core.services;
 using next.web.core.util;
 
 namespace next.web.Controllers
@@ -55,6 +56,10 @@ namespace next.web.Controllers
         {
             var session = HttpContext.Session;
             var content = await GetAuthenicatedPage(session, "myaccount");
+            if (mapSvc is AccountMapService svc && svc.Api == null)
+            {
+                svc.Api = apiwrapper;
+            }
             content = mapSvc.GetHtml(content, viewName);
             var viewer = AppContainer.GetDocumentView(viewName);
             if (viewer == null)

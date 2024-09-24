@@ -1,4 +1,7 @@
-﻿namespace next.web.core.interfaces
+﻿using next.core.entities;
+using next.core.interfaces;
+
+namespace next.web.core.interfaces
 {
     public interface IAccountMapService
     {
@@ -7,5 +10,6 @@
         string Modals(string content);
         string Scripts(string content);
         string Shell(string content);
+        Task<string> Transform(string html);
     }
 }

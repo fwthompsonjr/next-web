@@ -55,7 +55,9 @@ namespace next.web.tests.controllers
             {
                 await concrete.InjectHttpsRedirect(a, session);
             });
+            var acctMap = new AccountMapService();
             var collection = new ServiceCollection();
+            collection.AddSingleton(acctMap);
             collection.AddScoped(s => parser);
             collection.AddScoped(s => request);
             collection.AddScoped(s => mock);
@@ -78,7 +80,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new AccountController(apiWrapper.Object)
+                var controller = new AccountController(apiWrapper.Object, acctMap)
                 {
                     ControllerContext = controllerContext
                 };
