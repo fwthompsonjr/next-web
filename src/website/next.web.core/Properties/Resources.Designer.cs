@@ -283,6 +283,23 @@ namespace next.web.core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
+        ///&lt;div id=&quot;div-user-restriction&quot; name=&quot;user-restriction-callout&quot; class=&quot;row text-start text-warning&quot;&gt;
+        ///	&lt;div id=&quot;div-user-restriction-message&quot; class=&quot;col&quot;&gt;
+        ///		&lt;span&gt;Warning: You have exceeded monthly limit for your subscription type&lt;/span&gt;
+        ///	&lt;/div&gt;
+        ///	&lt;div id=&quot;div-user-restriction-action&quot; class=&quot;col&quot;&gt;
+        ///		&lt;a class=&quot;link-warning&quot;&gt;Get Help&lt;/a&gt;
+        ///	&lt;/div&gt;
+        ///&lt;/div&gt;.
+        /// </summary>
+        internal static string restriction_callout {
+            get {
+                return ResourceManager.GetString("restriction_callout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
         ///&lt;tr id=&quot;tr-user-interaction-purchased&quot; class=&quot;d-none&quot; name=&quot;user-interaction&quot; data-context=&quot;purchased&quot;&gt;
         ///	&lt;td style=&quot;padding: 20px&quot; colspan=&quot;2&quot;&gt;
         ///		&lt;hr size=&quot;1&quot; noshade=&quot;&quot;&gt;
