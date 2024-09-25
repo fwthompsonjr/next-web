@@ -6,7 +6,7 @@ using next.web.core.util;
 namespace next.web.Controllers
 {
     [Route("/correspondence")]
-    public class MailController(IApiWrapper wrapper) : BaseController(wrapper)
+    public class MailController(IApiWrapper wrapper, IViolationService violations) : BaseController(wrapper, violations)
     {
         [HttpGet]
         public async Task<IActionResult> Index()

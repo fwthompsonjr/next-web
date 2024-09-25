@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using next.core.interfaces;
 using next.web.core.extensions;
 using next.web.core.interfaces;
 using next.web.core.services;
@@ -8,7 +9,7 @@ using next.web.core.util;
 namespace next.web.Controllers
 {
     [Route("/my-account")]
-    public class AccountController(IApiWrapper wrapper, IAccountMapService mapService) : BaseController(wrapper)
+    public class AccountController(IApiWrapper wrapsvc, IAccountMapService mapService, IViolationService violations) : BaseController(wrapsvc, violations)
     {
         private readonly IAccountMapService mapSvc = mapService;
 
@@ -62,7 +63,7 @@ namespace next.web.Controllers
             var sanitizer = AppContainer.GetSanitizer(name);
             var content = sanitizer.Sanitize(string.Empty);
             content = await AppendStatus(content, true);
-            content = await ContentSanitizerRestriction.AppendDetail(content, wrapper, session);
+            content = await ContentSanitizerRestriction.AppendDetail(content, apiwrapper, session);
             var doc = content.ToHtml();
             content = doc.DocumentNode.OuterHtml;
             return GetResult(content);
@@ -74,7 +75,7 @@ namespace next.web.Controllers
         {
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) Redirect("/home");
-            await ContentSanitizerRestriction.UpgradeRequest(wrapper, session);
+            await ContentSanitizerRestriction.UpgradeRequest(apiwrapper, session);
             return RedirectToAction("Restrictions");
         }
 

@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace next.web.Controllers
 {
     [Route("/data")]
-    public class DataController(IApiWrapper wrapper) : BaseController(wrapper)
+    public class DataController(IApiWrapper wrapper, IViolationService violations) : BaseController(wrapper, violations)
     {
         private readonly IServiceProvider? provider = AppContainer.ServiceProvider;
 

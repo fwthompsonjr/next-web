@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using next.core.interfaces;
 using next.web.core.interfaces;
 using next.web.core.services;
 using next.web.core.util;
@@ -18,9 +19,10 @@ namespace next.web.Controllers
         private readonly IFetchIntentService _intentSvc;
         public HomeController(ILogger<HomeController> logger,
             IApiWrapper apiWrapper,
+            IViolationService violations,
             ISessionStringWrapper? wrapper = null,
             IFetchIntentService? intentSvc = null
-            ) : base(apiWrapper)
+            ) : base(apiWrapper, violations)
         {
             _logger = logger;
             if (wrapper != null) _sessionStringWrapper = wrapper;

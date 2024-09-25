@@ -9,9 +9,10 @@ using System.Text;
 
 namespace next.web
 {
-    public abstract class BaseController(IApiWrapper wrapper) : Controller
+    public abstract class BaseController(IApiWrapper wrapper, IViolationService service) : Controller
     {
         protected readonly IApiWrapper apiwrapper = wrapper;
+        protected readonly IViolationService violationSvc = service;
 
         protected async Task<string> AppendStatus(string content, bool isAlternate = false)
         {
@@ -25,7 +26,38 @@ namespace next.web
             return document.DocumentNode.OuterHtml;
         }
 
-        internal static List<string> GetIp(HttpContext http)
+        protected void AppendViolation(HttpContext http, string email = "")
+        {
+            var addresses = GetIp(http);
+            var sessionId = http.Session.Id;
+            var list = addresses.Select(x => new ViolationBo
+            {
+                IpAddress = x,
+                SessionId = sessionId,
+                Email = email
+            }).ToList();
+            list.ForEach(violationSvc.Append);
+        }
+
+        protected bool IsViolation(HttpContext http)
+        {
+            var addresses = GetIp(http);
+            var sessionId = http.Session.Id;
+            var list = addresses.Select(x => new ViolationBo
+            {
+                IpAddress = x,
+                SessionId = sessionId
+            }).ToList();
+            bool isViolation = false;
+            foreach (var incident in list)
+            {
+                isViolation = violationSvc.IsViolation(incident);
+                if (isViolation) break;
+            }
+            return isViolation;
+        }
+
+        protected static List<string> GetIp(HttpContext http)
         {
             List<string> exclusions = [ "127.0.0.0" , "::0", "localhost" , "0.0.0.0"];
             var ip = new List<string>();

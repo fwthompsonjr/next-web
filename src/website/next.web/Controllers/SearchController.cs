@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace next.web.Controllers
 {
     [Route("/search")]
-    public class SearchController(IApiWrapper wrapper) : BaseController(wrapper)
+    public class SearchController(IApiWrapper wrapper, IViolationService violations) : BaseController(wrapper, violations)
     {
         [HttpGet]
         public async Task<IActionResult> Index()
