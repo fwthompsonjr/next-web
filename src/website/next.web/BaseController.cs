@@ -61,9 +61,9 @@ namespace next.web
         {
             List<string> exclusions = ["127.0.0.0", "::0", "localhost", "0.0.0.0"];
             var ip = new List<string>();
-            var forward = http.Connection.RemoteIpAddress?.MapToIPv4().ToString();
-            var remote = http.GetServerVariable("REMOTE_HOST");
-            var addr = http.GetServerVariable("REMOTE_ADDR");
+            var forward = GetRemoteIp(http);
+            var remote = GetServerVariable(http, "REMOTE_HOST");
+            var addr = GetServerVariable(http, "REMOTE_ADDR");
             if (!string.IsNullOrEmpty(forward)) { ip.Add(forward); }
             if (!string.IsNullOrEmpty(remote)) { ip.Add(remote); }
             if (!string.IsNullOrEmpty(addr)) { ip.Add(addr); }
@@ -72,6 +72,28 @@ namespace next.web
             return ip;
         }
 
+        private static string? GetRemoteIp(HttpContext http)
+        {
+            try
+            {
+                return http.Connection.RemoteIpAddress?.ToString();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        private static string? GetServerVariable(HttpContext http, string variable)
+        {
+            try
+            {
+                return http.GetServerVariable(variable);
+            } 
+            catch
+            {
+                return null;
+            }
+        }
 
         internal static async Task<string> GetAuthenicatedPage(ISession? session, string pageName)
         {
