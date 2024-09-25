@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
+using next.core.implementations;
 using next.web.Controllers;
 using next.web.core.interfaces;
 using next.web.core.services;
@@ -20,10 +21,10 @@ namespace next.web.tests.controllers
             request.Setup(x => x.Scheme).Returns("http");
             request.Setup(x => x.Host).Returns(HostString.FromUriComponent("http://localhost:8080"));
             request.Setup(x => x.PathBase).Returns(PathString.FromUriComponent("/api"));
-
             var httpContext = Mock.Of<HttpContext>(_ =>
                 _.Request == request.Object
             );
+
             var mock = MockUserSession.GetInstance(authorized, downloadId);
             httpContext.Session = mock.MqSession.Object;
             //Controller needs a controller context
@@ -36,7 +37,7 @@ namespace next.web.tests.controllers
             var iwrapper = new Mock<IFetchIntentService>();
             var homeLogger = new Mock<ILogger<HomeController>>();
             var apiWrapper = new Mock<IApiWrapper>();
-
+            var violationSvc = new ViolationService();
             var parser = AppContainer.ServiceProvider?
                 .GetService<IBeautificationService>() ?? new BeautificationService();
             var concrete = new ApiWrapper(new MockAccountApi(statusCode), parser);
@@ -72,7 +73,7 @@ namespace next.web.tests.controllers
             collection.AddScoped(a =>
             {
                 var logger = a.GetRequiredService<ILogger<HomeController>>();
-                var controller = new HomeController(logger, apiWrapper.Object, mwrapper.Object, iwrapper.Object)
+                var controller = new HomeController(logger, apiWrapper.Object, violationSvc, mwrapper.Object, iwrapper.Object)
                 {
                     ControllerContext = controllerContext
                 };
@@ -80,7 +81,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new AccountController(apiWrapper.Object, acctMap)
+                var controller = new AccountController(apiWrapper.Object, acctMap, violationSvc)
                 {
                     ControllerContext = controllerContext
                 };
@@ -88,7 +89,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new MailController(apiWrapper.Object)
+                var controller = new MailController(apiWrapper.Object, violationSvc)
                 {
                     ControllerContext = controllerContext
                 };
@@ -96,7 +97,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new SearchController(apiWrapper.Object)
+                var controller = new SearchController(apiWrapper.Object, violationSvc)
                 {
                     ControllerContext = controllerContext
                 };
@@ -104,7 +105,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new InvoiceController(apiWrapper.Object)
+                var controller = new InvoiceController(apiWrapper.Object, violationSvc)
                 {
                     ControllerContext = controllerContext
                 };
@@ -112,7 +113,7 @@ namespace next.web.tests.controllers
             });
             collection.AddScoped(a =>
             {
-                var controller = new DataController(apiWrapper.Object)
+                var controller = new DataController(apiWrapper.Object, violationSvc)
                 {
                     ControllerContext = controllerContext
                 };

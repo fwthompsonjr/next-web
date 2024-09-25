@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using next.core.interfaces;
 using next.web.core.interfaces;
 using next.web.core.services;
 using next.web.core.util;
@@ -18,9 +19,10 @@ namespace next.web.Controllers
         private readonly IFetchIntentService _intentSvc;
         public HomeController(ILogger<HomeController> logger,
             IApiWrapper apiWrapper,
+            IViolationService violations,
             ISessionStringWrapper? wrapper = null,
             IFetchIntentService? intentSvc = null
-            ) : base(apiWrapper)
+            ) : base(apiWrapper, violations)
         {
             _logger = logger;
             if (wrapper != null) _sessionStringWrapper = wrapper;
@@ -30,6 +32,7 @@ namespace next.web.Controllers
         [HttpGet("home")]
         public async Task<IActionResult> Index()
         {
+            var isViolation = IsViolation(HttpContext);
             var helper = AppContainer.GetSanitizer("post-login");
             var content = Introduction;
             var session = HttpContext.Session;
@@ -38,6 +41,10 @@ namespace next.web.Controllers
             {
                 content = home.Sanitize(content);
                 content = await AppendStatus(content);
+            }
+            if (isViolation)
+            {
+                content = ContentSanitizerHome.ApplyViolation(content);
             }
             content = GetHttpRedirect(content, session);
             return new ContentResult

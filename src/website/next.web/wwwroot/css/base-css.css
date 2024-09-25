@@ -167,10 +167,14 @@ tr[data-position] a[name='link-show-details']:hover {
     z-index: 2000;
 }
 
-#cbo-search-state[disabled='disabled'],
-#cbo-search-county[disabled='disabled'],
-#tbx-search-startdate[disabled='disabled'],
-#tbx-search-enddate[disabled='disabled'] {
+#cbo-search-state[disabled],
+#cbo-search-county[disabled],
+#tbx-search-startdate[disabled],
+#tbx-search-enddate[disabled],
+#username[disabled],
+#login-password[disabled],
+input[disabled],
+select[disabled] {
     background-color: #777 !important;
     color: #444;
 }

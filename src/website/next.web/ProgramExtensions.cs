@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Rewrite;
+using next.core.implementations;
 using next.core.interfaces;
 using next.web.core.interfaces;
 using next.web.core.services;
@@ -14,6 +15,7 @@ namespace next.web
         {
             AppContainer.Build();
             api = ConfigureApiWrapper(api);
+            var violationService = new ViolationService();
             // Add services to the container.
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
@@ -21,6 +23,7 @@ namespace next.web
             services.AddDistributedMemoryCache();
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(15));
             services.AddSingleton(a => api);
+            services.AddSingleton<IViolationService>(a => violationService);
             services.AddSingleton<IAccountMapService, AccountMapService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IBeautificationService, BeautificationService>();

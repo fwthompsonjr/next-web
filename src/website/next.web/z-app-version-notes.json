@@ -1,5 +1,12 @@
 [
   {
+    "id": "3.2.19",
+    "notes": [
+      "web: add login failure tracking",
+      "core: code coverage"
+    ]
+  },
+  {
     "id": "3.2.18",
     "notes": [
       "core: code clean up",

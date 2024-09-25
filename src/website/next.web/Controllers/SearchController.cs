@@ -8,11 +8,13 @@ using System.Diagnostics.CodeAnalysis;
 namespace next.web.Controllers
 {
     [Route("/search")]
-    public class SearchController(IApiWrapper wrapper) : BaseController(wrapper)
+    public class SearchController(IApiWrapper wrapper, IViolationService violations) : BaseController(wrapper, violations)
     {
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             return await GetPage("mysearch-home");
         }
 
@@ -20,6 +22,8 @@ namespace next.web.Controllers
         [Route("active")]
         public async Task<IActionResult> Active()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             return await GetHistory(SearchFilterNames.Active);
         }
 
@@ -27,6 +31,8 @@ namespace next.web.Controllers
         [Route("purchases")]
         public async Task<IActionResult> Purchases()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             return await GetHistory(SearchFilterNames.Purchases);
         }
 
@@ -35,6 +41,8 @@ namespace next.web.Controllers
         [Route("history")]
         public async Task<IActionResult> History()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             return await GetHistory();
         }
 

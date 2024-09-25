@@ -9,9 +9,10 @@ using System.Text;
 
 namespace next.web
 {
-    public abstract class BaseController(IApiWrapper wrapper) : Controller
+    public abstract class BaseController(IApiWrapper wrapper, IViolationService service) : Controller
     {
         protected readonly IApiWrapper apiwrapper = wrapper;
+        protected readonly IViolationService violationSvc = service;
 
         protected async Task<string> AppendStatus(string content, bool isAlternate = false)
         {
@@ -23,6 +24,76 @@ namespace next.web
             var document = content.ToHtml();
             await session.AppendStatus(api, document, isAlternate);
             return document.DocumentNode.OuterHtml;
+        }
+
+        protected void AppendViolation(HttpContext http, string email = "")
+        {
+            var addresses = GetIp(http);
+            var sessionId = http.Session.Id;
+            var list = addresses.Select(x => new ViolationBo
+            {
+                IpAddress = x,
+                SessionId = sessionId,
+                Email = email
+            }).ToList();
+            list.ForEach(violationSvc.Append);
+        }
+
+        protected bool IsViolation(HttpContext http)
+        {
+            var addresses = GetIp(http);
+            var sessionId = http.Session.Id;
+            var list = addresses.Select(x => new ViolationBo
+            {
+                IpAddress = x,
+                SessionId = sessionId
+            }).ToList();
+            bool isViolation = false;
+            foreach (var incident in list)
+            {
+                isViolation = violationSvc.IsViolation(incident);
+                if (isViolation) break;
+            }
+            return isViolation;
+        }
+
+        protected static List<string> GetIp(HttpContext http)
+        {
+            List<string> exclusions = ["127.0.0.0", "::0", "localhost", "0.0.0.0"];
+            var ip = new List<string>();
+            var forward = GetRemoteIp(http);
+            var remote = GetServerVariable(http, "REMOTE_HOST");
+            var addr = GetServerVariable(http, "REMOTE_ADDR");
+            if (!string.IsNullOrEmpty(forward)) { ip.Add(forward); }
+            if (!string.IsNullOrEmpty(remote)) { ip.Add(remote); }
+            if (!string.IsNullOrEmpty(addr)) { ip.Add(addr); }
+            ip = ip.Distinct().ToList();
+            ip.RemoveAll(exclusions.Contains);
+            if (ip.Count == 0) ip.Add(Guid.NewGuid().ToString());
+            return ip;
+        }
+
+        private static string? GetRemoteIp(HttpContext http)
+        {
+            try
+            {
+                return http.Connection.RemoteIpAddress?.ToString();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        private static string? GetServerVariable(HttpContext http, string variable)
+        {
+            try
+            {
+                return http.GetServerVariable(variable);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         internal static async Task<string> GetAuthenicatedPage(ISession? session, string pageName)

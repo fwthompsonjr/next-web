@@ -34,6 +34,8 @@ namespace next.web.tests
         }
         public MockUserSession()
         {
+            var id = new Faker().Random.Guid().ToString();
+            MqSession.SetupGet(s => s.Id).Returns(id);
             MqSession.Setup(x => x.Remove(It.IsAny<string>()))
                 .Callback((string keyname) => Remove(keyname));
             MqSession.Setup(x => x.Set(It.IsAny<string>(), It.IsAny<byte[]>())).Callback((string a, byte[] b) =>
