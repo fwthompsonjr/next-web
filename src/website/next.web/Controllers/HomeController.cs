@@ -32,6 +32,7 @@ namespace next.web.Controllers
         [HttpGet("home")]
         public async Task<IActionResult> Index()
         {
+            var isViolation = IsViolation(HttpContext);
             var helper = AppContainer.GetSanitizer("post-login");
             var content = Introduction;
             var session = HttpContext.Session;
@@ -40,6 +41,10 @@ namespace next.web.Controllers
             {
                 content = home.Sanitize(content);
                 content = await AppendStatus(content);
+            }
+            if (isViolation)
+            {
+                content = ContentSanitizerHome.ApplyViolation(content);
             }
             content = GetHttpRedirect(content, session);
             return new ContentResult

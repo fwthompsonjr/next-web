@@ -234,9 +234,10 @@ namespace next.web.Controllers
 
         private void AppendViolation(FormSubmissionModel request, FormSubmissionResponse response)
         {
+            var rejectCodes = new[] { 400, 401 };
             var payload = request.Payload ?? string.Empty;
             var data = payload.ToInstance<FormLoginModel>();
-            if (data == null || response.StatusCode != 401) return;
+            if (data == null || !rejectCodes.Contains(response.StatusCode)) return;
             var email = data.UserName;
             var context = HttpContext;
             base.AppendViolation(context, email);
