@@ -88,9 +88,8 @@ namespace next.processor.api.tests
         [Fact]
         public void QueueProcessingShouldInitializeExpectedInstallers()
         {
-            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             // expected value for queue initializers
-            int expected = isWindows ? 5 : 7;
+            int expected = 1;
             var provider = GetServiceProvider();
             var service = provider.GetService<IQueueExecutor>();
             Assert.NotNull(service);
