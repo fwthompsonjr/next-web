@@ -59,7 +59,7 @@ namespace next.web
 
         protected static List<string> GetIp(HttpContext http)
         {
-            List<string> exclusions = [ "127.0.0.0" , "::0", "localhost" , "0.0.0.0"];
+            List<string> exclusions = ["127.0.0.0", "::0", "localhost", "0.0.0.0"];
             var ip = new List<string>();
             var forward = http.Connection.RemoteIpAddress?.MapToIPv4().ToString();
             var remote = http.GetServerVariable("REMOTE_HOST");
@@ -71,7 +71,7 @@ namespace next.web
             ip.RemoveAll(exclusions.Contains);
             return ip;
         }
-        
+
 
         internal static async Task<string> GetAuthenicatedPage(ISession? session, string pageName)
         {

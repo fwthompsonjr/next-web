@@ -1,5 +1,4 @@
-﻿using Bogus;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -10,7 +9,6 @@ using next.web.core.interfaces;
 using next.web.core.services;
 using next.web.core.util;
 using next.web.Services;
-using System.Collections.Specialized;
 namespace next.web.tests.controllers
 {
     public abstract class ControllerTestBase
@@ -26,7 +24,7 @@ namespace next.web.tests.controllers
             var httpContext = Mock.Of<HttpContext>(_ =>
                 _.Request == request.Object
             );
-            
+
             var mock = MockUserSession.GetInstance(authorized, downloadId);
             httpContext.Session = mock.MqSession.Object;
             //Controller needs a controller context

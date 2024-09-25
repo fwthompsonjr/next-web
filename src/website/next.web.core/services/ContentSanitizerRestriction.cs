@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using next.core.entities;
 using next.web.core.extensions;
-using System.Runtime.CompilerServices;
 
 namespace next.web.core.services
 {
@@ -23,7 +22,7 @@ namespace next.web.core.services
             const string one = "~1";
             const string findrows = "//*[@id='detail-table']/tbody/tr";
             const string nbrs = "N0";
-            var doc = GetDocument(content); 
+            var doc = GetDocument(content);
             if (doc == null) return content;
             var node = doc.DocumentNode;
             var payload = new { Id = Guid.NewGuid().ToString(), Name = "legallead.permissions.api" };

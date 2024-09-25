@@ -243,7 +243,7 @@ namespace next.web.core.services
             {
                 "/html/body/div/header",
                 "//div[@name='search-history-header']"
-            }; 
+            };
             var styles = new List<string>()
             {
                 "position: absolute; top: 75px; margin-left: 10px; width: 650px",
