@@ -69,6 +69,7 @@ namespace next.web
             if (!string.IsNullOrEmpty(addr)) { ip.Add(addr); }
             ip = ip.Distinct().ToList();
             ip.RemoveAll(exclusions.Contains);
+            if (ip.Count == 0) ip.Add(Guid.NewGuid().ToString());
             return ip;
         }
 
