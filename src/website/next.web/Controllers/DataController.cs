@@ -44,6 +44,7 @@ namespace next.web.Controllers
         [HttpPost("submit")]
         public async Task<IActionResult> Submit(FormSubmissionModel model)
         {
+            const string loginPage = "form-login";
             var session = HttpContext.Session;
             var response = FormResponses.GetDefault(null);
             if (!ModelState.IsValid || !model.Validate(Request))
@@ -53,6 +54,15 @@ namespace next.web.Controllers
             var handler = provider?.GetKeyedService<IJsHandler>(model.FormName);
             if (handler == null) return Json(response);
             response = await handler.Submit(model, session, apiwrapper);
+            if (model.FormName == loginPage && response.StatusCode != 200)
+            {
+                AppendViolation(model, response);
+                if (IsViolation(HttpContext))
+                {
+                    response.StatusCode = 408;
+                    response.RedirectTo = "/home";
+                }
+            }
             return Json(response);
         }
 
@@ -222,6 +232,15 @@ namespace next.web.Controllers
             }
         }
 
+        private void AppendViolation(FormSubmissionModel request, FormSubmissionResponse response)
+        {
+            var payload = request.Payload ?? string.Empty;
+            var data = payload.ToInstance<FormLoginModel>();
+            if (data == null || response.StatusCode != 401) return;
+            var email = data.UserName;
+            var context = HttpContext;
+            base.AppendViolation(context, email);
+        }
 
         [ExcludeFromCodeCoverage]
         private async Task<FormSubmissionResponse> DownloadVerification(ISession session, FormSubmissionResponse response, FetchIntentRequest location)

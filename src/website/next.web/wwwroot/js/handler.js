@@ -194,6 +194,10 @@ let theResponder = {
             $(jsSearchForm.controls.errormessage).text("Error occurred during search submision");
             $(jsSearchForm.controls.errormessage).removeClass("d-none");
         }
+        if (setStatusMessage && current.originalFormName == "form-login" && current.statusCode != 200) {
+            setStatusMessage(0, 'Please check values. Error processing login', true);
+            $("#username, #login-password").removeAttr("disabled");
+        }
     },
     "translate": function (json) {
         let rsp = {
