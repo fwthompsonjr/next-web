@@ -200,14 +200,23 @@ namespace next.processor.api.backing
         [ExcludeFromCodeCoverage(Justification = "Private member called and test from public accessor")]
         private static List<string> GetNames()
         {
+            if (_selections.Count > 0) return _selections;
             const string linux = "linux";
             const string windows = "windows";
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             var names = new List<string>(_installNames);
             if (isWindows) { names.RemoveAll(n => n.StartsWith(linux)); }
             else { names.RemoveAll(n => n.StartsWith(windows)); }
-            return names;
+            names.Sort((a,b) =>
+            {
+                var aa = Guid.NewGuid().ToString();
+                var bb = Guid.NewGuid().ToString();
+                return aa.CompareTo(bb);
+            });
+            _selections.Add(names[0]);
+            return _selections;
         }
+        private static readonly List<string> _selections = [];
         private static bool enableQueueOnInstallation = true;
     }
 }
