@@ -44,6 +44,7 @@ namespace next.web.Controllers
         [HttpPost("submit")]
         public async Task<IActionResult> Submit(FormSubmissionModel model)
         {
+            var session = HttpContext.Session;
             var response = FormResponses.GetDefault(null);
             if (!ModelState.IsValid || !model.Validate(Request))
             {
@@ -51,7 +52,7 @@ namespace next.web.Controllers
             }
             var handler = provider?.GetKeyedService<IJsHandler>(model.FormName);
             if (handler == null) return Json(response);
-            response = await handler.Submit(model, this.HttpContext.Session, apiwrapper);
+            response = await handler.Submit(model, session, apiwrapper);
             return Json(response);
         }
 

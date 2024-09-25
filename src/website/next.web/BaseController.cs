@@ -25,6 +25,22 @@ namespace next.web
             return document.DocumentNode.OuterHtml;
         }
 
+        internal static List<string> GetIp(HttpContext http)
+        {
+            List<string> exclusions = [ "127.0.0.0" , "::0", "localhost" , "0.0.0.0"];
+            var ip = new List<string>();
+            var forward = http.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+            var remote = http.GetServerVariable("REMOTE_HOST");
+            var addr = http.GetServerVariable("REMOTE_ADDR");
+            if (!string.IsNullOrEmpty(forward)) { ip.Add(forward); }
+            if (!string.IsNullOrEmpty(remote)) { ip.Add(remote); }
+            if (!string.IsNullOrEmpty(addr)) { ip.Add(addr); }
+            ip = ip.Distinct().ToList();
+            ip.RemoveAll(exclusions.Contains);
+            return ip;
+        }
+        
+
         internal static async Task<string> GetAuthenicatedPage(ISession? session, string pageName)
         {
             var isValid = HasUserToken(session);
