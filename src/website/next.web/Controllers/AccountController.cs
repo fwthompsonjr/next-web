@@ -18,6 +18,8 @@ namespace next.web.Controllers
         [OutputCache(Duration = 10)]
         public async Task<IActionResult> Index()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             return await GetPage("account-home");
         }
 
@@ -26,6 +28,8 @@ namespace next.web.Controllers
         [OutputCache(Duration = 10)]
         public async Task<IActionResult> Profile()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             return await GetPage("account-profile");
         }
 
@@ -34,6 +38,8 @@ namespace next.web.Controllers
         [OutputCache(Duration = 10)]
         public async Task<IActionResult> Permissions()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             return await GetPage("account-permissions");
         }
 
@@ -41,6 +47,8 @@ namespace next.web.Controllers
         [Route("cache-manager")]
         public async Task<IActionResult> CacheManagement()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             const string name = "cache-manager";
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) Redirect("/home");
@@ -57,6 +65,8 @@ namespace next.web.Controllers
         [Route("account-restriction")]
         public async Task<IActionResult> Restrictions()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             const string name = "restriction-manager";
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) Redirect("/home");
@@ -73,6 +83,8 @@ namespace next.web.Controllers
         [Route("account-upgrade-limits")]
         public async Task<IActionResult> RestrictionsUpgrade()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) Redirect("/home");
             await ContentSanitizerRestriction.UpgradeRequest(apiwrapper, session);
