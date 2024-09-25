@@ -89,7 +89,7 @@ namespace next.web
             try
             {
                 return http.GetServerVariable(variable);
-            } 
+            }
             catch
             {
                 return null;
