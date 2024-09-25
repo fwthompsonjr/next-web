@@ -29,6 +29,8 @@ namespace next.web.Controllers
         [HttpGet("permissions")]
         public async Task<IActionResult> Index()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var content = await GetAuthenicatedPage(session, "blank");
@@ -45,6 +47,8 @@ namespace next.web.Controllers
             Justification = "For http-get query parm is validated")]
         public IActionResult Purchase([FromQuery] string? id)
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             session.SetString(PurchaseRecordId, id ?? string.Empty);
@@ -54,6 +58,8 @@ namespace next.web.Controllers
         [HttpGet("purchase-record")]
         public async Task<IActionResult> PurchaseRecord()
         {
+            var isViolation = IsViolation(HttpContext);
+            if (isViolation) RedirectToAction("Index", "Home");
             const string landing = "payment-checkout";
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
