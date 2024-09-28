@@ -20,6 +20,9 @@ jobs:
         location: ["src/website/next.website.sln", "src/processor/next.processor.sln"]
     runs-on: ubuntu-latest
     steps:
+      - run: export PATH="$PATH:/opt/microsoft/powershell/7/"
+        name: Setup Powershell
+
       - uses: actions/checkout@v4
       - run: dotnet restore "${{ github.workspace }}/${{ matrix.location }}"
         id: dotnet-restore

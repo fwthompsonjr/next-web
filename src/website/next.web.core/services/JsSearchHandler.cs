@@ -82,6 +82,34 @@ namespace next.web.core.services
                 return response;
             }
         }
+
+        public static string AppendHarrisJpOptions(string content)
+        {
+            const string indx = "32190";
+            const string find_option = "//option[@dat-county-index='{0}'][@value='{1}']";
+            const string find = "//*[@id='cbo-search-dynamic-0']";
+            var doc = content.ToHtml();
+            var node = doc.DocumentNode;
+            var cbo = node.SelectSingleNode(find);
+            if (cbo == null) return node.OuterHtml;
+            foreach (var item in HarrisJpMap)
+            {
+                var query = string.Format(find_option, indx, item.Key);
+                var nde = cbo.SelectSingleNode(query);
+                if (nde != null) continue;
+                var append = doc.CreateElement("option");
+                append.Attributes.Add("value", item.Key);
+                append.Attributes.Add("dat-row-index", "0");
+                append.Attributes.Add("dat-row-name", "Search Type");
+                append.Attributes.Add("dat-county-index", indx);
+                append.Attributes.Add("style", "display: none");
+                append.InnerHtml = item.Value;
+                cbo.AppendChild(append);
+            }
+            return node.OuterHtml;
+        }
+
+
         private static readonly List<string> SearchForms =
         [
             "frm-search",
@@ -109,10 +137,26 @@ namespace next.web.core.services
             var oic = StringComparison.OrdinalIgnoreCase;
             if (search.County.Name.Equals("harris-jp", oic))
             {
+                var detail = GetHarrisJpParameter(search.Details);
                 search.Details.Clear();
-                search.Details.Add(new() { Name = "Court Selection", Text = "All JP Courts", Value = "0" });
+                search.Details.Add(detail);
             }
         }
+
+        private static BeginSearchDetail GetHarrisJpParameter(List<BeginSearchDetail> selection)
+        {
+            var searchValue = "0";
+            var searchText = HarrisJpMap[searchValue];
+            const string name = "Court Selection";
+            var item = selection.FirstOrDefault();
+            if (item != null && HarrisJpMap.TryGetValue(item.Value, out var userSelected))
+            {
+                searchValue = item.Value;
+                searchText = userSelected;
+            }
+            return new() { Name = name, Text = searchText, Value = searchValue };
+        }
+
         private static readonly Dictionary<string, Type> PayloadMap = new()
         {
             { "frm-search", typeof(BeginSearchModel) },
@@ -129,6 +173,13 @@ namespace next.web.core.services
             { "frm-search-purchases", "profile-edit-contact-phone" },
             { "frm-search-preview", "search-get-preview" },
             { "frm-search-invoice", "search-get-invoice" }
+        };
+
+        private static readonly Dictionary<string, string> HarrisJpMap = new()
+        {
+            { "0", "All JP Courts" },
+            { "1", "All JP Civil Courts" },
+            { "2", "All JP Criminal Courts" }
         };
     }
 }

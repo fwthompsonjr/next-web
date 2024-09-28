@@ -9,6 +9,7 @@ namespace next.processor.api.backing
     {
         protected bool IsRunnning { get; set; }
         private readonly IApiWrapper _api = api;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "VSSDK005:Avoid instantiating JoinableTaskContext", Justification = "<Pending>")]
         private readonly JoinableTaskFactory jtf = new(new JoinableTaskContext());
         protected override void DoWork(object? state)
         {

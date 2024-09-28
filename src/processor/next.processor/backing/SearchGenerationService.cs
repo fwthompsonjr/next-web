@@ -8,6 +8,7 @@ namespace next.processor.api.backing
     public class SearchGenerationService(IQueueExecutor executor) : BaseTimedSvc<SearchGenerationService>(GetSettings())
     {
         private readonly IQueueExecutor _executor = executor;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "VSSDK005:Avoid instantiating JoinableTaskContext", Justification = "<Pending>")]
         private readonly JoinableTaskFactory jtf = new(new JoinableTaskContext());
         protected override void DoWork(object? state)
         {
