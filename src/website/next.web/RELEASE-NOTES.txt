@@ -1,6 +1,7 @@
 
       next.web.application
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      : 3.2.20 - 2024-09-28 - Harris JP Search Refinement
       : 3.2.19 - 2024-09-22 - Code clean up
       : 3.2.18 - 2024-09-22 - Code clean up
       : 3.2.17 - 2024-09-22 - Correction to payment workflow

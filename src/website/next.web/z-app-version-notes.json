@@ -1,5 +1,12 @@
 [
   {
+    "id": "3.2.20",
+    "notes": [
+      "web: allow user to select search type for harris-jp",
+      "core: code clean up"
+    ]
+  },
+  {
     "id": "3.2.19",
     "notes": [
       "web: add login failure tracking",
