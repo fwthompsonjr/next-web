@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>Web application to present content for user actions.</Description>
-    <AssemblyVersion>3.2.18</AssemblyVersion>
-    <FileVersion>3.2.18</FileVersion>
+    <AssemblyVersion>3.2.19</AssemblyVersion>
+    <FileVersion>3.2.19</FileVersion>
   </PropertyGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File pre-build.ps1" ContinueOnError="true" />

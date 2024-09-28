@@ -50,6 +50,7 @@ namespace next.web.Controllers
         [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]
         private async Task<IActionResult> GetPage(string viewName)
         {
+            const string searchPage = "mysearch-home";
             var session = HttpContext.Session;
             if (!IsSessionAuthenicated(session)) return Redirect("/home");
             var content = await GetAuthenicatedPage(session, "mysearch");
@@ -66,7 +67,10 @@ namespace next.web.Controllers
             content = await AppendStatus(content);
             content = GetHttpRedirect(content, session);
             content = await AccountMapService.TransformSearch(content, apiwrapper, session);
+            if (!viewName.Equals(searchPage, StringComparison.OrdinalIgnoreCase)) return GetResult(content);
+            content = JsSearchHandler.AppendHarrisJpOptions(content);
             return GetResult(content);
+
         }
         [ExcludeFromCodeCoverage(Justification = "Helper method tested completely through public accessor")]
         private async Task<IActionResult> GetHistory(SearchFilterNames searchFilter = SearchFilterNames.History)
