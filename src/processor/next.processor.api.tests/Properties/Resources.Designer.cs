@@ -61,6 +61,25 @@ namespace next.processor.api.tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;Id&quot;: &quot;4fe0d02e-7df7-11ef-99ce-0af7a01f52e9&quot;,
+        ///		&quot;Name&quot;: &quot;04973a22-e4fd-4246-b02e-d9c7b207d61f&quot;,
+        ///		&quot;UserId&quot;: &quot;cf35094a-ad64-41dd-9f2d-32cbc942aaed&quot;,
+        ///		&quot;StartDate&quot;: &quot;2024-09-29T00:11:02&quot;,
+        ///		&quot;EndDate&quot;: null,
+        ///		&quot;ExpectedRows&quot;: null,
+        ///		&quot;CreateDate&quot;: &quot;2024-09-29T00:11:02&quot;,
+        ///		&quot;Payload&quot;: &quot;{\&quot;state\&quot;:\&quot;tx\&quot;,\&quot;county\&quot;:{\&quot;name\&quot;:\&quot;harris-jp\&quot;,\&quot;value\&quot;:32190},\&quot;details\&quot;:[{\&quot;name\&quot;:\&quot;Court Selection\&quot;,\&quot;text\&quot;:\&quot;All JP Civil Courts\&quot;,\&quot;value\&quot;:\&quot;1\&quot;}],\&quot;start\&quot;:1727049600000,\&quot;end\&quot;:1727395200000}&quot;
+        ///	 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string harris_jp_queue_sample_01 {
+            get {
+                return ResourceManager.GetString("harris_jp_queue_sample_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;state&quot;: &quot;tx&quot;,
         ///	&quot;county&quot;: {

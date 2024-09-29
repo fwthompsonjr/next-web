@@ -119,18 +119,21 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="user_payload_sample_collin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\_text\user_payload_sample_collin.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\_text\user_payload_sample_collin.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="user_payload_sample_denton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\_text\user_payload_sample_denton.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\_text\user_payload_sample_denton.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="user_payload_sample_harris" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\_text\user_payload_sample_harris.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\_text\user_payload_sample_harris.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="user_payload_sample_harris_jp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\_text\user_payload_sample_harris_jp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\_text\user_payload_sample_harris_jp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="user_payload_sample_tarrant" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\_text\user_payload_sample_tarrant.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\_text\user_payload_sample_tarrant.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="harris_jp_queue_sample_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\harris_jp_queue_sample_01.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>
