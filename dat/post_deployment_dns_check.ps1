@@ -11,7 +11,7 @@ after deployment of website
     a. login to go-daddy
     b. update dns record to point to ip 
 #>
-$current_ip = "3.130.1.109"
+$current_ip = "18.117.18.35"
 $siteUri = "https://oxfordlegalleads.com"
 $load_balancer = "awseb--awseb-slz37rtj56jw-1244023339.us-east-2.elb.amazonaws.com";
 $ip = Resolve-DNSName $load_balancer
