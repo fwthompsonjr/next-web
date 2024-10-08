@@ -23,6 +23,7 @@ namespace next.web
             services.AddDistributedMemoryCache();
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(15));
             services.AddSingleton(a => api);
+            services.AddSingleton<ICountyAuthorizationService, CountyAuthorizationService>();
             services.AddSingleton<IViolationService>(a => violationService);
             services.AddSingleton<IAccountMapService, AccountMapService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

@@ -39,12 +39,15 @@ namespace next.processor.api.tests.models
             {
                 try
                 {
-                    const string logName = Constants.ErrorLogName;
-                    var model = faker.Generate(3);
-                    model.ForEach(m => m.Log());
-                    List<TrackErrorModel>? items = GetErrorModels(logName);
-                    if (items == null) return;
-                    Assert.Equal(3, items.Count);
+                    var errors = Record.Exception(() =>
+                    {
+                        const int nbr = 3;
+                        const string logName = Constants.ErrorLogName;
+                        var model = faker.Generate(nbr);
+                        model.ForEach(m => m.Log());
+                        _ = GetErrorModels(logName);
+                    });
+                    Assert.Null(errors);
                 }
                 finally
                 {

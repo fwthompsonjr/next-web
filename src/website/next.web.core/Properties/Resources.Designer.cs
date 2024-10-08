@@ -197,6 +197,20 @@ namespace next.web.core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;name&quot;: &quot;dallas&quot;,
+        ///		&quot;code&quot;: &quot;952qGQ9KGUY2Gc0KDLhFVxfIY+YZpAn1i7/h1vxUW2/fwkNamCEd5GYaT81zUTV8&quot;
+        ///	}
+        ///].
+        /// </summary>
+        internal static string county_authenication_list {
+            get {
+                return ResourceManager.GetString("county_authenication_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;main role=&quot;main&quot; class=&quot;inner cover&quot;&gt;
         ///	&lt;div id=&quot;download-card&quot; class=&quot;card&quot;&gt;
         ///		&lt;div class=&quot;card-body text-start&quot;&gt;
@@ -288,7 +302,7 @@ namespace next.web.core.Properties {
         ///		&lt;span&gt;Warning: You have exceeded monthly limit.&lt;/span&gt;
         ///	&lt;/div&gt;
         ///	&lt;div id=&quot;div-user-restriction-action&quot; class=&quot;col text-start&quot;&gt;
-        ///		&lt;a class=&quot;link-warning&quot;&gt;Get Help&lt;/a&gt;
+        ///		&lt;a class=&quot;link-warning&quot; href=&quot;/my-account/account-restriction&quot;&gt;Get Help&lt;/a&gt;
         ///	&lt;/div&gt;
         ///&lt;/div&gt;.
         /// </summary>

@@ -1,5 +1,12 @@
 [
   {
+    "id": "3.2.21",
+    "notes": [
+      "web: expose api to allow external apps to retrieve credentials by county",
+      "core: code clean up"
+    ]
+  },
+  {
     "id": "3.2.20",
     "notes": [
       "web: allow user to select search type for harris-jp",

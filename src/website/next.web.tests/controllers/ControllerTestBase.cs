@@ -70,6 +70,7 @@ namespace next.web.tests.controllers
             collection.AddScoped(s => iwrapper.Object);
             collection.AddScoped(s => apiWrapper);
             collection.AddScoped(s => apiWrapper.Object);
+            collection.AddScoped<ICountyAuthorizationService, CountyAuthorizationService>();
             collection.AddScoped(a =>
             {
                 var logger = a.GetRequiredService<ILogger<HomeController>>();
@@ -114,6 +115,15 @@ namespace next.web.tests.controllers
             collection.AddScoped(a =>
             {
                 var controller = new DataController(apiWrapper.Object, violationSvc)
+                {
+                    ControllerContext = controllerContext
+                };
+                return controller;
+            });
+            collection.AddScoped(a =>
+            {
+                var svc = a.GetRequiredService<ICountyAuthorizationService>();
+                var controller = new AppController(svc)
                 {
                     ControllerContext = controllerContext
                 };
