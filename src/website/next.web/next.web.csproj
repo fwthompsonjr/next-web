@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>Web application to present content for user actions.</Description>
-    <AssemblyVersion>3.2.20</AssemblyVersion>
-    <FileVersion>3.2.20</FileVersion>
+    <AssemblyVersion>3.2.21</AssemblyVersion>
+    <FileVersion>3.2.21</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;MSB3073</NoWarn>
